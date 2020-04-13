@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en-gb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magic Squares</title>
+  <meta name="keywords" content="magic-squares, svg, art">
+  <meta name="author" content="Fania Raczinski, Dave Everitt">
+  <meta name="description" content="A tool for generating animated magic square SVGs.">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="imgs/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="imgs/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="imgs/favicons/favicon-16x16.png">
+  <link rel="manifest" href="imgs/favicons/site.webmanifest">
+  <link rel="mask-icon" href="imgs/favicons/safari-pinned-tab.svg" color="#b91d47">
+  <link rel="shortcut icon" href="imgs/favicons/favicon.ico">
+  <meta name="apple-mobile-web-app-title" content="MagicSquares">
+  <meta name="application-name" content="MagicSquares">
+  <meta name="msapplication-TileColor" content="#b91d47">
+  <meta name="msapplication-config" content="imgs/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta property="og:title" content="Magic Squares" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://squares.cubelife.org" />
+  <!-- <meta property="og:url" content="https://fania.github.io/magic-SVG" /> -->
+  <meta property="og:image" content="imgs/example.png" />
+  <!-- <script src="https://kit.fontawesome.com/51db5560fa.js" crossorigin="anonymous"></script> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link id="mainStyles" rel="stylesheet" href="css/styles.css">
+  <!-- <link rel="stylesheet" href="css/print.css"> -->
+</head>
+
+
+<body class="orderGroups">
+
+<form id="settings">
+  <div class="tabs">
+    <img src="imgs/logo.svg" alt="logo" width="100">
+    <fieldset>
+      <label for="orderGroups"><input type="radio" id="orderGroups" name="pageType" checked><span>ORDER-GROUPS</span></label>
+      <label for="filterGroups"><input type="radio" id="filterGroups" name="pageType"><span>FILTER-GROUPS</span></label>
+      <label for="singleInput"><input type="radio" id="singleInput" name="pageType"><span>SINGLE-INPUT</span></label>
+      <label for="dataSets"><input type="radio" id="dataSets" name="pageType"><span>DATA-SETS</span></label>
+    </fieldset>
+  </div>
+  <div class="options">
+    <fieldset>
+      <label for="styleOptions">
+        <select id="styleOptions">
+          <option value="numbers">Numbers</option>
+          <option value="quadvertex" selected>Quadratic curve on vertices</option>
+          <option value="straight">Straight polyline</option>
+          <option value="quadline">Quadratic curve on lines</option>
+          <option value="arc">Arc experiment</option>
+          <option value="altarc">Arc experiment (alternate)</option>
+        </select>
+        <span>Style</span>
+      </label>
+      <label for="orderOptions">
+        <select id="orderOptions">
+          <option value="3" >Order 3</option>
+          <option value="4" >Order 4 Suzuki</option>
+          <!-- <option value="4s" >Order 4 Suzuki sorted</option> -->
+          <option value="4RU" selected>Order 4 Raczinski Uniques (383)</option>
+          <option value="4R">Order 4 Raczinski (880)</option>
+          <!-- <option value="4RNC" >Order 4 Raczinski (3520)</option> -->
+          <option value="4RA" >Order 4 Raczinski (7040)</option>
+          <!-- <option value="4.0">Order 4 (unique)</option> -->
+          <option value="5">Order 5</option>
+          <option value="6">Order 6</option>
+          <option value="7">Order 7</option>
+          <option value="8">Order 8</option>
+          <option value="9">Order 9</option>
+          <option value="10">Order 10</option>
+          <option value="11">Order 11</option>
+          <option value="12">Order 12</option>
+          <option value="13">Order 13</option>
+          <option value="14">Order 14</option>
+          <option value="15">Order 15</option>
+          <option value="16">Order 16</option>
+          <option value="17">Order 17</option>
+          <option value="18">Order 18</option>
+          <option value="19">Order 19</option>
+          <option value="20">Order 20</option>
+        </select>
+        <span>Order</span>
+      </label>
+      <label for="datasetOptions">
+        <select id="datasetOptions">
+          <!-- <option value="default" >Default</option> -->
+          <option value="agrippa" >Agrippa</option>
+          <!-- <option value="suzuki" >Suzuki</option> -->
+        </select>
+        <span>Data Set</span>
+      </label>
+      <!-- <label for="groupOptions">
+        <select id="groupOptions">
+          <option value="0" >All</option>
+          <option value="1" >Group I</option>
+          <option value="2" >Group II</option>
+          <option value="3" >Group III</option>
+          <option value="4" >Group IV</option>
+          <option value="5" >Group V</option>
+          <option value="6" >Group VI</option>
+          <option value="7" >Group VII</option>
+          <option value="8" >Group VIII</option>
+          <option value="9" >Group IX</option>
+          <option value="10" >Group X</option>
+          <option value="11" >Group XI</option>
+          <option value="12" >Group XII</option>
+        </select>
+        <span>Group</span>
+      </label> -->
+      <label for="lenOptions">
+        <select id="lenOptions"></select>
+        <span>Length</span>
+      </label>
+    </fieldset>
+    <fieldset>
+      <label for="clearFill"><input type="checkbox" id="clearFill" checked><span>NoFill</span></label>
+      <label for="fillColour"><input type="color" id="fillColour" value="#666666"><span>Fill</span></label>
+      <label for="strokeColour"><input type="color" id="strokeColour" value="#FFFFFF"><span>Stroke</span></label>
+      <label for="textColour"><input type="color" id="textColour" value="#EEEEEE"><span>Text</span></label>
+      <label for="backColour"><input type="color" id="backColour" value="#222222"><span>Background</span></label>
+    </fieldset>
+    <fieldset>
+      <label for="padding"><input type="checkbox" id="padding" checked><span>Padding</span></label>
+    </fieldset>
+    <fieldset>
+      <label for="animate"><input type="radio" id="animate" name="animateRadio"><span>Animate (In Sync)</span></label>
+      <label for="animateOut"><input type="radio" id="animateOut" name="animateRadio"><span>Animate (Out of Sync)</span></label>
+      <!-- <label for="animateColours"><input type="radio" id="animateColours" name="animateRadio"><span>Animate (Colours)</span></label> -->
+      <label for="noAnimate"><input type="radio" id="noAnimate" name="animateRadio" checked><span>Animate (Stop)</span></label>
+    </fieldset>
+  </div>
+  <fieldset class="userInput">
+    <label for="values">
+      <input id="values" type="text" placeholder="1 2 3 etc..." value="13 22 18 27 11 20 31 4 36 9 29 2 12 21 14 23 16 25 30 3 5 32 34 7 17 26 10 19 15 24 8 35 28 1 6 33">
+      <span>manual square input</span>
+    </label>
+    <label for="search">
+      <input id="search" type="text" placeholder="1, 2, 3 etc..." value="">
+      <span>search by ID(s)</span>
+    </label>
+  </fieldset>
+  <div class="instructions">
+    <p><i id="info" class="far fa-question-circle"></i></p>
+    <p>
+      <input type="radio" name="lighting" id="night" checked>
+      <label id="nightLabel" for="night"><i class="fas fa-moon"></i></label>
+      <input type="radio" name="lighting" id="day">
+      <label id="dayLabel" for="day"><i class="far fa-sun"></i></label>
+      <!-- <span id="night" class="active"></span><span id="day"></span> -->
+    </p>
+  </div>
+</form>
+
+<section id="about" class="hide">
+  <h1>Magic Square Visualisations <img src="logo.svg" width="20"></h1>
+  <p>This is an art/research project by <a href="https://fania.eu">Fania Raczinski</a> and <a href="https://daveeveritt.org">Dave Everitt</a>.</p>
+  <p>Read more about the <a href="https://cubelife.org/culture.html">culture</a>, <a href="https://cubelife.org/history/">history</a>, and <a href="https://cubelife.org/research.html">theory</a> of magic squares.</p>
+  <p>There are 4 pages which have slightly different purposes.</p>
+  <dl>
+    <dt>ORDER-GROUPS:</dt>
+    <dd>Shows all<sup>*</sup> magic squares of a given order in a given style.</dd>
+    <dt>FILTER-GROUPS:</dt>
+    <dd>Shows all magic squares of a given order in a given style which share a given length.</dd>
+    <dd>This can be used to identify similar patterns in otherwise unique number sequences.</dd>
+    <dt>SINGLE-INPUT:</dt>
+    <dd>Either displays the given number sequence as a magic line in all styles, or</dd>
+    <dd>shows all styles for each of the given IDs of the given order.</dd>
+    <dt>DATA-SETS:</dt>
+    <dd>Currently this is a space to display the Agrippa set of astrological magic squares togther one one screen.</dd>
+  </dl>
+  <p><sup>*</sup> Orders 5+ are incomplete sets.</p>
+  <h2>How to Use:</h2>
+  <p>Press 's' to hide/show the interface.</p>
+  <p>Press 'F11' (on Windows) or 'Ctrl Cmd F' (on a Mac) to toggle fullscreen.</p>
+  <h2>Printing:</h2>
+  <p>ORDER-GROUPS printing is optimised for to fit all squares of an order on one A4 page.</p>
+  <!-- <p>FILTER-GROUPS printing </p> -->
+</section>
+
+<p id="errorMsg" class="error"></p>
+
+<!-- <canvas id="canvas" width="800" height="400"></canvas> -->
+<!-- <section id="pngs" class="hide"></section> -->
+
+<p id="constant">Loading...</p>
+
+<main id="svgGrid" class="svgGrid"></main>
+
+
+<footer>
+  <a id="download">&lt;3</a>
+  <p>© <a href="https://fania.eu">Fania Raczinski</a> & <a href="https://daveeveritt.org/art.html">Dave Everitt</a></p>
+  <!-- <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Licence" src="imgs/cc.png" /><img alt="Creative Commons Licence" src="imgs/by.png" /><img alt="Creative Commons Licence" style="border-width:0" src="imgs/nc.png" /></a> -->
+  <!-- This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a> -->
+  <!-- </p> -->
+</footer>
+
+<style id="extra_colour_styles"></style>
+
+
+<!-- <script src="data/duplicate.js"></script> -->
+
+
+<script src="data/index4R.js"></script>
+
+<!-- <script src="js/errors.js"></script> -->
+<!-- <script src="js/colours.js"></script> -->
+<!-- <script src="js/draw.js"></script> -->
+<!-- <script src="js/menu.js"></script> -->
+<!-- <script src="js/calc.js"></script> -->
+<!-- <script src="js/filters.js"></script> -->
+<!-- <script src="js/scripts.js"></script> -->
+<!-- <script src="js/helpers.js"></script> -->
+<!-- <script src="js/animate.js"></script> -->
+<!-- <script src="js/transformations.js"></script> -->
+<!-- <script src="js/tests.js"></script> -->
+
+</body>
+</html>

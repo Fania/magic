@@ -1,0 +1,11 @@
+body {
+  background: beige
+}
+
+h1 {
+  font-style: italic;
+  color: green;
+}
+h1::after {
+  content: "in assets / css";
+}

@@ -1,0 +1,170 @@
+
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC|Bellota|Dancing+Script|Liu+Jian+Mao+Cao|Marck+Script|Poiret+One|Sacramento&display=swap');
+
+
+@media print {
+
+  @page {
+    margin: 0;
+    size: A4 landscape;
+  }
+
+  /* h1 { 
+    string-set: doctitle content(); 
+  } */
+  /* @page {
+    @top-right {
+      content: string(doctitle);
+    }
+  } */
+
+  /* size = how many columns */
+  /* marg = how many rows */
+
+
+  /* ORDER-GROUPS */
+  body.orderGroups.order3 {  /* 4 */
+    --size: calc((100vw - 80px) / 7);
+    --marg: calc( ( 100vh - ( var(--size) * 4 ) ) / 2 );
+  }
+  body.orderGroups.order4 {  /* 880 */
+    --size: calc((100vw - 80px) / 40);
+    --marg: calc( ( 100vh - ( var(--size) * 22 ) ) / 2 );
+  }
+  body.orderGroups.order4R {  /* 880 */
+    --size: calc((100vw - 80px) / 40);
+    --marg: calc( ( 100vh - ( var(--size) * 22 ) ) / 2 );
+  }
+  body.orderGroups.order4RU {  /* 383 */
+    --size: calc((100vw - 80px) / 24);
+    --marg: calc( ( 100vh - ( var(--size) * 16 ) ) / 2 );
+  }
+  body.orderGroups.order5 {  /* 23 */
+    --size: calc((100vw - 80px) / 6);
+    --marg: calc( ( 100vh - ( var(--size) * 4 ) ) / 2 );
+  }
+  body.orderGroups.order6 {  /* 30 */
+    --size: calc(((100vw - 80px) / 6) * .875);
+    --marg: calc( ( 100vh - ( var(--size) * 5 ) ) / 2 );
+  }
+  body.orderGroups.order7 {  /* 4 */
+    --size: calc((100vw - 80px) / 4);
+    --marg: calc( ( 100vh - ( var(--size) * 1 ) ) / 2 );
+  }
+  body.orderGroups.order8 {  /* 4 */
+    --size: calc((100vw - 80px) / 4);
+    --marg: calc( ( 100vh - ( var(--size) * 1 ) ) / 2 );
+  }
+  body.orderGroups.order9 {  /* 4 */
+    --size: calc((100vw - 80px) / 4);
+    --marg: calc( ( 100vh - ( var(--size) * 1 ) ) / 2 );
+  }
+
+  /* FILTER-GROUPS */
+  body.filterGroups {
+    --size: calc((100vw - 80px) / 6);
+    --marg: 40px;
+  }
+
+  /* SINGLE-INPUT */
+  body.singleInput {
+    --size: calc(((100vw - 80px) / 5) * .975);
+    /* --marg: calc( ( 100vh - ( var(--size) * 2 ) ) / 2 ); */
+    --marg: 40px;
+  }
+
+
+  body { margin: var(--marg) 40px }
+  .order-x, .order-xt { width: var(--size); height: var(--size) }
+  body.filterGroups .svgGrid.filter div:nth-child(odd) { margin-right: 6em }
+
+  /* body.singleInput .svgGrid.search div {
+    break-before: page;
+    break-inside: avoid;
+  } */
+
+  #settings, footer { display: none }
+  .order-x, .order-xt { box-sizing: border-box }
+  .order-xt { padding: 2px }
+  .pad { padding: 3px }
+
+  .svgGrid.search p,
+  .svgGrid.single p,
+  .svgGrid.filter p,
+  .svgGrid.filter svg + p {
+    margin: 1em 0 2em; 
+    font-size: 1em; 
+    /* max-width: 380px;  */
+  }
+
+  /* body.orderGroups .svgGrid::after,
+  body.filterGroups .svgGrid::after,
+  body.singleInput .svgGrid::after {
+    content: "squares.cubelife.org";
+    color: #999;
+    font-size: .5em;
+  } */
+
+
+
+  body.transGroups {  /* 32 */
+    --size: calc((100vw - 80px) / 12);
+    --marg: calc( ( 100vh - ( var(--size) * 8 ) ) / 2 );
+  }
+
+  body.transGroups .transDiv p {
+    display: none;
+  }
+  body.transGroups .transDiv div div {
+    font-size: 2em;
+  }
+
+
+
+  .dataSet .allStyles .order-x, .dataSet .allStyles .order-xt,
+  .search .allStyles .order-x, .search .allStyles .order-xt,
+  .single .allStyles .order-x, .single .allStyles .order-xt {
+    width: calc(95vw / 3);
+  }
+
+
+
+
+  body.orderGroups.order4RU p {
+    display: none;
+  }
+  body.orderGroups.order4RU .svgGrid {
+    justify-content: start;
+  }
+  body.orderGroups.order4RU.dayMode .svgGrid:after {
+    /* font-family: 'Amatic SC', cursive; */
+    /* font-size: 1.2em; */
+    /* line-height: 4em; */
+    /* padding-left: 2em; */
+    /* color: #666; */
+    /* content: "Fania Raczinski & Dave Everitt © 2020 (squares.cubelife.org)"; */
+    content: url(../imgs/logo-dark.svg);
+    /* white-space: pre; */
+    /* text-align: right; */
+    width: calc( var(--size) - 2px );
+    height: calc( var(--size) - 2px );
+  }
+  body.orderGroups.order4RU:not(.dayMode) .svgGrid:after {
+    /* font-family: 'Amatic SC', cursive; */
+    /* font-size: 1.2em; */
+    /* line-height: 4em; */
+    /* padding-left: 2em; */
+    /* color: #666; */
+    /* content: "Fania Raczinski & Dave Everitt © 2020 (squares.cubelife.org)"; */
+    content: url(../imgs/logo.svg);
+    /* white-space: pre; */
+    /* text-align: right; */
+    width: calc( var(--size) - 2px );
+    height: calc( var(--size) - 2px );
+  }
+
+
+
+
+
+}
