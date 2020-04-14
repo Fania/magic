@@ -23,19 +23,28 @@ app.use(views('./views', { map: { html: 'nunjucks' }}))
 // home path
 router.get('/', (ctx, next) => {
   return ctx.render('./index', { 
-    // replace with your name!
-    name: 'Eka' 
+    content: 'Hello World'
   })
 })
 
 // Bonus: Use parameter in URL
 // eg. `https://eka-nodejs-koa-starter.glitch.me/name/Jane Doe`
-router.get('/name/:name', (ctx, next) => {
+router.get('/:content', (ctx, next) => {
   return ctx.render('./index', { 
-    // get name value from parameter
-    name: ctx.params.name 
+    // get content value from parameter
+    content: ctx.params.content 
   })
 });
+
+
+const db = require('./db')
+
+
+
+
+
+
+
 
 // Add the given middleware function to this app
 app.use(router.routes())
