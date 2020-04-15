@@ -19,11 +19,21 @@ const views = require('koa-views')
 app.use(views('./views', { map: { html: 'nunjucks' }}))
 
 
+
+
+const db = require('./db')
+
+
+
+
+
 // GET request
 // home path
 router.get('/', (ctx, next) => {
+  console.log(db);
   return ctx.render('./index', { 
-    content: 'Hello World'
+    // content: 'Hello World'
+    content: db.stuff
   })
 })
 
@@ -37,7 +47,6 @@ router.get('/:content', (ctx, next) => {
 });
 
 
-const db = require('./db')
 
 
 
