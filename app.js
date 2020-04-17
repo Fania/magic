@@ -21,7 +21,7 @@ app.use(views('./views', { map: { html: 'nunjucks' }}))
 
 
 
-const db = require('./db')
+const { db } = require('./db')
 
 
 
@@ -29,11 +29,26 @@ const db = require('./db')
 
 // GET request
 // home path
-router.get('/', (ctx, next) => {
-  console.log(db);
-  return ctx.render('./index', { 
-    // content: 'Hello World'
-    content: db.stuff
+// router.get('/', async (ctx, next) => {
+//   console.log(db.output);
+//   return ctx.render('./index', { 
+//     // content: 'Hello World'
+//     content: db.output
+//   })
+// })
+router.get('/', async (ctx, next) => {
+  await db.output
+  console.log(db.output);
+
+  await next();
+
+})
+
+app.use( async ( ctx ) => {
+  let title = 'Hello World'
+  console.log(title)
+  await ctx.render('./index', {
+    content: title,
   })
 })
 
@@ -51,8 +66,9 @@ router.get('/:content', (ctx, next) => {
 
 
 
-
-
+app.on('error', (err, ctx) => {
+  console.log('server error', err, ctx)
+});
 
 
 // Add the given middleware function to this app

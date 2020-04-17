@@ -1,5 +1,58 @@
 'use strict'
 
+
+
+const dotenv = require('dotenv').config()
+const NodeCouchDb = require('node-couchdb');
+
+const base = 'https://couch.fania.eu/'
+const dbname = 'magic4/'
+const view = '_design/lengths/_view/lengths'
+const user = process.env.DB_USER
+const password = process.env.DB_USER_PASSWORD
+const host = process.env.DB_HOST
+
+
+let output;
+
+const couch = new NodeCouchDb({
+  host: host,
+  protocol: 'https',
+  port: 443,
+  auth: {
+    user: user,
+    password: password
+  }
+})
+
+
+couch.listDatabases().then(dbs => {
+  console.log(dbs)
+}, err => {
+  console.log(err)
+})
+
+
+couch.get(dbname,view).then( (data, headers, status) => {
+  console.log(data)
+  console.log(headers)
+  console.log(status)
+  output = data
+
+}, err => {
+  console.log(err)
+})
+
+
+
+module.exports = { output }
+
+
+
+
+
+
+
 // module.exports = {
 //   foo: function () {
 //     // whatever
@@ -42,53 +95,122 @@
 
 
 
+// const dotenv = require('dotenv').config()
+// // const request = require('request')
+
+// // const url = 'https://couch.fania.eu/'
+// // const db = 'magic4/'
+// // const id = 'document_id'
+// const user = process.env.DB_USER
+// const password = process.env.DB_USER_PASSWORD
+
+
+
+// Create a database/collection inside CouchDB
+
+// request.put(url + db, function(err, resp, body) {
+//   // Add a document with an ID
+
+//   request.put({
+//     url: url + db + id,
+//     body: {message:'New Shiny Document', user: 'stefan'},
+//     json: true,
+//   }, function(err, resp, body) {
+//     // Read the document
+
+//     request(url + db + id, function(err, res, body) {
+//       console.log(body.user + ' : ' + body.message)
+//     })
+//   })
+// })
 
 
 
 
 
 
+// const https = require('https')
+// const base = `https://${user}:${password}@couch.fania.eu`
+// const db = `/magic4`
+// const params = `/_all_dbs`
+// const url = base + db + params
+// console.log(url)
 
+// https.get(url, res => {
+//   console.log('statusCode:', res.statusCode)
+//   console.log('headers:', res.headers)
 
-const PouchDB = require('pouchdb')
-PouchDB.plugin(require('pouchdb-authentication'))
-PouchDB.plugin(require('pouchdb-upsert'));
-const dotenv = require('dotenv').config();
+//   res.on('data', d => {
+//     console.log(d)
+    
+//   })
 
-// const localDB = new PouchDB('magic4')
-const remoteDB = new PouchDB(`https://couch.fania.eu/magic4`, {skip_setup: true})
-
-// PouchDB.debug.enable('*');
-
-
-remoteDB.logIn(process.env.DB_USER, process.env.DB_USER_PASSWORD)
-  .then( response => {
-    console.log(response);
-    console.log("Yay");
-    // return response
-
-    // remoteDB.get('d4a5e12cb6326166db6577c7870040c3').then(function (doc) {
-    //   console.log(doc);
-    // }).catch(function (err) {
-    //   console.log(err);
-    // });
-
-    // remoteDB.allDocs({include_docs: true}, function(err, doc) {
-    //   console.log("inside allDocs");
-    //   console.log(err);
-    //   console.log(doc);
-    // });
-
-    // remoteDB.info().then(function (info) {
-    //   console.log("inside info");
-    //   console.log(info);
-    // })
+// }).on('error', e => {
+//   console.error(e)
+// })
 
 
 
-    // return remoteDB.allDocs();
-    // return remoteDB.logOut();
-  })
+
+
+
+// const https = require('https')
+// const gets = (url) => new Promise((resolve, reject) => {
+//  https.get(url, (response) => {
+//  let body = ''
+//  response.on('data', (chunk) => body += chunk)
+//  response.on('end', () => resolve(body))
+//  }).on('error', reject)
+// })
+// const api = (page = 1) => {
+//  return gets(`https://swapi.co/api/people/?page=${page}`)
+// }
+// (async () => console.log(await api()))()
+
+
+
+
+
+
+// const PouchDB = require('pouchdb')
+// PouchDB.plugin(require('pouchdb-authentication'))
+// PouchDB.plugin(require('pouchdb-upsert'));
+// const dotenv = require('dotenv').config();
+
+// // const localDB = new PouchDB('magic4')
+// const remoteDB = new PouchDB(`https://couch.fania.eu/magic4`, {skip_setup: true})
+
+// // PouchDB.debug.enable('*');
+
+
+// remoteDB.logIn(process.env.DB_USER, process.env.DB_USER_PASSWORD)
+//   .then( response => {
+//     console.log(response);
+//     console.log("Yay");
+//     // return response
+
+//     // remoteDB.get('d4a5e12cb6326166db6577c7870040c3').then(function (doc) {
+//     //   console.log(doc);
+//     // }).catch(function (err) {
+//     //   console.log(err);
+//     // });
+
+//     // remoteDB.allDocs({include_docs: true}, function(err, doc) {
+//     //   console.log("inside allDocs");
+//     //   console.log(err);
+//     //   console.log(doc);
+//     // });
+
+//     // remoteDB.info().then(function (info) {
+//     //   console.log("inside info");
+//     //   console.log(info);
+//     // })
+
+
+
+//     // return remoteDB.allDocs();
+//     // return remoteDB.logOut();
+//   })
   // .then( (err,docs) => console.log(err,docs) )
 
 
