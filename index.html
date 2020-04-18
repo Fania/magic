@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Magic Squares</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+
+<main>
+  <h1>Magic Squares</h1>
+  <div id="myChart"></div>
+</main>
+
+
+
+
+<script>
+// Generates GET requests to a URL.
+function httpGet(Url){
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open("GET", Url, false);
+  xmlHttp.send(null);
+  return xmlHttp.responseText;
+}
+
+var aData = JSON.parse(httpGet('http://localhost:3000/test'));
+myChart.innerHTML = aData;
+console.log(aData);
+
+</script>
+
+</body>
+</html>

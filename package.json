@@ -1,25 +1,17 @@
 {
   "name": "magic",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "express": "^4.17.1",
-    "vue": "^2.6.11",
-    "vue-server-renderer": "^2.6.11"
-  },
-  "devDependencies": {},
+  "description": "A magic square page. Uses CouchDB, Node, Express, Nano.",
+  "main": "server.js",
+  "repository": "http://github.com/fania/magic",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Fania/magic.git"
+    "start": "node server.js"
   },
   "author": "Fania Raczinski",
   "license": "",
-  "bugs": {
-    "url": "https://github.com/Fania/magic/issues"
-  },
-  "homepage": "https://github.com/Fania/magic#readme"
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.12.4",
+    "nano": "^6.1.3"
+  }
 }
