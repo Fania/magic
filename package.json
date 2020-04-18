@@ -1,0 +1,25 @@
+{
+  "name": "magic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "vue": "^2.6.11",
+    "vue-server-renderer": "^2.6.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fania/magic.git"
+  },
+  "author": "Fania Raczinski",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/Fania/magic/issues"
+  },
+  "homepage": "https://github.com/Fania/magic#readme"
+}
