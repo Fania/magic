@@ -1,33 +1,62 @@
-<!doctype html>
-<html>
-
+<html lang="en-gb">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Magic Squares</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta name="keywords" content="magic-squares, svg, art">
+  <meta name="author" content="Fania Raczinski, Dave Everitt">
+  <meta name="description" content="A tool for generating animated magic square SVGs.">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/imgs/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/imgs/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/imgs/favicons/favicon-16x16.png">
+  <link rel="manifest" href="assets/imgs/favicons/site.webmanifest">
+  <link rel="mask-icon" href="assets/imgs/favicons/safari-pinned-tab.svg" color="#b91d47">
+  <link rel="shortcut icon" href="assets/imgs/favicons/favicon.ico">
+  <meta name="apple-mobile-web-app-title" content="MagicSquares">
+  <meta name="application-name" content="MagicSquares">
+  <meta name="msapplication-TileColor" content="#b91d47">
+  <meta name="msapplication-config" content="assets/imgs/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta property="og:title" content="Magic Squares" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://squares.cubelife.org" />
+  <!-- <meta property="og:url" content="https://fania.github.io/magic-SVG" /> -->
+  <meta property="og:image" content="assets/imgs/example.png" />
+  <!-- <script src="https://kit.fontawesome.com/51db5560fa.js" crossorigin="anonymous"></script> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link id="mainStyles" rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/print.css">
 </head>
 
 <body>
 
 <main>
-  <h1>Magic Squares</h1>
-  <div id="myChart"></div>
+  <header>
+    <img class="logo" src="assets/imgs/logo.svg">
+    <h1>Magic Squares</h1>
+  </header>
+  <output id="squares"></output >
 </main>
 
 
 
 
 <script>
-// Generates GET requests to a URL.
-function httpGet(Url){
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open("GET", Url, false);
-  xmlHttp.send(null);
-  return xmlHttp.responseText;
-}
 
-var aData = JSON.parse(httpGet('http://localhost:3000/test'));
-myChart.innerHTML = aData;
-console.log(aData);
+  async function getData() {
+    let response = await fetch('http://localhost:3000/data');
+    let data = await response.json();
+    return data
+  }
+
+  getData().then( data => {
+    for (let i in data.rows) {
+      const elem = data.rows[i].doc;
+      squares.insertAdjacentHTML('beforeend',elem.quadvertex.svg)
+    }
+  }) 
 
 </script>
 

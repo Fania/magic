@@ -1,3 +1,4 @@
 node_modules
 .env
 magic4
+package-lock.json

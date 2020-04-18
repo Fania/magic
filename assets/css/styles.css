@@ -11,3 +11,23 @@ body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', Verdana, sans-serif;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.logo {
+  width: 100px; height: 100px;
+}
+
+h1 {
+  margin-left: 1em;
+}
+
+svg {
+  fill: none;
+  stroke: white;
+  width: 200px;
+  margin: 20px;
+}
