@@ -41,24 +41,79 @@ async function getDB(dbName) {
 
 }
 
-async function insertDoc(id, doc, db) {
+async function insertDoc(doc, db) {
 
   try {
 
     // console.log( db, doc )
     console.log( '......... inserting document .........' )
     
-    console.log( 'id: ' )
-    console.log( id )
-    console.log( typeof id )
-    console.log( 'doc: ' )
-    console.log( doc )
-    console.log( typeof doc )
-    console.log( 'db: ' )
-    // console.log( db )
-    console.log( typeof db )
+    console.log( 'doc', typeof doc, doc)
 
-  
+
+    const getd = await db.get('1')
+    console.log( getd )
+
+
+
+    // test_db.update = function(obj, key, callback){
+    // var db = this;
+    // db.get(key, function (error, existing){ 
+    //     if(!error) obj._rev = existing._rev;
+    //     db.insert(obj, key, callback);
+    // });
+    // }
+
+
+
+
+    // if ( (await db.get(doc.id)) ) {
+    //   await db.insert(doc, doc.id)
+    //   console.log( `inserted id ${doc.id}` )
+    // }
+
+
+    // const head = await db.head('1');
+    // console.log( head )
+    // console.log( head.statusCode )
+    // const head2 = await db.head('123');
+    // console.log( head2 )
+    // console.log( head2.statusCode )
+
+    // db.head(id).then((headers) => {
+    //   console.log(headers)
+    // })
+
+
+    // if ( head.statusCode === 200 ) {
+
+    //   console.log('200')
+
+    // } else {
+
+    //   console.log('not 200')
+
+    // }
+
+    // console.log('head: ', head.statusCode);
+    // if (head.statusCode === 200) {
+    //   console.log('inside if 200')
+    //   const existingDoc = await db.get(id)
+    //   const rev = existingDoc._rev
+    //   doc._id = id
+    //   doc._rev = rev
+    //   await db.insert(doc)
+    //   console.log(`updated id ${id} with rev ${rev}`)
+    // } else {
+    //   console.log('inside else 40X')
+    //   await db.insert(doc, `${id}`)
+    //   console.log(`inserted id ${id}`)
+    // }
+
+
+
+
+
 
 
   } catch (error) { console.log( error ) }
@@ -77,14 +132,13 @@ async function populateDB(sourcePath, dbName) {
     const sourceData = await readFile(sourcePath)
     const data = JSON.parse(sourceData)
     const db = await getDB(dbName)  // needs await
-    for (let i in data) {
-      console.log('i: ', i)
-      console.log(typeof i)
-      console.log(`data${i}: ${data[i]}`)
-      console.log(data[i])
-      const id = data[i].id ? data[i].id : `${parseInt(i)+1}`
-      await insertDoc(id, data[i], db)
-    }
+
+    await insertDoc(data[0], db)
+    await insertDoc(data[300], db)
+
+    // for (let i in data) {
+    //   await insertDoc(data[i], db)
+    // }
   } catch (error) { console.log('populateDB: ', error) }
 
 }
