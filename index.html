@@ -37,7 +37,7 @@
     <img class="logo" src="assets/imgs/logo.svg">
     <h1>Magic Squares</h1>
   </header>
-  <output id="squares"></output >
+  <output id="squares"></output>
 </main>
 
 
@@ -45,18 +45,18 @@
 
 <script>
 
-  async function getData() {
-    let response = await fetch('http://localhost:3000/data');
-    let data = await response.json();
-    return data
-  }
+  // async function getData() {
+  //   let response = await fetch('http://localhost:3000/data');
+  //   let data = await response.json();
+  //   return data
+  // }
 
-  getData().then( data => {
-    for (let i in data.rows) {
-      const elem = data.rows[i].doc;
-      squares.insertAdjacentHTML('beforeend',elem.quadvertex.svg)
-    }
-  }) 
+  // getData().then( data => {
+  //   for (let i in data.rows) {
+  //     const elem = data.rows[i].doc;
+  //     squares.insertAdjacentHTML('beforeend',elem.quadvertex.svg)
+  //   }
+  // }) 
 
 </script>
 
