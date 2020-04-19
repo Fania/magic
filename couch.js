@@ -23,38 +23,56 @@ async function useDB(target) {
     const dbs = await nano.db.list()
     if (!dbs.includes(target)) {
       await nano.db.create(target)
-      database = nano.use(target)
       console.log(`create and use new database called ${target}`)
     } else {
       console.log(`use existing database called ${target}`)
-      database = nano.use(target)
     }
-    return database
   } catch (e) {
     console.log("FUCK useDB", e);
   } finally {
+    database = nano.use(target);
     console.log("useDB is done");
+    return database;
   }
 }
 
 
 async function insertDoc(target, doc, id) {
 
-  const database = await useDB(target);
-
-  // const database = nano.use(target)
-  // console.log(database)
-  // console.log(id)
-  // console.log('info: ', await database.info())
-  // console.log('head: ', await database.head(id))
-
-
   try {
-    console.log(`${id}`);
+
+    const database = await useDB(target);
+
+    // const database = nano.use(target)
+    // console.log('database: ', database)
+    // console.log(id)
+    // console.log('info: ', await database.info())
+    // console.log('head: ', await database.head(id))
+
+    console.log(`id: ${id}, ${doc}`);
     // console.log('info: ', await database.info());
+    // console.log(typeof id)
+    const existingDoc = await database.get(id);
+    console.log(existingDoc);
+
     const head = await database.head(`${id}`);
-    // console.log('head: ', head)
+
+    console.log('head: ', head);
     console.log('head: ', head.statusCode);
+    if (head.statusCode === 200) {
+      console.log('inside if 200')
+      const existingDoc = await database.get(id)
+      const rev = existingDoc._rev
+      doc._id = id
+      doc._rev = rev
+      await database.insert(doc)
+      console.log(`updated id ${id} with rev ${rev}`)
+    } else {
+      console.log('inside else 40X')
+      await database.insert(doc, `${id}`)
+      console.log(`inserted id ${id}`)
+    }
+
   } catch (e) {
     console.log("FUCK insertDoc", e);
   } finally {
@@ -83,14 +101,16 @@ async function insertDoc(target, doc, id) {
 
 
 async function insertAll(source, target) {
-  const readFile = util.promisify(fs.readFile);
-  const rawData = await readFile(source)
-  const data = JSON.parse(rawData)
-  for (let i in data) {
-    const id = data[i].id ? data[i].id : parseInt(i)+1
-    console.log(data[i])
-    await insertDoc(target, data[i], `${id}`)
-  }
+  try {
+    const readFile = util.promisify(fs.readFile);
+    const rawData = await readFile(source)
+    const data = JSON.parse(rawData)
+    for (let i in data) {
+      const id = data[i].id ? data[i].id : parseInt(i)+1
+      console.log('data[i]: ', {'numbers': data[i]})
+      await insertDoc(target, {'numbers': data[i]}, `${id}`)
+    }
+  } catch (error) { console.log('insertAll: ', error) }
 }
 // insertAll('./data/index4R.json','magictest')
 
