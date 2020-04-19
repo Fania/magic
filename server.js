@@ -6,9 +6,9 @@ const app = express()
 const couch = require('./couch.js')
 
 // couch.insertDoc('./data/sourceRaczinski880.json','sourceRaczinski880')
-couch.insertAll('./data/sourceRaczinski880.json','sourceraczinski880')
+// couch.insertAll('./data/sourceRaczinski880.json','sourceraczinski880')
 // couch.insertAll('./data/index4R.json','sourceraczinski880')
-
+couch.populateDB('./data/sourceRaczinski880.json','sourceraczinski');
 
 
 // const fs = require('fs')

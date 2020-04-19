@@ -10,6 +10,8 @@
 
 # Nano CouchDB
 
+https://jo.github.io/couchdb-best-practices/
+
 https://www.npmjs.com/package/nano
 
 http://writings.nunojob.com/2012/07/How-To-Update-A-Document-With-Nano-The-CouchDB-Client-for-Node.js.html
