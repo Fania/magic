@@ -13,8 +13,8 @@ window.addEventListener('load', () => loading.classList.remove('show') );
 async function displaySVGs(target) {
   console.log(`Showing ${target}`);
   squares.innerHTML = '';
-  let response = await fetch(`http://localhost:3000/${target}`);
-  let data = await response.json();
+  const rawData = await fetch(`http://localhost:3000/${target}`);
+  const data = await rawData.json();
   for (let i in data.rows) {
     const elem = data.rows[i].doc;
     squares.insertAdjacentHTML('beforeend',elem.quadvertex.svg);
