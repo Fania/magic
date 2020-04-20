@@ -1,12 +1,20 @@
-"use strict";
+'use strict'
 
 
-const styles = ["numbers", "straight", "quadvertex", "quadline", "arc", "altarc"];
-const orders = ["3","4","4R","4RA","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"];
+const styles = ['numbers','straight','quadvertex','quadline','arc','altarc'];
+const orders = ['3','4','4R','4RA','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'];
+
+
+
 
 // STEP 1
 // create master index with lengths and svg data
-function generateInitialIndex(order) {
+export async function initialIndex(order) {
+
+
+
+
+
   const source = sources[order];
   // console.log(source);
   let output = `[`;
@@ -18,25 +26,25 @@ function generateInitialIndex(order) {
       const coordsObject = getCoords(size,valuesArray);
       const svgString = prepareSVG(order,style,coordsObject,i+1);
       const svg = new DOMParser().parseFromString(svgString, 'text/html');
-      const len = style == "numbers" ? 0
-                  : Math.ceil(svg.querySelector(".lines").getTotalLength());
+      const len = style == 'numbers' ? 0
+                  : Math.ceil(svg.querySelector('.lines').getTotalLength());
       lengths[style] = [len,svgString];
     });
     const txt = `
-    { "id":         ${i + 1},
-      "numbers":    { "array": [${valuesArray}],
-                      "svg": "${lengths.numbers[1]}" },
-      "straight":   { "${lengths.straight[0]}": [], 
-                      "svg": "${lengths.straight[1]}" },
-      "quadvertex": { "${lengths.quadvertex[0]}": [], 
-                      "svg": "${lengths.quadvertex[1]}" },
-      "quadline":   { "${lengths.quadline[0]}": [], 
-                      "svg": "${lengths.quadline[1]}" },
-      "arc":        { "${lengths.arc[0]}": [], 
-                      "svg": "${lengths.arc[1]}" },
-      "altarc":     { "${lengths.altarc[0]}": [], 
-                      "svg": "${lengths.altarc[1]}" }
-    }${ (i!==(source.length -1)) ? "," : "" }`;
+    { 'id':         ${i + 1},
+      'numbers':    { 'array': [${valuesArray}],
+                      'svg': '${lengths.numbers[1]}' },
+      'straight':   { '${lengths.straight[0]}': [], 
+                      'svg': '${lengths.straight[1]}' },
+      'quadvertex': { '${lengths.quadvertex[0]}': [], 
+                      'svg': '${lengths.quadvertex[1]}' },
+      'quadline':   { '${lengths.quadline[0]}': [], 
+                      'svg': '${lengths.quadline[1]}' },
+      'arc':        { '${lengths.arc[0]}': [], 
+                      'svg': '${lengths.arc[1]}' },
+      'altarc':     { '${lengths.altarc[0]}': [], 
+                      'svg': '${lengths.altarc[1]}' }
+    }${ (i!==(source.length -1)) ? ',' : '' }`;
     output += txt;
   });
   output += `
@@ -44,13 +52,75 @@ function generateInitialIndex(order) {
   return JSON.parse(output);
 }
 
+// generateInitialIndex(order)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function generateInitialIndex(order) {
+//   const source = sources[order];
+//   // console.log(source);
+//   let output = `[`;
+//   let lengths = {};
+//   source.forEach( (valuesArray,i) => {
+//     // console.log(i, valuesArray);
+//     styles.forEach( style => {
+//       const size = parseInt(order);
+//       const coordsObject = getCoords(size,valuesArray);
+//       const svgString = prepareSVG(order,style,coordsObject,i+1);
+//       const svg = new DOMParser().parseFromString(svgString, 'text/html');
+//       const len = style == 'numbers' ? 0
+//                   : Math.ceil(svg.querySelector('.lines').getTotalLength());
+//       lengths[style] = [len,svgString];
+//     });
+//     const txt = `
+//     { 'id':         ${i + 1},
+//       'numbers':    { 'array': [${valuesArray}],
+//                       'svg': '${lengths.numbers[1]}' },
+//       'straight':   { '${lengths.straight[0]}': [], 
+//                       'svg': '${lengths.straight[1]}' },
+//       'quadvertex': { '${lengths.quadvertex[0]}': [], 
+//                       'svg': '${lengths.quadvertex[1]}' },
+//       'quadline':   { '${lengths.quadline[0]}': [], 
+//                       'svg': '${lengths.quadline[1]}' },
+//       'arc':        { '${lengths.arc[0]}': [], 
+//                       'svg': '${lengths.arc[1]}' },
+//       'altarc':     { '${lengths.altarc[0]}': [], 
+//                       'svg': '${lengths.altarc[1]}' }
+//     }${ (i!==(source.length -1)) ? ',' : '' }`;
+//     output += txt;
+//   });
+//   output += `
+//   ]`;
+//   return JSON.parse(output);
+// }
+
+
+
+
+
+
+
+
+
+
 
 
 // STEP 2
 // add shared lengths into master index
 function generateSharedLengths(index) {
   styles.forEach( style => {
-    if (style != "numbers") {
+    if (style != 'numbers') {
       const lengths = index.map(i => Object.keys(i[style])[0]);
       let output = {};
       lengths.forEach( len => {
@@ -80,14 +150,14 @@ function generateSharedLengths(index) {
 // GENERATE NEW INDEX HERE IN ONE COMMAND
 function printNewIndex(order) {
   let final = generateSharedLengths( generateInitialIndex(order) );
-  if(order === "4R") final = generateSimilarities(final);
+  if(order === '4R') final = generateSimilarities(final);
   const fullText = `const index${order} = ${JSON.stringify(final)};`;
   download.href = makeTextFile( fullText );
   download.innerText = `Download index for order ${order}`;
   download.setAttribute('download', `index${order}.js`);
 }
 
-// printNewIndex( "4RA" );
+// printNewIndex( '4RA' );
 
 
 
@@ -104,7 +174,7 @@ function generateSimilarities(index) {
   // console.log(index);
   index.forEach(idx => {
     // console.log(idx);
-    idx["simQuadVertex"] = duplicatesSorted[idx.id -1][1];
+    idx['simQuadVertex'] = duplicatesSorted[idx.id -1][1];
   });
   return index;
 }
@@ -143,10 +213,10 @@ function makeTextFile(text) {
 // function generateStats(index) {
 //   for (let i in index) {
 //     let id = parseInt(i) + 1;
-//     let valuesArray = index[i]["numbers"]["array"];
+//     let valuesArray = index[i]['numbers']['array'];
 //     console.log(id, valuesArray);
 //     // let order = Math.sqrt(valuesArray.length);
-//     // index[i]["numbers"]["svg"] = prepareSVG("numbers",getCoords(order,valuesArray),id);
+//     // index[i]['numbers']['svg'] = prepareSVG('numbers',getCoords(order,valuesArray),id);
 //   }
 //   return index;
 // }
@@ -170,9 +240,9 @@ function makeTextFile(text) {
 
 // GENERATE ANIMATION CSS
 function printNewAnimCSS(style, sync) {
-  let output = "";
+  let output = '';
   orders.forEach( order => {
-    output += `\n\n/* Order-${order} ${style} ${sync ? "lengths" : "speeds"} */`;
+    output += `\n\n/* Order-${order} ${style} ${sync ? 'lengths' : 'speeds'} */`;
     const index = indices[order];
     index.forEach( idx => {
       const len = Object.keys(idx[style])[0];
@@ -188,9 +258,9 @@ function printNewAnimCSS(style, sync) {
     });
   });
   download.href = makeTextFile( output );
-  download.innerText = `Download css for ${style} ${sync ? "lengths" : "speeds"}`;
-  download.setAttribute('download', `${style}${sync ? "Lengths" : "Speeds"}.css`);
+  download.innerText = `Download css for ${style} ${sync ? 'lengths' : 'speeds'}`;
+  download.setAttribute('download', `${style}${sync ? 'Lengths' : 'Speeds'}.css`);
 }
 
-// printNewAnimCSS( "altarc", false );
+// printNewAnimCSS( 'altarc', false );
 

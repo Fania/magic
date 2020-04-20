@@ -2,10 +2,11 @@
   "name": "magic",
   "version": "1.0.0",
   "description": "A magic square page.",
-  "main": "server.js",
+  "main": "server",
+  "type": "module",
   "repository": "http://github.com/fania/magic",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server"
   },
   "author": "Fania Raczinski",
   "license": "",
