@@ -1,7 +1,6 @@
 // LOADING ICON
-const loadDiv = document.getElementById('loading');
-loadDiv.classList.add('show')
-window.addEventListener('load', () => loadDiv.classList.remove('show') );
+loading.classList.add('show');
+window.addEventListener('load', () => loading.classList.remove('show') );
 // const loadTriggers = document.querySelectorAll('[type="submit"]');
 // loadTriggers.forEach(lt => 
 //   lt.addEventListener('click', () => loadDiv.classList.add('show')));
@@ -11,12 +10,32 @@ window.addEventListener('load', () => loadDiv.classList.remove('show') );
 
 
 // DISPLAY DATA
-async function getData() {
-  let response = await fetch('http://localhost:3000/data')
-  let data = await response.json()
+async function displaySVGs(target) {
+  console.log(`Showing ${target}`);
+  squares.innerHTML = '';
+  let response = await fetch(`http://localhost:3000/${target}`);
+  let data = await response.json();
   for (let i in data.rows) {
-    const elem = data.rows[i].doc
-    squares.insertAdjacentHTML('beforeend',elem.quadvertex.svg)
+    const elem = data.rows[i].doc;
+    squares.insertAdjacentHTML('beforeend',elem.quadvertex.svg);
   }
+  
 }
-getData()
+
+
+
+uniquesMenu.addEventListener('click', () => {
+  uniquesMenu.classList.add('active');
+  unfilteredMenu.classList.remove('active');
+  displaySVGs('data/4/unique');
+  event.preventDefault();
+});
+unfilteredMenu.addEventListener('click', () => {
+  uniquesMenu.classList.remove('active');
+  unfilteredMenu.classList.add('active');
+  displaySVGs('data/4/all');
+  event.preventDefault();
+});
+
+// default
+displaySVGs('data/4/unique');

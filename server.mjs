@@ -15,7 +15,7 @@ import { populateDB, viewDB } from './couch.mjs'
 
 // GENERATE INDEX
 import { initialIndex } from './generators.mjs'
-
+// initialIndex('4')
 
 
 
@@ -34,7 +34,15 @@ app.get('/', (req, res) => {
 })
 
 // ROUTE DATA API
-app.get('/data', async (req, res) => {
+app.get('/data/4/all', async (req, res) => {
+  const data = await viewDB('indexraczinski','order','numeric')
+  res.send( data )
+})
+app.get('/data/4/unique', async (req, res) => {
   const data = await viewDB('indexraczinski','filter','unique')
+  res.send( data )
+})
+app.get('/data/4/source', async (req, res) => {
+  const data = await viewDB('sourceraczinski','order','numeric')
   res.send( data )
 })

@@ -13,15 +13,25 @@ body {
 header {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
-
-.logo {
+header div {
+  display: flex;
+  align-items: center;
+}
+header div .logo {
   width: 100px; height: 100px;
 }
-
-h1 {
+header div h1 {
   margin-left: 1em;
+}
+header nav a {
+  color: var(--textColour);
+  text-decoration: none;
+  padding: 0 1em;
+}
+header nav a.active {
+  text-decoration: underline;
 }
 
 svg {

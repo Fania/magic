@@ -12,7 +12,12 @@ const orders = ['3','4','4R','4RA','5','6','7','8','9','10','11','12','13','14',
 export async function initialIndex(order) {
 
 
-
+  // let response = await fetch('http://localhost:3000/data/source/4')
+  // let data = await response.json()
+  // for (let i in data.rows) {
+  //   const elem = data.rows[i].doc
+  //   squares.insertAdjacentHTML('beforeend',elem.quadvertex.svg)
+  // }
 
 
   const source = sources[order];
