@@ -37,9 +37,9 @@ async function insertDoc(doc, db) {
     // console.log( `......... upserting document ${doc.id} .........` )
     // insert or update document
     // no idea how to write this with async / await
-    db.get(doc.id, (error, existing) => { 
+    db.get(doc.id, async (error, existing) => { 
       if(!error) doc._rev = existing._rev
-      db.insert(doc, doc.id)
+      await db.insert(doc, doc.id)
     })
   } catch (error) { console.log( 'insertDoc:', error ) }
 }
