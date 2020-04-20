@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "A magic square page.",
   "main": "server",
-  "type": "module",
   "repository": "http://github.com/fania/magic",
   "scripts": {
-    "start": "node server"
+    "start": "node server.mjs"
   },
   "author": "Fania Raczinski",
   "license": "",

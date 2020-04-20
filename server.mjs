@@ -5,7 +5,7 @@ const app = express()
 
 
 // POPULATE DATABASE
-import { populateDB, viewDB } from './couch.js'
+import { populateDB, viewDB } from './couch.mjs'
 // populateDB('./data/sourceRaczinski880.json','sourceraczinski');
 // populateDB('./data/index4R.json','indexraczinski')
 
@@ -14,7 +14,7 @@ import { populateDB, viewDB } from './couch.js'
 
 
 // GENERATE INDEX
-import { initialIndex } from './generators.js'
+import { initialIndex } from './generators.mjs'
 
 
 
