@@ -1,11 +1,13 @@
 'use strict'
 
-import express from 'express'
+const express = require('express')
+// import express from 'express'
 const app = express()
 
 
 // POPULATE DATABASE
-import { populateDB, viewDB } from './lib/couch.mjs'
+// import { populateDB, viewDB } from './lib/couch.js'
+require('./lib/couch.js')
 // populateDB('./data/sourceRaczinski880.json','sourceraczinski');
 // populateDB('./data/index4R.json','indexraczinski')
 
@@ -14,18 +16,20 @@ import { populateDB, viewDB } from './lib/couch.mjs'
 
 
 // GENERATE INDEX
-import { initialIndex } from './lib/generators.mjs'
+// import { initialIndex } from './lib/generators.js'
+require('./lib/generators.js')
 // console.log( initialIndex('4') )
 // initialIndex('4')
 
-import DomParser from 'dom-parser'
+const DomParser = require('dom-parser')
+// import DomParser from 'dom-parser'
 const parser = new DomParser()
 
 
 
 
-import * as d3 from 'd3'
-import * as d3s from 'd3-selection'
+// import * as d3 from 'd3'
+// import * as d3s from 'd3-selection'
 // import jsdom from "jsdom"
 
 // const { JSDOM } = jsdom
@@ -34,14 +38,6 @@ import * as d3s from 'd3-selection'
 
 const svgTest = parser.parseFromString("<svg id='arc-4-3' class='order-x' viewbox='-200 -170 680 680'><path class='lines arc' d='M0,0 A 50,50 0 1 1 0,0 A 50,50 0 1 1 100,0 A 50,50 0 1 1 300,100 A 50,50 0 1 1 200,100 A 50,50 0 1 1 200,300 A 50,50 0 1 1 300,200 A 50,50 0 1 1 100,200 A 50,50 0 1 1 0,300 A 50,50 0 1 1 200,200 A 50,50 0 1 1 300,300 A 50,50 0 1 1 100,300 A 50,50 0 1 1 0,200 A 50,50 0 1 1 0,100 A 50,50 0 1 1 100,100 A 50,50 0 1 1 300,0 A 50,50 0 1 1 200,0 A 50,50 0 1 1 0,0 '/></svg>", 'text/html')
 const svgString = "<svg id='arc-4-3' class='order-x' viewbox='-200 -170 680 680'><path class='lines arc' d='M0,0 A 50,50 0 1 1 0,0 A 50,50 0 1 1 100,0 A 50,50 0 1 1 300,100 A 50,50 0 1 1 200,100 A 50,50 0 1 1 200,300 A 50,50 0 1 1 300,200 A 50,50 0 1 1 100,200 A 50,50 0 1 1 0,300 A 50,50 0 1 1 200,200 A 50,50 0 1 1 300,300 A 50,50 0 1 1 100,300 A 50,50 0 1 1 0,200 A 50,50 0 1 1 0,100 A 50,50 0 1 1 100,100 A 50,50 0 1 1 300,0 A 50,50 0 1 1 200,0 A 50,50 0 1 1 0,0 '/></svg>"
-
-
-// import { SVG } from '@svgdotjs/svg.js'
-// import * as SVG from '@svgdotjs/svg.js'
-import * as SVG from 'svg.js'
-// import { SVG } from 'svg.js'
-var circle = SVG(svgString)
-console.log( circle )
 
 
 
@@ -75,9 +71,10 @@ console.log( circle )
 // const path = require("svg-path-properties");
 // const properties = new path.svgPathProperties("M0,100 Q50,-50 100,100 T200,100");
 // console.log(properties)
-// import * as SVGPathProperties from "svg-path-properties";
-// const properties = new SVGPathProperties("M0,100 Q50,-50 100,100 T200,100");
-// console.log(properties)
+// import { SVGPathProperties } from "svg-path-properties";
+const path = require("svg-path-properties");
+const properties = new path.svgPathProperties("M0,100 Q50,-50 100,100 T200,100");
+console.log(properties)
 
 
 

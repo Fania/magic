@@ -2,15 +2,14 @@
   "name": "magic",
   "version": "1.0.0",
   "description": "A magic square page.",
-  "main": "server.mjs",
+  "main": "server",
   "repository": "http://github.com/fania/magic",
   "scripts": {
-    "start": "node server.mjs"
+    "start": "node server.js"
   },
   "author": "Fania Raczinski",
   "license": "",
   "dependencies": {
-    "@svgdotjs/svg.js": "^3.0.16",
     "d3": "^5.15.1",
     "d3-selection": "^1.4.1",
     "dom-parser": "^0.1.6",
@@ -20,7 +19,6 @@
     "nano": "^8.2.2",
     "node-fetch": "^2.6.0",
     "point-at-length": "^1.1.0",
-    "rune.js": "^1.1.8",
     "svg-path-properties": "^1.0.4",
     "svg.js": "^2.7.1"
   }
