@@ -32,20 +32,57 @@
 
 <body>
 
+<header class="mainmenu">
+  <div>
+    <img class="logo" src="meta/imgs/logo.svg">
+    <h1>Magic Squares</h1>
+  </div>
+
+  <nav>
+    <a id="uniquesMenu" class="active" href="">Uniques</a>
+    <a id="unfilteredMenu" href="">Unfiltered</a>
+  </nav>
+</header>
+
+<header class="submenu">
+  <form>
+    <fieldset>
+      <label for="numbers">
+        <input type="radio" id="numbers" name="displayStyle">
+        <img src="meta/imgs/o4s19n.svg">
+        <span>Numbers</span>
+      </label>
+      <label for="straight">
+        <input type="radio" id="straight" name="displayStyle">
+        <img src="meta/imgs/o4s19s.svg">
+        <span>Straight</span>
+      </label>
+      <label for="quadvertex">
+        <input type="radio" id="quadvertex" name="displayStyle" checked>
+        <div><img src="meta/imgs/o4s19qv.svg"></div>
+        <span>Quadvertex</span>
+      </label>
+      <label for="quadline">
+        <input type="radio" id="quadline" name="displayStyle">
+        <img src="meta/imgs/o4s19ql.svg">
+        <span>Quadline</span>
+      </label>
+      <label for="arc">
+        <input type="radio" id="arc" name="displayStyle">
+        <div><img src="meta/imgs/o4s19a.svg"></div>
+        <span>Arc</span>
+      </label>
+      <label for="altarc">
+        <input type="radio" id="altarc" name="displayStyle">
+        <div><img src="meta/imgs/o4s19aa.svg"></div>
+        <span>Alt-Arc</span>
+      </label>
+    </fieldset>
+  </form>
+</header>
+
+
 <main>
-
-  <header>
-    <div>
-      <img class="logo" src="meta/imgs/logo.svg">
-      <h1>Magic Squares</h1>
-    </div>
-
-    <nav>
-      <a id="uniquesMenu" class="active" href="">Uniques</a>
-      <a id="unfilteredMenu" href="">Unfiltered</a>
-    </nav>
-  </header>
-
   <output id="squares"></output>
 </main>
 
