@@ -1,8 +1,13 @@
 'use strict'
 
 const express = require('express')
-// import express from 'express'
+const bodyParser = require('body-parser')
 const app = express()
+
+// app.use(express.urlencoded())
+// app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 
 
 // POPULATE DATABASE
@@ -56,12 +61,14 @@ app.get('/data/4/source', async (req, res) => {
 
 app.get('/data/4/test', async (req, res) => {
   res.sendFile('./data/index4.json', {root: './'})
-  // res.json()
+  // res.json('./data/index4.json', {root: './'})
 })
 
 
 
+
+
 app.post('/upload', async (req, res) => {
-  console.log( req.body )
-  // console.log( res )
+  console.log(req.body.manualInput)
+  res.redirect('/')
 })

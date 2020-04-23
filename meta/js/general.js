@@ -59,9 +59,9 @@ displayStyle.forEach( dStyle => {
 
 
 // MANUAL INPUT
-const manual = document.getElementById('manual');
-const manualInput = document.getElementById('manualInput');
-manual.addEventListener('submit', () => {
-  console.log( manualInput.value );
-  // event.preventDefault();
-})
+// const manual = document.getElementById('manual');
+// const manualInput = document.getElementById('manualInput');
+// manual.addEventListener('submit', () => {
+//   console.log( manualInput.value );
+//   // event.preventDefault();
+// })
