@@ -1,8 +1,10 @@
 # Magic Squares
 
+Don't forget to set up a .env file with login info.
 
 
-# Nano CouchDB
+
+## Nano CouchDB
 
 https://jo.github.io/couchdb-best-practices/
 

@@ -39,7 +39,7 @@
   </div>
 
   <nav>
-    <a id="uniquesMenu" class="active" href="">Uniques</a>
+    <a id="uniquesMenu" class="" href="">Uniques</a>
     <a id="unfilteredMenu" href="">Unfiltered</a>
   </nav>
 </header>
@@ -66,7 +66,7 @@
         <span>Straight</span>
       </label>
       <label for="quadvertex">
-        <input type="radio" id="quadvertex" name="displayStyle" checked>
+        <input type="radio" id="quadvertex" name="displayStyle">
         <div><img src="meta/imgs/o4s19qv.svg"></div>
         <span>Quadvertex</span>
       </label>
@@ -86,6 +86,12 @@
         <span>Alt-Arc</span>
       </label>
     </fieldset>
+  </form>
+</header>
+
+<header>
+  <form id="manual" action="/upload" method="post">
+    <input id="manualInput" type="text" placeholder="Enter magic square numbers here.">
   </form>
 </header>
 

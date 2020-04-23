@@ -16,7 +16,8 @@ const generate = require('./lib/generators.js')
 // generate.index('4')
 
 
-
+const checker = require('./lib/checker.js')
+// checker
 
 
 
@@ -55,4 +56,12 @@ app.get('/data/4/source', async (req, res) => {
 
 app.get('/data/4/test', async (req, res) => {
   res.sendFile('./data/index4.json', {root: './'})
+  // res.json()
+})
+
+
+
+app.post('/upload', async (req, res) => {
+  console.log( req.body )
+  // console.log( res )
 })
