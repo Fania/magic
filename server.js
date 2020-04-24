@@ -22,7 +22,7 @@ const generate = require('./lib/generators.js')
 
 
 const checker = require('./lib/checker.js')
-// checker
+// checker.verifyAndSanitise(input)
 
 
 
@@ -69,6 +69,7 @@ app.get('/data/4/test', async (req, res) => {
 
 
 app.post('/upload', async (req, res) => {
-  console.log(req.body.manualInput)
+  // console.log(req.body.manualInput)
+  checker.verifyAndSanitise( req.body.manualInput )
   res.redirect('/')
 })
