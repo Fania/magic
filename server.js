@@ -70,6 +70,17 @@ app.get('/data/4/test', async (req, res) => {
 
 app.post('/upload', async (req, res) => {
   // console.log(req.body.manualInput)
-  checker.isMagic( req.body.manualInput )
+  const result = checker.isMagic( req.body.manualInput )
+
+  console.log( `The given numbers are ${result ? 'magic' : 'not magic'}!` ) 
+
+  // does it exist in DB already?
+  // if so, then display it
+  // else add to DB
+  // and then display it
+
+
+  // res.send( { magic: result } )
   res.redirect('/')
+  // res.sendFile('./index.html', {root: './', magic: result })
 })
