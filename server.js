@@ -70,6 +70,6 @@ app.get('/data/4/test', async (req, res) => {
 
 app.post('/upload', async (req, res) => {
   // console.log(req.body.manualInput)
-  checker.verifyAndSanitise( req.body.manualInput )
+  checker.isMagic( req.body.manualInput )
   res.redirect('/')
 })

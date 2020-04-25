@@ -91,7 +91,8 @@
 
 <header>
   <form id="manual" action="/upload" method="post">
-    <input id="manualInput" name="manualInput" type="text" placeholder="Enter magic square here. Comma or space separated numbers are fine.">
+    <!-- <input id="manualInput" name="manualInput" type="text" placeholder="Enter magic square here. Comma or space separated numbers are fine." required pattern="(?:\d[\s|,]){9,}"> -->
+    <input id="manualInput" name="manualInput" type="text" placeholder="Enter magic square here. Comma or space separated numbers are fine." pattern="(?:[0-9]+[\s|,]){8,}[0-9]+">
   </form>
 </header>
 
