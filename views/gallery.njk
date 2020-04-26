@@ -1,0 +1,33 @@
+{% set title = "Gallery" %}
+{% set current = "gallery" %}
+{% extends "base.njk" %}
+
+
+{% block submenu %}
+
+<header class="submenu">
+
+  <nav>
+    <a href="data/4/unique">Uniques</a>
+    <a href="data/4/all">All</a>
+    <a href="data/4/source">Source</a>
+  </nav>
+
+</header>
+
+{% endblock %}
+
+
+{% block main %}
+<main>
+
+  <h1>Welcome {{ title }}</h1>
+  <p>Isn't this just the most exciting website ever?</p>
+  <p><strong>{{ magic }}</strong></p>
+  
+  <img src="meta/imgs/example.png">
+  <img src="meta/imgs/example.png">
+  <img src="meta/imgs/example.png">
+
+</main>
+{% endblock %}

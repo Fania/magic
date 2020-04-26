@@ -3,6 +3,8 @@ html {
   --textColour: #eeeeee;
 }
 
+/* BASE */
+
 body {
   background: var(--backColour);
   color: var(--textColour);
@@ -17,9 +19,12 @@ header.mainmenu {
 header.mainmenu div { display: flex; align-items: center; }
 header.mainmenu div .logo { width: 100px; height: 100px; }
 header.mainmenu div h1 { margin-left: 1em; }
-header.mainmenu nav a {
-  color: var(--textColour); text-decoration: none; padding: 0 1em; }
-header.mainmenu nav a.active { text-decoration: underline; }
+header.mainmenu nav a { text-transform: uppercase;
+  color: var(--textColour); text-decoration: none; padding: 4px 1em; }
+header.mainmenu nav a.active { border-top: 1px solid white }
+header.mainmenu nav a:not(.active):hover { border-bottom: 1px solid white }
+
+
 
 header.submenu { 
   display: flex; align-items: center; justify-content: space-between; 
@@ -71,3 +76,5 @@ svg[id^='arc'], svg[id^='altarc'] { stroke-width: 3px; }
   background-size: 20%; }
 #loading.show { display: block }
 
+
+main img { width: 100%; border: 1px solid white }

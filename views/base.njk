@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Magic Squares</title>
+  <title>Magic Squares{% if title %}: {% endif %}{{ title }}</title>
   <meta name="keywords" content="magic-squares, svg, art">
   <meta name="author" content="Fania Raczinski, Dave Everitt">
   <meta name="description" content="A tool for generating animated magic square SVGs.">
@@ -39,66 +39,16 @@
   </div>
 
   <nav>
-    <a id="uniquesMenu" class="" href="">Uniques</a>
-    <a id="unfilteredMenu" href="">Unfiltered</a>
+    <a id="homeMenu" href="/" {% if current == "home" %}class="active"{% endif %}>Home</a>
+    <a id="galleryMenu" href="/gallery" {% if current == "gallery" %}class="active"{% endif %}>Gallery</a>
+    <a id="contributeMenu" href="/contribute" {% if current == "contribute" %}class="active"{% endif %}>Contribute</a>
+    <a id="aboutMenu" href="/about" {% if current == "about" %}class="active"{% endif %}>About</a>
   </nav>
 </header>
 
-<header class="submenu">
+{% block submenu %}{% endblock %}
 
-  <nav>
-    <p>JSON Data:</p>
-    <a href="data/4/unique">Uniques</a>
-    <a href="data/4/all">All</a>
-    <a href="data/4/source">Source</a>
-  </nav>
-
-  <form>
-    <fieldset>
-      <label for="numbers">
-        <input type="radio" id="numbers" name="displayStyle">
-        <img src="meta/imgs/o4s19n.svg">
-        <span>Numbers</span>
-      </label>
-      <label for="straight">
-        <input type="radio" id="straight" name="displayStyle">
-        <img src="meta/imgs/o4s19s.svg">
-        <span>Straight</span>
-      </label>
-      <label for="quadvertex">
-        <input type="radio" id="quadvertex" name="displayStyle" checked>
-        <div><img src="meta/imgs/o4s19qv.svg"></div>
-        <span>Quadvertex</span>
-      </label>
-      <label for="quadline">
-        <input type="radio" id="quadline" name="displayStyle">
-        <img src="meta/imgs/o4s19ql.svg">
-        <span>Quadline</span>
-      </label>
-      <label for="arc">
-        <input type="radio" id="arc" name="displayStyle">
-        <div><img src="meta/imgs/o4s19a.svg"></div>
-        <span>Arc</span>
-      </label>
-      <label for="altarc">
-        <input type="radio" id="altarc" name="displayStyle">
-        <div><img src="meta/imgs/o4s19aa.svg"></div>
-        <span>Alt-Arc</span>
-      </label>
-    </fieldset>
-  </form>
-</header>
-
-<header>
-  <form id="manual" action="/upload" method="post">
-    <input id="manualInput" name="manualInput" type="text" placeholder="Enter magic square here. Comma or space separated numbers are fine." pattern="(?:[0-9]+[\s|,]){8,}[0-9]+">
-  </form>
-</header>
-
-
-<main>
-  <output id="squares"></output>
-</main>
+{% block main %}{% endblock %}
 
 
 <div id="loading"></div>

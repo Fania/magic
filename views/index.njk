@@ -1,0 +1,61 @@
+{% set current = "home" %}
+{% extends "base.njk" %}
+
+
+{% block submenu %}
+<header class="submenu">
+
+  <nav>
+    <p>JSON Data:</p>
+    <a href="data/4/unique">Uniques</a>
+    <a href="data/4/all">All</a>
+    <a href="data/4/source">Source</a>
+  </nav>
+
+  <form>
+    <fieldset>
+      <label for="numbers">
+        <input type="radio" id="numbers" name="displayStyle">
+        <img src="meta/imgs/o4s19n.svg">
+        <span>Numbers</span>
+      </label>
+      <label for="straight">
+        <input type="radio" id="straight" name="displayStyle">
+        <img src="meta/imgs/o4s19s.svg">
+        <span>Straight</span>
+      </label>
+      <label for="quadvertex">
+        <input type="radio" id="quadvertex" name="displayStyle" checked>
+        <div><img src="meta/imgs/o4s19qv.svg"></div>
+        <span>Quadvertex</span>
+      </label>
+      <label for="quadline">
+        <input type="radio" id="quadline" name="displayStyle">
+        <img src="meta/imgs/o4s19ql.svg">
+        <span>Quadline</span>
+      </label>
+      <label for="arc">
+        <input type="radio" id="arc" name="displayStyle">
+        <div><img src="meta/imgs/o4s19a.svg"></div>
+        <span>Arc</span>
+      </label>
+      <label for="altarc">
+        <input type="radio" id="altarc" name="displayStyle">
+        <div><img src="meta/imgs/o4s19aa.svg"></div>
+        <span>Alt-Arc</span>
+      </label>
+    </fieldset>
+  </form>
+</header>
+
+{% endblock %}
+
+
+{% block main %}
+<main>
+  <h1>Welcome</h1>
+  <p>Isn't this just the most exciting website ever?</p>
+  <p><strong>{{ magic }}</strong></p>
+  <output id="squares"></output>
+</main>
+{% endblock %}

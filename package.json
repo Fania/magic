@@ -16,6 +16,7 @@
     "lodash": "^4.17.15",
     "nano": "^8.2.2",
     "node-fetch": "^2.6.0",
+    "nunjucks": "^3.2.1",
     "svg-path-properties": "^1.0.4"
   }
 }

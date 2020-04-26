@@ -22,24 +22,13 @@ async function displaySVGs(target,style) {
   loading.classList.remove('show');
 }
 
-uniquesMenu.addEventListener('click', () => {
-  uniquesMenu.classList.add('active');
-  unfilteredMenu.classList.remove('active');
-  const currentStyle = document.querySelector('[name="displayStyle"]:checked').id;
-  displaySVGs('data/4/unique',currentStyle);
-  event.preventDefault();
-});
-unfilteredMenu.addEventListener('click', () => {
-  uniquesMenu.classList.remove('active');
-  unfilteredMenu.classList.add('active');
-  const currentStyle = document.querySelector('[name="displayStyle"]:checked').id;
-  displaySVGs('data/4/all',currentStyle);
-  event.preventDefault();
-});
-
-// default
-// displaySVGs('data/4/unique','quadvertex');
-
+// uniquesMenu.addEventListener('click', () => {
+//   uniquesMenu.classList.add('active');
+//   unfilteredMenu.classList.remove('active');
+//   const currentStyle = document.querySelector('[name="displayStyle"]:checked').id;
+//   displaySVGs('data/4/unique', currentStyle);
+//   event.preventDefault();
+// });
 
 
 
@@ -49,7 +38,7 @@ unfilteredMenu.addEventListener('click', () => {
 const displayStyle = document.getElementsByName('displayStyle');
 displayStyle.forEach( dStyle => {
   dStyle.addEventListener("change", (ev) => { 
-    displaySVGs('data/4/unique',ev.target.id);
+    displaySVGs('data/4/unique', ev.target.id);
   })
 })
 
@@ -66,4 +55,4 @@ displayStyle.forEach( dStyle => {
 //   // event.preventDefault();
 // })
 
-console.log(  )
+// console.log(  )
