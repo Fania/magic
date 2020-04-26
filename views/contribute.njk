@@ -4,7 +4,7 @@
 
 
 {% block submenu %}
-<header>
+<header class="submenu contribute">
 
   <form id="manual" action="/contribute" method="post">
     <input id="manualInput" name="manualInput" type="text" placeholder="Enter magic square here. Comma or space separated numbers are fine." pattern="(?:[0-9]+[\s|,]){8,}[0-9]+">
@@ -17,9 +17,19 @@
 {% block main %}
 <main>
 
-  <h1>Welcome {{ title }}</h1>
-  <p>Isn't this just the most exciting website ever?</p>
-  <p><strong>{{ magic }}</strong></p>
-  
+  <h2>Contribute</h2>
+  <p>You can contribute to our collection of higher order magic squares here.</p>
+
+
+  {% if feedback.magic %}
+  <p><strong>Congratulations, the numbers produce a magic square.</strong></p>
+  {% else %}
+  <p><strong>Sorry, there are problems with your numbers:</strong></p>
+  <p class="warning">{{ feedback.message }}</p>
+  {% endif %}
+
+  <output>
+  </output>
+
 </main>
 {% endblock %}

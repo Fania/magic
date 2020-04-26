@@ -3,12 +3,46 @@
 {% extends "base.njk" %}
 
 
+{% block submenu %}
+<header class="submenu about">
+
+  <nav>
+    <p><strong>JSON Data:</strong></p>
+    <a href="data/4/unique">Uniques</a>
+    <a href="data/4/all">All</a>
+    <a href="data/4/source">Source</a>
+  </nav>
+
+</header>
+{% endblock %}
+
+
 {% block main %}
 <main>
 
-  <h1>Welcome {{ title }}</h1>
-  <p>Isn't this just the most exciting website ever?</p>
-  <p><strong>{{ magic }}</strong></p>
+  <h2>Magic Square Visualisations <img class="tinyLogo" src="meta/imgs/logo.svg"></h2>
+  <p>This is an art/research project by <a href="https://fania.eu">Fania Raczinski</a> and <a href="https://daveeveritt.org">Dave Everitt</a>.</p>
+  <p>Read more about the <a href="https://cubelife.org/culture.html">culture</a>, <a href="https://cubelife.org/history/">history</a>, and <a href="https://cubelife.org/research.html">theory</a> of magic squares.</p>
+  <p>There are 4 pages which have slightly different purposes.</p>
+  <dl>
+    <dt>ORDER-GROUPS:</dt>
+    <dd>Shows all<sup>*</sup> magic squares of a given order in a given style.</dd>
+    <dt>FILTER-GROUPS:</dt>
+    <dd>Shows all magic squares of a given order in a given style which share a given length.</dd>
+    <dd>This can be used to identify similar patterns in otherwise unique number sequences.</dd>
+    <dt>SINGLE-INPUT:</dt>
+    <dd>Either displays the given number sequence as a magic line in all styles, or</dd>
+    <dd>shows all styles for each of the given IDs of the given order.</dd>
+    <dt>DATA-SETS:</dt>
+    <dd>Currently this is a space to display the Agrippa set of astrological magic squares togther one one screen.</dd>
+  </dl>
+  <p><sup>*</sup> Orders 5+ are incomplete sets.</p>
+  <h3>How to Use:</h3>
+  <p>Press 's' to hide/show the interface.</p>
+  <p>Press 'F11' (on Windows) or 'Ctrl Cmd F' (on a Mac) to toggle fullscreen.</p>
+  <h3>Printing:</h2>
+  <p>ORDER-GROUPS printing is optimised for to fit all squares of an order on one A4 page.</p>
+  <!-- <p>FILTER-GROUPS printing </p> -->
 
 </main>
 {% endblock %}

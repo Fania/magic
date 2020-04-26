@@ -2,6 +2,7 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
+// const dotenv = require('dotenv').config()
 const app = express()
 app.use(express.static('./'))
 
@@ -47,35 +48,40 @@ app.listen(3000, () => {
 
 
 
-// ROUTE INDEX
+// ROUTES
 app.get('/', (req, res) => {
-  res.render('index.njk', { magic: 'nothing' })
+  res.render('index.njk')
 })
 app.get('/gallery', (req, res) => {
-  res.render('gallery.njk', { magic: 'nothing' })
+  res.render('gallery.njk', { magic: 'nothing' } )
 })
 app.get('/about', (req, res) => {
-  res.render('about.njk', { magic: 'nothing' })
+  res.render('about.njk', { magic: 'nothing' } )
 })
 app.get('/contribute', (req, res) => {
-  res.render('contribute.njk', { magic: 'nothing' })
+  res.render('contribute.njk', { magic: 'nothing' } )
 })
-app.post('/contribute', (req, res) => {
+app.post('/contribute', async (req, res) => {
   const result = checker.isMagic( req.body.manualInput )
-  console.log( `The given numbers are ${result ? 'magic' : 'not magic'}!` ) 
+  console.log( `The numbers [${req.body.manualInput}] are ${result.magic ? 'magic' : 'not magic'}!` ) 
+
+
+
+
+
+
   // does it exist in DB already?
   // if so, then display it
   // else add to DB
   // and then display it
-  res.render('contribute.njk', { magic: result } )
-  // res.redirect('/contribute')
+  res.render('contribute.njk', { feedback: result } )
 })
 
 
 
 
 
-// ROUTE DATA API
+// DATA API
 app.get('/data/4/all', async (req, res) => {
   const data = await couch.viewDB('indexraczinski','order','numeric')
   res.send( data )
