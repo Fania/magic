@@ -19,13 +19,30 @@
 
   <h2>Contribute</h2>
   <p>You can contribute to our collection of higher order magic squares here.</p>
+  <p>Simply enter a number sequence in the input box above.</p>
+  
+  {# <script>console.log( {{ feedback | safe }} )</script> #}
+  {% if feedback != 'blank' and feedback.magic %}
+    <hr>
+    <p><strong>Congratulations, the numbers produce an order {{ feedback.order }} magic square.</strong></p>
+    {% if feedback.magic %}
+      <p>This square already exists in our collection with ID <strong>{{ feedback.doc.id }}</strong>.</p>
+    {% else %}
+      <p>This square didn't already exist in our collection and we added it with ID <strong>{{ feedback.doc.newID }}</strong>.</p>
+    {% endif %}
+    <div>{{ feedback.doc.numbers.svg | safe }}</div>
 
+    <div class="allStyles">
+      {{ feedback.doc.quadvertex.svg | safe }}
+      {{ feedback.doc.straight.svg | safe }}
+      {{ feedback.doc.quadline.svg | safe }}
+      {{ feedback.doc.arc.svg | safe }}
+      {{ feedback.doc.altarc.svg | safe }}
+    </div>
 
-  {% if feedback.magic %}
-  <p><strong>Congratulations, the numbers produce a magic square.</strong></p>
-  {% else %}
-  <p><strong>Sorry, there are problems with your numbers:</strong></p>
-  <p class="warning">{{ feedback.message }}</p>
+  {% elif feedback != 'blank' %}
+    <p><strong>Sorry, there are problems with your numbers:</strong></p>
+    <p class="warning">{{ feedback.message }}</p>
   {% endif %}
 
   <output>

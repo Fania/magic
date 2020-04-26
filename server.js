@@ -20,22 +20,40 @@ nunjucks.configure('views', {
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
-
-// POPULATE DATABASE
 const couch = require('./lib/couch.js')
-// couch.populateDB('./data/sourceRaczinski880.json','sourceraczinski');
-// couch.populateDB('./data/index4.json','indexraczinski')
-
-
-// GENERATE INDEX
 const generate = require('./lib/generators.js')
-// generate.index('4')
-
-
 const checker = require('./lib/checker.js')
-// checker.verifyAndSanitise(input)
+const cmd = require('./lib/haskell.js')
+// cmd.ls()
 
 
+
+
+// ORDER 3
+// couch.populateDB('./data/sourceOrder3.json','source3')
+// couch.createMetaDocs( 'source3', 3, 'order', 'numeric' )
+// generate.index('3')
+// couch.populateDB('./data/index3.json','index3')
+// couch.createMetaDocs( 'index3', 3, 'filter', 'unique' )
+// couch.createMetaDocs( 'index3', 3, 'order', 'numeric' )
+
+
+// ORDER 4
+// couch.populateDB('./data/sourceRaczinski880.json','source4')
+// couch.createMetaDocs( 'source4', 4, 'order', 'numeric' )
+// generate.index('4')
+// couch.populateDB('./data/index4.json','index4')
+// couch.createMetaDocs( 'index4', 4, 'filter', 'unique' )
+// couch.createMetaDocs( 'index4', 4, 'order', 'numeric' )
+
+
+// ORDER 5
+// couch.populateDB('./data/sourceOrder5.json','source5')
+// couch.createMetaDocs( 'source5', 5, 'order', 'numeric' )
+// generate.index('5')
+// couch.populateDB('./data/index5.json','index5')
+// couch.createMetaDocs( 'index5', 5, 'filter', 'unique' )
+// couch.createMetaDocs( 'index5', 5, 'order', 'numeric' )
 
 
 
@@ -53,21 +71,38 @@ app.get('/', (req, res) => {
   res.render('index.njk')
 })
 app.get('/gallery', (req, res) => {
-  res.render('gallery.njk', { magic: 'nothing' } )
+  res.render('gallery.njk')
 })
 app.get('/about', (req, res) => {
-  res.render('about.njk', { magic: 'nothing' } )
+  res.render('about.njk')
 })
 app.get('/contribute', (req, res) => {
-  res.render('contribute.njk', { magic: 'nothing' } )
+  res.render('contribute.njk', { feedback: 'blank' } )
 })
 app.post('/contribute', async (req, res) => {
   const result = checker.isMagic( req.body.manualInput )
-  console.log( `The numbers [${req.body.manualInput}] are ${result.magic ? 'magic' : 'not magic'}!` ) 
+  // console.log( `The numbers [${req.body.manualInput}] are ${result.magic ? 'magic' : 'not magic'}!` ) 
+
+  if (result.magic) {
+    console.log( result.order )
+    const found = await couch.searchDB(`index${result.order}`, result.numbers)
+    result.doc = found.docs[0]
+    console.log( found )
+    found.bookmark !== 'nil' ? result.exists = true : result.exists = false
 
 
 
 
+
+
+
+
+    // check for transformations?
+    // use full 7040 db and filter everything down from there?
+
+  }
+
+  console.log( result )
 
 
   // does it exist in DB already?
@@ -82,16 +117,19 @@ app.post('/contribute', async (req, res) => {
 
 
 // DATA API
-app.get('/data/4/all', async (req, res) => {
-  const data = await couch.viewDB('indexraczinski','order','numeric')
+app.get('/data/:order/all', async (req, res) => {
+  const o = req.params.order
+  const data = await couch.viewDB(`index${o}`,'order','numeric')
   res.send( data )
 })
-app.get('/data/4/unique', async (req, res) => {
-  const data = await couch.viewDB('indexraczinski','filter','unique')
+app.get('/data/:order/unique', async (req, res) => {
+  const o = req.params.order
+  const data = await couch.viewDB(`index${o}`,'filter','unique')
   res.send( data )
 })
-app.get('/data/4/source', async (req, res) => {
-  const data = await couch.viewDB('sourceraczinski','order','numeric')
+app.get('/data/:order/source', async (req, res) => {
+  const o = req.params.order
+  const data = await couch.viewDB(`index${o}`,'order','numeric')
   res.send( data )
 })
 
