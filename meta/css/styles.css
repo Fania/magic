@@ -88,7 +88,7 @@ main output { display: flex; justify-content: center; flex-wrap: wrap; }
 svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 
   width: 200px; margin: 20px }
 svg[id^='numbers'] { font-size: 3em; fill: var(--textColour); stroke: none; }
-svg[id^='arc'], svg[id^='altarc'] { stroke-width: 3px; }
+svg[id^='arc'], svg[id^='altarc'] { stroke-width: 5px; }
 
 
 #loading {

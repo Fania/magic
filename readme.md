@@ -4,6 +4,22 @@ Don't forget to set up a .env file with login info.
 
 
 
+## Todo
+
+- [ ] update design docs with rev if needed
+- [ ] test and check the new createOrder function
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+
+
+
+
+
+
+
 ## Nano CouchDB
 
 https://jo.github.io/couchdb-best-practices/

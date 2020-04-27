@@ -29,14 +29,17 @@ const cmd = require('./lib/haskell.js')
 
 
 
-// ORDER 3
-// couch.populateDB('./data/sourceOrder3.json','source3')
-// couch.createMetaDocs( 'source3', 3, 'order', 'numeric' )
-// generate.index('3')
-// couch.populateDB('./data/index3.json','index3')
-// couch.createMetaDocs( 'index3', 3, 'filter', 'unique' )
-// couch.createMetaDocs( 'index3', 3, 'order', 'numeric' )
+async function createOrder(n) {
+  await couch.populateDB(`./data/source${n}.json`,`source${n}`)
+  await couch.createMetaDocs( `source${n}`, `${n}`, 'order', 'numeric' )
+  await generate.index(`${n}`)
+  await couch.populateDB(`./data/index${n}.json`,`index${n}`)
+  await couch.createMetaDocs( `index${n}`, `${n}`, 'filter', 'unique' )
+  await couch.createMetaDocs( `index${n}`, `${n}`, 'order', 'numeric' )
+}
 
+// ORDER 3
+createOrder(3)
 
 // ORDER 4
 // couch.populateDB('./data/sourceRaczinski880.json','source4')
@@ -45,6 +48,16 @@ const cmd = require('./lib/haskell.js')
 // couch.populateDB('./data/index4.json','index4')
 // couch.createMetaDocs( 'index4', 4, 'filter', 'unique' )
 // couch.createMetaDocs( 'index4', 4, 'order', 'numeric' )
+
+// ORDER 4 ALL
+// couch.populateDB('./data/source4a.json','source4a')
+// couch.createMetaDocs( 'source4a', '4a', 'order', 'numeric' )
+// generate.index('4a')
+// couch.populateDB('./data/index4a.json','index4a')
+// couch.createMetaDocs( 'index4a', '4a', 'filter', 'unique' )
+// couch.createMetaDocs( 'index4a', '4a', 'order', 'numeric' )
+
+
 
 
 // ORDER 5
@@ -84,16 +97,16 @@ app.post('/contribute', async (req, res) => {
   // console.log( `The numbers [${req.body.manualInput}] are ${result.magic ? 'magic' : 'not magic'}!` ) 
 
   if (result.magic) {
-    console.log( result.order )
+    // console.log( result.order )
     const found = await couch.searchDB(`index${result.order}`, result.numbers)
     result.doc = found.docs[0]
-    console.log( found )
+    // console.log( found )
     found.bookmark !== 'nil' ? result.exists = true : result.exists = false
 
 
 
 
-
+// 1,4,14,15,13,16,2,3,12,9,7,6,8,5,11,10
 
 
 
