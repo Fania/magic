@@ -29,19 +29,17 @@ const cmd = require('./lib/haskell.js')
 
 
 
-async function createOrder(n) {
-  await couch.populateDB(`./data/source${n}.json`,`source${n}`)
-  await couch.createMetaDocs( `source${n}`, `${n}`, 'order', 'numeric' )
-  await generate.index(`${n}`)
-  await couch.populateDB(`./data/index${n}.json`,`index${n}`)
-  await couch.createMetaDocs( `index${n}`, `${n}`, 'filter', 'unique' )
-  await couch.createMetaDocs( `index${n}`, `${n}`, 'order', 'numeric' )
-}
+
 
 // ORDER 3
-// createOrder(3)
+async function createOrder(n) {
+  await generate.source(n)
+  await generate.index(n)
+}
 
-couch.createMetaDocs( 'index3', '3', 'order', 'numeric' )
+createOrder(3)
+
+// couch.createMetaDocs( 'index3', '3', 'order', 'numeric' )
 
 
 
