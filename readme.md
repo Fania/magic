@@ -8,9 +8,9 @@ Don't forget to set up a .env file with login info.
 
 - [ ] update design docs with rev if needed
 - [ ] test and check the new createOrder function
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ] upload single input to DB
+- [ ] create design doc for each display style
+- [ ] query doc?
 - [ ] 
 - [ ] 
 

@@ -39,7 +39,14 @@ async function createOrder(n) {
 }
 
 // ORDER 3
-createOrder(3)
+// createOrder(3)
+
+couch.createMetaDocs( 'index3', '3', 'order', 'numeric' )
+
+
+
+
+
 
 // ORDER 4
 // couch.populateDB('./data/sourceRaczinski880.json','source4')
