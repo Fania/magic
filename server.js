@@ -53,7 +53,7 @@ app.listen(3000, () => {
 
 // ROUTES
 app.get('/', (req, res) => {
-  res.render('index.njk')
+  res.render('home.njk')
 })
 app.get('/gallery', (req, res) => {
   res.render('gallery.njk')
@@ -67,16 +67,34 @@ app.get('/contribute', (req, res) => {
 app.post('/contribute', async (req, res) => {
   const result = checker.isMagic( req.body.manualInput )
   // console.log( `The numbers [${req.body.manualInput}] are ${result.magic ? 'magic' : 'not magic'}!` ) 
+  console.log( result )
 
   if (result.magic) {
     // console.log( result.order )
-    const found = await couch.searchDB(`index${result.order}`, result.numbers)
-    result.doc = found.docs[0]
+    const found = await couch.searchDB(`source${result.order}`, result.numbers)
     // console.log( found )
-    found.bookmark !== 'nil' ? result.exists = true : result.exists = false
+
+    // NEW MAGIC SQUARE
+    if (found.docs === []) {
+      result.exists = false
+
+      await couch.getLatestID(`source${result.order}`)
+
+      const newSourceDoc = {
+        "numbers": result.numbers
+      }
+      // need to know the id
+      await couch.insertDoc(newSourceDoc, `source${result.order}`)
 
 
+    // EXISTING MAGIC SQUARE
+    } else {
+      result.doc = found.docs[0]
+      result.exists = true
+    }
 
+// order 3
+// [[4,9,2,3,5,7,8,1,6],[2,9,4,7,5,3,6,1,8],[8,1,6,3,5,7,4,9,2],[4,3,8,9,5,1,2,7,6],[6,7,2,1,5,9,8,3,4],[8,3,4,1,5,9,6,7,2],[6,1,8,7,5,3,2,9,4],[2,7,6,9,5,1,4,3,8]]
 
 // 1,4,14,15,13,16,2,3,12,9,7,6,8,5,11,10
 
@@ -87,7 +105,7 @@ app.post('/contribute', async (req, res) => {
 
   }
 
-  console.log( result )
+  // console.log( result )
 
 
   // does it exist in DB already?

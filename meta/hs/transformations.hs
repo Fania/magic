@@ -1,55 +1,6 @@
 import Data.List
+import System.IO
 import System.Environment
--- import Char
--- import ORDER4
-
--- BRUTE FORCE
-
-order3 = [ 
-  [a1,b1,c1, 
-   a2,b2,c2, 
-   a3,b3,c3] | 
-      a1 <- [1..9],
-      b1 <- [1..9] \\ [a1], 
-      c1 <- [1..9] \\ [a1,b1], 
-      a2 <- [1..9] \\ [a1,b1,c1],
-      b2 <- [1..9] \\ [a1,b1,c1,a2], 
-      c2 <- [1..9] \\ [a1,b1,c1,a2,b2], 
-      a3 <- [1..9] \\ [a1,b1,c1,a2,b2,c2], 
-      b3 <- [1..9] \\ [a1,b1,c1,a2,b2,c2,a3],
-      c3 <- [1..9] \\ [a1,b1,c1,a2,b2,c2,a3,b3], 
-      all (==15) [a1+b1+c1, a2+b2+c2, a3+b3+c3, -- rows
-                  a1+a2+a3, b1+b2+b3, c1+c2+c3, -- cols
-                  a1+b2+c3, c1+b2+a3]           -- diags
-  ]
-
-
-order4 = [ 
-  [a1,b1,c1,d1, 
-   a2,b2,c2,d2, 
-   a3,b3,c3,d3, 
-   a4,b4,c4,d4] | 
-      a1 <- [1..16],
-      b1 <- [1..16] \\ [a1], 
-      c1 <- [1..16] \\ [a1,b1], 
-      d1 <- [1..16] \\ [a1,b1,c1], 
-      a2 <- [1..16] \\ [a1,b1,c1,d1],
-      b2 <- [1..16] \\ [a1,b1,c1,d1,a2], 
-      c2 <- [1..16] \\ [a1,b1,c1,d1,a2,b2], 
-      d2 <- [1..16] \\ [a1,b1,c1,d1,a2,b2,c2], 
-      a3 <- [1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2], 
-      b3 <- [1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3],
-      c3 <- [1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3], 
-      d3 <- [1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3],
-      a4 <- [1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3,d3],
-      b4 <- [1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3,d3,a4],
-      c4 <- [1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3,d3,a4,b4], 
-      d4 <- [1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3,d3,a4,b4,c4],
-      all (==34) [a1+b1+c1+d1, a2+b2+c2+d2, a3+b3+c3+d3, a4+b4+c4+d4, -- rows
-                  a1+a2+a3+a4, b1+b2+b3+b4, c1+c2+c3+c4, d1+d2+d3+d4, -- cols
-                  a1+b2+c3+d4, d1+c2+b3+a4]                           -- diags
-  ]
-
 
 
 -- SLIGHTLY MORE CLEVER
@@ -202,35 +153,7 @@ removeCompls [] = []
 removeCompls (n:ns) = n : removeCompls (delete (complement n) ns)
 
 
--- getCompls :: [[Int]] -> [[Int]]
--- getCompls (n:ns) = takeWhile (_ == complement n) ns
-
-
--- compareMS :: [[Int]] -> [[Int]] -> [([Int],String,[Int])]
--- compareMS [] _ = []
--- compareMS (m:ms) ns = (m,s,n) : compareMS ms ns
---   where n = 
-
-
-
-  
-  
---   [ (x,s,y) | x <- ms, 
---                             let y = fromJust $ elemIndex (ms !! x) ns,
---                             let s = 
---                                     if (y == mirrorLR x) then "mirrorLR" else
---                                     if (y == mirrorUD x) then "mirrorUD" else
---                                     if (y == mirrorD1 x) then "mirrorD1" else
---                                     if (y == mirrorD2 x) then "mirrorD2" else
---                                     if (y == rotate90 x) then "rotate90" else
---                                     if (y == rotate180 x) then "rotate180" else
---                                     if (y == rotateM90 x) then "rotateM90" else "id"]
-
-
-
-
-
-main = do
+-- main = do
   -- print $ length order4s
   -- print order4x
   -- print $ transform $ head order4x
@@ -259,6 +182,6 @@ main = do
   -- print $ transformExtras $ [2,1,15,16,14,13,3,4,11,8,10,5,7,12,6,9]
   -- print $ transformExtras $ [1,2,16,15,13,14,4,3,12,7,9,6,8,11,5,10]
   -- print $ removeCompls order4x
-  x <- getArgs
-  y <- [ n::Int | n <- head x ]
-  print $ transform y
+  -- x <- getArgs
+  -- y <- [ z::Int | z <- words getArgs ]
+  -- print $ transform3 [ x | x <- words getArgs ]

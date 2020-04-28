@@ -1,11 +1,19 @@
-// LOADING ICON
-const loadTriggers = document.querySelectorAll('nav a');
-loadTriggers.forEach(lt => 
-  lt.addEventListener('click', () => loading.classList.add('show') ) );
+
+
+if (document.querySelector('.contribute')) {
+  // LOADING ICON
+  const manualTrigger = document.querySelector('#manual');
+  manualTrigger.addEventListener('submit', () => loading.classList.add('show'));
+}
 
 
 
 if (document.querySelector('.home')) {
+  // LOADING ICON
+  const menuTriggers = document.querySelectorAll('nav a');
+  menuTriggers.forEach(lt => 
+    lt.addEventListener('click', () => loading.classList.add('show') ) );
+
 
   // DISPLAY DATA
   async function displaySVGs(target,style) {

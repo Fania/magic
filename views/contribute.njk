@@ -28,7 +28,7 @@
     <p><strong>Congratulations, the numbers produce an order {{ feedback.order }} magic square.</strong></p>
     
     {% if feedback.exists %}
-      <p>This square already exists in our collection with ID <strong>{{ feedback.doc.id }}</strong>.</p>
+      <p>This square already exists in our collection with ID <strong>{{ feedback.doc._id }}</strong>.</p>
     {% else %}
       <p>This square didn't already exist in our collection and we added it with ID <strong>{{ feedback.newID }}</strong>.</p>
     {% endif %}

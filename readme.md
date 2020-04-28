@@ -10,7 +10,10 @@ Don't forget to set up a .env file with login info.
 - [ ] test and check the new createOrder function
 - [ ] upload single input to DB
 - [ ] create design doc for each display style
-- [ ] query doc?
+- [ ] query doc? see contribute
+- [ ] contribute, check for transformations
+- [ ] add other higher order displays
+- [ ] 
 - [ ] 
 - [ ] 
 
