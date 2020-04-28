@@ -31,47 +31,18 @@ const cmd = require('./lib/haskell.js')
 
 
 
-// ORDER 3
-async function createOrder(n) {
+async function setupOrder(n) {
   await generate.source(n)
   await generate.index(n)
 }
 
-createOrder(3)
+// setupOrder('4a')
+// setupOrder(20)
+
+
 
 // couch.createMetaDocs( 'index3', '3', 'order', 'numeric' )
 
-
-
-
-
-
-// ORDER 4
-// couch.populateDB('./data/sourceRaczinski880.json','source4')
-// couch.createMetaDocs( 'source4', 4, 'order', 'numeric' )
-// generate.index('4')
-// couch.populateDB('./data/index4.json','index4')
-// couch.createMetaDocs( 'index4', 4, 'filter', 'unique' )
-// couch.createMetaDocs( 'index4', 4, 'order', 'numeric' )
-
-// ORDER 4 ALL
-// couch.populateDB('./data/source4a.json','source4a')
-// couch.createMetaDocs( 'source4a', '4a', 'order', 'numeric' )
-// generate.index('4a')
-// couch.populateDB('./data/index4a.json','index4a')
-// couch.createMetaDocs( 'index4a', '4a', 'filter', 'unique' )
-// couch.createMetaDocs( 'index4a', '4a', 'order', 'numeric' )
-
-
-
-
-// ORDER 5
-// couch.populateDB('./data/sourceOrder5.json','source5')
-// couch.createMetaDocs( 'source5', 5, 'order', 'numeric' )
-// generate.index('5')
-// couch.populateDB('./data/index5.json','index5')
-// couch.createMetaDocs( 'index5', 5, 'filter', 'unique' )
-// couch.createMetaDocs( 'index5', 5, 'order', 'numeric' )
 
 
 
