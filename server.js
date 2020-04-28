@@ -35,13 +35,9 @@ async function setupOrder(n) {
   await generate.source(n)
   await generate.index(n)
 }
-
 // setupOrder('4a')
 // setupOrder(20)
 
-
-
-// couch.createMetaDocs( 'index3', '3', 'order', 'numeric' )
 
 
 
@@ -123,9 +119,9 @@ app.get('/data/:order/source', async (req, res) => {
 })
 
 
-app.get('/data/4/test', async (req, res) => {
-  res.sendFile('./data/index4.json', {root: './'})
-  // res.json('./data/index4.json', {root: './'})
-})
+// app.get('/data/4/test', async (req, res) => {
+//   res.sendFile('./data/index4.json', {root: './'})
+//   // res.json('./data/index4.json', {root: './'})
+// })
 
 

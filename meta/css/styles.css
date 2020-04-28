@@ -31,10 +31,13 @@ header.submenu form { margin: 0; }
 header.submenu form fieldset { border: none; margin: 0; padding: 0; }
 
 
-
 header.submenu.home { 
   display: flex; align-items: center; justify-content: space-between; 
   padding-top: 0 }
+header.submenu.home nav a { text-transform: uppercase;
+  color: var(--textColour); text-decoration: none; padding: 4px 1em; }
+header.submenu.home nav a.active { text-decoration: underline }
+header.submenu.home nav a:not(.active):hover { text-decoration: underline }
 header.submenu.home form img { width: 50px; height: 50px; }
 header.submenu.home form label { 
   padding: 0 10px; cursor: pointer; 
