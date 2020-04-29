@@ -22,31 +22,31 @@
   <p>Simply enter a number sequence in the input box above.</p>
   <p>If you have a larger collection that you'd like to donate please contact us via email.</p>
   
-  {# <script>console.log( {{ feedback | safe }} )</script> #}
-  {% if feedback != 'blank' and feedback.magic %}
+  {# <script>console.log( {{ result | safe }} )</script> #}
+  {% if result != 'blank' and result.magic %}
     <hr>
-    <p><strong>Congratulations, the numbers produce an order {{ feedback.order }} magic square.</strong></p>
+    <p><strong>Congratulations, the numbers produce an order {{ result.order }} magic square.</strong></p>
     
-    {% if feedback.exists %}
-      <p>This square already exists in our collection with ID <strong>{{ feedback.doc._id }}</strong>.</p>
+    {% if result.exists %}
+      <p>This square already exists in our collection with ID <strong>{{ result.doc._id }}</strong>.</p>
     {% else %}
-      <p>This square didn't already exist in our collection and we added it with ID <strong>{{ feedback.newID }}</strong>.</p>
+      <p>This square didn't already exist in our collection and we added it with ID <strong>{{ result.newID }}</strong>.</p>
     {% endif %}
 
-    <div>{{ feedback.doc.numbers.svg | safe }}</div>
+    <div>{{ result.doc.numbers.svg | safe }}</div>
 
     <div class="allStyles">
-      {{ feedback.doc.quadvertex.svg | safe }}
-      {{ feedback.doc.straight.svg | safe }}
-      {{ feedback.doc.quadline.svg | safe }}
-      {{ feedback.doc.arc.svg | safe }}
-      {{ feedback.doc.altarc.svg | safe }}
+      {{ result.doc.quadvertex.svg | safe }}
+      {{ result.doc.straight.svg | safe }}
+      {{ result.doc.quadline.svg | safe }}
+      {{ result.doc.arc.svg | safe }}
+      {{ result.doc.altarc.svg | safe }}
     </div>
 
-  {% elif feedback != 'blank' %}
+  {% elif result != 'blank' %}
     <hr>
     <p><strong>Sorry, there are problems with your numbers:</strong></p>
-    <p class="warning">{{ feedback.message }}</p>
+    <p class="warning">{{ result.message }}</p>
   {% endif %}
 
   <output>

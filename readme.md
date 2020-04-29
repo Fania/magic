@@ -6,15 +6,15 @@ Don't forget to set up a .env file with login info.
 
 ## Todo
 
-- [ ] update design docs with rev if needed
-- [ ] test and check the new createOrder function
-- [ ] upload single input to DB
+- [x] update design docs with rev if needed
+- [x] test and check the new createOrder function
+- [x] upload single input to DB
 - [ ] create design doc for each display style
 - [ ] query doc? see contribute
 - [ ] contribute, check for transformations
 - [ ] add other higher order displays
-- [ ] 
-- [ ] 
+- [ ] check sharedLengths - broken
+- [ ] use db.view('order', 'numeric') to get sorted list
 - [ ] 
 
 

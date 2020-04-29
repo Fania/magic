@@ -69,30 +69,45 @@ app.get('/contribute', (req, res) => {
   res.render('contribute.njk')
 })
 app.post('/contribute', async (req, res) => {
-  const result = checker.isMagic( req.body.manualInput )
+  const result = checker.magic( req.body.manualInput )
   // console.log( `The numbers [${req.body.manualInput}] are ${result.magic ? 'magic' : 'not magic'}!` ) 
   console.log( result )
 
   if (result.magic) {
     // console.log( result.order )
-    const found = await couch.searchDB(`source${result.order}`, result.numbers)
-    // console.log( found )
+    const found = await couch.searchDB(`index${result.order}`, result.numbers)
+    console.log( found )
+    console.log( found.docs )
+    console.log( typeof found.docs )
+    console.log( found.docs == [] )
+    console.log( found.docs === [] )
+    console.log( found.bookmark === 'nil' )
 
     // NEW MAGIC SQUARE
-    if (found.docs === []) {
+    if (found.bookmark === 'nil') {
+      console.log( 'found new magic square' )
       result.exists = false
 
-      await couch.getLatestID(`source${result.order}`)
+      const latestID = await couch.getLatestID(`source${result.order}`)
 
       const newSourceDoc = {
+        "_id": `${latestID + 1}`,
         "numbers": result.numbers
       }
+      const newIndexDoc = {
+        "_id": `${latestID + 1}`,
+        "numbers": result.numbers
+      }
+
       // need to know the id
-      await couch.insertDoc(newSourceDoc, `source${result.order}`)
+      // need to update local original source json
+      // need to update remote index too
+      await couch.addDoc(newSourceDoc, `source${result.order}`)
 
 
     // EXISTING MAGIC SQUARE
     } else {
+      console.log( 'magic square already exists' )
       result.doc = found.docs[0]
       result.exists = true
     }
@@ -116,7 +131,7 @@ app.post('/contribute', async (req, res) => {
   // if so, then display it
   // else add to DB
   // and then display it
-  res.render('contribute.njk', { feedback: result } )
+  res.render('contribute.njk', { result: result } )
 })
 
 
