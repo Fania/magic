@@ -68,3 +68,8 @@ if (document.querySelector('.home')) {
 // })
 
 // console.log(  )
+
+
+
+// GALLERY
+

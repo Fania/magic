@@ -3,7 +3,7 @@
 {% extends "base.njk" %}
 
 
-{% block submenu %}
+{# {% block submenu %}
 <header class="submenu gallery">
 
   <nav>
@@ -12,19 +12,27 @@
   </nav>
 
 </header>
-{% endblock %}
+{% endblock %} #}
 
 
 {% block main %}
-<main>
+<main class="gallery">
 
-  <h1>Welcome {{ title }}</h1>
-  <p>Isn't this just the most exciting website ever?</p>
-  <p><strong>{{ magic }}</strong></p>
+  <h1>{{ title }}</h1>
   
-  <img src="meta/imgs/example.png">
-  <img src="meta/imgs/example.png">
-  <img src="meta/imgs/example.png">
+  <section>
+    {% for vidName in vidFiles %}
+      <video autoplay muted loop>
+        <source src="meta/vids/{{ vidName }}" type="video/mp4">
+      </video>
+    {% endfor %}
+  </section>
+
+  <section>
+    {% for imgName in imgFiles %}
+      <img src="meta/imgs/gallery/{{ imgName }}">
+    {% endfor %}
+  </section>
 
 </main>
 {% endblock %}

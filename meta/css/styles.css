@@ -63,6 +63,11 @@ header.submenu.home form input:checked ~ span { text-decoration: underline; }
 header.submenu.gallery { 
   display: flex; align-items: center; justify-content: flex-end;
   padding-top: 0 }
+.gallery video { width: 100% }
+.gallery img { width: 100% }
+/* .gallery img { width: 100% } */
+
+
 
 /* ABOUT */
 header.submenu.about { 
@@ -102,5 +107,5 @@ svg[id^='arc'], svg[id^='altarc'] { stroke-width: 5px; }
 #loading.show { display: block }
 
 
-main img { width: 100%; border: 1px solid white }
+/* main img { width: 100%; border: 1px solid white } */
 main img.tinyLogo { width: 30px; border: none; position: relative; top: 5px }

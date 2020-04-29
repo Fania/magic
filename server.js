@@ -1,5 +1,6 @@
 'use strict'
 
+const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
 // const dotenv = require('dotenv').config()
@@ -24,8 +25,9 @@ const couch = require('./lib/couch.js')
 const generate = require('./lib/generators.js')
 const checker = require('./lib/checker.js')
 const cmd = require('./lib/haskell.js')
+const gallery = require('./lib/gallery.js')
 // cmd.ls()
-
+gallery.getImgs()
 
 
 
@@ -56,13 +58,15 @@ app.get('/', (req, res) => {
   res.render('home.njk')
 })
 app.get('/gallery', (req, res) => {
-  res.render('gallery.njk')
+  const imgFiles = fs.readdirSync('./meta/imgs/gallery')
+  const vidFiles = fs.readdirSync('./meta/vids')
+  res.render('gallery.njk', { imgFiles: imgFiles, vidFiles: vidFiles })
 })
 app.get('/about', (req, res) => {
   res.render('about.njk')
 })
 app.get('/contribute', (req, res) => {
-  res.render('contribute.njk', { feedback: 'blank' } )
+  res.render('contribute.njk')
 })
 app.post('/contribute', async (req, res) => {
   const result = checker.isMagic( req.body.manualInput )
