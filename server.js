@@ -65,9 +65,21 @@ app.get('/gallery', (req, res) => {
 app.get('/about', (req, res) => {
   res.render('about.njk')
 })
+
+
+
+
+// const router = express.Router()
+// const contriboute = require('./controllers/contribute')
+// router.get('/contribute', contriboute.getContribute)
+// app.use('/', contriboute)
+// app.use('/contribute', router)
+
 app.get('/contribute', (req, res) => {
   res.render('contribute.njk')
 })
+
+
 app.post('/contribute', async (req, res) => {
   const result = checker.magic( req.body.manualInput )
   // console.log( `The numbers [${req.body.manualInput}] are ${result.magic ? 'magic' : 'not magic'}!` ) 
@@ -112,12 +124,16 @@ app.post('/contribute', async (req, res) => {
       result.exists = true
     }
 
-// order 3
-// [[4,9,2,3,5,7,8,1,6],[2,9,4,7,5,3,6,1,8],[8,1,6,3,5,7,4,9,2],[4,3,8,9,5,1,2,7,6],[6,7,2,1,5,9,8,3,4],[8,3,4,1,5,9,6,7,2],[6,1,8,7,5,3,2,9,4],[2,7,6,9,5,1,4,3,8]]
-
-// 1,4,14,15,13,16,2,3,12,9,7,6,8,5,11,10
-
-
+    // order 3
+    // 4,9,2,3,5,7,8,1,6
+    // 2,9,4,7,5,3,6,1,8
+    // 8,1,6,3,5,7,4,9,2
+    // 4,3,8,9,5,1,2,7,6
+    // 6,7,2,1,5,9,8,3,4
+    // 8,3,4,1,5,9,6,7,2
+    // 6,1,8,7,5,3,2,9,4
+    // 2,7,6,9,5,1,4,3,8
+    // 1,4,14,15,13,16,2,3,12,9,7,6,8,5,11,10
 
     // check for transformations?
     // use full 7040 db and filter everything down from there?
@@ -126,13 +142,16 @@ app.post('/contribute', async (req, res) => {
 
   // console.log( result )
 
-
   // does it exist in DB already?
   // if so, then display it
   // else add to DB
   // and then display it
   res.render('contribute.njk', { result: result } )
 })
+
+
+
+
 
 
 
