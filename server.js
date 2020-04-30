@@ -38,7 +38,7 @@ async function setupOrder(n) {
   await generate.index(n)
 }
 // setupOrder('4a')
-// setupOrder(20)
+// setupOrder(4)
 
 
 
@@ -71,17 +71,17 @@ app.get('/contribute', (req, res) => {
 app.post('/contribute', async (req, res) => {
   const result = checker.magic( req.body.manualInput )
   // console.log( `The numbers [${req.body.manualInput}] are ${result.magic ? 'magic' : 'not magic'}!` ) 
-  console.log( result )
+  // console.log( result )
 
   if (result.magic) {
     // console.log( result.order )
     const found = await couch.searchDB(`index${result.order}`, result.numbers)
-    console.log( found )
-    console.log( found.docs )
-    console.log( typeof found.docs )
-    console.log( found.docs == [] )
-    console.log( found.docs === [] )
-    console.log( found.bookmark === 'nil' )
+    // console.log( found )
+    // console.log( found.docs )
+    // console.log( typeof found.docs )
+    // console.log( found.docs == [] )
+    // console.log( found.docs === [] )
+    // console.log( found.bookmark === 'nil' )
 
     // NEW MAGIC SQUARE
     if (found.bookmark === 'nil') {
@@ -139,19 +139,29 @@ app.post('/contribute', async (req, res) => {
 
 
 // DATA API
-app.get('/data/:order/all', async (req, res) => {
-  const o = req.params.order
-  const data = await couch.viewDB(`index${o}`,'order','numeric')
+app.get('/data/:n/all', async (req, res) => {
+  const o = req.params.n
+  const data = await couch.viewDB(`index${o}`,'order','numeric', true)
   res.send( data )
 })
-app.get('/data/:order/unique', async (req, res) => {
-  const o = req.params.order
-  const data = await couch.viewDB(`index${o}`,'filter','unique')
+app.get('/data/:n/unique', async (req, res) => {
+  const o = req.params.n
+  const data = await couch.viewDB(`index${o}`,'filter','unique', true)
   res.send( data )
 })
-app.get('/data/:order/source', async (req, res) => {
-  const o = req.params.order
-  const data = await couch.viewDB(`index${o}`,'order','numeric')
+app.get('/data/:n/quadvertex', async (req, res) => {
+  const o = req.params.n
+  const data = await couch.viewDB(`index${o}`,'filter','quadvertex', false)
+  res.send( data )
+})
+app.get('/data/:n/arrays', async (req, res) => {
+  const o = req.params.n
+  const data = await couch.viewDB(`index${o}`,'filter','arrays', false)
+  res.send( data )
+})
+app.get('/data/:n/source', async (req, res) => {
+  const o = req.params.n
+  const data = await couch.viewDB(`index${o}`,'order','numeric', true)
   res.send( data )
 })
 

@@ -13,9 +13,9 @@ Don't forget to set up a .env file with login info.
 - [ ] query doc? see contribute
 - [ ] contribute, check for transformations
 - [ ] add other higher order displays
-- [ ] check sharedLengths - broken
+- [ ] check sharedLengths in index - broken
 - [ ] use db.view('order', 'numeric') to get sorted list
-- [ ] 
+- [ ] selectively update only changes for bulk index
 
 
 
