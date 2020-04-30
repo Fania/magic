@@ -24,8 +24,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const couch = require('./lib/couch.js')
 const generate = require('./lib/generators.js')
 const checker = require('./lib/checker.js')
-const cmd = require('./lib/haskell.js')
 const gallery = require('./lib/gallery.js')
+// const cmd = require('./lib/haskell.js')
 // cmd.ls()
 gallery.getImgs()
 
@@ -34,11 +34,10 @@ gallery.getImgs()
 
 
 async function setupOrder(n) {
-  await generate.source(n)
   await generate.index(n)
 }
 // setupOrder('4a')
-// setupOrder(20)
+// setupOrder(3)
 
 
 
@@ -87,40 +86,31 @@ app.post('/contribute', async (req, res) => {
 
   if (result.magic) {
     // console.log( result.order )
-    const found = await couch.searchDB(`index${result.order}`, result.numbers)
-    console.log( found )
-    console.log( found.docs )
-    console.log( typeof found.docs )
-    console.log( found.docs == [] )
-    console.log( found.docs === [] )
-    console.log( found.bookmark === 'nil' )
+    const found = await couch.findDoc(result.order,result.numbers)
+    console.log( 'found', found )
+    // console.log( found.docs )
+    // console.log( typeof found.docs )
+    // console.log( found.docs == [] )
+    // console.log( found.docs === [] )
+    // console.log( found.bookmark === 'nil' )
 
     // NEW MAGIC SQUARE
-    if (found.bookmark === 'nil') {
+    if (found.rows.length === 0) {
       console.log( 'found new magic square' )
       result.exists = false
 
-      const latestID = await couch.getLatestID(`source${result.order}`)
-
-      const newSourceDoc = {
-        "_id": `${latestID + 1}`,
-        "numbers": result.numbers
-      }
-      const newIndexDoc = {
-        "_id": `${latestID + 1}`,
-        "numbers": result.numbers
-      }
+      // const latestID = await couch.getLatestID(result.order)
 
       // need to know the id
       // need to update local original source json
       // need to update remote index too
-      await couch.addDoc(newSourceDoc, `source${result.order}`)
+      await couch.insertDoc(result.numbers,result.order)
 
 
     // EXISTING MAGIC SQUARE
     } else {
       console.log( 'magic square already exists' )
-      result.doc = found.docs[0]
+      result.doc = found.rows[0].doc
       result.exists = true
     }
 
@@ -158,26 +148,52 @@ app.post('/contribute', async (req, res) => {
 
 
 // DATA API
-app.get('/data/:order/all', async (req, res) => {
-  const o = req.params.order
-  const data = await couch.viewDB(`index${o}`,'order','numeric')
+app.get('/data/:n/all', async (req, res) => {
+  const order = req.params.n
+  const data = await couch.viewDB(order,'filter','all', true)
   res.send( data )
 })
-app.get('/data/:order/unique', async (req, res) => {
-  const o = req.params.order
-  const data = await couch.viewDB(`index${o}`,'filter','unique')
+app.get('/data/:n/unique', async (req, res) => {
+  const order = req.params.n
+  const data = await couch.viewDB(order,'filter','unique', true)
   res.send( data )
 })
-app.get('/data/:order/source', async (req, res) => {
-  const o = req.params.order
-  const data = await couch.viewDB(`index${o}`,'order','numeric')
+app.get('/data/:n/arrays', async (req, res) => {
+  const order = req.params.n
+  const data = await couch.viewDB(order,'filter','arrays', false)
   res.send( data )
 })
-
-
-// app.get('/data/4/test', async (req, res) => {
-//   res.sendFile('./data/index4.json', {root: './'})
-//   // res.json('./data/index4.json', {root: './'})
-// })
-
-
+app.get('/data/:n/quadvertex', async (req, res) => {
+  const order = req.params.n
+  const data = await couch.viewDB(order,'filter','quadvertex', false)
+  res.send( data )
+})
+app.get('/data/:n/numbers', async (req, res) => {
+  const order = req.params.n
+  const data = await couch.viewDB(order,'filter','numbers', false)
+  res.send( data )
+})
+app.get('/data/:n/straight', async (req, res) => {
+  const order = req.params.n
+  const data = await couch.viewDB(order,'filter','straight', false)
+  res.send( data )
+})
+app.get('/data/:n/quadline', async (req, res) => {
+  const order = req.params.n
+  const data = await couch.viewDB(order,'filter','quadline', false)
+  res.send( data )
+})
+app.get('/data/:n/arc', async (req, res) => {
+  const order = req.params.n
+  const data = await couch.viewDB(order,'filter','arc', false)
+  res.send( data )
+})
+app.get('/data/:n/altarc', async (req, res) => {
+  const order = req.params.n
+  const data = await couch.viewDB(order,'filter','altarc', false)
+  res.send( data )
+})
+app.get('/data/:n/source', async (req, res) => {
+  const order = req.params.n
+  res.sendFile(`./data/source${order}.json`, {root: './'})
+})
