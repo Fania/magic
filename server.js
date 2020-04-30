@@ -34,7 +34,8 @@ gallery.getImgs()
 
 
 async function setupOrder(n) {
-  await generate.index(n)
+  const result = await generate.index(n)
+  await couch.test(result, n)
 }
 // setupOrder('4a')
 // setupOrder(3)
@@ -82,31 +83,21 @@ app.get('/contribute', (req, res) => {
 app.post('/contribute', async (req, res) => {
   const result = checker.magic( req.body.manualInput )
   // console.log( `The numbers [${req.body.manualInput}] are ${result.magic ? 'magic' : 'not magic'}!` ) 
-  console.log( result )
+  // console.log( result )
 
   if (result.magic) {
     // console.log( result.order )
     const found = await couch.findDoc(result.order,result.numbers)
-    console.log( 'found', found )
-    // console.log( found.docs )
-    // console.log( typeof found.docs )
-    // console.log( found.docs == [] )
-    // console.log( found.docs === [] )
-    // console.log( found.bookmark === 'nil' )
+    // console.log( 'found', found )
 
     // NEW MAGIC SQUARE
     if (found.rows.length === 0) {
       console.log( 'found new magic square' )
       result.exists = false
+      couch.insertDoc(result.numbers,result.order)
+      // result.doc = 
 
-      // const latestID = await couch.getLatestID(result.order)
-
-      // need to know the id
-      // need to update local original source json
-      // need to update remote index too
-      await couch.insertDoc(result.numbers,result.order)
-
-
+      
     // EXISTING MAGIC SQUARE
     } else {
       console.log( 'magic square already exists' )
