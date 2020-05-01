@@ -139,19 +139,14 @@ app.post('/contribute', async (req, res) => {
 
 
 // DATA API
-app.get('/data/:n/all', async (req, res) => {
+app.get('/data/:n/arrays', async (req, res) => {
   const order = req.params.n
-  const data = await couch.viewDB(order,'filter','all', true)
+  const data = await couch.viewDB(order,'filter','arrays', false)
   res.send( data )
 })
 app.get('/data/:n/unique', async (req, res) => {
   const order = req.params.n
-  const data = await couch.viewDB(order,'filter','unique', true)
-  res.send( data )
-})
-app.get('/data/:n/arrays', async (req, res) => {
-  const order = req.params.n
-  const data = await couch.viewDB(order,'filter','arrays', false)
+  const data = await couch.viewDB(order,'filter','unique', false)
   res.send( data )
 })
 app.get('/data/:n/quadvertex', async (req, res) => {

@@ -5,13 +5,49 @@
 {% block submenu %}
 <header class="submenu home">
 
-  <nav>
+  {# <nav>
     <p><strong>Display:</strong></p>
     <a id="uniquesMenu" class="active" href="">Uniques</a>
     <a id="unfilteredMenu" href="">All</a>
-  </nav>
+  </nav> #}
 
   <form>
+    <fieldset>
+      <label for="order">
+        <select name="displayOrder" id="order">
+          <option value="3">3</option>
+          <option value="4" selected>4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+        </select>
+        <span>Order</span>
+      </label>
+    </fieldset>
+
+    <fieldset id="order4quadOptions">
+      <label for="unique">
+        <input type="radio" id="unique" name="displayAmount" checked>
+        <span>Uniques</span>
+      </label>/<label for="all">
+        <input type="radio" id="all" name="displayAmount">
+        <span>All</span>
+      </label>
+    </fieldset>
+
     <fieldset>
       <label for="numbers">
         <input type="radio" id="numbers" name="displayStyle">
@@ -53,4 +89,9 @@
 <main>
   <output id="squares"></output>
 </main>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="meta/js/home.js"></script>
 {% endblock %}
