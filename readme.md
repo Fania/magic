@@ -9,7 +9,7 @@ Don't forget to set up a .env file with login info.
 - [x] update design docs with rev if needed
 - [x] test and check the new createOrder function
 - [x] upload single input to DB
-- [ ] create design doc for each display style
+- [x] create design doc for each display style
 - [ ] query doc? see contribute
 - [ ] contribute, check for transformations
 - [ ] add other higher order displays

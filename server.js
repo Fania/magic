@@ -3,6 +3,7 @@
 const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
+const _ = require('lodash')
 // const dotenv = require('dotenv').config()
 const app = express()
 app.use(express.static('./'))
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const couch = require('./lib/couch.js')
 const generate = require('./lib/generators.js')
 const checker = require('./lib/checker.js')
+const transformations = require('./lib/transformations.js')
 const gallery = require('./lib/gallery.js')
 // const cmd = require('./lib/haskell.js')
 // cmd.ls()
@@ -87,13 +89,22 @@ app.post('/contribute', async (req, res) => {
 
   if (result.magic) {
     // console.log( result.order )
-    const found = await couch.findDoc(result.order,result.numbers)
+    const d4 = transformations.getD4(result.numbers)
+    console.log('D4', d4, typeof d4 )
+    const d4array = _.values(d4)
+    let found = await couch.findDocS(result.order,d4array)
+    console.log(found)
+    
+    
+    // const found = await couch.findDoc(result.order,result.numbers)
     // console.log( 'found', found )
 
     // NEW MAGIC SQUARE
     if (found.rows.length === 0) {
       console.log( 'found new magic square' )
       result.exists = false
+
+
       couch.insertDoc(result.numbers,result.order)
       // result.doc = 
 
@@ -101,7 +112,12 @@ app.post('/contribute', async (req, res) => {
     // EXISTING MAGIC SQUARE
     } else {
       console.log( 'magic square already exists' )
-      result.doc = found.rows[0].doc
+      const old = found.rows[0].doc
+      if (result.numbers !== old.numbers.array) {
+        const matchType = _.invert(d4)[old.numbers.array]
+        result.matchType = transformations.getWording(matchType)
+      }
+      result.doc = old
       result.exists = true
     }
 

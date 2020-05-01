@@ -25,10 +25,13 @@
   {# <script>console.log( {{ result | safe }} )</script> #}
   {% if result != 'blank' and result.magic %}
     <hr>
-    <p><strong>Congratulations, the numbers produce an order {{ result.order }} magic square.</strong></p>
+    <p><strong>Congratulations, these numbers produce an order {{ result.order }} magic square.</strong></p>
     
     {% if result.exists %}
       <p>This square already exists in our collection with ID <strong>{{ result.doc._id }}</strong>.</p>
+      {% if result.matchType %}
+        <p>Your input [{{  result.numbers }}] is a <strong>{{ result.matchType }}</strong> of the square below.</p>
+      {% endif %}
     {% else %}
       <p>This square didn't already exist in our collection and we added it with ID <strong>{{ result.newID }}</strong>.</p>
     {% endif %}
