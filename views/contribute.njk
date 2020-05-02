@@ -36,7 +36,7 @@
       <p>This square didn't already exist in our collection and we added it with ID <strong>{{ result.newID }}</strong>.</p>
     {% endif %}
 
-    <div class="bothNumbers">{% if result.querySVG %}{{  result.querySVG | safe }}{% endif %} <span>&gt;</span> {{ result.doc.numbers.svg | safe }}</div>
+    <div class="bothNumbers">{% if result.querySVG %}{{  result.querySVG | safe }} <span>&gt;</span> {% endif %}{{ result.doc.numbers.svg | safe }}</div>
 
     <div class="allStyles">
       {{ result.doc.quadvertex.svg | safe }}

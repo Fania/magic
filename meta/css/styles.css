@@ -143,3 +143,4 @@ main img.tinyLogo { width: 30px; border: none; position: relative; top: 5px }
 .illustration { float: right }
 .bothNumbers { display: flex; align-items: center; }
 .bothNumbers span { font-size: 5em; padding: 0 .5em; }
+hr { margin: 2em 0; }

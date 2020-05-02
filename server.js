@@ -38,14 +38,33 @@ gallery.getImgs()
 
 async function setupOrder(n) {
   const result = await generate.index(n)
-  await couch.test(result, n)
+  await couch.populateDB(result, n)
 }
 // setupOrder('4a')
 // setupOrder(3)
 
+async function initialiseAll() {
+  setupOrder(3)
+  setupOrder(4)
+  setupOrder(5)
+  setupOrder(6)
+  setupOrder(7)
+  setupOrder(8)
+  setupOrder(9)
+  setupOrder(10)
+  setupOrder(11)
+  setupOrder(12)
+  setupOrder(13)
+  setupOrder(14)
+  setupOrder(15)
+  setupOrder(16)
+  setupOrder(17)
+  setupOrder(18)
+  setupOrder(19)
+  setupOrder(20)
+}
 
-
-
+initialiseAll()
 
 
 
@@ -108,16 +127,13 @@ app.post('/contribute', async (req, res) => {
       if (result.numbers !== old.numbers.array) {
         const matchType = _.invert(d4)[old.numbers.array]
         result.matchType = transformations.getWording(matchType)
-
         const coordsObject = draw.getCoords(result.order, result.numbers)
-        const querySVG = draw.prepareSVG(result.order, 'numbers', coordsObject, result.id)
-        // const querySVG = draw.createNumberSVGs(result.order, coordsObject, result.id)
+        const querySVG = draw.prepareSVG(result.order,'numbers',coordsObject,0)
         result.querySVG = querySVG
-
       }
     }
   }
-  console.log( result )
+  // console.log( result )
   res.render('contribute.njk', { result: result } )
 })
 
@@ -131,7 +147,7 @@ app.post('/contribute', async (req, res) => {
 // 6,1,8,7,5,3,2,9,4
 // 2,7,6,9,5,1,4,3,8
 // 1,4,14,15,13,16,2,3,12,9,7,6,8,5,11,10
-
+// 1,15,24,8,17,23,7,16,5,14,20,4,13,22,6,12,21,10,19,3,9,18,2,11,25
 
 
 
