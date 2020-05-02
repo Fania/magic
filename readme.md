@@ -10,14 +10,15 @@ Don't forget to set up a .env file with login info.
 - [x] test and check the new createOrder function
 - [x] upload single input to DB
 - [x] create design doc for each display style
-- [ ] query doc? see contribute
-- [ ] contribute, check for transformations
-- [ ] add other higher order displays
-- [ ] check sharedLengths in index - broken
-- [ ] use db.view('order', 'numeric') to get sorted list
+- [x] query doc? see contribute
+- [x] contribute, check for transformations
+- [x] add other higher order displays
+- [x] check sharedLengths in index - broken
+- [x] use db.view('order', 'numeric') to get sorted list
+- [x] save contributions in log file too (with dates, etc)
 - [ ] selectively update only changes for bulk index
-- [ ] save contributions in log file too (with dates, etc)
-
+- [ ] improve gallery style
+- [ ] mobile style
 
 
 

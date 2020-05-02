@@ -82,5 +82,6 @@ displayOrder.addEventListener('wheel', () => {
     let toIndex = (fromIndex - 1) % totalOptions;
     displayOrder.selectedIndex = toIndex;
   }
+  displaySVGs(getCurrent('order'),getCurrent('style'));
   event.preventDefault();
 })

@@ -77,7 +77,9 @@ header.submenu form fieldset { border: none; margin: 0; padding: 0; }
 .home form option { font-size: 16px; }
 
 
-#order4quadOptions { position: absolute; bottom: -25px; right: 257px; }
+#order4quadOptions { 
+  position: absolute; bottom: -25px; right: 257px; 
+  font-size: .9em; color: #888888; }
 #order4quadOptions.hide { display: none; }
 #order4quadOptions label { padding: 0; }
 
