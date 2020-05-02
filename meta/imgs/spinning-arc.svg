@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="yes"?>
+<svg id="arc-4R-277" 
+class="order-x" 
+style="fill: none; stroke: #FFFFFF; stroke-width: 4px;" 
+viewBox="-70 -70 440 440" 
+xmlns="http://www.w3.org/2000/svg" 
+xmlns:svg="http://www.w3.org/2000/svg" 
+xmlns:xlink="http://www.w3.org/1999/xlink" 
+version="1.1">
+<animateTransform 
+xlink:href="#arc-4R-277" 
+attributeName="transform" 
+attributeType="XML" 
+type="rotate" 
+from="360 0 0" 
+to="0 0 0" 
+begin="0s" dur="10s" 
+repeatCount="indefinite" 
+fill="freeze"/>
+<path class="lines arc" d="M300,200 A 50,50 0 1 1 300,200 A 50,50 0 1 1 0,0 A 50,50 0 1 1 100,300 A 50,50 0 1 1 200,100 A 50,50 0 1 1 200,200 A 50,50 0 1 1 100,0 A 50,50 0 1 1 0,300 A 50,50 0 1 1 300,100 A 50,50 0 1 1 0,100 A 50,50 0 1 1 200,300 A 50,50 0 1 1 300,0 A 50,50 0 1 1 100,200 A 50,50 0 1 1 100,100 A 50,50 0 1 1 300,300 A 50,50 0 1 1 200,0 A 50,50 0 1 1 0,200 A 50,50 0 1 1 300,200 "></path></svg>

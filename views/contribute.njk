@@ -23,7 +23,7 @@
   <p>If you have a larger collection that you'd like to donate please contact us via email.</p>
   
   {# <script>console.log( {{ result | safe }} )</script> #}
-  {% if result != 'blank' and result.magic %}
+  {% if result.magic %}
     <hr>
     <p><strong>Congratulations, these numbers produce an order {{ result.order }} magic square.</strong></p>
     
@@ -36,7 +36,7 @@
       <p>This square didn't already exist in our collection and we added it with ID <strong>{{ result.newID }}</strong>.</p>
     {% endif %}
 
-    <div>{{ result.doc.numbers.svg | safe }}</div>
+    <div class="bothNumbers">{% if result.querySVG %}{{  result.querySVG | safe }}{% endif %} <span>&gt;</span> {{ result.doc.numbers.svg | safe }}</div>
 
     <div class="allStyles">
       {{ result.doc.quadvertex.svg | safe }}
@@ -46,7 +46,7 @@
       {{ result.doc.altarc.svg | safe }}
     </div>
 
-  {% elif result != 'blank' %}
+  {% elif result %}
     <hr>
     <p><strong>Sorry, there are problems with your numbers:</strong></p>
     <p class="warning">{{ result.message }}</p>

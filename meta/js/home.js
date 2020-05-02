@@ -72,24 +72,15 @@ function getCurrent(thing) {
 
 
 displayOrder.addEventListener('wheel', () => {
-  console.log(event);
-
-  const initialOrder = getCurrent('order');
-  console.log(initialOrder);
-
-  const currentIndex = displayOrder.selectedIndex;
-
+  const totalOptions = displayOrder.length;
+  let fromIndex = displayOrder.selectedIndex;
   if (Math.sign(event.deltaY) === 1) {
-    console.log('down scroll', currentIndex);
-    displayOrder.selectedIndex += 1;
+    let toIndex = (fromIndex + 1) % totalOptions;
+    displayOrder.selectedIndex = toIndex;
   } else {
-    console.log('up scroll', currentIndex);
-    displayOrder.selectedIndex -= 1;
+    if (fromIndex === 0) fromIndex = 18;
+    let toIndex = (fromIndex - 1) % totalOptions;
+    displayOrder.selectedIndex = toIndex;
   }
-
-  // use modulo to fix over and under reaching
-  // displayOrder[displayOrder.selectedIndex].value;
-  
-
   event.preventDefault();
 })

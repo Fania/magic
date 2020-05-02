@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const couch = require('./lib/couch.js')
 const generate = require('./lib/generators.js')
 const checker = require('./lib/checker.js')
+const draw = require('./lib/draw.js')
 const transformations = require('./lib/transformations.js')
 const gallery = require('./lib/gallery.js')
 // const cmd = require('./lib/haskell.js')
@@ -84,69 +85,52 @@ app.get('/contribute', (req, res) => {
 
 app.post('/contribute', async (req, res) => {
   const result = checker.magic( req.body.manualInput )
-  // console.log( `The numbers [${req.body.manualInput}] are ${result.magic ? 'magic' : 'not magic'}!` ) 
-  // console.log( result )
 
   if (result.magic) {
-    // console.log( result.order )
     const d4 = transformations.getD4(result.numbers)
-    console.log('D4', d4, typeof d4 )
     const d4array = _.values(d4)
-    let found = await couch.findDocS(result.order,d4array)
-    console.log(found)
-    
-    
-    // const found = await couch.findDoc(result.order,result.numbers)
-    // console.log( 'found', found )
-
+    const found = await couch.findDocs(result.order,d4array)
+    // const found = await couch.findDocs(result.order,[result.numbers])
     // NEW MAGIC SQUARE
     if (found.rows.length === 0) {
       console.log( 'found new magic square' )
       result.exists = false
-
-
-      couch.insertDoc(result.numbers,result.order)
-      // result.doc = 
-
-      
+      await couch.insertDoc(result.numbers,result.order)
+      const newDoc = await couch.findDocs(result.order,[result.numbers])
+      result.doc = newDoc.rows[0].doc
+      result.newID = newDoc.rows[0].id
     // EXISTING MAGIC SQUARE
     } else {
       console.log( 'magic square already exists' )
+      result.exists = true
       const old = found.rows[0].doc
+      result.doc = old
       if (result.numbers !== old.numbers.array) {
         const matchType = _.invert(d4)[old.numbers.array]
         result.matchType = transformations.getWording(matchType)
+
+        const coordsObject = draw.getCoords(result.order, result.numbers)
+        const querySVG = draw.prepareSVG(result.order, 'numbers', coordsObject, result.id)
+        // const querySVG = draw.createNumberSVGs(result.order, coordsObject, result.id)
+        result.querySVG = querySVG
+
       }
-      result.doc = old
-      result.exists = true
     }
-
-    // order 3
-    // 4,9,2,3,5,7,8,1,6
-    // 2,9,4,7,5,3,6,1,8
-    // 8,1,6,3,5,7,4,9,2
-    // 4,3,8,9,5,1,2,7,6
-    // 6,7,2,1,5,9,8,3,4
-    // 8,3,4,1,5,9,6,7,2
-    // 6,1,8,7,5,3,2,9,4
-    // 2,7,6,9,5,1,4,3,8
-    // 1,4,14,15,13,16,2,3,12,9,7,6,8,5,11,10
-
-    // check for transformations?
-    // use full 7040 db and filter everything down from there?
-
   }
-
-  // console.log( result )
-
-  // does it exist in DB already?
-  // if so, then display it
-  // else add to DB
-  // and then display it
+  console.log( result )
   res.render('contribute.njk', { result: result } )
 })
 
-
+// order 3
+// 4,9,2,3,5,7,8,1,6
+// 2,9,4,7,5,3,6,1,8
+// 8,1,6,3,5,7,4,9,2
+// 4,3,8,9,5,1,2,7,6
+// 6,7,2,1,5,9,8,3,4
+// 8,3,4,1,5,9,6,7,2
+// 6,1,8,7,5,3,2,9,4
+// 2,7,6,9,5,1,4,3,8
+// 1,4,14,15,13,16,2,3,12,9,7,6,8,5,11,10
 
 
 
