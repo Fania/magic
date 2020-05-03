@@ -12,7 +12,7 @@
   </nav> #}
 
   <form>
-    <fieldset>
+    <fieldset id="orderOptions">
       <label for="order">
         <select name="displayOrder" id="order">
           <option value="3">3</option>
@@ -39,12 +39,13 @@
     </fieldset>
 
     <fieldset id="order4quadOptions">
+      <label for="all">
+        <input type="radio" id="all" name="displayAmount">
+        <span>All | </span>
+      </label>
       <label for="unique">
         <input type="radio" id="unique" name="displayAmount" checked>
         <span>Uniques</span>
-      </label><em>/</em><label for="all">
-        <input type="radio" id="all" name="displayAmount">
-        <span>All</span>
       </label>
     </fieldset>
 

@@ -5,8 +5,6 @@ html {
 
 /* BASE */
 
-* { box-sizing: border-box; }
-
 body {
   background: var(--backColour);
   color: var(--textColour);
@@ -23,9 +21,9 @@ header.mainmenu div { display: flex; align-items: center; }
 header.mainmenu div .logo { width: 100px; height: 100px; }
 header.mainmenu div h1 { display: none; margin-left: 1em; }
 header.mainmenu nav { 
-  display: flex; flex-direction: column; align-items: flex-end; }
+   display: flex; flex-direction: column; align-items: flex-end; }
 header.mainmenu nav a { text-transform: uppercase;
-  color: var(--textColour); text-decoration: none; padding: 6px 10px; }
+  color: var(--textColour); box-sizing: border-box; height: 1.75em;text-decoration: none; padding: 6px 10px; }
 header.mainmenu nav a.active { border-right: 3px solid white }
 
 
@@ -35,7 +33,7 @@ header.submenu nav a { color: var(--textColour); text-decoration: none; padding:
 header.submenu nav p { padding: 0 1em; }
 header.submenu form { margin: 0; }
 header.submenu form fieldset { border: none; margin: 0; padding: 0; }
-
+header.submenu label { box-sizing: border-box; }
 
 /* .home { padding-top: 0 } */
 
@@ -70,6 +68,9 @@ header.submenu form fieldset { border: none; margin: 0; padding: 0; }
 .home form input:checked ~ span { text-decoration: underline; }
 
 
+#orderOptions label {  
+  display: flex; flex-direction: column; align-items: center;
+}
 .home form select { 
   color: var(--textColour);
   background-color: var(--backColour);
@@ -85,12 +86,11 @@ header.submenu form fieldset { border: none; margin: 0; padding: 0; }
 
 
 #order4quadOptions { display: flex; flex-direction: column-reverse;
-  position: absolute; bottom: 30px; left: 10px; 
+  position: absolute; bottom: 10px; left: 10px; 
   font-size: .9em; color: #888888; }
 #order4quadOptions.hide { display: none; }
-#order4quadOptions label { padding: 0; width: 60px; display: inline-flex;    
-  align-items: center; flex-direction: column; }
-#order4quadOptions em { display: none; }
+#order4quadOptions label { padding: 0; }
+/* #order4quadOptions em { display: none; } */
 
 
 /* .home form #unique {
@@ -157,9 +157,14 @@ main img.tinyLogo { width: 30px; border: none; position: relative; top: 5px }
 hr { margin: 2em 0; }
 
 
-
-
 @media screen and (min-width: 500px) {
+
+  svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 
+    width: 200px; margin: 20px }
+
+}
+
+@media screen and (min-width: 700px) {
 
   header { padding: 2em; }
   header.mainmenu div h1 { display: flex; margin-left: 1em; }
@@ -172,20 +177,14 @@ hr { margin: 2em 0; }
   .home form { position: relative;
     display: flex; align-items: flex-end; justify-content: space-between; }
 
+  .home form #styleOptions label { width: unset; }
 
   .home form label:hover span { 
     text-decoration: underline; }
   .home form label:hover img { 
     filter: drop-shadow(0px 0px 0px cyan); }
 
-  #order4quadOptions { display: block;
-    position: absolute; bottom: -25px; left: unset; right: 257px; 
-    font-size: .9em; color: #888888; }
-  #order4quadOptions em { display: block; }
-
-
-  svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 
-    width: 200px; margin: 20px }
-
+  #order4quadOptions { display: unset;
+    position: absolute; bottom: -20px; left: unset; right:260px; }
 
 }
