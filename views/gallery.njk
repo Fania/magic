@@ -3,16 +3,17 @@
 {% extends "base.njk" %}
 
 
-{# {% block submenu %}
+{% block submenu %}
 <header class="submenu gallery">
 
   <nav>
-    <a href="">Images</a>
-    <a href="">Videos</a>
+    <a href="#videos">Videos</a>
+    <a href="#renders">Renders</a>
+    <a href="#lines">Lines</a>
   </nav>
 
 </header>
-{% endblock %} #}
+{% endblock %}
 
 
 {% block main %}
@@ -20,7 +21,7 @@
 
   <h1>{{ title }}</h1>
   
-  <section>
+  <section id="videos">
     {% for file in vidFiles %}
       <video autoplay muted loop>
         <source src="meta/gallery/vid/{{ file }}" type="video/mp4">
@@ -28,15 +29,15 @@
     {% endfor %}
   </section>
 
-  <section>
-    {% for file in imgFiles %}
-      <img src="meta/gallery/img/{{ file }}">
+  <section id="renders">
+    {% for file in artFiles %}
+      <img src="meta/gallery/art/{{ file }}">
     {% endfor %}
   </section>
 
-  <section>
-    {% for file in artFiles %}
-      <img src="meta/gallery/art/{{ file }}">
+  <section id="lines">
+    {% for file in imgFiles %}
+      <img src="meta/gallery/img/{{ file }}">
     {% endfor %}
   </section>
 
