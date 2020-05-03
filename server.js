@@ -30,7 +30,7 @@ const transformations = require('./lib/transformations.js')
 const gallery = require('./lib/gallery.js')
 // const cmd = require('./lib/haskell.js')
 // cmd.ls()
-gallery.getImgs()
+
 
 
 
@@ -77,69 +77,17 @@ app.listen(3000, () => {
 
 
 // ROUTES
-app.get('/', (req, res) => {
-  res.render('home.njk')
-})
-app.get('/gallery', (req, res) => {
-  const imgFiles = fs.readdirSync('./meta/gallery/img')
-  const vidFiles = fs.readdirSync('./meta/gallery/vid')
-  const artFiles = fs.readdirSync('./meta/gallery/art')
-  res.render('gallery.njk', {
-    imgFiles: imgFiles,
-    vidFiles: vidFiles,
-    artFiles: artFiles
-  })
-})
-app.get('/about', (req, res) => {
-  res.render('about.njk')
+app.get('/', (req, res) => { res.render('home.njk') })
+
+app.get('/gallery', (req, res) => { 
+  res.render('gallery.njk', { files: gallery.getFiles() })
 })
 
+app.get('/about', (req, res) => { res.render('about.njk') })
 
-
-
-// const router = express.Router()
-// const contriboute = require('./controllers/contribute')
-// router.get('/contribute', contriboute.getContribute)
-// app.use('/', contriboute)
-// app.use('/contribute', router)
-
-app.get('/contribute', (req, res) => {
-  res.render('contribute.njk')
-})
-
-
+app.get('/contribute', (req, res) => { res.render('contribute.njk') })
 app.post('/contribute', async (req, res) => {
-  const result = checker.magic( req.body.manualInput )
-
-  if (result.magic) {
-    const d4 = transformations.getD4(result.numbers)
-    const d4array = _.values(d4)
-    const found = await couch.findDocs(result.order,d4array)
-    // const found = await couch.findDocs(result.order,[result.numbers])
-    // NEW MAGIC SQUARE
-    if (found.rows.length === 0) {
-      console.log( 'found new magic square' )
-      result.exists = false
-      await couch.insertDoc(result.numbers,result.order)
-      const newDoc = await couch.findDocs(result.order,[result.numbers])
-      result.doc = newDoc.rows[0].doc
-      result.newID = newDoc.rows[0].id
-    // EXISTING MAGIC SQUARE
-    } else {
-      console.log( 'magic square already exists' )
-      result.exists = true
-      const old = found.rows[0].doc
-      result.doc = old
-      if (result.numbers !== old.numbers.array) {
-        const matchType = _.invert(d4)[old.numbers.array]
-        result.matchType = transformations.getWording(matchType)
-        const coordsObject = draw.getCoords(result.order, result.numbers)
-        const querySVG = draw.prepareSVG(result.order,'numbers',coordsObject,0)
-        result.querySVG = querySVG
-      }
-    }
-  }
-  // console.log( result )
+  const result = await checker.magic( req.body.manualInput )
   res.render('contribute.njk', { result: result } )
 })
 

@@ -109,6 +109,19 @@ header.submenu.gallery {
 .gallery #lines { margin: 1em 0; column-count: 1; }
 .gallery #lines img { margin: 1em 0; width: 100%; }
 
+#modal {
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  display: flex; justify-content: center; align-items: center;
+  background-color: rgba(0,0,0,0.9); }
+#modal img { object-fit: contain; width: 90vw; height: 90vh; }
+
+
+
+
+
+
+
 
 
 
