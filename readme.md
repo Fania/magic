@@ -23,6 +23,12 @@ Don't forget to set up a .env file with login info.
 
 
 
+## Art
+- create overlaid positions of all squares of number 1. etc. where is the 1 in this square, then where is it in the next? trace position of a given number. if stays in one place, brighten dot
+
+- take all numbers with a colour each and do the same above.
+
+
 
 
 
