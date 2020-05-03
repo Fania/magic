@@ -21,16 +21,22 @@
   <h1>{{ title }}</h1>
   
   <section>
-    {% for vidName in vidFiles %}
+    {% for file in vidFiles %}
       <video autoplay muted loop>
-        <source src="meta/vids/{{ vidName }}" type="video/mp4">
+        <source src="meta/gallery/vid/{{ file }}" type="video/mp4">
       </video>
     {% endfor %}
   </section>
 
   <section>
-    {% for imgName in imgFiles %}
-      <img src="meta/imgs/gallery/{{ imgName }}">
+    {% for file in imgFiles %}
+      <img src="meta/gallery/img/{{ file }}">
+    {% endfor %}
+  </section>
+
+  <section>
+    {% for file in artFiles %}
+      <img src="meta/gallery/art/{{ file }}">
     {% endfor %}
   </section>
 

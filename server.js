@@ -81,9 +81,14 @@ app.get('/', (req, res) => {
   res.render('home.njk')
 })
 app.get('/gallery', (req, res) => {
-  const imgFiles = fs.readdirSync('./meta/imgs/gallery')
-  const vidFiles = fs.readdirSync('./meta/vids')
-  res.render('gallery.njk', { imgFiles: imgFiles, vidFiles: vidFiles })
+  const imgFiles = fs.readdirSync('./meta/gallery/img')
+  const vidFiles = fs.readdirSync('./meta/gallery/vid')
+  const artFiles = fs.readdirSync('./meta/gallery/art')
+  res.render('gallery.njk', {
+    imgFiles: imgFiles,
+    vidFiles: vidFiles,
+    artFiles: artFiles
+  })
 })
 app.get('/about', (req, res) => {
   res.render('about.njk')
