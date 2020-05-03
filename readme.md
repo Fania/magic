@@ -16,10 +16,10 @@ Don't forget to set up a .env file with login info.
 - [x] check sharedLengths in index - broken
 - [x] use db.view('order', 'numeric') to get sorted list
 - [x] save contributions in log file too (with dates, etc)
-- [ ] selectively update only changes for bulk index
+- [x] mobile style
+- [x] selectively update only changes for bulk index (not possible)
 - [ ] improve gallery style
-- [ ] mobile style
-
+- [ ] sort local source file every time a new square is added
 
 
 

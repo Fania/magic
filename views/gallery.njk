@@ -22,6 +22,7 @@
   <h1>{{ title }}</h1>
   
   <section id="videos">
+    <h2>Videos</h2>
     {% for file in vidFiles %}
       <video autoplay muted loop>
         <source src="meta/gallery/vid/{{ file }}" type="video/mp4">
@@ -30,16 +31,22 @@
   </section>
 
   <section id="renders">
+    <h2>Renders</h2>
     {% for file in artFiles %}
       <img src="meta/gallery/art/{{ file }}">
     {% endfor %}
   </section>
 
   <section id="lines">
+    <h2>Lines</h2>
     {% for file in imgFiles %}
       <img src="meta/gallery/img/{{ file }}">
     {% endfor %}
   </section>
 
 </main>
+{% endblock %}
+
+{% block scripts %}
+<script src="meta/js/gallery.js"></script>
 {% endblock %}
