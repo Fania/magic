@@ -139,7 +139,7 @@ header.submenu.contribute form input#manualInput:focus { outline: none }
 .warning { color: #ff0055 }
 
 
-main { margin: 1em; }
+main { margin: 1em; min-height: calc(100vh - 460px); }
 main output { display: flex; justify-content: center; flex-wrap: wrap; }
 
 svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 
@@ -174,14 +174,22 @@ footer a, footer p { color: #666; text-decoration: none; margin: 0; }
 
 
 
-
+.overlap {
+  position: relative;
+}
+.overlap svg {
+  position: absolute;
+  width: 500px;
+  stroke-width: 1px;
+}
 
 
 
 @media screen and (min-width: 500px) {
 
   svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 
-    width: 200px; margin: 20px }
+    width: 200px; margin: 20px; 
+  }
 
 }
 
