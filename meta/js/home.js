@@ -67,10 +67,6 @@ function getCurrent(thing) {
 
 
 
-
-
-
-
 displayOrder.addEventListener('wheel', () => {
   const totalOptions = displayOrder.length;
   let fromIndex = displayOrder.selectedIndex;
@@ -85,3 +81,7 @@ displayOrder.addEventListener('wheel', () => {
   displaySVGs(getCurrent('order'),getCurrent('style'));
   event.preventDefault();
 })
+
+
+
+

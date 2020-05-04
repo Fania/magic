@@ -1,5 +1,7 @@
 html {
   --backColour: #222222;
+  --mediumBackColour: #11111180;
+  --darkBackColour: #111111;
   --textColour: #eeeeee;
 }
 
@@ -13,7 +15,7 @@ body {
 }
 a { color: var(--textColour) }
 
-header { background: #111111; margin: 0; padding: 1em; }
+header { background: var(--darkBackColour); margin: 0; padding: 1em; }
 
 header.mainmenu { 
   display: flex; align-items: center; justify-content: space-between; }
@@ -28,7 +30,7 @@ header.mainmenu nav a.active { border-right: 3px solid white }
 
 
 
-header.submenu { background: #11111180; }
+header.submenu { background: var(--mediumBackColour); }
 header.submenu nav a { color: var(--textColour); text-decoration: none; padding: 0 1em; }
 header.submenu nav p { padding: 0 1em; }
 header.submenu form { margin: 0; }
@@ -162,6 +164,18 @@ main img.tinyLogo { width: 30px; border: none; position: relative; top: 5px }
 .bothNumbers { display: flex; align-items: center; }
 .bothNumbers span { font-size: 5em; padding: 0 .5em; }
 hr { margin: 2em 0; }
+
+
+
+footer {
+  margin-top: 3em; background: var(--darkBackColour); padding: 1em; 
+  display: flex; justify-content: space-between; }
+footer a, footer p { color: #666; text-decoration: none; margin: 0; }
+
+
+
+
+
 
 
 @media screen and (min-width: 500px) {

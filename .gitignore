@@ -4,4 +4,4 @@ package-lock.json
 *.exe
 *.hi
 *.o
-output.txt
+*.txt

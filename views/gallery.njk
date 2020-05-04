@@ -33,14 +33,14 @@
   <section id="renders">
     <h2>Renders</h2>
     {% for file in files.renders %}
-      <img src="meta/gallery/art/{{ file }}">
+      <img src="meta/gallery/art/{{ file }}" loading="lazy">
     {% endfor %}
   </section>
 
   <section id="lines">
     <h2>Lines</h2>
     {% for file in files.images %}
-      <img src="meta/gallery/img/{{ file }}">
+      <img src="meta/gallery/img/{{ file }}" loading="lazy">
     {% endfor %}
   </section>
 
