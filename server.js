@@ -41,8 +41,8 @@ async function setupOrder(n) {
   await couch.populateDB(result, n)
 }
 // setupOrder('4a')
-// setupOrder(3)
-// setupOrder(4)
+// setupOrder(5)
+
 
 async function initialiseAll() {
   await setupOrder(3)
