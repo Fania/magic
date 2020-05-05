@@ -47,6 +47,30 @@ async function displaySVGs(order,style) {
   } catch (error) { console.log(error) }
   finally { 
     loading.classList.remove('show');
+
+
+    const [...svgs] = document.querySelectorAll('#squares svg');
+    // console.log(svgs);
+
+    const io = new IntersectionObserver(
+      entries => {
+        console.log(entries);
+      },{}
+    );
+
+    svgs.forEach( elem => {
+      io.observe(elem);
+    });
+
+    // Start observing an element
+    // io.observe(element);
+
+    // Stop observing an element
+    // io.unobserve(element);
+
+    // Disable entire IntersectionObserver
+    // io.disconnect();
+
   }
 }
 
@@ -78,10 +102,9 @@ displayOrder.addEventListener('wheel', () => {
     let toIndex = (fromIndex - 1) % totalOptions;
     displayOrder.selectedIndex = toIndex;
   }
+  loading.classList.add('show')
   displaySVGs(getCurrent('order'),getCurrent('style'));
   event.preventDefault();
 })
-
-
 
 

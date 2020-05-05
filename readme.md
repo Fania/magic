@@ -20,6 +20,22 @@ Don't forget to set up a .env file with login info.
 - [x] selectively update only changes for bulk index (not possible)
 - [x] improve gallery style
 - [x] sort local source file every time a new square is added
+- [ ] 
+
+
+
+
+
+
+## Lazy Loading
+
+https://developers.google.com/web/updates/2016/04/intersectionobserver
+
+1. only grab like 100 svgs from couch
+2. manually add a sentinel into dom after svgs
+3. that sentinel triggers intersection observer which calls step 1 again
+
+
 
 
 
