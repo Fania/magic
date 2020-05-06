@@ -51,7 +51,7 @@
 
     <fieldset id="styleOptions">
       <label for="numbers">
-        <input type="radio" id="numbers" name="displayStyle">
+        <input type="radio" id="numbers" name="displayStyle" checked>
         <img src="meta/imgs/o4s19n.svg">
         <span>Numbers</span>
       </label>
@@ -61,7 +61,7 @@
         <span>Straight</span>
       </label>
       <label for="quadvertex">
-        <input type="radio" id="quadvertex" name="displayStyle" checked>
+        <input type="radio" id="quadvertex" name="displayStyle" >
         <div><img src="meta/imgs/o4s19qv.svg"></div>
         <span>Quadvertex</span>
       </label>
@@ -79,6 +79,11 @@
         <input type="radio" id="altarc" name="displayStyle">
         <div><img src="meta/imgs/o4s19aa.svg"></div>
         <span>Alt-Arc</span>
+      </label>
+      <label for="colours">
+        <input type="radio" id="colours" name="displayStyle">
+        {# <div><img src="meta/imgs/o4s19aa.svg"></div> #}
+        <span>Colours</span>
       </label>
     </fieldset>
   </form>

@@ -36,7 +36,7 @@ displayTriggers.forEach( ds => {
 
 
 // default
-displaySVGs( '4', 'quadvertex' );
+displaySVGs( getCurrent('order'),getCurrent('style') );
 
 
 // DISPLAY DATA
@@ -130,3 +130,36 @@ displayOrder.addEventListener('wheel', () => {
 })
 
 
+
+
+
+
+
+
+
+// setTimeout(function(){
+
+
+
+
+//   const x = document.querySelector('svg#numbers-4-5');
+//   // console.dir(x);
+
+//   // console.log(x.children);
+//   for (let child of x.children) {
+
+//     console.dir(child);
+//     console.log(child.attributes.x.value);
+//     console.log(child.attributes.y.value);
+//     console.log(child.innerHTML);
+
+
+
+
+
+
+//   };
+
+
+
+// }, 500); 

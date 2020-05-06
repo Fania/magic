@@ -33,6 +33,16 @@ const gallery = require('./lib/gallery.js')
 
 
 
+// const localData = fs.readFileSync(`./data/source4.json`)
+// const data = JSON.parse(localData)
+// data.forEach( d => {
+//   const coords = draw.getCoords(4,d)
+//   const svgString = draw.prepareSVG(4,'colours',coords,0)
+//   console.log(svgString)
+// })
+
+
+
 
 
 
@@ -41,7 +51,7 @@ async function setupOrder(n) {
   await couch.populateDB(result, n)
 }
 // setupOrder('4a')
-// setupOrder(5)
+// setupOrder(4)
 
 
 async function initialiseAll() {
@@ -109,52 +119,21 @@ app.post('/contribute', async (req, res) => {
 
 
 // DATA API
-app.get('/data/:n/arrays/:o', async (req, res) => {
+
+// n = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+// s = ['arrays','arc','altarc','quadvertex','quadline','numbers','unique','straight','colours']
+// o = [0,200,400,600, etc]
+
+app.get('/data/:n', async (req, res) => {
   const order = req.params.n
-  const offset = req.params.o
-  const data = await couch.viewDB(order,'filter','arrays', offset)
+  const data = await couch.viewAllDB(order)
   res.send( data )
 })
-app.get('/data/:n/unique/:o', async (req, res) => {
+app.get('/data/:n/:s/:o', async (req, res) => {
   const order = req.params.n
+  const style = req.params.s
   const offset = req.params.o
-  const data = await couch.viewDB(order,'filter','unique', offset)
-  res.send( data )
-})
-app.get('/data/:n/quadvertex/:o', async (req, res) => {
-  const order = req.params.n
-  const offset = req.params.o
-  const data = await couch.viewDB(order,'filter','quadvertex', offset)
-  res.send( data )
-})
-app.get('/data/:n/numbers/:o', async (req, res) => {
-  const order = req.params.n
-  const offset = req.params.o
-  const data = await couch.viewDB(order,'filter','numbers', offset)
-  res.send( data )
-})
-app.get('/data/:n/straight/:o', async (req, res) => {
-  const order = req.params.n
-  const offset = req.params.o
-  const data = await couch.viewDB(order,'filter','straight', offset)
-  res.send( data )
-})
-app.get('/data/:n/quadline/:o', async (req, res) => {
-  const order = req.params.n
-  const offset = req.params.o
-  const data = await couch.viewDB(order,'filter','quadline', offset)
-  res.send( data )
-})
-app.get('/data/:n/arc/:o', async (req, res) => {
-  const order = req.params.n
-  const offset = req.params.o
-  const data = await couch.viewDB(order,'filter','arc', offset)
-  res.send( data )
-})
-app.get('/data/:n/altarc/:o', async (req, res) => {
-  const order = req.params.n
-  const offset = req.params.o
-  const data = await couch.viewDB(order,'filter','altarc', offset)
+  const data = await couch.viewDB(order, 'filter', style, offset)
   res.send( data )
 })
 app.get('/data/:n/source', async (req, res) => {

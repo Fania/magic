@@ -1,0 +1,23 @@
+<?xml version="1.0" standalone="yes"?>
+<svg id='colours-4-0' class='order-xt pad' 
+viewBox="-40 -40 380 380" height="900" width="900"
+xmlns="http://www.w3.org/2000/svg" version="1.1">
+
+<circle fill='#091540' cx='0' cy='0' r='40'/>
+<circle fill='#7692FF' cx='300' cy='200' r='40'/>
+<circle fill='#ABD2FA' cx='100' cy='0' r='40'/>
+<circle fill='#3D518C' cx='200' cy='100' r='40'/>
+<circle fill='#1B2CC1' cx='300' cy='100' r='40'/>
+<circle fill='#012A36' cx='0' cy='300' r='40'/>
+<circle fill='#00A6FB' cx='200' cy='300' r='40'/>
+<circle fill='#1F7A8C' cx='100' cy='200' r='40'/>
+<circle fill='#50C9CE' cx='200' cy='200' r='40'/>
+<circle fill='#58355E' cx='100' cy='300' r='40'/>
+<circle fill='#B388EB' cx='300' cy='300' r='40'/>
+<circle fill='#231942' cx='0' cy='100' r='40'/>
+<circle fill='#FF9FE5' cx='100' cy='100' r='40'/>
+<circle fill='#5E548E' cx='200' cy='0' r='40'/>
+<circle fill='#419D78' cx='0' cy='200' r='40'/>
+<circle fill='#654597' cx='300' cy='0' r='40'/>
+
+</svg>

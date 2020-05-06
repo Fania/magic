@@ -95,6 +95,15 @@ header.submenu label { box-sizing: border-box; }
 /* #order4quadOptions em { display: none; } */
 
 
+
+
+svg[id^='colours'] {
+  stroke: none;
+  fill-opacity: 0.2;
+}
+
+
+
 /* .home form #unique {
   position: relative;
 } */
