@@ -99,8 +99,88 @@ header.submenu label { box-sizing: border-box; }
 
 svg[id^='colours'] {
   stroke: none;
-  fill-opacity: 0.2;
+  fill-opacity: 1;
 }
+
+circle.num-1  { fill: #091540; 
+  /* animation: anim1 4s alternate infinite;  */
+}
+circle.num-2  { fill: #7692FF; 
+  /* animation: anim2 4s alternate infinite;  */
+}
+circle.num-3  { fill: #ABD2FA; 
+  /* animation: anim3 4s alternate infinite; */
+}
+circle.num-4  { fill: #3D518C; 
+  /* animation: anim4 4s alternate infinite; */
+}
+circle.num-5  { fill: #1B2CC1; 
+  /* animation: anim5 4s alternate infinite; */
+}
+circle.num-6  { fill: #012A36; 
+  /* animation: anim6 4s alternate infinite; */
+}
+circle.num-7  { fill: #00A6FB; 
+  /* animation: anim7 4s alternate infinite; */
+}
+circle.num-8  { fill: #1F7A8C; 
+  /* animation: anim8 4s alternate infinite; */
+}
+circle.num-9  { fill: #50C9CE; 
+  /* animation: anim9 4s alternate infinite; */
+}
+circle.num-10 { fill: #58355E; 
+  /* animation: anim10 4s alternate infinite; */
+}
+circle.num-11 { fill: #B388EB; 
+  /* animation: anim11 4s alternate infinite; */
+}
+circle.num-12 { fill: #231942; 
+  /* animation: anim12 4s alternate infinite; */
+}
+circle.num-13 { fill: #FF9FE5; 
+  /* animation: anim13 4s alternate infinite; */
+}
+circle.num-14 { fill: #5E548E; 
+  /* animation: anim14 4s alternate infinite; */
+}
+circle.num-15 { fill: #419D78; 
+  /* animation: anim15 4s alternate infinite; */
+}
+circle.num-16 { fill: #654597; 
+  /* animation: anim16 4s alternate infinite; */
+}
+
+
+@keyframes colourCycle {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+@keyframes anim1  { 0% { opacity: 0 }   5.25% { opacity: 0 }   6.25% { opacity: 1 } }
+@keyframes anim2  { 0% { opacity: 0 }  11.5%  { opacity: 0 }  12.5%  { opacity: 1 } }
+@keyframes anim3  { 0% { opacity: 0 }  17.75% { opacity: 0 }  18.75% { opacity: 1 } }
+@keyframes anim4  { 0% { opacity: 0 }  24%    { opacity: 0 }  25%    { opacity: 1 } }
+@keyframes anim5  { 0% { opacity: 0 }  30.25% { opacity: 0 }  31.25% { opacity: 1 } }
+@keyframes anim6  { 0% { opacity: 0 }  36.5%  { opacity: 0 }  37.5%  { opacity: 1 } }
+@keyframes anim7  { 0% { opacity: 0 }  42.75% { opacity: 0 }  43.75% { opacity: 1 } }
+@keyframes anim8  { 0% { opacity: 0 }  49%    { opacity: 0 }  50%    { opacity: 1 } }
+@keyframes anim9  { 0% { opacity: 0 }  55.25% { opacity: 0 }  56.25% { opacity: 1 } }
+@keyframes anim10 { 0% { opacity: 0 }  61.5%  { opacity: 0 }  62.5%  { opacity: 1 } }
+@keyframes anim11 { 0% { opacity: 0 }  67.75% { opacity: 0 }  68.75% { opacity: 1 } }
+@keyframes anim12 { 0% { opacity: 0 }  74%    { opacity: 0 }  75%    { opacity: 1 } }
+@keyframes anim13 { 0% { opacity: 0 }  80.25% { opacity: 0 }  81.25% { opacity: 1 } }
+@keyframes anim14 { 0% { opacity: 0 }  86.5%  { opacity: 0 }  87.5%  { opacity: 1 } }
+@keyframes anim15 { 0% { opacity: 0 }  92.75% { opacity: 0 }  93.75% { opacity: 1 } }
+@keyframes anim16 { 0% { opacity: 0 }  99%    { opacity: 0 } 100%    { opacity: 1 } }
+
+
+/* 
+'#091540','#7692FF','#ABD2FA','#3D518C',
+'#1B2CC1','#012A36','#00A6FB','#1F7A8C',
+'#50C9CE','#58355E','#B388EB','#231942',
+'#FF9FE5','#5E548E','#419D78','#654597'
+*/
+
 
 
 

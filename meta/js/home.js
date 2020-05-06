@@ -142,17 +142,23 @@ displayOrder.addEventListener('wheel', () => {
 
 
 
-//   const x = document.querySelector('svg#numbers-4-5');
+//   const x = document.getElementsByTagName('circle');
 //   // console.dir(x);
 
 //   // console.log(x.children);
-//   for (let child of x.children) {
+//   for (let child of x) {
 
 //     console.dir(child);
-//     console.log(child.attributes.x.value);
-//     console.log(child.attributes.y.value);
-//     console.log(child.innerHTML);
+//     console.log(child.attributes.fill.value);
+//     // console.log(child.attributes.x.value);
+//     // console.log(child.attributes.y.value);
+//     // console.log(child.innerHTML);
 
+//     if( child.attributes.fill.value !== '#091540' ) {
+
+//       child.attributes.fill.value = 'none'
+
+//     }
 
 
 
