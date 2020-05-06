@@ -24,11 +24,38 @@ displayTriggers.forEach( ds => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
 // default
 displaySVGs( '4', 'quadvertex' );
+
+
 // DISPLAY DATA
 async function displaySVGs(order,style) {
   try {
+    let offset = 0;
+    squares.innerHTML = '';
+    await getData(order,style,offset);
+  } catch (error) { console.log(error) }
+  finally { 
+    loading.classList.remove('show');
+  }
+}
+
+
+async function getData(order,style,offset) {
+  try {
+    // console.log(`Loading squares ${offset} - ${offset + 200}`);
+    // fix order 4 unique/all choice subsubmenu
     if (order === '4' && style === 'quadvertex' && unique.checked) 
       style = 'unique';
     if (order === '4' && style === 'quadvertex' && all.checked) 
@@ -36,43 +63,38 @@ async function displaySVGs(order,style) {
     (order === '4' && (style === 'quadvertex' || style === 'unique'))
       ? opt.classList.remove('hide')
       : opt.classList.add('hide');
-    squares.innerHTML = '';
-    const url = `http://localhost:3000/data/${order}/${style}`;
+    const url = `http://localhost:3000/data/${order}/${style}/${offset}`;
     const rawData = await fetch(url);
     const data = await rawData.json();
     for (let i in data.rows) {
       const elem = data.rows[i].value.svg;
       squares.insertAdjacentHTML('beforeend',elem);
     }
+    // only add sentinel if we have more results left
+    if(data.rows.length === 200) {
+      const io = new IntersectionObserver(
+        entries => {
+          if(entries[0].isIntersecting) {
+            // console.log(entries[0].target, entries[0]);
+            offset += 200;
+            getData(getCurrent('order'),getCurrent('style'),offset);
+            io.unobserve(entries[0].target);
+          }
+        },{}
+      );
+      const sentinel = document.createElement('div');
+      sentinel.classList.add(`sentinel${offset}`);
+      squares.appendChild(sentinel);
+      io.observe(sentinel);
+    }
   } catch (error) { console.log(error) }
-  finally { 
-    loading.classList.remove('show');
-
-
-    const [...svgs] = document.querySelectorAll('#squares svg');
-    // console.log(svgs);
-
-    const io = new IntersectionObserver(
-      entries => {
-        console.log(entries);
-      },{}
-    );
-
-    svgs.forEach( elem => {
-      io.observe(elem);
-    });
-
-    // Start observing an element
-    // io.observe(element);
-
-    // Stop observing an element
-    // io.unobserve(element);
-
-    // Disable entire IntersectionObserver
-    // io.disconnect();
-
-  }
 }
+
+
+
+
+
+
 
 
 
