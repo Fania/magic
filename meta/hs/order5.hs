@@ -13,11 +13,10 @@ import Data.List
 
 -- compile: 
 -- ghc magic -O2 -prof
--- -fllvm ?
-
 
 -- run:
 -- ./magic -RTS
+
 
 
 -- RUN WITH:
