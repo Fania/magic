@@ -46,12 +46,17 @@ const gallery = require('./lib/gallery.js')
 
 
 
+
+
+
+
+
 async function setupOrder(n) {
   const result = await generate.index(n)
   await couch.populateDB(result, n)
 }
 // setupOrder('4a')
-// setupOrder(4)
+// setupOrder(20)
 
 
 async function initialiseAll() {

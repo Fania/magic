@@ -97,57 +97,63 @@ header.submenu label { box-sizing: border-box; }
 
 
 
-svg[id^='colours'] {
+/* svg[id^='colours'] {
   stroke: none;
   fill-opacity: 1;
+} */
+
+svg * {
+  box-sizing: border-box;
 }
 
-circle.num-1  { fill: #091540; 
+[class^='num-'] { stroke-width: 0; }
+
+.num-1  { fill: #091540; stroke: #091540; 
   /* animation: anim1 4s alternate infinite;  */
 }
-circle.num-2  { fill: #7692FF; 
+.num-2  { fill: #7692FF; stroke: #7692FF; 
   /* animation: anim2 4s alternate infinite;  */
 }
-circle.num-3  { fill: #ABD2FA; 
+.num-3  { fill: #ABD2FA; stroke: #ABD2FA; 
   /* animation: anim3 4s alternate infinite; */
 }
-circle.num-4  { fill: #3D518C; 
+.num-4  { fill: #3D518C; stroke: #3D518C;
   /* animation: anim4 4s alternate infinite; */
 }
-circle.num-5  { fill: #1B2CC1; 
+.num-5  { fill: #1B2CC1; stroke: #1B2CC1;
   /* animation: anim5 4s alternate infinite; */
 }
-circle.num-6  { fill: #012A36; 
+.num-6  { fill: #012A36; stroke: #012A36; 
   /* animation: anim6 4s alternate infinite; */
 }
-circle.num-7  { fill: #00A6FB; 
+.num-7  { fill: #00A6FB; stroke: #00A6FB; 
   /* animation: anim7 4s alternate infinite; */
 }
-circle.num-8  { fill: #1F7A8C; 
+.num-8  { fill: #1F7A8C; stroke: #1F7A8C;
   /* animation: anim8 4s alternate infinite; */
 }
-circle.num-9  { fill: #50C9CE; 
+.num-9  { fill: #50C9CE; stroke: #50C9CE; 
   /* animation: anim9 4s alternate infinite; */
 }
-circle.num-10 { fill: #58355E; 
+.num-10 { fill: #58355E; stroke: #58355E; 
   /* animation: anim10 4s alternate infinite; */
 }
-circle.num-11 { fill: #B388EB; 
+.num-11 { fill: #B388EB; stroke: #B388EB;
   /* animation: anim11 4s alternate infinite; */
 }
-circle.num-12 { fill: #231942; 
+.num-12 { fill: #231942; stroke: #231942; 
   /* animation: anim12 4s alternate infinite; */
 }
-circle.num-13 { fill: #FF9FE5; 
+.num-13 { fill: #FF9FE5; stroke: #FF9FE5; 
   /* animation: anim13 4s alternate infinite; */
 }
-circle.num-14 { fill: #5E548E; 
+.num-14 { fill: #5E548E; stroke: #5E548E; 
   /* animation: anim14 4s alternate infinite; */
 }
-circle.num-15 { fill: #419D78; 
+.num-15 { fill: #419D78; stroke: #419D78; 
   /* animation: anim15 4s alternate infinite; */
 }
-circle.num-16 { fill: #654597; 
+.num-16 { fill: #654597; stroke: #654597; 
   /* animation: anim16 4s alternate infinite; */
 }
 
