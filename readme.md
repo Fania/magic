@@ -20,7 +20,7 @@ Don't forget to set up a .env file with login info.
 - [x] selectively update only changes for bulk index (not possible)
 - [x] improve gallery style
 - [x] sort local source file every time a new square is added
-- [ ] 
+- [ ] tetris shapes for digital roots
 
 
 
