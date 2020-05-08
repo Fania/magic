@@ -38,26 +38,32 @@ Don't forget to set up a .env file with login info.
 
 ## IA
 
+pages:
+  - home
+  - gallery
+  - contribute
+  - about
+
 styles:
-  - numbers
-  - straight
-  - quadvertex
-  - quadline
-  - arc
-  - altarc
-  - circles
-  - blocks
-  - tetromino
+  - lines:
+    - numbers
+    - straight
+    - quadvertex
+    - quadline
+    - arc
+    - altarc
+  - colours:
+    - circles
+    - blocks
+    - tetromino
 
 orders: 
   - 3-20
 
 colours:
   - background
-  - stroke
-  - fill
-  - stroke alpha
-  - fill alpha
+  - stroke + alpha
+  - fill + alpha
   - fill style?
 
 sizes:
@@ -70,6 +76,10 @@ animation:
   - none
   - speed
 
+filters:
+  - length
+  - id/order + ranges
+
 info:
   - id
   - order
@@ -77,13 +87,6 @@ info:
   - numbers
   - similar ids?
   - numbers overlay?
-
-filters:
-  - length
-  - id/order
-  - id/order ranges
-  - 
-
 
 
 
