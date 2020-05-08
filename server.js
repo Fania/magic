@@ -126,7 +126,7 @@ app.post('/contribute', async (req, res) => {
 // DATA API
 
 // n = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-// s = ['arrays','arc','altarc','quadvertex','quadline','numbers','unique','straight','colours']
+// s = ['arrays','arc','altarc','quadvertex','quadline','numbers','unique','straight','circles','blocks','tetromino']
 // o = [0,200,400,600, etc]
 
 app.get('/data/:n', async (req, res) => {

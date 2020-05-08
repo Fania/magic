@@ -20,30 +20,69 @@ Don't forget to set up a .env file with login info.
 - [x] selectively update only changes for bulk index (not possible)
 - [x] improve gallery style
 - [x] sort local source file every time a new square is added
-- [ ] tetris shapes for digital roots
+- [x] tetris shapes for digital roots
+- [ ] add colour options
+- [ ] add padding options
+- [ ] add size options
+- [ ] add printing options
+- [ ] add 
+- [ ] 
+- [ ] 
+- [ ] 
 
 
 
 
 
 
-## Lazy Loading
 
-https://developers.google.com/web/updates/2016/04/intersectionobserver
+## IA
 
-1. only grab like 100 svgs from couch
-2. manually add a sentinel into dom after svgs
-3. that sentinel triggers intersection observer which calls step 1 again
+styles:
+  - numbers
+  - straight
+  - quadvertex
+  - quadline
+  - arc
+  - altarc
+  - circles
+  - blocks
+  - tetromino
 
+orders: 
+  - 3-20
 
+colours:
+  - background
+  - stroke
+  - fill
+  - stroke alpha
+  - fill alpha
+  - fill style?
 
+sizes:
+  - padding
+  - width/height
 
+animation: 
+  - sync
+  - async
+  - none
+  - speed
 
+info:
+  - id
+  - order
+  - style
+  - numbers
+  - similar ids?
+  - numbers overlay?
 
-## Art
-- create overlaid positions of all squares of number 1. etc. where is the 1 in this square, then where is it in the next? trace position of a given number. if stays in one place, brighten dot
-
-- take all numbers with a colour each and do the same above.
+filters:
+  - length
+  - id/order
+  - id/order ranges
+  - 
 
 
 
