@@ -30,12 +30,17 @@ header.mainmenu nav a.active { border-right: 3px solid white }
 
 
 
-header.submenu { background: var(--mediumBackColour); }
+header.submenu { background: var(--mediumBackColour); 
+}
 header.submenu nav a { color: var(--textColour); text-decoration: none; padding: 0 1em; }
 header.submenu nav p { padding: 0 1em; }
 header.submenu form { margin: 0; }
 header.submenu form fieldset { border: none; margin: 0; padding: 0; }
 header.submenu label { box-sizing: border-box; }
+
+
+
+
 
 /* .home { padding-top: 0 } */
 
@@ -300,8 +305,24 @@ footer a, footer p { color: #666; text-decoration: none; margin: 0; }
   header.mainmenu nav a:not(.active):hover { border-bottom: 1px solid white }
   header.mainmenu nav a { padding: 4px 1em; }
 
-  .home form { position: relative;
-    display: flex; align-items: flex-end; justify-content: space-between; }
+
+
+  .home form { 
+    /* position: relative; */
+    display: flex; 
+    flex-direction: column;
+    align-items: flex-end; justify-content: space-between; }
+
+
+  header.submenu { background: var(--mediumBackColour); 
+    /* position: fixed;  */
+    position: relative; 
+    float: left;
+    width: 140px;
+    height: calc(100vh - 228px);
+  }
+
+
 
   .home form #styleOptions label { width: unset; }
 
