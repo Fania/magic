@@ -6,3 +6,4 @@ package-lock.json
 *.o
 *.txt
 output.txt
+test.drawio
