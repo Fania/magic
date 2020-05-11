@@ -25,8 +25,8 @@ Don't forget to set up a .env file with login info.
 - [ ] add padding options
 - [ ] add size options
 - [ ] add printing options
-- [ ] add 
-- [ ] 
+- [ ] add pin-to-top / favourite feature
+- [ ] hover info for each square or put into modal
 - [ ] 
 - [ ] 
 

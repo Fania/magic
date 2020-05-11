@@ -15,26 +15,26 @@ body {
 }
 a { color: var(--textColour) }
 
-header { margin: 0; padding: 1em; }
+header { margin: 0; padding: 0 1em; }
 
-header.mainmenu { 
+.mainmenu { 
   background: var(--darkBackColour);
   display: flex; align-items: center; justify-content: space-between; }
-header.mainmenu div { display: flex; align-items: center; }
-header.mainmenu div .logo { width: 100px; height: 100px; }
-header.mainmenu div h1 { display: none; margin-left: 1em; }
-header.mainmenu nav { 
+.mainmenu div { display: flex; align-items: center; }
+.mainmenu div .logo { width: 65px; height: 65px; }
+.mainmenu div h1 { display: none; margin-left: 1em; }
+.mainmenu nav { 
    display: flex; flex-direction: column; align-items: flex-end; }
-header.mainmenu nav a { text-transform: uppercase;
+.mainmenu nav a { text-transform: uppercase;
   color: var(--textColour); box-sizing: border-box; height: 1.75em;text-decoration: none; padding: 6px 10px; }
-header.mainmenu nav a.active { border-right: 3px solid white }
+.mainmenu nav a.active { border-right: 3px solid white }
 
 
 
-header.submenu { background: var(--mediumBackColour); 
+.submenu { background: var(--mediumBackColour); 
 }
-header.submenu nav a { color: var(--textColour); text-decoration: none; padding: 0 1em; }
-header.submenu nav p { padding: 0 1em; }
+.submenu nav a { color: var(--textColour); text-decoration: none; padding: 0 1em; }
+.submenu nav p { padding: 0 1em; }
 /* header.submenu form { margin: 0; } */
 /* header.submenu form fieldset { border: none; margin: 0; padding: 0; } */
 /* header.submenu label { box-sizing: border-box; } */
@@ -298,13 +298,13 @@ footer a, footer p { color: #666; text-decoration: none; margin: 0; }
 @media screen and (min-width: 700px) {
 
   main { margin: 2em; }
-  header { padding: 2em; }
-  header.mainmenu div h1 { display: flex; margin-left: 1em; }
-  header.mainmenu nav { flex-direction: row; }
-  header.mainmenu nav a.active { 
+  header { padding: 0 2em; }
+  .mainmenu div h1 { display: flex; margin-left: 1em; }
+  .mainmenu nav { flex-direction: row; }
+  .mainmenu nav a.active { 
     border-right: none; border-top: 1px solid white; }
-  header.mainmenu nav a:not(.active):hover { border-bottom: 1px solid white }
-  header.mainmenu nav a { padding: 4px 1em; }
+  .mainmenu nav a:not(.active):hover { border-bottom: 1px solid white }
+  .mainmenu nav a { padding: 4px 1em; }
 
 
 
@@ -325,15 +325,33 @@ footer a, footer p { color: #666; text-decoration: none; margin: 0; }
 
 
 
-  header.submenu { 
+  .submenu { 
     background: var(--mediumBackColour); 
     position: relative; 
     float: left;
-    width: 140px;
-    height: calc(100vh - 228px);
+    width: 150px;
+    height: calc(100vh - 80.88px - 2em);
+    padding: 1em;
   }
-
-
+  .submenu form {  
+    display: flex; flex-direction: column; justify-content: space-around;
+    height: calc(100vh - 80.88px - 2em);
+  }
+  .submenu #styleOptions { 
+    /* display: inline-block;  */
+    /* grid-template-columns: 1fr 1fr; */
+  }
+  .submenu #styleOptions label, .submenu #styleOptions div { 
+    display: inline-block; 
+  }
+  .submenu #styleOptions [type="radio"] { display: none; }
+  .submenu #styleOptions img {
+    width: 40px; padding: 4px; box-sizing: border-box; filter: grayscale(1);
+  }
+  .submenu #styleOptions fieldset {
+    border: 0;
+    display: none;
+  }
 
 
 

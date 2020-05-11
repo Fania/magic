@@ -16,30 +16,64 @@ loadingTriggers.forEach( lt =>
   lt.addEventListener('change', () => loading.classList.add('show') )
 );
 
-// DISPLAY TRIGGERS
+
+
+
+
+const settings = {
+  "order":      "4",
+  "style":      "blocks",
+  "size":       "200px",
+  "gap":        "20px",
+  "background": "#666666",
+  "stroke":     "#FFFFFF",
+  "salpha":     "1",
+  "fill":       "#000000",
+  "falpha":     "0",
+  "animation":  "off",
+  "speed":      "50"
+}
+
+
+
+
+
+
+// ORDER OPTIONS
+
+displayOrder.addEventListener('wheel', () => {
+  const totalOptions = displayOrder.length;
+  let fromIndex = displayOrder.selectedIndex;
+  if (Math.sign(event.deltaY) === 1) {
+    let toIndex = (fromIndex + 1) % totalOptions;
+    displayOrder.selectedIndex = toIndex;
+  } else {
+    if (fromIndex === 0) fromIndex = 18;
+    let toIndex = (fromIndex - 1) % totalOptions;
+    displayOrder.selectedIndex = toIndex;
+  }
+  loading.classList.add('show')
+  displaySVGs(getCurrent('order'),getCurrent('style'));
+  settings.order = getCurrent('order');
+  saveSettings(settings);
+  event.preventDefault();
+})
+
+
+
+
+
+
+// STYLE OPTIONS
+
 displayTriggers.forEach( ds => {
   ds.addEventListener('change', () => { 
     displaySVGs(getCurrent('order'),getCurrent('style'));
   });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-// default
 displaySVGs( getCurrent('order'),getCurrent('style') );
 
-
-// DISPLAY DATA
 async function displaySVGs(order,style) {
   try {
     let offset = 0;
@@ -50,7 +84,6 @@ async function displaySVGs(order,style) {
     loading.classList.remove('show');
   }
 }
-
 
 async function getData(order,style,offset) {
   try {
@@ -93,18 +126,39 @@ async function getData(order,style,offset) {
 
 
 
+//  SIZE OPTIONS
+
+const size = document.getElementById('size');
+const space = document.getElementById('space');
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// UTILITY
 
 function getCurrent(thing) {
   switch (thing) {
-    case 'style':
-      return document.querySelector('input[name="displayStyle"]:checked').id;
     case 'order':
       return displayOrder[displayOrder.selectedIndex].value;
+    case 'style':
+      return document.querySelector('input[name="displayStyle"]:checked').id;
     case 'amount':
       return document.querySelector('input[name="displayAmount"]:checked').id;
   }
@@ -113,21 +167,26 @@ function getCurrent(thing) {
 
 
 
-displayOrder.addEventListener('wheel', () => {
-  const totalOptions = displayOrder.length;
-  let fromIndex = displayOrder.selectedIndex;
-  if (Math.sign(event.deltaY) === 1) {
-    let toIndex = (fromIndex + 1) % totalOptions;
-    displayOrder.selectedIndex = toIndex;
-  } else {
-    if (fromIndex === 0) fromIndex = 18;
-    let toIndex = (fromIndex - 1) % totalOptions;
-    displayOrder.selectedIndex = toIndex;
-  }
-  loading.classList.add('show')
-  displaySVGs(getCurrent('order'),getCurrent('style'));
-  event.preventDefault();
-})
+
+function saveSettings(settingsJSON) {
+
+  const settingsString = JSON.stringify(settingsJSON);
+  localStorage.setItem("magicSettings", settingsString);
+  console.log("saving", settingsJSON);
+
+}
+
+function getSettings() {
+
+  const settingsString = localStorage.getItem("magicSettings");
+  const settingsJSON = JSON.parse(settingsString);
+  console.log("retrieving", settingsJSON);
+  return settingsJSON;
+
+}
+
+
+
 
 
 
