@@ -329,7 +329,7 @@ footer a, footer p { color: #666; text-decoration: none; margin: 0; }
     background: var(--mediumBackColour); 
     position: relative; 
     float: left;
-    width: 150px;
+    width: 165px;
     height: calc(100vh - 80.88px - 2em);
     padding: 1em;
   }

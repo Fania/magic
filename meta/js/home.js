@@ -9,30 +9,24 @@ const displayTriggers = (displayStyles.concat(displayOrder,displayAmounts)).flat
 const unique = document.getElementById('unique');
 const all = document.getElementById('all');
 const opt = document.getElementById('order4quadOptions');
+const extraStyles = document.getElementById('extraStyles');
 
 
 // LOADING ICON TRIGGERS
+
 loadingTriggers.forEach( lt => 
   lt.addEventListener('change', () => loading.classList.add('show') )
 );
 
 
 
+// FIRST LOAD
+
+updateOptions();
+loadSVGs(getCurrent('order'),getCurrent('style'));
+adjustSize();
 
 
-const settings = {
-  "order":      "4",
-  "style":      "blocks",
-  "size":       "200px",
-  "gap":        "20px",
-  "background": "#666666",
-  "stroke":     "#FFFFFF",
-  "salpha":     "1",
-  "fill":       "#000000",
-  "falpha":     "0",
-  "animation":  "off",
-  "speed":      "50"
-}
 
 
 
@@ -53,9 +47,10 @@ displayOrder.addEventListener('wheel', () => {
     displayOrder.selectedIndex = toIndex;
   }
   loading.classList.add('show')
-  displaySVGs(getCurrent('order'),getCurrent('style'));
-  settings.order = getCurrent('order');
+  const settings = getSettings();
+  settings.order = parseInt(displayOrder[displayOrder.selectedIndex].value);
   saveSettings(settings);
+  loadSVGs(getCurrent('order'),getCurrent('style'));
   event.preventDefault();
 })
 
@@ -68,13 +63,14 @@ displayOrder.addEventListener('wheel', () => {
 
 displayTriggers.forEach( ds => {
   ds.addEventListener('change', () => { 
-    displaySVGs(getCurrent('order'),getCurrent('style'));
+    const settings = getSettings();
+    settings.style = document.querySelector('input[name="displayStyle"]:checked').id;
+    saveSettings(settings);
+    loadSVGs(getCurrent('order'),getCurrent('style'));
   });
 });
 
-displaySVGs( getCurrent('order'),getCurrent('style') );
-
-async function displaySVGs(order,style) {
+async function loadSVGs(order,style) {
   try {
     let offset = 0;
     squares.innerHTML = '';
@@ -129,11 +125,54 @@ async function getData(order,style,offset) {
 //  SIZE OPTIONS
 
 const size = document.getElementById('size');
-const space = document.getElementById('space');
+size.addEventListener('input', adjustSize);
+function adjustSize() {
+  const settings = getSettings();
+  settings.size = parseInt(document.getElementById('size').value);
+  saveSettings(settings);
+  updateStyles();
+  // extraStyles.innerText = `svg { width: ${settings.size}% }`;
+}
+
+
+function updateStyles() {
+
+  const [...rules] = document.styleSheets[0].cssRules;
+  // const svgRule = [...rules].find(rule => rule.selectorText === "svg");
+  // console.log('svgRule', svgRule)
+  const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
+  console.log('svgRuleIndex', svgRuleIndex);
+  document.styleSheets[0].deleteRule(svgRuleIndex)
+
+  // update all setting styles here
+  // 
+  const text = `svg {
+    stroke: red;
+    width: ${getCurrent('size')}%;
+  }`;
+
+  document.styleSheets[0].insertRule(text, document.styleSheets[0].cssRules.length)
+
+}
 
 
 
 
+
+
+
+
+
+//  GAP OPTIONS
+
+// const space = document.getElementById('space');
+// space.addEventListener('input', adjustSpace);
+// function adjustSpace() {
+//   const settings = getSettings();
+//   settings.size = document.getElementById('size').value;
+//   saveSettings(settings);
+//   extraStyles.innerText = `svg { width: ${settings.size}% }`;
+// }
 
 
 
@@ -154,35 +193,66 @@ const space = document.getElementById('space');
 // UTILITY
 
 function getCurrent(thing) {
+  const settings = getSettings();
   switch (thing) {
     case 'order':
-      return displayOrder[displayOrder.selectedIndex].value;
+      return settings.order;
     case 'style':
-      return document.querySelector('input[name="displayStyle"]:checked').id;
+      return settings.style;
     case 'amount':
-      return document.querySelector('input[name="displayAmount"]:checked').id;
+      return settings.amount;
+    case 'size':
+      return settings.size;
+    case 'settings':
+      return settings;
   }
 }
 
 
 
+function updateOptions() {
+  // order
+  displayOrder.selectedIndex = parseInt(getCurrent('order')) - 3;
+  // style
+  document.querySelector(`#${getCurrent('style')}`).checked = true;
+  // size
+  document.getElementById('size').value = getCurrent('size');
+}
+
+
 
 
 function saveSettings(settingsJSON) {
-
   const settingsString = JSON.stringify(settingsJSON);
   localStorage.setItem("magicSettings", settingsString);
-  console.log("saving", settingsJSON);
-
+  // console.log("saving", settingsJSON);
 }
 
 function getSettings() {
-
   const settingsString = localStorage.getItem("magicSettings");
-  const settingsJSON = JSON.parse(settingsString);
-  console.log("retrieving", settingsJSON);
+  let settingsJSON = {};
+  if (settingsString === null) {
+    settingsJSON = { 
+      "order":      4,
+      "style":      "blocks",
+      "amount":     383,
+      "size":       "20",
+      "gap":        20,
+      "background": "#000000",
+      "stroke":     "#FFFFFF",
+      "salpha":     1,
+      "fill":       "#666666",
+      "falpha":     0,
+      "animation":  "off",
+      "speed":      50
+    }
+    saveSettings(settingsJSON);
+    // console.log("first-time setup");
+  } else {
+    settingsJSON = JSON.parse(settingsString);
+    // console.log("retrieving", settingsJSON);
+  }
   return settingsJSON;
-
 }
 
 

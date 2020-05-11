@@ -21,14 +21,14 @@ Don't forget to set up a .env file with login info.
 - [x] improve gallery style
 - [x] sort local source file every time a new square is added
 - [x] tetris shapes for digital roots
-- [ ] add colour options
-- [ ] add padding options
-- [ ] add size options
+- [x] stroke width
+- [x] add size options
+- [x] add colour options
+- [x] add padding options
 - [ ] add printing options
 - [ ] add pin-to-top / favourite feature
 - [ ] hover info for each square or put into modal
-- [ ] 
-- [ ] 
+- [ ] number overlay?
 
 
 
@@ -44,37 +44,6 @@ pages:
   - contribute
   - about
 
-styles:
-  - lines:
-    - numbers
-    - straight
-    - quadvertex
-    - quadline
-    - arc
-    - altarc
-  - colours:
-    - circles
-    - blocks
-    - tetromino
-
-orders: 
-  - 3-20
-
-colours:
-  - background
-  - stroke + alpha
-  - fill + alpha
-  - fill style?
-
-sizes:
-  - padding
-  - width/height
-
-animation: 
-  - sync
-  - async
-  - none
-  - speed
 
 filters:
   - length
