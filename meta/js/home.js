@@ -117,17 +117,11 @@ async function getData(order,style,offset) {
 }
 
 
-
-
-//  SIZE OPTION
+//  SIZE OPTIONS
 const size = document.getElementById('size');
 size.addEventListener('input', ()=> { adjust('size') });
-
-//  GAP OPTION
 const gap = document.getElementById('gap');
 gap.addEventListener('input', ()=> { adjust('gap') });
-
-//  STROKE-WIDTH OPTION
 const strokeWidth = document.getElementById('strokeWidth');
 strokeWidth.addEventListener('input', ()=> { adjust('strokeWidth') });
 
@@ -143,11 +137,58 @@ fill.addEventListener('input', ()=> { adjust('fill') });
 const falpha = document.getElementById('falpha');
 falpha.addEventListener('input', ()=> { adjust('falpha') });
 
+// ANIMATION OPTIONS
+
+
+// PRESET OPTIONS
+const reset = document.getElementById('reset');
+reset.addEventListener('click', ()=> { 
+  const settings = getSettings();
+  settings['order'] = parseInt(displayOrder[displayOrder.selectedIndex].value);
+  settings['style'] = document.querySelector('input[name="displayStyle"]:checked').id;
+  settings['amount'] = document.querySelector('input[name="displayAmount"]:checked').id;
+  settings['size'] = "20";
+  settings['gap'] = "20";
+  settings['background'] = "#222222";
+  settings['stroke'] = "#FFFFFF";
+  settings['strokeWidth'] = "2";
+  settings['salpha'] = "255";
+  settings['fill'] = "#666666";
+  settings['falpha'] = "0";
+  settings['animation'] = "off";
+  settings['speed'] = 50;
+  saveSettings(settings);
+});
+const random = document.getElementById('random');
+random.addEventListener('click', ()=> { 
+  const settings = getSettings();
+  settings['order'] = parseInt(displayOrder[displayOrder.selectedIndex].value);
+  settings['style'] = document.querySelector('input[name="displayStyle"]:checked').id;
+  settings['amount'] = document.querySelector('input[name="displayAmount"]:checked').id;
+  settings['size'] = getRandomInt(1, 50);
+  settings['gap'] = getRandomInt(0, 50);
+  settings['background'] = getRandomColour();
+  settings['stroke'] = getRandomColour();
+  settings['strokeWidth'] = getRandomInt(1, 30);
+  settings['salpha'] = getRandomInt(0, 255);
+  settings['fill'] = getRandomColour();
+  settings['falpha'] = getRandomInt(0, 255);
+  settings['animation'] = "off";
+  settings['speed'] = 50;
+  saveSettings(settings);
+});
 
 
 
-
-
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min; 
+  //The maximum is inclusive and the minimum is inclusive 
+}
+function getRandomColour() {
+  return `#${getHex(getRandomInt(0, 255))}${getHex(getRandomInt(0, 255))}${getHex(getRandomInt(0, 255))}`;
+}
 
 
 
@@ -220,7 +261,6 @@ function updateOptions() {
   document.getElementById('salpha').value = getCurrent('salpha');
   document.getElementById('fill').value = getCurrent('fill');
   document.getElementById('falpha').value = getCurrent('falpha');
-
   updateStyles();
 }
 
@@ -248,6 +288,7 @@ function updateStyles() {
 function saveSettings(settingsJSON) {
   const settingsString = JSON.stringify(settingsJSON);
   localStorage.setItem("magicSettings", settingsString);
+  updateOptions();
   updateStyles();
   // console.log("saving", settingsJSON);
 }

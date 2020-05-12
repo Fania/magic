@@ -1,6 +1,6 @@
 html {
   --backColour: #222222;
-  --mediumBackColour: #11111180;
+  --mediumBackColour: #11111140;
   --darkBackColour: #11111195;
   --textColour: #eeeeee;
 }
@@ -323,17 +323,19 @@ footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
   /* #order4quadOptions { display: unset;
     position: absolute; bottom: -20px; left: unset; right:260px; } */
 
+  .submenu { padding: 1em; }
 
+  .submenu #manual { margin: 1em }
 
-  .submenu { 
+  .submenu.home { 
     background: var(--mediumBackColour); 
     position: relative; 
     float: left;
     width: 165px;
     height: calc(100vh - 80.88px - 2em);
-    padding: 1em;
+    
   }
-  .submenu form {  
+  .submenu.home form {  
     display: flex; flex-direction: column; justify-content: space-around;
     height: calc(100vh - 80.88px - 2em);
   }
