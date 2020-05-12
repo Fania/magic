@@ -1,7 +1,7 @@
 html {
   --backColour: #222222;
   --mediumBackColour: #11111180;
-  --darkBackColour: #111111;
+  --darkBackColour: #11111195;
   --textColour: #eeeeee;
 }
 
@@ -271,7 +271,7 @@ hr { margin: 2em 0; }
 footer {
   margin-top: 3em; background: var(--darkBackColour); padding: 1em; 
   display: flex; justify-content: space-between; }
-footer a, footer p { color: #666; text-decoration: none; margin: 0; }
+footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
 
 
 
@@ -352,9 +352,20 @@ footer a, footer p { color: #666; text-decoration: none; margin: 0; }
     border: 0;
     display: none;
   }
+  .submenu #colourOptions [type="color"] {
+    width: 35px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+  .submenu #colourOptions label { 
+    display: block; 
+  }
 
 
-
+  .submenu #animationOptions label { 
+    display: block; 
+  }
 
 
 

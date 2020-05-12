@@ -112,17 +112,18 @@
     </fieldset>
 
     <fieldset id="sizeOptions">
+      <legend>Size</legend>
       <label>
-        <span>Size</span>
-        <input type="range" id="size" value="20">
+        <span>Width/Height</span>
+        <input type="range" id="size" value="20" step="5" min="1">
       </label>
       <label>
         <span>Gap</span>
         <input type="range" id="gap" value="20">
       </label>
       <label>
-        <span>Stroke-Width</span>
-        <input type="range" id="strokeWidth" value="2">
+        <span>Line-Width</span>
+        <input type="range" id="strokeWidth" value="2" min="1" max="30">
       </label>
     </fieldset>
 
@@ -130,7 +131,7 @@
       <legend>Colours</legend>
       <label>
         <span>Background</span>
-        <input type="color" id="back" value="#000000">
+        <input type="color" id="background" value="#000000">
       </label>
       <label>
         <span>Stroke</span>
@@ -138,7 +139,7 @@
       </label>
       <label>
         <span>Stroke Alpha</span>
-        <input type="range" id="salpha" value="0">
+        <input type="range" id="salpha" value="255" min="0" max="255" step="5">
       </label>
       <label>
         <span>Fill</span>
@@ -146,7 +147,7 @@
       </label>
       <label>
         <span>Fill Alpha</span>
-        <input type="range" id="falpha" value="1" min="0" max="1">
+        <input type="range" id="falpha" value="0" min="0" max="255" step="5">
       </label>
     </fieldset>
 

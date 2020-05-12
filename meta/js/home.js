@@ -24,7 +24,7 @@ loadingTriggers.forEach( lt =>
 
 updateOptions();
 loadSVGs(getCurrent('order'),getCurrent('style'));
-adjustSize();
+// adjustSize();
 
 
 
@@ -60,7 +60,6 @@ displayOrder.addEventListener('wheel', () => {
 
 
 // STYLE OPTIONS
-
 displayTriggers.forEach( ds => {
   ds.addEventListener('change', () => { 
     const settings = getSettings();
@@ -69,7 +68,6 @@ displayTriggers.forEach( ds => {
     loadSVGs(getCurrent('order'),getCurrent('style'));
   });
 });
-
 async function loadSVGs(order,style) {
   try {
     let offset = 0;
@@ -80,7 +78,6 @@ async function loadSVGs(order,style) {
     loading.classList.remove('show');
   }
 }
-
 async function getData(order,style,offset) {
   try {
     // console.log(`Loading squares ${offset} - ${offset + 200}`);
@@ -122,38 +119,29 @@ async function getData(order,style,offset) {
 
 
 
-//  SIZE OPTIONS
-
+//  SIZE OPTION
 const size = document.getElementById('size');
-size.addEventListener('input', adjustSize);
-function adjustSize() {
-  const settings = getSettings();
-  settings.size = parseInt(document.getElementById('size').value);
-  saveSettings(settings);
-  updateStyles();
-  // extraStyles.innerText = `svg { width: ${settings.size}% }`;
-}
+size.addEventListener('input', ()=> { adjust('size') });
 
+//  GAP OPTION
+const gap = document.getElementById('gap');
+gap.addEventListener('input', ()=> { adjust('gap') });
 
-function updateStyles() {
+//  STROKE-WIDTH OPTION
+const strokeWidth = document.getElementById('strokeWidth');
+strokeWidth.addEventListener('input', ()=> { adjust('strokeWidth') });
 
-  const [...rules] = document.styleSheets[0].cssRules;
-  // const svgRule = [...rules].find(rule => rule.selectorText === "svg");
-  // console.log('svgRule', svgRule)
-  const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
-  console.log('svgRuleIndex', svgRuleIndex);
-  document.styleSheets[0].deleteRule(svgRuleIndex)
-
-  // update all setting styles here
-  // 
-  const text = `svg {
-    stroke: red;
-    width: ${getCurrent('size')}%;
-  }`;
-
-  document.styleSheets[0].insertRule(text, document.styleSheets[0].cssRules.length)
-
-}
+//  COLOUR OPTIONS
+const background = document.getElementById('background');
+background.addEventListener('input', ()=> { adjust('background') });
+const stroke = document.getElementById('stroke');
+stroke.addEventListener('input', ()=> { adjust('stroke') });
+const salpha = document.getElementById('salpha');
+salpha.addEventListener('input', ()=> { adjust('salpha') });
+const fill = document.getElementById('fill');
+fill.addEventListener('input', ()=> { adjust('fill') });
+const falpha = document.getElementById('falpha');
+falpha.addEventListener('input', ()=> { adjust('falpha') });
 
 
 
@@ -163,16 +151,6 @@ function updateStyles() {
 
 
 
-//  GAP OPTIONS
-
-// const space = document.getElementById('space');
-// space.addEventListener('input', adjustSpace);
-// function adjustSpace() {
-//   const settings = getSettings();
-//   settings.size = document.getElementById('size').value;
-//   saveSettings(settings);
-//   extraStyles.innerText = `svg { width: ${settings.size}% }`;
-// }
 
 
 
@@ -203,28 +181,74 @@ function getCurrent(thing) {
       return settings.amount;
     case 'size':
       return settings.size;
+    case 'gap':
+      return settings.gap;
+    case 'strokeWidth':
+      return settings.strokeWidth;
+    case 'background':
+      return settings.background;
+    case 'stroke':
+      return settings.stroke;
+    case 'salpha':
+      return settings.salpha;
+    case 'fill':
+      return settings.fill;
+    case 'falpha':
+      return settings.falpha;
     case 'settings':
       return settings;
   }
 }
 
 
-
-function updateOptions() {
-  // order
-  displayOrder.selectedIndex = parseInt(getCurrent('order')) - 3;
-  // style
-  document.querySelector(`#${getCurrent('style')}`).checked = true;
-  // size
-  document.getElementById('size').value = getCurrent('size');
+function adjust(thing) {
+  const settings = getSettings();
+  settings[thing] = document.getElementById(thing).value;
+  saveSettings(settings);
 }
 
+
+
+function updateOptions() {
+  displayOrder.selectedIndex = parseInt(getCurrent('order')) - 3;
+  document.querySelector(`#${getCurrent('style')}`).checked = true;
+  document.getElementById('size').value = getCurrent('size');
+  document.getElementById('gap').value = getCurrent('gap');
+  document.getElementById('strokeWidth').value = getCurrent('strokeWidth');
+  document.getElementById('background').value = getCurrent('background');
+  document.getElementById('stroke').value = getCurrent('stroke');
+  document.getElementById('salpha').value = getCurrent('salpha');
+  document.getElementById('fill').value = getCurrent('fill');
+  document.getElementById('falpha').value = getCurrent('falpha');
+
+  updateStyles();
+}
+
+
+
+function updateStyles() {
+  const [...rules] = document.styleSheets[0].cssRules;
+  const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
+  // console.log('svgRuleIndex', svgRuleIndex);
+  document.styleSheets[0].deleteRule(svgRuleIndex)
+  const text = `svg {
+    stroke: ${getCurrent('stroke')}${getHex(getCurrent('salpha'))};
+    fill: ${getCurrent('fill')}${getHex(getCurrent('falpha'))};
+    stroke-width: ${getCurrent('strokeWidth')}px;
+    width: ${getCurrent('size')}%;
+    margin: ${getCurrent('gap')}px;
+  }`;
+  document.styleSheets[0].insertRule(text, document.styleSheets[0].cssRules.length);
+  document.body.style.background = getCurrent('background');
+
+}
 
 
 
 function saveSettings(settingsJSON) {
   const settingsString = JSON.stringify(settingsJSON);
   localStorage.setItem("magicSettings", settingsString);
+  updateStyles();
   // console.log("saving", settingsJSON);
 }
 
@@ -233,21 +257,22 @@ function getSettings() {
   let settingsJSON = {};
   if (settingsString === null) {
     settingsJSON = { 
-      "order":      4,
-      "style":      "blocks",
-      "amount":     383,
-      "size":       "20",
-      "gap":        20,
-      "background": "#000000",
-      "stroke":     "#FFFFFF",
-      "salpha":     1,
-      "fill":       "#666666",
-      "falpha":     0,
-      "animation":  "off",
-      "speed":      50
+      "order":       4,
+      "style":       "blocks",
+      "amount":      383,
+      "size":        "20",
+      "gap":         "20",
+      "background":  "#222222",
+      "stroke":      "#FFFFFF",
+      "strokeWidth": "2",
+      "salpha":      "255",
+      "fill":        "#666666",
+      "falpha":      "0",
+      "animation":   "off",
+      "speed":       50
     }
     saveSettings(settingsJSON);
-    // console.log("first-time setup");
+    console.log("first-time setup");
   } else {
     settingsJSON = JSON.parse(settingsString);
     // console.log("retrieving", settingsJSON);
@@ -256,6 +281,12 @@ function getSettings() {
 }
 
 
+function getHex(dec) {
+  return (parseInt(dec) + 0x10000).toString(16).substr(-2).toUpperCase();
+}
+function getDec(hex) { 
+  return parseInt(hex,16); 
+}
 
 
 

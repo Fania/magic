@@ -29,7 +29,7 @@ Don't forget to set up a .env file with login info.
 - [ ] add pin-to-top / favourite feature
 - [ ] hover info for each square or put into modal
 - [ ] number overlay?
-
+- [ ] fix 880/383 options for quadvertex4
 
 
 
