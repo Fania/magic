@@ -11,7 +11,7 @@
     <a id="unfilteredMenu" href="">All</a>
   </nav> #}
 
-  <form>
+  <form action="/" method="post">
   
     <fieldset id="orderOptions">
       <label>
@@ -172,9 +172,13 @@
     </fieldset>
 
     <fieldset id="presetOptions">
-      <legend>Presets</legend>
+      <legend>Themes</legend>
       <input type="button" id="reset" value="reset">
       <input type="button" id="random" value="random">
+      <select id="themes">
+        <option value="">Choose</option>
+      </select>
+      <input type="submit" name="saveTheme" id="saveTheme" value="save">
     </fieldset>
 
 

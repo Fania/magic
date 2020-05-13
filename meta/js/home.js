@@ -197,11 +197,45 @@ function getRandomColour() {
 
 
 
+// POPULATE THEME OPTIONS
+const themes = document.getElementById('themes');
 
+populateThemeOptions();
+async function populateThemeOptions() {
+  try {
+    const url = `http://localhost:3000/data/themes`;
+    const rawData = await fetch(url);
+    const data = await rawData.json();
+    for (let i in data.rows) {
+      const name = data.rows[i].id;
+      const capName = name[0].toUpperCase() + name.slice(1);
+      const option = document.createElement('option');
+      option.value = name;
+      option.innerText = capName;
+      themes.appendChild(option);
+    }
+  } catch (error) { console.log(error) }
+}
 
+themes.addEventListener('change', ()=> { 
+  getTheme(event.target.value);
+});
 
+async function getTheme(name) {
+  try {
+    const url = `http://localhost:3000/data/themes`;
+    const rawData = await fetch(url);
+    const data = await rawData.json();
+    const theme = data.rows.find(item => item.id === name).doc;
+    console.log(theme);
 
+  } catch (error) { console.log(error) }
+}
 
+const saveTheme = document.getElementById('saveTheme');
+saveTheme.addEventListener('click', ()=> {
+  
+});
 
 
 

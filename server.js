@@ -41,7 +41,42 @@ const gallery = require('./lib/gallery.js')
 //   console.log(svgString)
 // })
 
+const defaultTheme = { 
+  "_id":         "default",
+  "order":       4,
+  "style":       "blocks",
+  "amount":      383,
+  "size":        "20",
+  "gap":         "20",
+  "background":  "#222222",
+  "stroke":      "#FFFFFF",
+  "strokeWidth": "2",
+  "salpha":      "255",
+  "fill":        "#666666",
+  "falpha":      "0",
+  "animation":   "off",
+  "speed":       50
+}
 
+const cherryBlossom = {
+  "_id": "cherryBlossom",
+  "amount": "unique",
+  "animation": "off",
+  "background": "#C99AB5",
+  "falpha": 224,
+  "fill": "#F9C2D5",
+  "gap": "0",
+  "order": 5,
+  "salpha": 161,
+  "size": "16",
+  "speed": 50,
+  "stroke": "#816443",
+  "strokeWidth": 15,
+  "style": "quadvertex"
+}
+
+// couch.insertTheme(defaultTheme)
+// couch.insertTheme(cherryBlossom)
 
 
 
@@ -93,6 +128,12 @@ app.listen(3000, () => {
 
 // ROUTES
 app.get('/', (req, res) => { res.render('home.njk') })
+app.post('/', (req, res) => { 
+  const theme = req.body.saveTheme
+  console.log(theme)
+  // couch.insertTheme(theme)
+  res.render('home.njk')
+})
 
 app.get('/gallery', (req, res) => { 
   res.render('gallery.njk', { files: gallery.getFiles() })
@@ -144,4 +185,8 @@ app.get('/data/:n/:s/:o', async (req, res) => {
 app.get('/data/:n/source', async (req, res) => {
   const order = req.params.n
   res.sendFile(`./data/source${order}.json`, {root: './'})
+})
+app.get('/data/themes', async (req, res) => {
+  const data = await couch.viewAllDB('themes')
+  res.send( data )
 })
