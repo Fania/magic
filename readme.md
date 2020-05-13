@@ -31,6 +31,8 @@ Don't forget to set up a .env file with login info.
 - [ ] number overlay?
 - [ ] fix 880/383 options for quadvertex4
 - [ ] favorite theme
+- [ ] enable query parameters for bookmarking and sharing
+- [ ] themes load only after page reload
 
 
 

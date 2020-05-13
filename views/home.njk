@@ -11,12 +11,13 @@
     <a id="unfilteredMenu" href="">All</a>
   </nav> #}
 
-  <form action="/" method="post">
+  <form id="settings" action="/" method="POST" >
+  {# <form id="settings"> #}
   
     <fieldset id="orderOptions">
       <label>
         <span>Order</span>
-        <select name="displayOrder" id="order">
+        <select name="order" id="order">
           <option value="3">3</option>
           <option value="4" selected>4</option>
           <option value="5">5</option>
@@ -41,11 +42,11 @@
 
     {# <fieldset id="order4quadOptions">
       <label for="all">
-        <input type="radio" id="all" name="displayAmount">
+        <input type="radio" id="all" name="amount">
         <span>All | </span>
       </label>
       <label for="unique">
-        <input type="radio" id="unique" name="displayAmount" checked>
+        <input type="radio" id="unique" name="amount" checked>
         <span>Uniques</span>
       </label>
     </fieldset> #}
@@ -53,59 +54,59 @@
     <fieldset id="styleOptions">
       <legend>Style</legend>
       <label>
-        <input type="radio" id="numbers" name="displayStyle" >
+        <input type="radio" id="numbers" value="numbers" name="style" >
         <img src="meta/imgs/o3s1n.svg">
         {# <span>Numbers</span> #}
       </label>
       <label>
-        <input type="radio" id="straight" name="displayStyle">
+        <input type="radio" id="straight" value="straight" name="style">
         <img src="meta/imgs/o3s1s.svg">
         {# <span>Straight</span> #}
       </label>
       <div>
         <label>
-          <input type="radio" id="quadvertex" name="displayStyle" >
+          <input type="radio" id="quadvertex" value="quadvertex" name="style" >
           <div><img src="meta/imgs/o3s1qv.svg"></div>
           {# <span>Quadvertex</span> #}
         </label>
         <fieldset id="order4quadOptions">
           <label>
-            <input type="radio" id="all" name="displayAmount">
+            <input type="radio" id="all" value="all" name="amount">
             <span>880 | </span>
           </label>
           <label>
-            <input type="radio" id="unique" name="displayAmount" checked>
+            <input type="radio" id="unique" value="unique" name="amount" checked>
             <span>383</span>
           </label>
         </fieldset>
       </div>
       <label>
-        <input type="radio" id="quadline" name="displayStyle">
+        <input type="radio" id="quadline" value="quadline" name="style">
         <img src="meta/imgs/o3s1ql.svg">
         {# <span>Quadline</span> #}
       </label>
       <label>
-        <input type="radio" id="arc" name="displayStyle">
+        <input type="radio" id="arc" value="arc" name="style">
         <div><img src="meta/imgs/o3s1a.svg"></div>
         {# <span>Arc</span> #}
       </label>
       <label>
-        <input type="radio" id="altarc" name="displayStyle">
+        <input type="radio" id="altarc" value="altarc" name="style">
         <div><img src="meta/imgs/o3s1aa.svg"></div>
         {# <span>Alt-Arc</span> #}
       </label>
       <label>
-        <input type="radio" id="circles" name="displayStyle" >
+        <input type="radio" id="circles" value="circles" name="style" >
         <div><img src="meta/imgs/o3s1c.svg"></div>
         {# <span>Colours</span> #}
       </label>
       <label>
-        <input type="radio" id="blocks" name="displayStyle" checked>
+        <input type="radio" id="blocks" value="blocks" name="style" checked>
         <div><img src="meta/imgs/o3s1b.svg"></div>
         {# <span>Blocks</span> #}
       </label>
       <label>
-        <input type="radio" id="tetromino" name="displayStyle" >
+        <input type="radio" id="tetromino" value="tetromino" name="style" >
         <div><img src="meta/imgs/o3s1t.svg"></div>
         {# <span>Tetromino</span> #}
       </label>
@@ -115,15 +116,15 @@
       <legend>Size</legend>
       <label>
         <span>Width/Height</span>
-        <input type="range" id="size" value="20" step="5" min="1">
+        <input type="range" id="size" name="size" value="20" step="5" min="1">
       </label>
       <label>
         <span>Gap</span>
-        <input type="range" id="gap" value="20">
+        <input type="range" id="gap" name="gap" value="20">
       </label>
       <label>
         <span>Line-Width</span>
-        <input type="range" id="strokeWidth" value="2" min="1" max="30">
+        <input type="range" id="strokeWidth" name="strokeWidth" value="2" min="1" max="30">
       </label>
     </fieldset>
 
@@ -131,23 +132,23 @@
       <legend>Colours</legend>
       <label>
         <span>Background</span>
-        <input type="color" id="background" value="#000000">
+        <input type="color" id="background" name="background" value="#000000">
       </label>
       <label>
         <span>Stroke</span>
-        <input type="color" id="stroke" value="#FFFFFF">
+        <input type="color" id="stroke" name="stroke" value="#FFFFFF">
       </label>
       <label>
         <span>Stroke Alpha</span>
-        <input type="range" id="salpha" value="255" min="0" max="255" step="5">
+        <input type="range" id="salpha" name="salpha" value="255" min="0" max="255" step="5">
       </label>
       <label>
         <span>Fill</span>
-        <input type="color" id="fill" value="#666666">
+        <input type="color" id="fill" name="fill" value="#666666">
       </label>
       <label>
         <span>Fill Alpha</span>
-        <input type="range" id="falpha" value="0" min="0" max="255" step="5">
+        <input type="range" id="falpha" name="falpha" value="0" min="0" max="255" step="5">
       </label>
     </fieldset>
 
@@ -155,19 +156,19 @@
       <legend>Animation</legend>
       <label>
         <span>sync</span>
-        <input type="radio" id="animSync" name="animationStyle">
+        <input type="radio" id="animSync" name="animation" value="sync">
       </label>
       <label>
         <span>async</span>
-        <input type="radio" id="animAsync" name="animationStyle">
+        <input type="radio" id="animAsync" name="animation" value="async">
       </label>
       <label>
         <span>off</span>
-        <input type="radio" id="animOff" name="animationStyle" checked>
+        <input type="radio" id="animOff" name="animation" value="off" checked>
       </label>
       <label>
         <span>Speed</span>
-        <input type="range" id="speed" value="50">
+        <input type="range" id="speed" name="speed" value="50">
       </label>
     </fieldset>
 
@@ -178,7 +179,8 @@
       <select id="themes">
         <option value="">Choose</option>
       </select>
-      <input type="submit" name="saveTheme" id="saveTheme" value="save">
+      <input type="submit" id="saveTheme" value="save">
+      <input type="hidden" id="themeName" name="_id" value="">
     </fieldset>
 
 

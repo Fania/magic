@@ -128,10 +128,10 @@ app.listen(3000, () => {
 
 // ROUTES
 app.get('/', (req, res) => { res.render('home.njk') })
-app.post('/', (req, res) => { 
-  const theme = req.body.saveTheme
-  console.log(theme)
-  // couch.insertTheme(theme)
+app.post('/', async (req, res) => { 
+  const theme = req.body
+  // console.log(theme)
+  await couch.insertTheme(theme)
   res.render('home.njk')
 })
 

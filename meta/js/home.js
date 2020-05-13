@@ -1,15 +1,14 @@
 'use strict';
 
 const [...menuTriggers] = document.querySelectorAll('nav a');
-const [...displayStyles] = document.getElementsByName('displayStyle');
-const [...displayAmounts] = document.getElementsByName('displayAmount');
+const [...displayStyles] = document.getElementsByName('style');
+const [...displayAmounts] = document.getElementsByName('amount');
 const displayOrder = document.getElementById('order');
 const loadingTriggers = (menuTriggers.concat(displayStyles,displayOrder,displayAmounts)).flat(Infinity);
 const displayTriggers = (displayStyles.concat(displayOrder,displayAmounts)).flat(Infinity);
 const unique = document.getElementById('unique');
 const all = document.getElementById('all');
 const opt = document.getElementById('order4quadOptions');
-const extraStyles = document.getElementById('extraStyles');
 
 
 // LOADING ICON TRIGGERS
@@ -63,7 +62,7 @@ displayOrder.addEventListener('wheel', () => {
 displayTriggers.forEach( ds => {
   ds.addEventListener('change', () => { 
     const settings = getSettings();
-    settings.style = document.querySelector('input[name="displayStyle"]:checked').id;
+    settings.style = document.querySelector('input[name="style"]:checked').id;
     saveSettings(settings);
     loadSVGs(getCurrent('order'),getCurrent('style'));
   });
@@ -145,8 +144,8 @@ const reset = document.getElementById('reset');
 reset.addEventListener('click', ()=> { 
   const settings = getSettings();
   settings['order'] = parseInt(displayOrder[displayOrder.selectedIndex].value);
-  settings['style'] = document.querySelector('input[name="displayStyle"]:checked').id;
-  settings['amount'] = document.querySelector('input[name="displayAmount"]:checked').id;
+  settings['style'] = document.querySelector('input[name="style"]:checked').id;
+  settings['amount'] = document.querySelector('input[name="amount"]:checked').id;
   settings['size'] = "20";
   settings['gap'] = "20";
   settings['background'] = "#222222";
@@ -163,8 +162,8 @@ const random = document.getElementById('random');
 random.addEventListener('click', ()=> { 
   const settings = getSettings();
   settings['order'] = parseInt(displayOrder[displayOrder.selectedIndex].value);
-  settings['style'] = document.querySelector('input[name="displayStyle"]:checked').id;
-  settings['amount'] = document.querySelector('input[name="displayAmount"]:checked').id;
+  settings['style'] = document.querySelector('input[name="style"]:checked').id;
+  settings['amount'] = document.querySelector('input[name="amount"]:checked').id;
   settings['size'] = getRandomInt(1, 50);
   settings['gap'] = getRandomInt(0, 50);
   settings['background'] = getRandomColour();
@@ -206,6 +205,7 @@ async function populateThemeOptions() {
     const url = `http://localhost:3000/data/themes`;
     const rawData = await fetch(url);
     const data = await rawData.json();
+    themes.innerHTML = '<option value="">Choose</option>';
     for (let i in data.rows) {
       const name = data.rows[i].id;
       const capName = name[0].toUpperCase() + name.slice(1);
@@ -232,10 +232,19 @@ async function getTheme(name) {
   } catch (error) { console.log(error) }
 }
 
+const settings = document.getElementById('settings');
 const saveTheme = document.getElementById('saveTheme');
-saveTheme.addEventListener('click', ()=> {
-  
+const themeName = document.getElementById('themeName');
+settings.addEventListener('submit', async ()=> {
+  const name = prompt('What do you want to call this theme?\nPlease enter a single word name below.');
+  themeName.value = name;
+  // location.reload();
+  // const option = document.createElement('option');
+  // option.value = name;
+  // option.innerText = name;
+  // themes.appendChild(option);
 });
+
 
 
 
