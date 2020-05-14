@@ -114,6 +114,10 @@
         <span>Line-Width</span>
         <input type="range" id="strokeWidth" name="strokeWidth" value="2" min="1" max="30">
       </label>
+      <label>
+        <span>Overlap</span>
+        <input type="checkbox" id="overlap" name="overlap">
+      </label>
     </fieldset>
 
     <fieldset id="colourOptions">
@@ -143,16 +147,16 @@
     <fieldset id="animationOptions">
       <legend>Animation</legend>
       <label>
-        <span>sync</span>
         <input type="radio" id="animSync" name="animation" value="sync">
+        <span>sync</span>
       </label>
       <label>
-        <span>async</span>
         <input type="radio" id="animAsync" name="animation" value="async">
+        <span>async</span>
       </label>
       <label>
-        <span>off</span>
         <input type="radio" id="animOff" name="animation" value="off" checked>
+        <span>off</span>
       </label>
       <label>
         <span>Speed</span>

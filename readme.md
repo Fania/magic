@@ -33,7 +33,11 @@ Don't forget to set up a .env file with login info.
 - [ ] number overlay?
 - [ ] favorite theme
 - [ ] enable query parameters for bookmarking and sharing
+- [ ] add option to overlap all completely
+- [ ] fix line width for arc and altarc
+- [ ] fix mobile style again
 - [ ] order option "change" event needs adding, so both wheel and change work
+- [ ] manual order change triggers two draws of squares
 
 
 

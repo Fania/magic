@@ -341,7 +341,7 @@ footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
     position: relative;
   }
 
-  label { cursor: pointer }
+  label { cursor: pointer; font-size: 0.9em; }
 
   #styleOptions label { display: inline-block; }
   #styleOptions [type="radio"] { display: none; }
@@ -353,32 +353,36 @@ footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
     /* position: relative; top: 5px; font-size: .8em;  */
     display: flex; flex-direction: column;
     line-height: .95em;
-    position: absolute; top: 11px; right: 8px; font-size: .8em; 
+    position: absolute; top: 12px; right: 8px; font-size: .8em; 
   }
   #order4quadOptions.hide { display: none }
   #order4quadOptions [type="radio"] { display: none }
 
   #order4quadOptions [type="radio"]:not(:checked) + span::after { 
-    content: " ✘"; color: #666;
-  }
+    content: " ✘"; color: #666; }
   #order4quadOptions [type="radio"]:checked + span::after { 
-    content: " ✔"; color: #666;
-  }
+    content: " ✔"; color: #BBB; }
 
 
 
-  #colourOptions [type="color"] {
-    width: 35px;
-    padding: 0; margin: 0; border: 0;
-  }
+  #colourOptions [type="color"] { 
+    width: 35px; padding: 0; margin: 0; border: 0; }
   #colourOptions label { display: flex; justify-content: space-between; }
   #colourOptions [type="range"] { width: 70px }
 
 
-  #animationOptions label { display: block; }
+  #animationOptions [type="radio"] { display: none; }
+  #animationOptions label:nth-of-type(1)::after { content: "|"; color: #666; }
+  #animationOptions label:nth-of-type(2)::after { content: "|"; color: #666; }
+  #animationOptions [type="radio"]:checked + span { text-decoration: underline; }
+  #animationOptions [type="range"] { width: 70px; }
 
 
 
+  #squares.overlap { position: relative; }
+  #squares.overlap svg { position: absolute; }
+  /* enabling this only shows the first 200, not the whole set */
+  #squares.overlap [class^="sentinel"] { display: none; }
 
 
 

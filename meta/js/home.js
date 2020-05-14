@@ -19,10 +19,32 @@ loadingTriggers.forEach( lt =>
 
 
 
+
+const defaults = { 
+  "order":       4,
+  "amount":      383,
+  "style":       "blocks",
+  "size":        "20",
+  "gap":         "20",
+  "overlap":     false,
+  "background":  "#222222",
+  "stroke":      "#FFFFFF",
+  "strokeWidth": "2",
+  "salpha":      "255",
+  "fill":        "#666666",
+  "falpha":      "0",
+  "animation":   "off",
+  "speed":       50
+};
+
+
+
+
+
 // FIRST LOAD
 
 updateOptions();
-loadSVGs(getCurrent('order'),getCurrent('style'));
+loadSVGs();
 // adjustSize();
 
 
@@ -35,6 +57,7 @@ loadSVGs(getCurrent('order'),getCurrent('style'));
 // ORDER OPTIONS
 
 displayOrder.addEventListener('wheel', () => {
+  console.log('order wheel triggered');
   const totalOptions = displayOrder.length;
   let fromIndex = displayOrder.selectedIndex;
   if (Math.sign(event.deltaY) === 1) {
@@ -46,15 +69,17 @@ displayOrder.addEventListener('wheel', () => {
     displayOrder.selectedIndex = toIndex;
   }
   loading.classList.add('show');
-
-  const settings = getSettings();
-  settings.order = parseInt(displayOrder[displayOrder.selectedIndex].value);
-  saveSettings(settings);
-
-  loadSVGs(getCurrent('order'),getCurrent('style'));
+  adjust('order');
+  loadSVGs();
   event.preventDefault();
 })
-
+displayOrder.addEventListener('change', () => {
+  console.log('order change triggered');
+  loading.classList.add('show');
+  adjust('order');
+  loadSVGs();
+  event.preventDefault();
+})
 
 
 
@@ -63,23 +88,27 @@ displayOrder.addEventListener('wheel', () => {
 // STYLE OPTIONS
 displayTriggers.forEach( ds => {
   ds.addEventListener('change', () => { 
+    console.log('style change triggered');
     const settings = getSettings();
     settings.style = document.querySelector('input[name="style"]:checked').id;
     saveSettings(settings);
-    loadSVGs(getCurrent('order'),getCurrent('style'));
+    // adjust('style');
+    loadSVGs();
   });
 });
-async function loadSVGs(order,style) {
+async function loadSVGs() {
+  console.log('loadSVGs');
   try {
     let offset = 0;
     squares.innerHTML = '';
-    await getData(order,style,offset);
+    await getData(getCurrent('order'),getCurrent('style'),offset);
   } catch (error) { console.log(error) }
   finally { 
     loading.classList.remove('show');
   }
 }
 async function getData(order,style,offset) {
+  console.log(`getData ${order} ${style} ${offset}`);
   try {
     // console.log(`Loading squares ${offset} - ${offset + 200}`);
     // fix order 4 unique/all choice subsubmenu
@@ -129,6 +158,10 @@ const gap = document.getElementById('gap');
 gap.addEventListener('input', ()=> { adjust('gap') });
 const strokeWidth = document.getElementById('strokeWidth');
 strokeWidth.addEventListener('input', ()=> { adjust('strokeWidth') });
+const overlap = document.getElementById('overlap');
+overlap.addEventListener('change', ()=> { 
+   squares.classList.toggle('overlap');
+});
 
 //  COLOUR OPTIONS
 const background = document.getElementById('background');
@@ -147,23 +180,7 @@ falpha.addEventListener('input', ()=> { adjust('falpha') });
 
 // PRESET OPTIONS
 const reset = document.getElementById('reset');
-reset.addEventListener('click', ()=> { 
-  const settings = getSettings();
-  settings['order'] = parseInt(displayOrder[displayOrder.selectedIndex].value);
-  settings['style'] = document.querySelector('input[name="style"]:checked').id;
-  settings['amount'] = document.querySelector('input[name="amount"]:checked').id;
-  settings['size'] = "20";
-  settings['gap'] = "20";
-  settings['background'] = "#222222";
-  settings['stroke'] = "#FFFFFF";
-  settings['strokeWidth'] = "2";
-  settings['salpha'] = "255";
-  settings['fill'] = "#666666";
-  settings['falpha'] = "0";
-  settings['animation'] = "off";
-  settings['speed'] = 50;
-  saveSettings(settings);
-});
+reset.addEventListener('click', ()=> { saveSettings(defaults); });
 const random = document.getElementById('random');
 random.addEventListener('click', ()=> { 
   const settings = getSettings();
@@ -189,6 +206,7 @@ const themes = document.getElementById('themes');
 
 populateThemeOptions();
 async function populateThemeOptions() {
+  console.log('populateThemeOptions');
   try {
     const url = `http://localhost:3000/data/themes`;
     const rawData = await fetch(url);
@@ -210,16 +228,15 @@ themes.addEventListener('change', ()=> {
 });
 
 async function getTheme(name) {
+  console.log(`getTheme ${name}`);
   try {
     const url = `http://localhost:3000/data/themes`;
     const rawData = await fetch(url);
     const data = await rawData.json();
     const theme = data.rows.find(item => item.id === name).doc;
     saveSettings(theme);
-    loadSVGs(getCurrent('order'),getCurrent('style'));
+    loadSVGs();
     updateOptions();
-
-
   } catch (error) { console.log(error) }
 }
 
@@ -246,6 +263,7 @@ settings.addEventListener('submit', async ()=> {
 // UTILITY
 
 function getCurrent(thing) {
+  console.log(`getCurrent ${thing}`);
   const settings = getSettings();
   switch (thing) {
     case 'order':
@@ -258,6 +276,8 @@ function getCurrent(thing) {
       return settings.size;
     case 'gap':
       return settings.gap;
+    case 'overlap':
+      return settings.overlap;
     case 'strokeWidth':
       return settings.strokeWidth;
     case 'background':
@@ -277,51 +297,33 @@ function getCurrent(thing) {
 
 
 function adjust(thing) {
+  console.log(`adjust ${thing}`);
   const settings = getSettings();
-
-  // const settings = getSettings();
-  // settings['order'] = parseInt(displayOrder[displayOrder.selectedIndex].value);
-  // settings['style'] = document.querySelector('input[name="style"]:checked').id;
-  // settings['amount'] = document.querySelector('input[name="amount"]:checked').id;
-  // settings['size'] = "20";
-  // settings['gap'] = "20";
-  // settings['background'] = "#222222";
-  // settings['stroke'] = "#FFFFFF";
-  // settings['strokeWidth'] = "2";
-  // settings['salpha'] = "255";
-  // settings['fill'] = "#666666";
-  // settings['falpha'] = "0";
-  // settings['animation'] = "off";
-  // settings['speed'] = 50;
-  // saveSettings(settings);
-  let newValue = "";
+  let x = "";
   switch(thing) {
     case 'order': 
       x = parseInt(displayOrder[displayOrder.selectedIndex].value);
     case 'style':
-      x = document.querySelector('input[name="style"]:checked').id;
+      x = document.querySelector('[name="style"]:checked').value;
     case 'amount':
-      x = document.querySelector('input[name="amount"]:checked').id;
+      x = document.querySelector('[name="amount"]:checked').value;
+    default:
+      x = document.getElementById(thing).value;
   }
-
-
-  if (thing === 'order') {
-    settings.order = parseInt(displayOrder[displayOrder.selectedIndex].value);
-  } else {
-  }
-  // settings[thing] = x;
-  settings[thing] = document.getElementById(thing).value;
-
+  settings[thing] = x;
+  // settings[thing] = document.getElementById(thing).value;
   saveSettings(settings);
 }
 
 
 
 function updateOptions() {
+  console.log('updateOptions');
   displayOrder.selectedIndex = parseInt(getCurrent('order')) - 3;
   document.querySelector(`#${getCurrent('style')}`).checked = true;
   document.getElementById('size').value = getCurrent('size');
   document.getElementById('gap').value = getCurrent('gap');
+  document.getElementById('overlap').checked = getCurrent('overlap');
   document.getElementById('strokeWidth').value = getCurrent('strokeWidth');
   document.getElementById('background').value = getCurrent('background');
   document.getElementById('stroke').value = getCurrent('stroke');
@@ -334,6 +336,7 @@ function updateOptions() {
 
 
 function applyStyles() {
+  console.log('applyStyles');
   const [...rules] = document.styleSheets[0].cssRules;
   const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
   // console.log('svgRuleIndex', svgRuleIndex);
@@ -353,6 +356,7 @@ function applyStyles() {
 
 
 function saveSettings(settingsJSON) {
+  console.log('saveSettings');
   const settingsString = JSON.stringify(settingsJSON);
   localStorage.setItem("magicSettings", settingsString);
   updateOptions();
@@ -361,24 +365,11 @@ function saveSettings(settingsJSON) {
 }
 
 function getSettings() {
+  // console.log('getSettings');
   const settingsString = localStorage.getItem("magicSettings");
   let settingsJSON = {};
   if (settingsString === null) {
-    settingsJSON = { 
-      "order":       4,
-      "style":       "blocks",
-      "amount":      383,
-      "size":        "20",
-      "gap":         "20",
-      "background":  "#222222",
-      "stroke":      "#FFFFFF",
-      "strokeWidth": "2",
-      "salpha":      "255",
-      "fill":        "#666666",
-      "falpha":      "0",
-      "animation":   "off",
-      "speed":       50
-    }
+    settingsJSON = defaults;
     saveSettings(settingsJSON);
     console.log("first-time setup");
   } else {
