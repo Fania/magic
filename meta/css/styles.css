@@ -338,36 +338,48 @@ footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
   .submenu.home form {  
     display: flex; flex-direction: column; justify-content: space-around;
     height: calc(100vh - 80.88px - 2em);
+    position: relative;
   }
-  .submenu #styleOptions { 
-    /* display: inline-block;  */
-    /* grid-template-columns: 1fr 1fr; */
-  }
-  .submenu #styleOptions label, .submenu #styleOptions div { 
-    display: inline-block; 
-  }
-  .submenu #styleOptions [type="radio"] { display: none; }
-  .submenu #styleOptions img {
+
+  label { cursor: pointer }
+
+  #styleOptions label { display: inline-block; }
+  #styleOptions [type="radio"] { display: none; }
+  #styleOptions [type="radio"]:checked + img { border: 1px dotted #666; }
+  #styleOptions img {
     width: 40px; padding: 4px; box-sizing: border-box; filter: grayscale(1);
   }
-  .submenu #styleOptions fieldset {
-    border: 0;
-    display: none;
+  #order4quadOptions { border: 0; padding: 0; text-align: right; 
+    /* position: relative; top: 5px; font-size: .8em;  */
+    display: flex; flex-direction: column;
+    line-height: .95em;
+    position: absolute; top: 11px; right: 8px; font-size: .8em; 
   }
-  .submenu #colourOptions [type="color"] {
+  #order4quadOptions.hide { display: none }
+  #order4quadOptions [type="radio"] { display: none }
+
+  #order4quadOptions [type="radio"]:not(:checked) + span::after { 
+    content: " ✘"; color: #666;
+  }
+  #order4quadOptions [type="radio"]:checked + span::after { 
+    content: " ✔"; color: #666;
+  }
+
+
+
+  #colourOptions [type="color"] {
     width: 35px;
-    padding: 0;
-    margin: 0;
-    border: 0;
+    padding: 0; margin: 0; border: 0;
   }
-  .submenu #colourOptions label { 
-    display: block; 
-  }
+  #colourOptions label { display: flex; justify-content: space-between; }
+  #colourOptions [type="range"] { width: 70px }
 
 
-  .submenu #animationOptions label { 
-    display: block; 
-  }
+  #animationOptions label { display: block; }
+
+
+
+
 
 
 

@@ -45,10 +45,12 @@ displayOrder.addEventListener('wheel', () => {
     let toIndex = (fromIndex - 1) % totalOptions;
     displayOrder.selectedIndex = toIndex;
   }
-  loading.classList.add('show')
+  loading.classList.add('show');
+
   const settings = getSettings();
   settings.order = parseInt(displayOrder[displayOrder.selectedIndex].value);
   saveSettings(settings);
+
   loadSVGs(getCurrent('order'),getCurrent('style'));
   event.preventDefault();
 })
@@ -81,13 +83,17 @@ async function getData(order,style,offset) {
   try {
     // console.log(`Loading squares ${offset} - ${offset + 200}`);
     // fix order 4 unique/all choice subsubmenu
-    if (order === '4' && style === 'quadvertex' && unique.checked) 
+    const unique = document.getElementById('unique');
+    const all = document.getElementById('all');
+    if (order === 4 && style === 'quadvertex' && unique.checked) 
       style = 'unique';
-    if (order === '4' && style === 'quadvertex' && all.checked) 
+    if (order === 4 && style === 'quadvertex' && all.checked) 
       style = 'quadvertex';
-    (order === '4' && (style === 'quadvertex' || style === 'unique'))
-      ? opt.classList.remove('hide')
-      : opt.classList.add('hide');
+
+    (order === 4 && (style === 'quadvertex' || style === 'unique'))
+      ? document.getElementById('order4quadOptions').classList.remove('hide')
+      : document.getElementById('order4quadOptions').classList.add('hide');
+
     const url = `http://localhost:3000/data/${order}/${style}/${offset}`;
     const rawData = await fetch(url);
     const data = await rawData.json();
@@ -178,24 +184,6 @@ random.addEventListener('click', ()=> {
 });
 
 
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min; 
-  //The maximum is inclusive and the minimum is inclusive 
-}
-function getRandomColour() {
-  return `#${getHex(getRandomInt(0, 255))}${getHex(getRandomInt(0, 255))}${getHex(getRandomInt(0, 255))}`;
-}
-
-
-
-
-
-
-
-
 // POPULATE THEME OPTIONS
 const themes = document.getElementById('themes');
 
@@ -227,7 +215,10 @@ async function getTheme(name) {
     const rawData = await fetch(url);
     const data = await rawData.json();
     const theme = data.rows.find(item => item.id === name).doc;
-    console.log(theme);
+    saveSettings(theme);
+    loadSVGs(getCurrent('order'),getCurrent('style'));
+    updateOptions();
+
 
   } catch (error) { console.log(error) }
 }
@@ -287,7 +278,40 @@ function getCurrent(thing) {
 
 function adjust(thing) {
   const settings = getSettings();
+
+  // const settings = getSettings();
+  // settings['order'] = parseInt(displayOrder[displayOrder.selectedIndex].value);
+  // settings['style'] = document.querySelector('input[name="style"]:checked').id;
+  // settings['amount'] = document.querySelector('input[name="amount"]:checked').id;
+  // settings['size'] = "20";
+  // settings['gap'] = "20";
+  // settings['background'] = "#222222";
+  // settings['stroke'] = "#FFFFFF";
+  // settings['strokeWidth'] = "2";
+  // settings['salpha'] = "255";
+  // settings['fill'] = "#666666";
+  // settings['falpha'] = "0";
+  // settings['animation'] = "off";
+  // settings['speed'] = 50;
+  // saveSettings(settings);
+  let newValue = "";
+  switch(thing) {
+    case 'order': 
+      x = parseInt(displayOrder[displayOrder.selectedIndex].value);
+    case 'style':
+      x = document.querySelector('input[name="style"]:checked').id;
+    case 'amount':
+      x = document.querySelector('input[name="amount"]:checked').id;
+  }
+
+
+  if (thing === 'order') {
+    settings.order = parseInt(displayOrder[displayOrder.selectedIndex].value);
+  } else {
+  }
+  // settings[thing] = x;
   settings[thing] = document.getElementById(thing).value;
+
   saveSettings(settings);
 }
 
@@ -304,12 +328,12 @@ function updateOptions() {
   document.getElementById('salpha').value = getCurrent('salpha');
   document.getElementById('fill').value = getCurrent('fill');
   document.getElementById('falpha').value = getCurrent('falpha');
-  updateStyles();
+  applyStyles();
 }
 
 
 
-function updateStyles() {
+function applyStyles() {
   const [...rules] = document.styleSheets[0].cssRules;
   const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
   // console.log('svgRuleIndex', svgRuleIndex);
@@ -332,7 +356,7 @@ function saveSettings(settingsJSON) {
   const settingsString = JSON.stringify(settingsJSON);
   localStorage.setItem("magicSettings", settingsString);
   updateOptions();
-  updateStyles();
+  // applyStyles();
   // console.log("saving", settingsJSON);
 }
 
@@ -371,8 +395,15 @@ function getHex(dec) {
 function getDec(hex) { 
   return parseInt(hex,16); 
 }
-
-
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min; 
+  //The maximum is inclusive and the minimum is inclusive 
+}
+function getRandomColour() {
+  return `#${getHex(getRandomInt(0, 255))}${getHex(getRandomInt(0, 255))}${getHex(getRandomInt(0, 255))}`;
+}
 
 
 

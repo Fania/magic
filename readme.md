@@ -25,15 +25,15 @@ Don't forget to set up a .env file with login info.
 - [x] add size options
 - [x] add colour options
 - [x] add padding options
+- [x] fix 880/383 options for quadvertex4
+- [x] themes load only after page reload
 - [ ] add printing options
 - [ ] add pin-to-top / favourite feature
 - [ ] hover info for each square or put into modal
 - [ ] number overlay?
-- [ ] fix 880/383 options for quadvertex4
 - [ ] favorite theme
 - [ ] enable query parameters for bookmarking and sharing
-- [ ] themes load only after page reload
-
+- [ ] order option "change" event needs adding, so both wheel and change work
 
 
 

@@ -40,16 +40,16 @@
       </label>
     </fieldset>
 
-    {# <fieldset id="order4quadOptions">
-      <label for="all">
-        <input type="radio" id="all" name="amount">
-        <span>All | </span>
+    <fieldset id="order4quadOptions">
+      <label>
+        <input type="radio" id="all" name="amount" value="all">
+        <span>880</span>
       </label>
-      <label for="unique">
-        <input type="radio" id="unique" name="amount" checked>
-        <span>Uniques</span>
+      <label>
+        <input type="radio" id="unique" name="amount" value="unique" checked>
+        <span>383</span>
       </label>
-    </fieldset> #}
+    </fieldset>
 
     <fieldset id="styleOptions">
       <legend>Style</legend>
@@ -63,23 +63,11 @@
         <img src="meta/imgs/o3s1s.svg">
         {# <span>Straight</span> #}
       </label>
-      <div>
-        <label>
-          <input type="radio" id="quadvertex" value="quadvertex" name="style" >
-          <div><img src="meta/imgs/o3s1qv.svg"></div>
-          {# <span>Quadvertex</span> #}
-        </label>
-        <fieldset id="order4quadOptions">
-          <label>
-            <input type="radio" id="all" value="all" name="amount">
-            <span>880 | </span>
-          </label>
-          <label>
-            <input type="radio" id="unique" value="unique" name="amount" checked>
-            <span>383</span>
-          </label>
-        </fieldset>
-      </div>
+      <label>
+        <input type="radio" id="quadvertex" value="quadvertex" name="style" >
+        <img src="meta/imgs/o3s1qv.svg">
+        {# <span>Quadvertex</span> #}
+      </label>
       <label>
         <input type="radio" id="quadline" value="quadline" name="style">
         <img src="meta/imgs/o3s1ql.svg">
@@ -87,27 +75,27 @@
       </label>
       <label>
         <input type="radio" id="arc" value="arc" name="style">
-        <div><img src="meta/imgs/o3s1a.svg"></div>
+        <img src="meta/imgs/o3s1a.svg">
         {# <span>Arc</span> #}
       </label>
       <label>
         <input type="radio" id="altarc" value="altarc" name="style">
-        <div><img src="meta/imgs/o3s1aa.svg"></div>
+        <img src="meta/imgs/o3s1aa.svg">
         {# <span>Alt-Arc</span> #}
       </label>
       <label>
         <input type="radio" id="circles" value="circles" name="style" >
-        <div><img src="meta/imgs/o3s1c.svg"></div>
+        <img src="meta/imgs/o3s1c.svg">
         {# <span>Colours</span> #}
       </label>
       <label>
         <input type="radio" id="blocks" value="blocks" name="style" checked>
-        <div><img src="meta/imgs/o3s1b.svg"></div>
+        <img src="meta/imgs/o3s1b.svg">
         {# <span>Blocks</span> #}
       </label>
       <label>
         <input type="radio" id="tetromino" value="tetromino" name="style" >
-        <div><img src="meta/imgs/o3s1t.svg"></div>
+        <img src="meta/imgs/o3s1t.svg">
         {# <span>Tetromino</span> #}
       </label>
     </fieldset>
