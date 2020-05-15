@@ -275,14 +275,14 @@ footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
 
 
 
-.overlap {
+/* .overlap {
   position: relative;
 }
 .overlap svg {
   position: absolute;
   width: 500px;
   stroke-width: 1px;
-}
+} */
 
 
 
@@ -336,7 +336,7 @@ footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
     
   }
   .submenu.home form {  
-    display: flex; flex-direction: column; justify-content: space-around;
+    display: flex; flex-direction: column; justify-content: space-between;
     height: calc(100vh - 80.88px - 2em);
     position: relative;
   }
@@ -353,15 +353,30 @@ footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
     /* position: relative; top: 5px; font-size: .8em;  */
     display: flex; flex-direction: column;
     line-height: .95em;
-    position: absolute; top: 12px; right: 8px; font-size: .8em; 
+    position: absolute; top: 8px; right: 8px; font-size: .8em; 
   }
   #order4quadOptions.hide { display: none }
   #order4quadOptions [type="radio"] { display: none }
-
   #order4quadOptions [type="radio"]:not(:checked) + span::after { 
     content: " ✘"; color: #666; }
   #order4quadOptions [type="radio"]:checked + span::after { 
     content: " ✔"; color: #BBB; }
+
+
+
+  #sizeOptions label:last-child { position: relative; }
+  #overlapOptions { border: 0; padding: 0; text-align: right; 
+    display: flex; flex-direction: column;
+    line-height: .95em;
+    position: absolute; top: -2px; right: -55px; font-size: .8em; 
+  }
+  #overlapOptions [type="radio"] { display: none }
+  #overlapOptions [type="radio"]:not(:checked) + span::after { 
+    content: " ✘"; color: #666; }
+  #overlapOptions [type="radio"]:checked + span::after { 
+    content: " ✔"; color: #BBB; }
+
+
 
 
 
@@ -382,7 +397,7 @@ footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
   #squares.overlap { position: relative; }
   #squares.overlap svg { position: absolute; }
   /* enabling this only shows the first 200, not the whole set */
-  #squares.overlap [class^="sentinel"] { display: none; }
+  #squares.overlap.few [class^="sentinel"] { display: none; }
 
 
 

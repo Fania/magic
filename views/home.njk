@@ -117,8 +117,20 @@
       <label>
         <span>Overlap</span>
         <input type="checkbox" id="overlap" name="overlap">
+        <fieldset id="overlapOptions">
+          <label>
+            <input type="radio" id="overlapAll" name="overlapAmount" value="overlapAll">
+            <span>all</span>
+          </label>
+          <label>
+            <input type="radio" id="overlap200" name="overlapAmount" value="overlap200" checked>
+            <span>200</span>
+          </label>
+        </fieldset>
       </label>
     </fieldset>
+
+
 
     <fieldset id="colourOptions">
       <legend>Colours</legend>
@@ -147,15 +159,15 @@
     <fieldset id="animationOptions">
       <legend>Animation</legend>
       <label>
-        <input type="radio" id="animSync" name="animation" value="sync">
+        <input type="radio" id="sync" name="animation" value="sync">
         <span>sync</span>
       </label>
       <label>
-        <input type="radio" id="animAsync" name="animation" value="async">
+        <input type="radio" id="async" name="animation" value="async">
         <span>async</span>
       </label>
       <label>
-        <input type="radio" id="animOff" name="animation" value="off" checked>
+        <input type="radio" id="off" name="animation" value="off" checked>
         <span>off</span>
       </label>
       <label>

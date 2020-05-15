@@ -34,6 +34,7 @@ Don't forget to set up a .env file with login info.
 - [ ] favorite theme
 - [ ] enable query parameters for bookmarking and sharing
 - [ ] add option to overlap all completely
+- [ ] fix eventListeners and that for overlapAmount
 - [ ] fix line width for arc and altarc
 - [ ] fix mobile style again
 - [ ] order option "change" event needs adding, so both wheel and change work
