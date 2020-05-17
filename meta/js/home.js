@@ -53,17 +53,18 @@ loadSVGs();
 
 
 
+// OK FROM HERE
 
-
-// ORDER OPTIONS
+// ORDER OPTION
 displayOrder.addEventListener('wheel', () => {
   console.log('ORDER wheel triggered');
   const totalOptions = displayOrder.length;
   let fromIndex = displayOrder.selectedIndex;
-  if (Math.sign(event.deltaY) === 1) {
+  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
     let toIndex = (fromIndex + 1) % totalOptions;
     displayOrder.selectedIndex = toIndex;
-  } else {
+  }
+  if (Math.sign(event.wheelDeltaY) === 1) { // UP
     if (fromIndex === 0) fromIndex = 18;
     let toIndex = (fromIndex - 1) % totalOptions;
     displayOrder.selectedIndex = toIndex;
@@ -75,6 +76,14 @@ displayOrder.addEventListener('change', () => {
   adjust('order');
 })
 
+// AMOUNT OPTIONS
+displayAmounts.forEach( da => {
+  da.addEventListener('change', () => { 
+    console.log('AMOUNT change triggered');
+    adjust('amount');
+  });
+});
+
 // STYLE OPTIONS
 displayStyles.forEach( ds => {
   ds.addEventListener('change', () => { 
@@ -83,31 +92,95 @@ displayStyles.forEach( ds => {
   });
 });
 
-
-
-
-//  SIZE OPTIONS
+// SIZE OPTION
 const size = document.getElementById('size');
-size.addEventListener('input', ()=> { adjust('size') });
-const gap = document.getElementById('gap');
-gap.addEventListener('input', ()=> { adjust('gap') });
-const strokeWidth = document.getElementById('strokeWidth');
-strokeWidth.addEventListener('input', ()=> { adjust('strokeWidth') });
-const overlap = document.getElementById('overlap');
-overlap.addEventListener('change', ()=> { 
-  squares.classList.toggle('overlap');
+size.addEventListener('input', ()=> { 
+  console.log('SIZE input triggered');
+  adjust('size');
 });
+size.addEventListener('wheel', ()=> { 
+  console.log('SIZE wheel triggered');
+  const old = parseInt(size.value);
+  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+    if(old > 5) { size.value = old - 5; } 
+    else        { size.value = 1; }
+  }
+  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+    if(old < 95) { size.value = old + 5; } 
+    else         { size.value = 100; }
+  }
+  adjust('size');
+  event.preventDefault();
+});
+
+// GAP OPTION
+const gap = document.getElementById('gap');
+gap.addEventListener('input', ()=> { 
+  console.log('GAP input triggered');
+  adjust('gap');
+});
+gap.addEventListener('wheel', ()=> { 
+  console.log('GAP wheel triggered');
+  const old = parseInt(gap.value);
+  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+    if(old >= 5) { gap.value = old - 5; } 
+    else         { gap.value = 0; }
+  }
+  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+    if(old <= 95) { gap.value = old + 5; } 
+    else          { gap.value = 100; }
+  }
+  adjust('gap');
+  event.preventDefault();
+});
+
+// LINE-WIDTH OPTION
+const strokeWidth = document.getElementById('strokeWidth');
+strokeWidth.addEventListener('input', ()=> { 
+  console.log('LINE-WIDTH input triggered');
+  adjust('strokeWidth');
+});
+strokeWidth.addEventListener('wheel', ()=> { 
+  console.log('LINE-WIDTH wheel triggered');
+  const old = parseInt(strokeWidth.value);
+  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+    if(old > 2) { strokeWidth.value = old - 2; } 
+    else        { strokeWidth.value = 1; }
+  }
+  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+    if(old <= 28) { strokeWidth.value = old + 2; } 
+    else          { strokeWidth.value = 30; }
+  }
+  adjust('strokeWidth');
+  event.preventDefault();
+});
+
+// OVERLAP OPTIONS
+const overlap = document.getElementById('overlap');
 const overlapAll = document.getElementById('overlapAll');
 const overlap200 = document.getElementById('overlap200');
+overlap.addEventListener('change', () => { 
+  console.log('OVERLAP change triggered');
+  adjust('overlap');
+  applyOverlap(overlap.checked);
+});
 [overlapAll,overlap200].forEach( oa => {
-  addEventListener('change', ()=> { 
-    console.log(event.target.value);
+  oa.addEventListener('change', ()=> { 
+    console.log('OVERLAP-AMOUNT change triggered');
     adjust('overlapAmount');
-    if(event.target.value === 'overlap200')
-      squares.classList.toggle('few');
+    if(event.target.value === 'overlap200') {
+      squares.classList.add('few');
+    }
+    else { 
+      squares.classList.remove('few'); 
+    }
   });
 });
-// add overlpaamount
+
+// OK TO HERE
+
+
+
 
 
 //  COLOUR OPTIONS
@@ -212,7 +285,7 @@ settings.addEventListener('submit', async ()=> {
 
 function getCurrent(thing) {
   const settings = getSettings();
-  console.log(`getCurrent ${thing}:`, settings[thing]);
+  // console.log(`getCurrent ${thing}:`, settings[thing]);
   switch (thing) {
     case 'settings':      return settings;
     case 'order':         return settings.order;
@@ -271,6 +344,7 @@ function adjust(thing) {
 function loadSettings() {
   console.log('loadSettings');
   console.log(getCurrent('overlap'));
+  console.log(typeof getCurrent('overlap'));
   displayOrder.selectedIndex = parseInt(getCurrent('order')) - 3;
   document.querySelector(`#${getCurrent('amount')}`).checked = true;
   document.querySelector(`#${getCurrent('style')}`).checked = true;
@@ -315,6 +389,7 @@ async function loadSVGs() {
   try {
     squares.innerHTML = '';
     await getData(0);
+    applyOverlap(getCurrent('overlap'));
   } catch (error) { console.log(error) }
   finally { 
     loading.classList.remove('show');
@@ -408,6 +483,19 @@ function getRandomColour() {
 
 
 
+function applyOverlap(state) {
+  if (state) { // true
+    squares.classList.add('overlap');
+    if(overlap200.checked) {
+      squares.classList.add('few')
+    }
+    else {
+      squares.classList.remove('few'); 
+    }
+  } else { // false
+    squares.classList.remove('overlap');
+  }
+}
 
 
 
