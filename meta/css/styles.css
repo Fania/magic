@@ -23,6 +23,7 @@ header { margin: 0; padding: 0 1em; }
 .mainmenu div { display: flex; align-items: center; }
 .mainmenu div .logo { width: 65px; height: 65px; }
 .mainmenu div h1 { display: none; margin-left: 1em; }
+.mainmenu div a span { display: none; }
 .mainmenu nav { 
    display: flex; flex-direction: column; align-items: flex-end; }
 .mainmenu nav a { text-transform: uppercase;
@@ -271,7 +272,7 @@ hr { margin: 2em 0; }
 footer {
   margin-top: 3em; background: var(--darkBackColour); padding: 1em; 
   display: flex; justify-content: space-between; }
-footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
+footer a, footer p { color: #eeeeee80; text-decoration: none; margin: 0; }
 
 
 
@@ -345,6 +346,7 @@ footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
   label { cursor: pointer; font-size: 0.9em; }
 
   #styleOptions label { display: inline-block; }
+  #styleOptions label span { display: none; }
   #styleOptions [type="radio"] { display: none; }
   #styleOptions [type="radio"]:checked + img { border: 1px dotted #666; }
   #styleOptions img {
@@ -392,6 +394,11 @@ footer a, footer p { color: #EEEEEE60; text-decoration: none; margin: 0; }
   #animationOptions label:nth-of-type(2)::after { content: "|"; color: #666; }
   #animationOptions [type="radio"]:checked + span { text-decoration: underline; }
   #animationOptions [type="range"] { width: 70px; }
+
+
+
+  #presetOptions #themes { width: 70px }
+  #presetOptions label { display: none }
 
 
 

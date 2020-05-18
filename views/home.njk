@@ -55,48 +55,48 @@
       <legend>Style</legend>
       <label>
         <input type="radio" id="numbers" value="numbers" name="style" >
-        <img src="meta/imgs/o3s1n.svg">
-        {# <span>Numbers</span> #}
+        <img src="meta/imgs/o3s1n.svg" alt="Numbers display style">
+        <span>Numbers</span>
       </label>
       <label>
         <input type="radio" id="straight" value="straight" name="style">
-        <img src="meta/imgs/o3s1s.svg">
-        {# <span>Straight</span> #}
+        <img src="meta/imgs/o3s1s.svg" alt="Straight display style">
+        <span>Straight</span>
       </label>
       <label>
         <input type="radio" id="quadvertex" value="quadvertex" name="style" >
-        <img src="meta/imgs/o3s1qv.svg">
-        {# <span>Quadvertex</span> #}
+        <img src="meta/imgs/o3s1qv.svg" alt="Quadvertex display style">
+        <span>Quadvertex</span>
       </label>
       <label>
         <input type="radio" id="quadline" value="quadline" name="style">
-        <img src="meta/imgs/o3s1ql.svg">
-        {# <span>Quadline</span> #}
+        <img src="meta/imgs/o3s1ql.svg" alt="Quadline display style">
+        <span>Quadline</span>
       </label>
       <label>
         <input type="radio" id="arc" value="arc" name="style">
-        <img src="meta/imgs/o3s1a.svg">
-        {# <span>Arc</span> #}
+        <img src="meta/imgs/o3s1a.svg" alt="Arc display style">
+        <span>Arc</span>
       </label>
       <label>
         <input type="radio" id="altarc" value="altarc" name="style">
-        <img src="meta/imgs/o3s1aa.svg">
-        {# <span>Alt-Arc</span> #}
+        <img src="meta/imgs/o3s1aa.svg" alt="Alt-arc display style">
+        <span>Alt-Arc</span>
       </label>
       <label>
         <input type="radio" id="circles" value="circles" name="style" >
-        <img src="meta/imgs/o3s1c.svg">
-        {# <span>Colours</span> #}
+        <img src="meta/imgs/o3s1c.svg" alt="Circles display style">
+        <span>Colours</span>
       </label>
       <label>
         <input type="radio" id="blocks" value="blocks" name="style" checked>
-        <img src="meta/imgs/o3s1b.svg">
-        {# <span>Blocks</span> #}
+        <img src="meta/imgs/o3s1b.svg" alt="Blocks display style">
+        <span>Blocks</span>
       </label>
       <label>
         <input type="radio" id="tetromino" value="tetromino" name="style" >
-        <img src="meta/imgs/o3s1t.svg">
-        {# <span>Tetromino</span> #}
+        <img src="meta/imgs/o3s1t.svg" alt="Tetromino display style">
+        <span>Tetromino</span>
       </label>
     </fieldset>
 
@@ -178,12 +178,13 @@
 
     <fieldset id="presetOptions">
       <legend>Themes</legend>
-      <input type="button" id="reset" value="reset">
-      <input type="button" id="random" value="random">
+      <label for="themes">Choose theme</label>
       <select id="themes">
         <option value="">Choose</option>
       </select>
       <input type="submit" id="saveTheme" value="save">
+      <input type="button" id="reset" value="reset">
+      <input type="button" id="random" value="random">
       <input type="hidden" id="themeName" name="_id" value="">
     </fieldset>
 
@@ -210,3 +211,10 @@
 {# <script src="lazysizes.min.js" async=""></script> #}
 <script src="meta/js/home.js"></script>
 {% endblock %}
+
+
+<datalist id="widthHeightList">
+  <option value="1">
+  <option value="2">
+  <option value="2">
+</datalist>

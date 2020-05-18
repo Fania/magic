@@ -23,8 +23,8 @@ loadingTriggers.forEach( lt =>
 const defaults = { 
   "order":         4,
   "amount":        "unique",
-  "style":         "blocks",
-  "size":          "20",
+  "style":         "quadvertex",
+  "size":          "16",
   "gap":           "20",
   "overlap":       false,
   "overlapAmount": "overlap200",
@@ -45,7 +45,8 @@ const defaults = {
 // FIRST LOAD
 
 loadSettings();
-loadSVGs();
+// loadSVGs();
+getData();
 // adjustSize();
 
 
@@ -55,7 +56,6 @@ loadSVGs();
 
 // OK FROM HERE
 
-// ORDER OPTION
 displayOrder.addEventListener('wheel', () => {
   console.log('ORDER wheel triggered');
   const totalOptions = displayOrder.length;
@@ -70,13 +70,13 @@ displayOrder.addEventListener('wheel', () => {
     displayOrder.selectedIndex = toIndex;
   }
   adjust('order');
-})
+  event.preventDefault();
+});
 displayOrder.addEventListener('change', () => {
   console.log('ORDER change triggered');
   adjust('order');
-})
+});
 
-// AMOUNT OPTIONS
 displayAmounts.forEach( da => {
   da.addEventListener('change', () => { 
     console.log('AMOUNT change triggered');
@@ -84,7 +84,6 @@ displayAmounts.forEach( da => {
   });
 });
 
-// STYLE OPTIONS
 displayStyles.forEach( ds => {
   ds.addEventListener('change', () => { 
     console.log('STYLE change triggered');
@@ -92,7 +91,6 @@ displayStyles.forEach( ds => {
   });
 });
 
-// SIZE OPTION
 const size = document.getElementById('size');
 size.addEventListener('input', ()=> { 
   console.log('SIZE input triggered');
@@ -113,7 +111,6 @@ size.addEventListener('wheel', ()=> {
   event.preventDefault();
 });
 
-// GAP OPTION
 const gap = document.getElementById('gap');
 gap.addEventListener('input', ()=> { 
   console.log('GAP input triggered');
@@ -134,7 +131,6 @@ gap.addEventListener('wheel', ()=> {
   event.preventDefault();
 });
 
-// LINE-WIDTH OPTION
 const strokeWidth = document.getElementById('strokeWidth');
 strokeWidth.addEventListener('input', ()=> { 
   console.log('LINE-WIDTH input triggered');
@@ -155,7 +151,6 @@ strokeWidth.addEventListener('wheel', ()=> {
   event.preventDefault();
 });
 
-// OVERLAP OPTIONS
 const overlap = document.getElementById('overlap');
 const overlapAll = document.getElementById('overlapAll');
 const overlap200 = document.getElementById('overlap200');
@@ -177,49 +172,99 @@ overlap.addEventListener('change', () => {
   });
 });
 
+const background = document.getElementById('background');
+background.addEventListener('input', ()=> { 
+  console.log('BACKGROUND input triggered');
+  adjust('background');
+});
+
+const stroke = document.getElementById('stroke');
+stroke.addEventListener('input', ()=> { 
+  console.log('STROKE input triggered');
+  adjust('stroke');
+});
+
+// STROKE-ALPHA OPTION
+const salpha = document.getElementById('salpha');
+salpha.addEventListener('input', ()=> { 
+  console.log('STROKE-ALPHA input triggered');
+  adjust('salpha');
+});
+salpha.addEventListener('wheel', ()=> { 
+  console.log('STROKE-ALPHA wheel triggered');
+  const old = parseInt(salpha.value);
+  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+    if(old >= 5) { salpha.value = old - 5; } 
+    else        { salpha.value = 0; }
+  }
+  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+    if(old <= 250) { salpha.value = old + 5; } 
+    else          { salpha.value = 255; }
+  }
+  adjust('salpha');
+  event.preventDefault();
+});
+
+// FILL OPTION
+const fill = document.getElementById('fill');
+fill.addEventListener('input', ()=> { 
+  console.log('FILL input triggered');
+  adjust('fill');
+});
+
+// FILL-ALPHA OPTION
+const falpha = document.getElementById('falpha');
+falpha.addEventListener('input', ()=> { 
+  console.log('FILL-ALPHA input triggered');
+  adjust('falpha');
+});
+falpha.addEventListener('wheel', ()=> { 
+  console.log('FILL-ALPHA wheel triggered');
+  const old = parseInt(falpha.value);
+  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+    if(old >= 5) { falpha.value = old - 5; } 
+    else        { falpha.value = 0; }
+  }
+  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+    if(old <= 250) { falpha.value = old + 5; } 
+    else          { falpha.value = 255; }
+  }
+  adjust('falpha');
+  event.preventDefault();
+});
+
+// ANIMATION OPTIONS
+
+// RESET OPTION
+const reset = document.getElementById('reset');
+reset.addEventListener('click', ()=> { 
+  console.log('RESET click triggered');
+  saveSettings(defaults);
+});
+
+// RANDOM OPTION
+const random = document.getElementById('random');
+random.addEventListener('click', ()=> { 
+  console.log('RANDOM click triggered');
+  const settings = getSettings();
+  settings.size = getRandomInt(1, 50);
+  settings.gap = getRandomInt(0, 50);
+  settings.background = getRandomColour();
+  settings.stroke = getRandomColour();
+  settings.strokeWidth = getRandomInt(1, 30);
+  settings.salpha = getRandomInt(0, 255);
+  settings.fill = getRandomColour();
+  settings.falpha = getRandomInt(0, 255);
+  saveSettings(settings);
+});
+
+
+
 // OK TO HERE
 
 
 
 
-
-//  COLOUR OPTIONS
-const background = document.getElementById('background');
-background.addEventListener('input', ()=> { adjust('background') });
-const stroke = document.getElementById('stroke');
-stroke.addEventListener('input', ()=> { adjust('stroke') });
-const salpha = document.getElementById('salpha');
-salpha.addEventListener('input', ()=> { adjust('salpha') });
-const fill = document.getElementById('fill');
-fill.addEventListener('input', ()=> { adjust('fill') });
-const falpha = document.getElementById('falpha');
-falpha.addEventListener('input', ()=> { adjust('falpha') });
-
-// ANIMATION OPTIONS
-
-
-// PRESET OPTIONS
-const reset = document.getElementById('reset');
-reset.addEventListener('click', ()=> { saveSettings(defaults); });
-const random = document.getElementById('random');
-random.addEventListener('click', ()=> { 
-  const settings = getSettings();
-  settings['order'] = parseInt(displayOrder[displayOrder.selectedIndex].value);
-  settings['style'] = document.querySelector('input[name="style"]:checked').id;
-  settings['amount'] = document.querySelector('input[name="amount"]:checked').id;
-  // add overlap and overlap amount
-  settings['size'] = getRandomInt(1, 50);
-  settings['gap'] = getRandomInt(0, 50);
-  settings['background'] = getRandomColour();
-  settings['stroke'] = getRandomColour();
-  settings['strokeWidth'] = getRandomInt(1, 30);
-  settings['salpha'] = getRandomInt(0, 255);
-  settings['fill'] = getRandomColour();
-  settings['falpha'] = getRandomInt(0, 255);
-  settings['animation'] = "off";
-  settings['speed'] = 50;
-  saveSettings(settings);
-});
 
 
 // POPULATE THEME OPTIONS
@@ -256,7 +301,8 @@ async function getTheme(name) {
     const data = await rawData.json();
     const theme = data.rows.find(item => item.id === name).doc;
     saveSettings(theme);
-    loadSVGs();
+    // loadSVGs();
+    getData();
     loadSettings();
   } catch (error) { console.log(error) }
 }
@@ -282,30 +328,6 @@ settings.addEventListener('submit', async ()=> {
 
 
 // UTILITY
-
-function getCurrent(thing) {
-  const settings = getSettings();
-  // console.log(`getCurrent ${thing}:`, settings[thing]);
-  switch (thing) {
-    case 'settings':      return settings;
-    case 'order':         return settings.order;
-    case 'amount':        return settings.amount;
-    case 'style':         return settings.style;
-    case 'size':          return settings.size;
-    case 'gap':           return settings.gap;
-    case 'strokeWidth':   return settings.strokeWidth;
-    case 'overlap':       return settings.overlap;
-    case 'overlapAmount': return settings.overlapAmount;
-    case 'background':    return settings.background;
-    case 'stroke':        return settings.stroke;
-    case 'salpha':        return settings.salpha;
-    case 'fill':          return settings.fill;
-    case 'falpha':        return settings.falpha;
-    case 'animation':     return settings.animation;
-    case 'speed':         return settings.speed;
-  }
-}
-
 
 function adjust(thing) {
   console.log(`adjust ${thing}`);
@@ -336,30 +358,29 @@ function adjust(thing) {
   }
   settings[thing] = x;
   saveSettings(settings);
-  if(thing === 'order' || thing === 'style' || thing === 'amount') loadSVGs();
+  if(['order','style','amount'].includes(thing)) getData();
 }
 
 
 
 function loadSettings() {
   console.log('loadSettings');
-  console.log(getCurrent('overlap'));
-  console.log(typeof getCurrent('overlap'));
-  displayOrder.selectedIndex = parseInt(getCurrent('order')) - 3;
-  document.querySelector(`#${getCurrent('amount')}`).checked = true;
-  document.querySelector(`#${getCurrent('style')}`).checked = true;
-  document.getElementById('size').value = getCurrent('size');
-  document.getElementById('gap').value = getCurrent('gap');
-  document.getElementById('strokeWidth').value = getCurrent('strokeWidth');
-  document.getElementById('overlap').checked = getCurrent('overlap');
-  document.querySelector(`#${getCurrent('overlapAmount')}`).checked = true;
-  document.getElementById('background').value = getCurrent('background');
-  document.getElementById('stroke').value = getCurrent('stroke');
-  document.getElementById('salpha').value = getCurrent('salpha');
-  document.getElementById('fill').value = getCurrent('fill');
-  document.getElementById('falpha').value = getCurrent('falpha');
-  document.querySelector(`#${getCurrent('animation')}`).checked = true;
-  document.getElementById('speed').value = getCurrent('speed');
+  const settings = getSettings();
+  displayOrder.selectedIndex = parseInt(settings.order) - 3;
+  document.querySelector(`#${settings.amount}`).checked = true;
+  document.querySelector(`#${settings.style}`).checked = true;
+  document.getElementById('size').value = settings.size;
+  document.getElementById('gap').value = settings.gap;
+  document.getElementById('strokeWidth').value = settings.strokeWidth;
+  document.getElementById('overlap').checked = settings.overlap;
+  document.querySelector(`#${settings.overlapAmount}`).checked = true;
+  document.getElementById('background').value = settings.background;
+  document.getElementById('stroke').value = settings.stroke;
+  document.getElementById('salpha').value = settings.salpha;
+  document.getElementById('fill').value = settings.fill;
+  document.getElementById('falpha').value = settings.falpha;
+  document.querySelector(`#${settings.animation}`).checked = true;
+  document.getElementById('speed').value = settings.speed;
   applyStyles();
 }
 
@@ -367,41 +388,29 @@ function loadSettings() {
 
 function applyStyles() {
   console.log('applyStyles');
+  const settings = getSettings();
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
   const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
   sheet.deleteRule(svgRuleIndex)
   const text = `
   svg {
-    stroke: ${getCurrent('stroke')}${getHex(getCurrent('salpha'))};
-    fill: ${getCurrent('fill')}${getHex(getCurrent('falpha'))};
-    stroke-width: ${getCurrent('strokeWidth')}px;
-    width: ${getCurrent('size')}%;
-    margin: ${getCurrent('gap')}px;
+    stroke: ${settings.stroke}${getHex(settings.salpha)};
+    fill: ${settings.fill}${getHex(settings.falpha)};
+    stroke-width: ${settings.strokeWidth}px;
+    width: ${settings.size}%;
+    margin: ${settings.gap}px;
   }`;
   sheet.insertRule(text, sheet.cssRules.length);
-  document.body.style.background = getCurrent('background');
+  document.body.style.background = settings.background;
   loading.classList.remove('show');
 }
 
-async function loadSVGs() {
-  console.log('loadSVGs');
-  try {
-    squares.innerHTML = '';
-    await getData(0);
-    applyOverlap(getCurrent('overlap'));
-  } catch (error) { console.log(error) }
-  finally { 
-    loading.classList.remove('show');
-  }
-}
 
-async function getData(offset) {
-  let order = getCurrent('order');
-  let style = getCurrent('style');
-  console.log(`getData ${order} ${style} ${offset}`);
+async function getData(offset = 0) {
   try {
-    // console.log(`Loading squares ${offset} - ${offset + 200}`);
+    let order = getSettings().order;
+    let style = getSettings().style;
     // fix order 4 unique/all choice subsubmenu
     const unique = document.getElementById('unique');
     const all = document.getElementById('all');
@@ -409,11 +418,12 @@ async function getData(offset) {
       style = 'unique';
     if (order === 4 && style === 'quadvertex' && all.checked) 
       style = 'quadvertex';
-
     (order === 4 && (style === 'quadvertex' || style === 'unique'))
       ? document.getElementById('order4quadOptions').classList.remove('hide')
       : document.getElementById('order4quadOptions').classList.add('hide');
-
+    console.log(`getData ${order} ${style} ${offset}`);
+    if(offset === 0) squares.innerHTML = '';
+    loading.classList.add('show'); 
     const url = `http://localhost:3000/data/${order}/${style}/${offset}`;
     const rawData = await fetch(url);
     const data = await rawData.json();
@@ -438,7 +448,10 @@ async function getData(offset) {
       squares.appendChild(sentinel);
       io.observe(sentinel);
     }
-  } catch (error) { console.log(error) }
+    applyOverlap(getSettings().overlap);
+  } 
+  catch (error) { console.log(error) }
+  finally { loading.classList.remove('show'); }
 }
 
 function saveSettings(settingsJSON) {
@@ -451,7 +464,7 @@ function saveSettings(settingsJSON) {
 }
 
 function getSettings() {
-  // console.log('getSettings');
+  console.log('getSettings');
   const settingsString = localStorage.getItem("magicSettings");
   let settingsJSON = {};
   if (settingsString === null) {
@@ -475,7 +488,7 @@ function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min; 
-  //The maximum is inclusive and the minimum is inclusive 
+  // maximum and minimum inclusive 
 }
 function getRandomColour() {
   return `#${getHex(getRandomInt(0, 255))}${getHex(getRandomInt(0, 255))}${getHex(getRandomInt(0, 255))}`;
@@ -497,39 +510,3 @@ function applyOverlap(state) {
   }
 }
 
-
-
-
-
-// setTimeout(function(){
-
-
-
-
-//   const x = document.getElementsByTagName('circle');
-//   // console.dir(x);
-
-//   // console.log(x.children);
-//   for (let child of x) {
-
-//     console.dir(child);
-//     console.log(child.attributes.fill.value);
-//     // console.log(child.attributes.x.value);
-//     // console.log(child.attributes.y.value);
-//     // console.log(child.innerHTML);
-
-//     if( child.attributes.fill.value !== '#091540' ) {
-
-//       child.attributes.fill.value = 'none'
-
-//     }
-
-
-
-
-
-//   };
-
-
-
-// }, 500); 
