@@ -4,7 +4,6 @@ const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
 const compression = require('compression');
-// const shrinkRay = require('shrink-ray');
 const _ = require('lodash')
 // const dotenv = require('dotenv').config()
 const app = express()
@@ -133,7 +132,14 @@ app.listen(3000, () => {
 app.get('/', (req, res) => { res.render('home.njk') })
 app.post('/', async (req, res) => { 
   const theme = req.body
-  // console.log(theme)
+  console.log(theme)
+  console.log(theme.overlap)
+  if(!theme.overlap) { theme.overlap = 'false' }
+  // const settingsString = localStorage.getItem("magicSettings")
+  // console.log(settingsString)
+
+
+
   await couch.insertTheme(theme)
   res.render('home.njk')
 })

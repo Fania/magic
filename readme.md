@@ -40,6 +40,8 @@ Don't forget to set up a .env file with login info.
 - [ ] order option "change" event needs adding, so both wheel and change work
 - [ ] manual order change triggers two draws of squares
 - [ ] finish defining data lists for ranges
+- [ ] PWA stuff, service workers, etc
+
 
 
 

@@ -269,12 +269,11 @@ random.addEventListener('click', ()=> {
 
 // POPULATE THEME OPTIONS
 const themes = document.getElementById('themes');
-
 populateThemeOptions();
 async function populateThemeOptions() {
   console.log('populateThemeOptions');
   try {
-    const url = `http://localhost:3000/data/themes`;
+    const url = '/data/themes';
     const rawData = await fetch(url);
     const data = await rawData.json();
     themes.innerHTML = '<option value="">Choose</option>';
@@ -296,12 +295,11 @@ themes.addEventListener('change', ()=> {
 async function getTheme(name) {
   console.log(`getTheme ${name}`);
   try {
-    const url = `http://localhost:3000/data/themes`;
+    const url = '/data/themes';
     const rawData = await fetch(url);
     const data = await rawData.json();
     const theme = data.rows.find(item => item.id === name).doc;
     saveSettings(theme);
-    // loadSVGs();
     getData();
     loadSettings();
   } catch (error) { console.log(error) }
