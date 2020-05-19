@@ -285,9 +285,14 @@ footer a, footer p { color: #eeeeee80; text-decoration: none; margin: 0; }
   stroke-width: 1px;
 } */
 
-#squares.animateOddly { --speed: 0s; }
+#squares.animateOddly { --speed: 2; }
 #squares.animateOddly svg .lines { 
-  animation: dash var(--speed) ease-in-out alternate infinite }
+  animation-name: dash;
+  animation-duration: calc(2.5 * var(--speed))s;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate; 
+  animation-iteration-count: infinite; 
+}
 #squares.animateEvenly svg .lines {
   animation: dash 20s ease-in-out alternate infinite }
 @keyframes dash { to { stroke-dashoffset: 0 } }

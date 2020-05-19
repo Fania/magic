@@ -255,9 +255,16 @@ const offA = document.getElementById('off');
 [syncA,asyncA,offA].forEach( a => {
   a.addEventListener('change', ()=> { 
     console.log(`ANIMATION change triggered by ${a.id}`);
-    if(a.id === 'sync') { squares.classList.add('animateEvenly'); }
-    if(a.id === 'async') { squares.classList.add('animateOddly'); }
+    if(a.id === 'sync') { 
+      squares.classList.add('animate'); 
+      squares.classList.add('animateEvenly'); 
+    }
+    if(a.id === 'async') { 
+      squares.classList.add('animate'); 
+      squares.classList.add('animateOddly'); 
+    }
     if(a.id === 'off') {
+      squares.classList.remove('animate');
       squares.classList.remove('animateOddly');
       squares.classList.remove('animateEvenly');
     }
@@ -272,11 +279,20 @@ speed.addEventListener('input', ()=> {
   console.log('speed', speed.value);
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
-  const ruleIndex = rules.findIndex(rule => 
-    rule.selectorText === "#squares.animateEvenly svg .lines");
-  sheet.deleteRule(ruleIndex);
-  const text = `#squares.animateEvenly svg .lines { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
-
+  const animType = document.querySelector('[name="animation"]:checked').value;
+  let text = '';
+  if(animType === 'sync') {
+    const evenRuleIndex = rules.findIndex(rule => 
+      rule.selectorText === "#squares.animateEvenly svg .lines");
+    sheet.deleteRule(evenRuleIndex);
+    text = `#squares.animateEvenly svg .lines { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
+  } 
+  if(animType === 'async') {
+    const oddRuleIndex = rules.findIndex(rule => 
+      rule.selectorText === "#squares.animateOddly");
+    sheet.deleteRule(oddRuleIndex);
+    text = `#squares.animateOddly { --speed: ${speed.value / 2} }`;
+  }
   sheet.insertRule(text, sheet.cssRules.length);
   adjust('speed');
 });
@@ -608,17 +624,25 @@ function animationCSS(id, order, style, len) {
 
   const sheet = document.styleSheets[0];
   // const [...rules] = sheet.cssRules;
-  // const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
-  // sheet.deleteRule(svgRuleIndex)
+  // const syncRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
+  // sheet.deleteRule(syncRuleIndex);
   const styleName = style === 'unique' ? 'quadvertex' : style
-  const syncName = `#squares.animateEvenly #${styleName}-${order}-${id} .lines`;
+  const syncName = `#squares.animate #${styleName}-${order}-${id} .lines`;
   const syncText = `${syncName}{stroke-dasharray:${len};stroke-dashoffset:${len}}`;
-  // sheet.insertRule(syncText, sheet.cssRules.length);
+  sheet.insertRule(syncText, sheet.cssRules.length);
 
+  const sheetNew = document.styleSheets[0];
   const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} .lines`;
-  const asyncText = `${asyncName}{animation: dash calc(${len}/var(--speed)) ease-in-out alternate infinite}`;
-
-  sheet.insertRule(syncText + asyncText, sheet.cssRules.length);
+  const asyncText = `
+  ${asyncName}{
+    animation-name: dash;
+    animation-duration: calc(${len}/1000 * var(--speed));
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate; 
+    animation-iteration-count: infinite; 
+  }`;
+  console.log(asyncText);
+  sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
   // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
 
 //   let output = '';
