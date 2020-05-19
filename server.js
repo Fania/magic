@@ -43,43 +43,6 @@ const gallery = require('./lib/gallery.js')
 //   console.log(svgString)
 // })
 
-const defaultTheme = { 
-  "_id":         "default",
-  "order":       4,
-  "style":       "blocks",
-  "amount":      383,
-  "size":        "20",
-  "gap":         "20",
-  "background":  "#222222",
-  "stroke":      "#FFFFFF",
-  "strokeWidth": "2",
-  "salpha":      "255",
-  "fill":        "#666666",
-  "falpha":      "0",
-  "animation":   "off",
-  "speed":       50
-}
-
-const cherryBlossom = {
-  "_id": "cherryBlossom",
-  "amount": "unique",
-  "animation": "off",
-  "background": "#C99AB5",
-  "falpha": 224,
-  "fill": "#F9C2D5",
-  "gap": "0",
-  "order": 5,
-  "salpha": 161,
-  "size": "16",
-  "speed": 50,
-  "stroke": "#816443",
-  "strokeWidth": 15,
-  "style": "quadvertex"
-}
-
-// couch.insertTheme(defaultTheme)
-// couch.insertTheme(cherryBlossom)
-
 
 
 
@@ -132,14 +95,7 @@ app.listen(3000, () => {
 app.get('/', (req, res) => { res.render('home.njk') })
 app.post('/', async (req, res) => { 
   const theme = req.body
-  console.log(theme)
-  console.log(theme.overlap)
-  if(!theme.overlap) { theme.overlap = 'false' }
-  // const settingsString = localStorage.getItem("magicSettings")
-  // console.log(settingsString)
-
-
-
+  if(!theme.overlap) theme.overlap = 'false'
   await couch.insertTheme(theme)
   res.render('home.njk')
 })

@@ -5,10 +5,10 @@ const [...displayStyles] = document.getElementsByName('style');
 const [...displayAmounts] = document.getElementsByName('amount');
 const displayOrder = document.getElementById('order');
 const loadingTriggers = (menuTriggers.concat(displayStyles,displayOrder,displayAmounts)).flat(Infinity);
-const displayTriggers = (displayStyles.concat(displayOrder,displayAmounts)).flat(Infinity);
-const unique = document.getElementById('unique');
-const all = document.getElementById('all');
-const opt = document.getElementById('order4quadOptions');
+// const displayTriggers = (displayStyles.concat(displayOrder,displayAmounts)).flat(Infinity);
+// const unique = document.getElementById('unique');
+// const all = document.getElementById('all');
+// const opt = document.getElementById('order4quadOptions');
 
 
 // LOADING ICON TRIGGERS
@@ -260,13 +260,6 @@ random.addEventListener('click', ()=> {
 
 
 
-// OK TO HERE
-
-
-
-
-
-
 // POPULATE THEME OPTIONS
 const themes = document.getElementById('themes');
 populateThemeOptions();
@@ -306,18 +299,17 @@ async function getTheme(name) {
 }
 
 const settings = document.getElementById('settings');
-const saveTheme = document.getElementById('saveTheme');
 const themeName = document.getElementById('themeName');
 settings.addEventListener('submit', async ()=> {
   const name = prompt('What do you want to call this theme?\nPlease enter a single word name below.');
   themeName.value = name;
-  // location.reload();
-  // const option = document.createElement('option');
-  // option.value = name;
-  // option.innerText = name;
-  // themes.appendChild(option);
 });
 
+
+
+
+
+// OK TO HERE
 
 
 
@@ -370,7 +362,7 @@ function loadSettings() {
   document.getElementById('size').value = settings.size;
   document.getElementById('gap').value = settings.gap;
   document.getElementById('strokeWidth').value = settings.strokeWidth;
-  document.getElementById('overlap').checked = settings.overlap;
+  document.getElementById('overlap').checked = settings.overlap === 'true';
   document.querySelector(`#${settings.overlapAmount}`).checked = true;
   document.getElementById('background').value = settings.background;
   document.getElementById('stroke').value = settings.stroke;
@@ -379,6 +371,11 @@ function loadSettings() {
   document.getElementById('falpha').value = settings.falpha;
   document.querySelector(`#${settings.animation}`).checked = true;
   document.getElementById('speed').value = settings.speed;
+  if(settings._id) {
+    const displayTheme = document.getElementById('themes');
+    const themeIndex = displayTheme[displayTheme.selectedIndex].value;
+    displayTheme.selectedIndex = parseInt(settings._id);
+  }
   applyStyles();
 }
 
@@ -401,6 +398,7 @@ function applyStyles() {
   }`;
   sheet.insertRule(text, sheet.cssRules.length);
   document.body.style.background = settings.background;
+  applyOverlap(settings.overlap === 'true');
   loading.classList.remove('show');
 }
 
@@ -446,7 +444,7 @@ async function getData(offset = 0) {
       squares.appendChild(sentinel);
       io.observe(sentinel);
     }
-    applyOverlap(getSettings().overlap);
+    applyOverlap(getSettings().overlap === 'true');
   } 
   catch (error) { console.log(error) }
   finally { loading.classList.remove('show'); }
@@ -462,7 +460,7 @@ function saveSettings(settingsJSON) {
 }
 
 function getSettings() {
-  console.log('getSettings');
+  // console.log('getSettings');
   const settingsString = localStorage.getItem("magicSettings");
   let settingsJSON = {};
   if (settingsString === null) {
@@ -497,12 +495,8 @@ function getRandomColour() {
 function applyOverlap(state) {
   if (state) { // true
     squares.classList.add('overlap');
-    if(overlap200.checked) {
-      squares.classList.add('few')
-    }
-    else {
-      squares.classList.remove('few'); 
-    }
+    if(overlap200.checked) { squares.classList.add('few'); }
+    else { squares.classList.remove('few'); }
   } else { // false
     squares.classList.remove('overlap');
   }

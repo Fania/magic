@@ -397,8 +397,9 @@ footer a, footer p { color: #eeeeee80; text-decoration: none; margin: 0; }
 
 
 
-  #presetOptions #themes { width: 70px }
+  #presetOptions #themes { width: 133px }
   #presetOptions label { display: none }
+  #presetOptions input { width: 60px; margin: 2px 0;}
 
 
 

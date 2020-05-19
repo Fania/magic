@@ -25,23 +25,23 @@ Don't forget to set up a .env file with login info.
 - [x] add size options
 - [x] add colour options
 - [x] add padding options
+- [x] add themes
 - [x] fix 880/383 options for quadvertex4
 - [x] themes load only after page reload
+- [x] order option "change" event needs adding, so both wheel and change work
+- [x] add option to overlap all completely
+- [x] fix eventListeners and that for overlapAmount
 - [ ] add printing options
 - [ ] add pin-to-top / favourite feature
 - [ ] hover info for each square or put into modal
 - [ ] number overlay?
-- [ ] favorite theme
 - [ ] enable query parameters for bookmarking and sharing
-- [ ] add option to overlap all completely
-- [ ] fix eventListeners and that for overlapAmount
+- [ ] add share button
 - [ ] fix line width for arc and altarc
 - [ ] fix mobile style again
-- [ ] order option "change" event needs adding, so both wheel and change work
 - [ ] manual order change triggers two draws of squares
 - [ ] finish defining data lists for ranges
 - [ ] PWA stuff, service workers, etc
-
 
 
 
