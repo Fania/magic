@@ -285,6 +285,15 @@ footer a, footer p { color: #eeeeee80; text-decoration: none; margin: 0; }
   stroke-width: 1px;
 } */
 
+#squares.animateOddly { --speed: 0s; }
+#squares.animateOddly svg .lines { 
+  animation: dash var(--speed) ease-in-out alternate infinite }
+#squares.animateEvenly svg .lines {
+  animation: dash 20s ease-in-out alternate infinite }
+@keyframes dash { to { stroke-dashoffset: 0 } }
+
+
+
 
 
 @media screen and (min-width: 500px) {

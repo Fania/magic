@@ -5,12 +5,6 @@
 {% block submenu %}
 <header class="submenu home">
 
-  {# <nav>
-    <p><strong>Display:</strong></p>
-    <a id="uniquesMenu" class="active" href="">Uniques</a>
-    <a id="unfilteredMenu" href="">All</a>
-  </nav> #}
-
   <form id="settings" action="/" method="POST" >
   {# <form id="settings"> #}
   
@@ -130,8 +124,6 @@
       </fieldset>
     </fieldset>
 
-
-
     <fieldset id="colourOptions">
       <legend>Colours</legend>
       <label>
@@ -172,7 +164,7 @@
       </label>
       <label>
         <span>Speed</span>
-        <input type="range" id="speed" name="speed" value="50">
+        <input type="range" id="speed" name="speed" value="20">
       </label>
     </fieldset>
 
@@ -188,7 +180,6 @@
       <input type="button" id="share" value="share">
       <input type="hidden" id="themeName" name="_id" value="">
     </fieldset>
-
 
   </form>
 </header>

@@ -249,6 +249,56 @@ falpha.addEventListener('wheel', ()=> {
 });
 
 // ANIMATION OPTIONS
+const syncA = document.getElementById('sync');
+const asyncA = document.getElementById('async');
+const offA = document.getElementById('off');
+[syncA,asyncA,offA].forEach( a => {
+  a.addEventListener('change', ()=> { 
+    console.log(`ANIMATION change triggered by ${a.id}`);
+    if(a.id === 'sync') { squares.classList.add('animateEvenly'); }
+    if(a.id === 'async') { squares.classList.add('animateOddly'); }
+    if(a.id === 'off') {
+      squares.classList.remove('animateOddly');
+      squares.classList.remove('animateEvenly');
+    }
+    adjust('animation');
+  });
+});
+
+// ANIMATION SPEED OPTION
+const speed = document.getElementById('speed');
+speed.addEventListener('input', ()=> { 
+  console.log('SPEED input triggered');
+  console.log('speed', speed.value);
+  const sheet = document.styleSheets[0];
+  const [...rules] = sheet.cssRules;
+  const ruleIndex = rules.findIndex(rule => 
+    rule.selectorText === "#squares.animateEvenly svg .lines");
+  sheet.deleteRule(ruleIndex);
+  const text = `#squares.animateEvenly svg .lines { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
+
+  sheet.insertRule(text, sheet.cssRules.length);
+  adjust('speed');
+});
+speed.addEventListener('wheel', ()=> { 
+  console.log('SPEED wheel triggered');
+  const old = parseInt(speed.value);
+  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+    if(old > 5) { speed.value = old - 5; } 
+    else        { speed.value = 1; }
+  }
+  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+    if(old <= 95) { speed.value = old + 5; } 
+    else          { speed.value = 100; }
+  }
+  adjust('speed');
+  event.preventDefault();
+});
+
+
+
+
+
 
 // RESET OPTION
 const reset = document.getElementById('reset');
@@ -464,6 +514,10 @@ async function getData(offset = 0) {
     for (let i in data.rows) {
       const elem = data.rows[i].value.svg;
       squares.insertAdjacentHTML('beforeend',elem);
+      if(!['numbers','blocks','circles','tetromino'].includes(style)) {
+        animationCSS(data.rows[i].id, order, style, 
+                             data.rows[i].value['length']);
+      }
     }
     // only add sentinel if we have more results left
     if(data.rows.length === 200) {
@@ -540,3 +594,51 @@ function applyOverlap(state) {
   }
 }
 
+
+
+
+
+
+
+// #quadvertex-3-1 .lines { stroke-dasharray: 1040; stroke-dashoffset: 1040; }
+// #quadvertex-3-1 .lines { animation: dash 2.08s ease-in-out alternate infinite; }
+
+function animationCSS(id, order, style, len) {
+  // console.log(id, order, style, len);
+
+  const sheet = document.styleSheets[0];
+  // const [...rules] = sheet.cssRules;
+  // const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
+  // sheet.deleteRule(svgRuleIndex)
+  const styleName = style === 'unique' ? 'quadvertex' : style
+  const syncName = `#squares.animateEvenly #${styleName}-${order}-${id} .lines`;
+  const syncText = `${syncName}{stroke-dasharray:${len};stroke-dashoffset:${len}}`;
+  // sheet.insertRule(syncText, sheet.cssRules.length);
+
+  const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} .lines`;
+  const asyncText = `${asyncName}{animation: dash calc(${len}/var(--speed)) ease-in-out alternate infinite}`;
+
+  sheet.insertRule(syncText + asyncText, sheet.cssRules.length);
+  // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
+
+//   let output = '';
+//   orders.forEach( order => {
+//     output += `\n\n/* Order-${order} ${style} ${sync ? 'lengths' : 'speeds'} */`;
+//     const index = indices[order];
+//     index.forEach( idx => {
+//       const len = Object.keys(idx[style])[0];
+//       if (sync) {
+//         const lengths = `
+// #${style}-${order}-${idx.id} .lines { stroke-dasharray: ${len}; stroke-dashoffset: ${len}; }`;
+//         output += lengths;
+//       } else {
+//         const speeds = `
+// #${style}-${order}-${idx.id} .lines { animation: dash ${len/1000 * 2}s ease-in-out alternate infinite; }`;
+//         output += speeds;
+//       }
+//     });
+//   });
+//   download.href = makeTextFile( output );
+//   download.innerText = `Download css for ${style} ${sync ? 'lengths' : 'speeds'}`;
+//   download.setAttribute('download', `${style}${sync ? 'Lengths' : 'Speeds'}.css`);
+}
