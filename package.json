@@ -10,6 +10,7 @@
   "author": "Fania Raczinski",
   "license": "CC-BY-NC-SA",
   "dependencies": {
+    "compression": "^1.7.4",
     "dom-parser": "^0.1.6",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

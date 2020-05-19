@@ -3,9 +3,12 @@
 const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
+const compression = require('compression');
+// const shrinkRay = require('shrink-ray');
 const _ = require('lodash')
 // const dotenv = require('dotenv').config()
 const app = express()
+app.use(compression())
 app.use(express.static('./'))
 
 
