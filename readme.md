@@ -31,12 +31,12 @@ Don't forget to set up a .env file with login info.
 - [x] order option "change" event needs adding, so both wheel and change work
 - [x] add option to overlap all completely
 - [x] fix eventListeners and that for overlapAmount
+- [x] add share button
+- [x] enable query parameters for bookmarking and sharing
 - [ ] add printing options
-- [ ] add pin-to-top / favourite feature
+- [ ] add pin-to-top / favourite feature for individual squares
 - [ ] hover info for each square or put into modal
 - [ ] number overlay?
-- [ ] enable query parameters for bookmarking and sharing
-- [ ] add share button
 - [ ] fix line width for arc and altarc
 - [ ] fix mobile style again
 - [ ] manual order change triggers two draws of squares

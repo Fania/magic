@@ -19,6 +19,8 @@ loadingTriggers.forEach( lt =>
 
 
 
+// OK FROM HERE
+
 
 const defaults = { 
   "order":         4,
@@ -43,18 +45,31 @@ const defaults = {
 
 
 // FIRST LOAD
-
-loadSettings();
-// loadSVGs();
-getData();
-// adjustSize();
-
-
-
-
+const params = location.search;
+if(params) { loadBookmark(params); }
+else {
+  // clean load, possibly from memory
+  loadSettings();
+  getData();
+}
 
 
-// OK FROM HERE
+
+function loadBookmark(params) {
+  const keyValueStrings = (params.slice(1)).split('&');
+  const settings = {};
+  keyValueStrings.forEach(x => {
+    const pair = x.split('=');
+    const value = pair[1].replace('%23','#');
+    settings[pair[0]] = value;
+  });
+  // console.log(settings);
+  saveSettings(settings);
+  loadSettings();
+  getData();
+}
+
+
 
 displayOrder.addEventListener('wheel', () => {
   console.log('ORDER wheel triggered');
@@ -258,6 +273,29 @@ random.addEventListener('click', ()=> {
   saveSettings(settings);
 });
 
+// SHARE OPTION
+const share = document.getElementById('share');
+share.addEventListener('click', ()=> { 
+  const settings = getSettings();
+  const params = new URLSearchParams(settings);
+  const bookmark = location + '?' + params.toString();
+  console.log(bookmark);
+
+  if (navigator.share) {
+    navigator.share({
+      title: 'squares.cubelife.org',
+      text: 'Magic Squares',
+      url: bookmark,
+    })
+    .then(() => console.log('Successful share'))
+    .catch((error) => console.log('Error sharing', error));
+  } else { console.log('no sharing possible'); }
+
+  location = bookmark;
+  // bookmark.select();
+  // document.execCommand("copy");
+  // alert('Added URL to clipboard.');
+});
 
 
 // POPULATE THEME OPTIONS
