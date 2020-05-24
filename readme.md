@@ -42,6 +42,10 @@ Don't forget to set up a .env file with login info.
 - [ ] manual order change triggers two draws of squares
 - [ ] finish defining data lists for ranges
 - [ ] PWA stuff, service workers, etc
+- [ ] insert intersection observer sooner? at 150?
+- [ ] move generateSharedLengths to mapreduce filter view in couch?
+
+
 
 
 

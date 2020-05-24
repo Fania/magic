@@ -312,7 +312,7 @@ footer a, footer p { color: #eeeeee80; text-decoration: none; margin: 0; }
 
 @media screen and (min-width: 700px) {
 
-  main { margin: 2em; }
+  main { margin: 2em; margin-left: calc(200px + 2em) }
   header { padding: 0 2em; }
   .mainmenu div h1 { display: flex; margin-left: 1em; }
   .mainmenu nav { flex-direction: row; }
