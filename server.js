@@ -35,7 +35,7 @@ const gallery = require('./lib/gallery.js')
 
 
 
-couch.getDBInfo()
+// couch.getDBInfo()
 
 // const localData = fs.readFileSync(`./data/source4.json`)
 // const data = JSON.parse(localData)

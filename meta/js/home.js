@@ -641,7 +641,7 @@ function animationCSS(id, order, style, len) {
     animation-direction: alternate; 
     animation-iteration-count: infinite; 
   }`;
-  console.log(asyncText);
+  // console.log(asyncText);
   sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
   // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
 
