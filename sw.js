@@ -18,6 +18,7 @@ const precacheResources = [
   '/meta/imgs/favicons/favicon.ico',
   '/meta/imgs/favicons/favicon-32x32.png',
   '/meta/imgs/favicons/favicon-16x16.png',
+  '/meta/imgs/logo.svg',
   '/meta/imgs/o3s1n.svg',
   '/meta/imgs/o3s1s.svg',
   '/meta/imgs/o3s1qv.svg',
