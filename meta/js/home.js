@@ -524,7 +524,7 @@ async function getData(offset = 0) {
     console.log(`getData ${order} ${style} ${offset}`);
     if(offset === 0) squares.innerHTML = '';
     loading.classList.add('show'); 
-    const url = `http://localhost:3000/data/${order}/${style}/${offset}`;
+    const url = `/data/${order}/${style}/${offset}`;
     const rawData = await fetch(url);
     const data = await rawData.json();
     for (let i in data.rows) {
