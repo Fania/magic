@@ -8,8 +8,8 @@
 const cacheName = 'magic-v1';
 const precacheResources = [
   '/',
-  '/views/base.njk',
-  '/views/home.njk',
+  // '/views/base.njk',
+  // '/views/home.njk',
   '/meta/js/general.js',
   '/meta/js/home.js',
   '/meta/css/styles.css',
