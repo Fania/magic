@@ -140,10 +140,8 @@ app.post('/contribute', async (req, res) => {
 // NEW - Add CORS headers - see https://enable-cors.org/server_expressjs.html
 app.use( (req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://magic.fania.eu')
-  res.header('Access-Control-Allow-Headers', `Origin, 
-                                              X-Requested-With, 
-                                              Content-Type, 
-                                              Accept`)
+  res.header('Access-Control-Allow-Headers', 
+             'Origin, X-Requested-With, Content-Type, Accept')
   next()
 })
 
