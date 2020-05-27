@@ -33,6 +33,7 @@ Don't forget to set up a .env file with login info.
 - [x] fix eventListeners and that for overlapAmount
 - [x] add share button
 - [x] enable query parameters for bookmarking and sharing
+- [x] PWA stuff, service workers, etc
 - [ ] add printing options
 - [ ] add pin-to-top / favourite feature for individual squares
 - [ ] hover info for each square or put into modal
@@ -41,10 +42,9 @@ Don't forget to set up a .env file with login info.
 - [ ] fix mobile style again
 - [ ] manual order change triggers two draws of squares
 - [ ] finish defining data lists for ranges
-- [ ] PWA stuff, service workers, etc
 - [ ] insert intersection observer sooner? at 150?
 - [ ] move generateSharedLengths to mapreduce filter view in couch?
-
+- [ ] update/push cache with changes
 
 
 
