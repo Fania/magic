@@ -137,6 +137,17 @@ app.post('/contribute', async (req, res) => {
 // s = ['arrays','arc','altarc','quadvertex','quadline','numbers','unique','straight','circles','blocks','tetromino']
 // o = [0,200,400,600, etc]
 
+// NEW - Add CORS headers - see https://enable-cors.org/server_expressjs.html
+app.use( (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://magic.fania.eu')
+  res.header('Access-Control-Allow-Headers', `Origin, 
+                                              X-Requested-With, 
+                                              Content-Type, 
+                                              Accept`)
+  next()
+})
+
+
 app.get('/data/:n', async (req, res) => {
   const order = req.params.n
   const data = await couch.viewAllDB(order)
