@@ -12,6 +12,7 @@ body {
   color: var(--textColour);
   margin: 0;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', Verdana, sans-serif;
+  
 }
 a { color: var(--textColour) }
 
@@ -19,13 +20,14 @@ header { margin: 0; padding: 0 1em; }
 
 #hamburger { display: block; font-size: 3em; }
 #mainnav { 
+  box-sizing: border-box;
   background: #111111CC; padding: 1em;
-  position: absolute; right: 0; top: 69px;
-  height: calc(100vh - 100px); width: 100%;
+  position: fixed; top: 69px;
+  height: 30%;
   display: flex; align-items: flex-end; justify-content: space-around;
-  transform: translateX(100%); transition: all 1s; }
+  transform: translateX(235%); transition: all 1s; }
 #mainnav.show { 
-  transform: translateX(0); transition: all 1s; }
+  transform: translateX(135%); transition: all 1s; }
 
 
 .mainmenu { 

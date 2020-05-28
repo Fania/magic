@@ -8,8 +8,6 @@
 const cacheName = 'magic-v1';
 const precacheResources = [
   '/',
-  // '/views/base.njk',
-  // '/views/home.njk',
   '/meta/js/general.js',
   '/meta/js/home.js',
   '/meta/css/styles.css',
@@ -34,39 +32,71 @@ const precacheResources = [
 ];
 
 self.addEventListener('install', event => {
-  // console.log('Service worker install event!');
+  // console.log('[Service Worker] install event!');
   event.waitUntil(
-    caches.open(cacheName)
-      .then(cache => {
-        return cache.addAll(precacheResources);
-      })
+    cacheAssets(cacheName, precacheResources)
   );
 });
 
-self.addEventListener('activate', event => {
-  // console.log('Service worker activate event!');
+
+// delete old cache
+// self.addEventListener('activate', function(event) {
+//   const cacheWhitelist = ['pages-cache-v1', 'blog-posts-cache-v1'];
+//   event.waitUntil(
+//     caches.keys().then(function(cacheNames) {
+//       return Promise.all(
+//         cacheNames.map(function(cacheName) {
+//           if (cacheWhitelist.indexOf(cacheName) === -1) {
+//             return caches.delete(cacheName);
+//           }
+//         })
+//       );
+//     })
+//   );
+// });
+
+
+self.addEventListener('sync', event => {
+  // console.log('[Service Worker] Sync triggered by', event.tag);
+  if (event.tag == 'update-assets') {
+    event.waitUntil(
+      cacheAssets(cacheName, precacheResources)
+    );
+  }
 });
 
+// https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Offline_Service_workers
 self.addEventListener('fetch', event => {
-  // console.log('Fetch intercepted for:', event.request.url);
+  // console.log('[Service Worker] Fetching: ', event.request.url);
   event.respondWith(caches.match(event.request)
     .then(cachedResponse => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        return fetch(event.request);
+        // Check cache but fall back to network
+        return cachedResponse || fetch(event.request);
       })
     );
 });
 
-
-// self.addEventListener('fetch', function(event) {
+// automatically add any new things to cache
+// self.addEventListener('fetch', event => {
 //   event.respondWith(
-//     caches.open(cacheName).then(function(cache) {
-//       return fetch(event.request).then(function(response) {
-//         cache.put(event.request, response.clone());
-//         return response;
-//       });
-//     })
+//     caches.match(event.request)
+//       .then((r) => {
+//         console.log('[Service Worker] Fetching resource: ' + event.request.url);
+//         return r || fetch(event.request)
+//           .then(async response => {
+//             const cache = await caches.open(cacheName);
+//             console.log('[Service Worker] Caching new resource: ' + event.request.url);
+//             cache.put(event.request, response.clone());
+//             return response;
+//           });
+//       })
 //   );
 // });
+
+
+
+async function cacheAssets(name, things) {
+  // console.log('[Service Worker] Caching files');
+  const cache = await caches.open(name);
+  return cache.addAll(things);
+}
