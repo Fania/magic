@@ -3,7 +3,7 @@
 {% extends "base.njk" %}
 
 
-{% block submenu %}
+{# {% block submenu %}
 <header class="submenu contribute">
 
   <form id="manual" action="/contribute" method="post">
@@ -11,16 +11,20 @@
   </form>
 
 </header>
-{% endblock %}
+{% endblock %} #}
 
 
 {% block main %}
-<main>
+<main class="contribute">
 
   <h2>Contribute</h2>
   <p>You can contribute to our collection of higher order magic squares (n > 4) here.</p>
   <p>Simply enter a number sequence in the input box above.</p>
   <p>If you have a larger collection that you'd like to donate please contact us via email.</p>
+
+  <form id="manual" action="/contribute" method="post">
+    <input id="manualInput" name="manualInput" type="text" placeholder="Enter magic square here. Comma or space separated numbers are fine." pattern="(?:[0-9]+[\s|,]){8,}[0-9]+">
+  </form>
   
   {# <script>console.log( {{ result | safe }} )</script> #}
   {% if result.magic %}
