@@ -4,13 +4,20 @@
 // console.log('Inside service worker script!');
 
 
-
-const cacheName = 'magic-v1';
+const cacheVersion = 'v0.1';
+const cacheName = 'magic-' + cacheVersion;
 const precacheResources = [
   '/',
   '/meta/js/general.js',
   '/meta/js/home.js',
   '/meta/css/styles.css',
+  '/data/4/unique/0',
+  '/data/themes'
+];
+
+const staticVersion = 'v0.1';
+const staticName = 'magicStatic-' + staticVersion;
+const staticResources = [
   '/meta/imgs/favicons/site.webmanifest',
   '/meta/imgs/favicons/android-chrome-192x192.png',
   '/meta/imgs/favicons/favicon.ico',
@@ -26,48 +33,53 @@ const precacheResources = [
   '/meta/imgs/o3s1c.svg',
   '/meta/imgs/o3s1b.svg',
   '/meta/imgs/o3s1t.svg',
-  '/meta/imgs/spinning-arc.svg',
-  '/data/4/unique/0',
-  '/data/themes'
+  '/meta/imgs/spinning-arc.svg'
 ];
 
-self.addEventListener('install', event => {
-  // console.log('[Service Worker] install event!');
+
+// add new cache(s)
+addEventListener('install', event => {
+  console.log('[Service Worker] installed!');
+  skipWaiting();
   event.waitUntil(
     cacheAssets(cacheName, precacheResources)
+  );
+  event.waitUntil(
+    cacheAssets(staticName, staticResources)
   );
 });
 
 
-// delete old cache
-// self.addEventListener('activate', function(event) {
-//   const cacheWhitelist = ['pages-cache-v1', 'blog-posts-cache-v1'];
-//   event.waitUntil(
-//     caches.keys().then(function(cacheNames) {
-//       return Promise.all(
-//         cacheNames.map(function(cacheName) {
-//           if (cacheWhitelist.indexOf(cacheName) === -1) {
-//             return caches.delete(cacheName);
-//           }
-//         })
-//       );
-//     })
-//   );
-// });
-
-
-self.addEventListener('sync', event => {
-  // console.log('[Service Worker] Sync triggered by', event.tag);
-  if (event.tag == 'update-assets') {
-    event.waitUntil(
-      cacheAssets(cacheName, precacheResources)
-    );
-  }
+// delete old cache(s)
+addEventListener('activate', event => {
+  console.log('[Service Worker] activate and delete old!');
+  const whitelist = [cacheName,staticName];
+  event.waitUntil(
+    caches.keys().then( names => {
+      return Promise.all(
+        names.map( cn => {
+          if (whitelist.indexOf(cn) === -1) {
+            return caches.delete(cn);
+          }
+        })
+      );
+    })
+  );
 });
 
+
+// addEventListener('sync', event => {
+//   console.log('[Service Worker] Synced by', event.tag);
+//   if (event.tag == 'update-assets') {
+//     event.waitUntil(
+//       cacheAssets(cacheName, precacheResources)
+//     );
+//   }
+// });
+
 // https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Offline_Service_workers
-self.addEventListener('fetch', event => {
-  // console.log('[Service Worker] Fetching: ', event.request.url);
+addEventListener('fetch', event => {
+  // console.log('[Service Worker] Fetching ', event.request.url);
   event.respondWith(caches.match(event.request)
     .then(cachedResponse => {
         // Check cache but fall back to network
@@ -96,7 +108,7 @@ self.addEventListener('fetch', event => {
 
 
 async function cacheAssets(name, things) {
-  // console.log('[Service Worker] Caching files');
+  console.log('[Service Worker] Caching files');
   const cache = await caches.open(name);
   return cache.addAll(things);
 }
