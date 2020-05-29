@@ -3,7 +3,6 @@
 
 // console.log('Inside service worker script!');
 
-
 const cacheVersion = 'v0.1';
 const cacheName = 'magic-' + cacheVersion;
 const precacheResources = [
@@ -82,11 +81,20 @@ addEventListener('fetch', event => {
   // console.log('[Service Worker] Fetching ', event.request.url);
   event.respondWith(caches.match(event.request)
     .then(cachedResponse => {
-        // Check cache but fall back to network
-        return cachedResponse || fetch(event.request);
+        // CACHE > NETWORK
+        if (cachedResponse) {
+          // console.log('[Service Worker] from CACHE');
+          return cachedResponse
+        } else {
+          console.log('[Service Worker] Fetch from NETWORK ', event.request.url);
+          return fetch(event.request)
+        }
+        // return cachedResponse || fetch(event.request);
       })
     );
 });
+
+
 
 // automatically add any new things to cache
 // self.addEventListener('fetch', event => {
@@ -106,9 +114,15 @@ addEventListener('fetch', event => {
 // });
 
 
+async function getCache(req) {
+  console.log('[Service Worker] Retrieving cache ', name);
+  // caches.match(event.request)
+  const cache = await caches.open(name);
+  return await cache.match(req);
+}
 
 async function cacheAssets(name, things) {
-  console.log('[Service Worker] Caching files');
+  console.log('[Service Worker] Caching ', name);
   const cache = await caches.open(name);
   return cache.addAll(things);
 }

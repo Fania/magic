@@ -5,6 +5,11 @@ if ('serviceWorker' in navigator) {
     await navigator.serviceWorker.register('sw.js');
     // const resp = await navigator.serviceWorker.ready;
     // resp.sync.register('update-assets');
+
+
+
+
+
   });
 }
 

@@ -23,25 +23,27 @@
   
   <section id="videos">
     <h2>Videos</h2>
-    {% for file in files.videos %}
+    {# {% for file in files.videos %}
       <video autoplay muted loop>
         <source src="meta/gallery/vid/{{ file }}" type="video/mp4">
       </video>
-    {% endfor %}
+    {% endfor %} #}
   </section>
 
   <section id="renders">
     <h2>Renders</h2>
     {% for file in files.renders %}
-      <img src="meta/gallery/art/{{ file }}" loading="lazy">
+      {# <img src="meta/gallery/art/{{ file }}"> #}
+      {# <img src="meta/gallery/art/{{ file }}" loading="lazy"> #}
+      <img src="meta/gallery/art/{{ file }}" loading="lazy" width="100%" height="100%">
     {% endfor %}
   </section>
 
   <section id="lines">
     <h2>Lines</h2>
-    {% for file in files.images %}
-      <img src="meta/gallery/img/{{ file }}" loading="lazy">
-    {% endfor %}
+    {# {% for file in files.images %}
+      <img src="meta/gallery/img/{{ file }}" loading="lazy" width="100%" height="100%">
+    {% endfor %} #}
   </section>
 
 </main>
