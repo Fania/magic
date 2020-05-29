@@ -13,8 +13,10 @@ if ('serviceWorker' in navigator) {
 
 hamburger.addEventListener('click', ()=> {
   mainnav.classList.toggle('show');
+  hamburger.classList.toggle('rotate');
 })
 subway.addEventListener('click', ()=> {
   const subnav = document.querySelector('.submenu');
   subnav.classList.toggle('show');
+  subway.classList.toggle('rotate');
 })
