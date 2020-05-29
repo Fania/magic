@@ -52,6 +52,9 @@ header { margin: 0; padding: 0 1em; }
   content: "'"; font-size: 48px; position: absolute; top: 8px; right: 11px }
 #subway::after {
   content: "'"; font-size: 48px; position: absolute; top: 18px; right: 21px }
+
+
+
 .submenu { 
   background: #111111CC; position: absolute;
   transform: translateX(-100%); transition: all 1s }
@@ -61,8 +64,7 @@ header { margin: 0; padding: 0 1em; }
 .submenu nav p { padding: 0 1em }
 .submenu.home { 
   box-sizing: border-box;
-  background: var(--mediumBackColour); 
-  position: relative; float: left; width: 100%; height: calc(100vh - 70px) }
+  width: 100%; height: calc(100vh - 70px) }
 .submenu.home form {  
   display: flex; flex-direction: column; justify-content: space-around;
   height: 100%; position: relative }
@@ -304,6 +306,7 @@ footer a, footer p { color: #eeeeee80; text-decoration: none; margin: 0; }
 
   #hamburger { display: none }
   #mainnav { 
+    transform: translateX(0);
     background: none; position: static;
     flex-direction: row; justify-content: flex-end }
   #mainnav a { padding: 4px 1em; }
@@ -312,11 +315,14 @@ footer a, footer p { color: #eeeeee80; text-decoration: none; margin: 0; }
 
 
   #subway { display: none }
+
+
   .submenu { padding: 1em; transform: translateX(0) }
 
   .submenu #manual { margin: 1em }
 
   .submenu.home { 
+    background: var(--mediumBackColour); 
     width: 200px;
     height: calc(100vh - 80.88px - 2em);
   }
