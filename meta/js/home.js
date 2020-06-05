@@ -565,6 +565,8 @@ function saveSettings(settingsJSON) {
   loadSettings();
   // applyStyles();
   // console.log("saving", settingsJSON);
+
+  saveSettingsDB(dbPromise,settingsJSON);
 }
 
 function getSettings() {
@@ -666,3 +668,58 @@ function animationCSS(id, order, style, len) {
 //   download.innerText = `Download css for ${style} ${sync ? 'lengths' : 'speeds'}`;
 //   download.setAttribute('download', `${style}${sync ? 'Lengths' : 'Speeds'}.css`);
 }
+
+
+
+
+
+
+
+
+// IndexedDB
+
+const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
+//check for support
+if (!('indexedDB' in window)) {
+  console.log("This browser doesn't support IndexedDB");
+  // return;
+}
+console.log('test hello IDB??');
+
+// let dbPromise = idb.open('magic', 1);
+let dbPromise = idb.open('magic', 2, (upgradeDb) => {
+  console.log('making a new object store');
+  if (!upgradeDb.objectStoreNames.contains('settings')) {
+    upgradeDb.createObjectStore('settings');
+  }
+});
+
+
+function saveSettingsDB(db,settingsJSON) {
+  console.log('adding settings to store in IDB');
+  let tx = db.transaction('settings', 'readwrite');
+  let store = tx.objectStore('settings');
+  return store.add(settingsJSON);
+}
+
+
+
+
+// window.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB;
+// const IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction;
+// const dbVersion = 1;
+// let request = indexedDB.open("magic", dbVersion);
+// let idb;
+// request.onerror = (event) => {
+//   console.error('Indexed DB problem' + event.target.errorCode);
+// };
+// request.onsuccess = (event) => {
+//   console.log('Indexed DB worked');
+//   idb = event.target.result;
+// };
+// request.onupgradeneeded = (event) => { 
+//   console.log('Indexed DB add object store');
+//   idb = event.target.result;
+//   let objectStore = db.createObjectStore("settings", {'key': 'value'});
+// };
