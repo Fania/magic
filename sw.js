@@ -3,13 +3,18 @@
 
 // console.log('Inside service worker script!');
 
-const cacheVersion = 'v0.1';
+const cacheVersion = 'v0.2';
 const cacheName = 'magic-' + cacheVersion;
 const precacheResources = [
   '/',
   '/meta/js/general.js',
   '/meta/js/home.js',
   '/meta/css/styles.css',
+  '/gallery',
+  '/meta/js/gallery.js',
+  '/contribute',
+  '/meta/js/contribute.js',
+  '/about',
   '/data/4/unique/0',
   '/data/themes'
 ];
@@ -115,7 +120,7 @@ addEventListener('fetch', event => {
 
 
 async function getCache(req) {
-  console.log('[Service Worker] Retrieving cache ', name);
+  console.log('[Service Worker] Retrieving ', name);
   // caches.match(event.request)
   const cache = await caches.open(name);
   return await cache.match(req);
@@ -126,3 +131,12 @@ async function cacheAssets(name, things) {
   const cache = await caches.open(name);
   return cache.addAll(things);
 }
+
+// caches.open('mygame-core-v1').then(function(cache) {
+//   cache.addAll(
+//     // levels 11-20
+//   );
+//   return cache.addAll(
+//     // core assets & levels 1-10
+//   );
+// })

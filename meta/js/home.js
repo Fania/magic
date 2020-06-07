@@ -566,7 +566,7 @@ function saveSettings(settingsJSON) {
   // applyStyles();
   // console.log("saving", settingsJSON);
 
-  saveSettingsDB(dbPromise,settingsJSON);
+  saveSettingsDB(settingsJSON);
 }
 
 function getSettings() {
@@ -678,30 +678,39 @@ function animationCSS(id, order, style, len) {
 
 // IndexedDB
 
-const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+// const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
-//check for support
-if (!('indexedDB' in window)) {
-  console.log("This browser doesn't support IndexedDB");
-  // return;
-}
-console.log('test hello IDB??');
+// //check for support
+// if (!('indexedDB' in window)) {
+//   console.log("This browser doesn't support IndexedDB");
+//   // return;
+// }
+// console.log('test hello IDB??');
 
-// let dbPromise = idb.open('magic', 1);
-let dbPromise = idb.open('magic', 2, (upgradeDb) => {
-  console.log('making a new object store');
-  if (!upgradeDb.objectStoreNames.contains('settings')) {
-    upgradeDb.createObjectStore('settings');
-  }
-});
+// // let dbPromise = idb.open('magic', 1);
+// let dbPromise = idb.open('magic', 2, (upgradeDb) => {
+//   console.log('making a new object store');
+//   if (!upgradeDb.objectStoreNames.contains('settings')) {
+//     upgradeDb.createObjectStore('settings');
+//   }
+// });
 
 
-function saveSettingsDB(db,settingsJSON) {
-  console.log('adding settings to store in IDB');
-  let tx = db.transaction('settings', 'readwrite');
-  let store = tx.objectStore('settings');
-  return store.add(settingsJSON);
-}
+// function saveSettingsDB(db,settingsJSON) {
+//   console.log('adding settings to store in IDB');
+//   let tx = db.transaction('settings', 'readwrite');
+//   let store = tx.objectStore('settings');
+//   return store.add(settingsJSON);
+// }
+
+// function doDatabaseStuff(things) {
+//   // const db = await openDB(…);
+//   idb.open('magic', 1, (upgradeDB) => {
+//     let store = upgradeDB.createObjectStore('settings', { keyPath: 'id' });
+//     store.put(things);
+//   })
+// }
+// doDatabaseStuff(things);
 
 
 
@@ -723,3 +732,82 @@ function saveSettingsDB(db,settingsJSON) {
 //   idb = event.target.result;
 //   let objectStore = db.createObjectStore("settings", {'key': 'value'});
 // };
+
+
+function saveSettingsDB(setts) {
+  console.log('... saving to DB');
+  const dbName = "magic";
+  let version = 1;
+  let request = indexedDB.open(dbName, version);
+  request.onerror = event => console.error(event);
+  request.onupgradeneeded = event => {
+    let db = event.target.result;
+    let os = db.createObjectStore("settings", { 
+      keyPath: 'id',                                                autoIncrement: true 
+    });
+    // objectStore.createIndex("style", "style", { unique: true });
+    // objectStore.createIndex("order", "order", { unique: true });
+    os.transaction.oncomplete = (event) => {
+      let store = db.transaction("magic", "readwrite").os("settings");
+      console.log('store', store);
+
+      if(store) {
+        console.log('store exists');
+        var request = store.get(1);
+        request.onerror = event => console.error(event);
+        request.onsuccess = event => {
+          var data = event.target.result;
+          console.log('from DB', data);
+          // update the value(s) in the object that you want to change
+          data.age = 42;
+
+          var requestUpdate = store.put(data);
+          requestUpdate.onerror = function(event) {
+            // Do something with the error
+          };
+          requestUpdate.onsuccess = function(event) {
+            // Success - the data is updated!
+          };
+        };
+
+      } else {
+        console.log("store doesn't exist");
+        store.add( setts );
+      }
+
+
+
+      // customerData.forEach( customer => customerObjectStore.add(customer) );
+    };
+  };
+
+}
+
+function updateSettingsDB(setts) {
+  const dbName = "magic";
+  let version = 1;
+  let request = indexedDB.open(dbName, version);
+  request.onerror = event => console.error(event);
+  request.onupgradeneeded = event => {
+    let db = event.target.result;
+    var objectStore = db.transaction("magic", "readwrite").objectStore("settings");
+    var request = objectStore.get(1);
+    request.onerror = event => console.error(event);
+    request.onsuccess = event => {
+      var data = event.target.result;
+      
+      // update the value(s) in the object that you want to change
+      data.age = 42;
+
+      var requestUpdate = objectStore.put(data);
+      requestUpdate.onerror = function(event) {
+        // Do something with the error
+      };
+      requestUpdate.onsuccess = function(event) {
+        // Success - the data is updated!
+      };
+    };
+
+  };
+
+}
