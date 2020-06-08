@@ -3,24 +3,28 @@
 
 // console.log('Inside service worker script!');
 
-const cacheVersion = 'v0.2';
-const cacheName = 'magic-' + cacheVersion;
+const cacheName = 'magic-v0.1';
+
 const precacheResources = [
   '/',
   '/meta/js/general.js',
   '/meta/js/home.js',
-  '/meta/css/styles.css',
+  '/meta/css/styles.css'
+];
+
+const postcacheResources = [
   '/gallery',
   '/meta/js/gallery.js',
   '/contribute',
   '/meta/js/contribute.js',
-  '/about',
+  '/about'
+];
+
+const dataResources = [
   '/data/4/unique/0',
   '/data/themes'
 ];
 
-const staticVersion = 'v0.1';
-const staticName = 'magicStatic-' + staticVersion;
 const staticResources = [
   '/meta/imgs/favicons/site.webmanifest',
   '/meta/imgs/favicons/android-chrome-192x192.png',
@@ -28,15 +32,6 @@ const staticResources = [
   '/meta/imgs/favicons/favicon-32x32.png',
   '/meta/imgs/favicons/favicon-16x16.png',
   '/meta/imgs/logo.svg',
-  '/meta/imgs/o3s1n.svg',
-  '/meta/imgs/o3s1s.svg',
-  '/meta/imgs/o3s1qv.svg',
-  '/meta/imgs/o3s1ql.svg',
-  '/meta/imgs/o3s1a.svg',
-  '/meta/imgs/o3s1aa.svg',
-  '/meta/imgs/o3s1c.svg',
-  '/meta/imgs/o3s1b.svg',
-  '/meta/imgs/o3s1t.svg',
   '/meta/imgs/spinning-arc.svg'
 ];
 
@@ -44,20 +39,15 @@ const staticResources = [
 // add new cache(s)
 addEventListener('install', event => {
   console.log('[Service Worker] installed!');
+  event.waitUntil( cacheAllThings() );
   skipWaiting();
-  event.waitUntil(
-    cacheAssets(cacheName, precacheResources)
-  );
-  event.waitUntil(
-    cacheAssets(staticName, staticResources)
-  );
 });
 
 
 // delete old cache(s)
 addEventListener('activate', event => {
-  console.log('[Service Worker] activate and delete old!');
-  const whitelist = [cacheName,staticName];
+  console.log('[Service Worker] activating!');
+  const whitelist = [cacheName];
   event.waitUntil(
     caches.keys().then( names => {
       return Promise.all(
@@ -120,23 +110,45 @@ addEventListener('fetch', event => {
 
 
 async function getCache(req) {
-  console.log('[Service Worker] Retrieving ', name);
+  console.log('[Service Worker] retrieving ', name);
   // caches.match(event.request)
   const cache = await caches.open(name);
   return await cache.match(req);
 }
 
-async function cacheAssets(name, things) {
-  console.log('[Service Worker] Caching ', name);
+async function cacheAssets(name,things) {
+  console.log('[Service Worker] caching ', name);
   const cache = await caches.open(name);
   return cache.addAll(things);
 }
+async function cacheAllThings() {
+  console.log('[Service Worker] caching ...');
+  const cache = await caches.open(cacheName);
+  cache.addAll(postcacheResources.concat(dataResources));
+  updateDataResources();
+  return cache.addAll(precacheResources.concat(staticResources));
+}
 
-// caches.open('mygame-core-v1').then(function(cache) {
-//   cache.addAll(
-//     // levels 11-20
-//   );
-//   return cache.addAll(
-//     // core assets & levels 1-10
-//   );
-// })
+
+// IndexedDB
+async function updateDataResources() {
+  const request = indexedDB.open('magic', 1);
+  request.onerror = event => console.error(event.target.errorCode);
+  request.onupgradeneeded = event => {
+    const db = event.target.result;
+    db.createObjectStore('settings');
+  };
+  request.onsuccess = event => {
+    const db = event.target.result;
+    const tx = db.transaction(['settings'], 'readonly');
+    const store = tx.objectStore('settings');
+    const item = store.get(1);
+    item.onsuccess = async () => {
+      const output = await item.result;
+      const url = `/data/${output.order}/${output.style}/0`
+      const cache = await caches.open(cacheName);
+      cache.add(url);
+    };
+    item.onerror = event => console.error(event.target.errorCode);
+  };
+}

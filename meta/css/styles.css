@@ -82,12 +82,16 @@ header { margin: 0; padding: 0 1em; }
 
 
 
+#styleOptions svg {
+  width: 40px; padding: 4px; box-sizing: border-box; filter: grayscale(1); margin: 0;
+}
 #styleOptions img {
   width: 40px; padding: 4px; box-sizing: border-box; filter: grayscale(1);
 }
 #styleOptions label { display: inline-block; }
 #styleOptions label span { display: none; }
 #styleOptions [type="radio"] { display: none; }
+#styleOptions [type="radio"]:checked + svg { border: 1px dotted #666; }
 #styleOptions [type="radio"]:checked + img { border: 1px dotted #666; }
 
 
