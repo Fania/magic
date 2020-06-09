@@ -49,6 +49,16 @@ Don't forget to set up a .env file with login info.
 
 
 
+
+1. render page, load default settings, store settings in localStorage and iDB
+2. add static assets, data to cache if it doesn't exist?
+3. any interaction on page, add data to cache
+4. 
+
+
+
+
+
 ## IA
 
 pages:

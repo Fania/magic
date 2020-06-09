@@ -1,5 +1,15 @@
 'use strict';
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    await navigator.serviceWorker.register('sw.js');
+    // const resp = await navigator.serviceWorker.ready;
+    // resp.sync.register('update-assets');
+  });
+}
+
+
+
 const [...menuTriggers] = document.querySelectorAll('nav a');
 const [...displayStyles] = document.getElementsByName('style');
 const [...displayAmounts] = document.getElementsByName('amount');
@@ -559,7 +569,7 @@ async function getData(offset = 0) {
 }
 
 function saveSettings(settingsJSON) {
-  console.log('saveSettings');
+  console.log('saveSettings to localStorage');
   const settingsString = JSON.stringify(settingsJSON);
   localStorage.setItem("magicSettings", settingsString);
   loadSettings();
@@ -582,6 +592,32 @@ function getSettings() {
   }
   return settingsJSON;
 }
+
+
+// IndexedDB
+function saveSettingsDB(settings) {
+  console.log('saveSettings to iDB via front end');
+  const request = indexedDB.open('magic', 1);
+  request.onerror = event => console.error(event.target.errorCode);
+  request.onupgradeneeded = event => {
+    const db = event.target.result;
+    db.createObjectStore('settings');
+  };
+  request.onsuccess = event => {
+    const db = event.target.result;
+    updateData(db, settings);
+  };
+}
+function updateData(db, settings) {
+  let tx = db.transaction(['settings'], 'readwrite');
+  let store = tx.objectStore('settings');
+  store.put(settings,1);
+  tx.oncomplete = () => { console.log('Update settings in DB') }
+  tx.onerror = event => console.error(event.target.errorCode);
+}
+
+
+
 
 
 function getHex(dec) {
@@ -675,24 +711,3 @@ function animationCSS(id, order, style, len) {
 
 
 
-
-// IndexedDB
-function saveSettingsDB(settings) {
-  const request = indexedDB.open('magic', 1);
-  request.onerror = event => console.error(event.target.errorCode);
-  request.onupgradeneeded = event => {
-    const db = event.target.result;
-    db.createObjectStore('settings');
-  };
-  request.onsuccess = event => {
-    const db = event.target.result;
-    updateData(db, settings);
-  };
-}
-function updateData(db, settings) {
-  let tx = db.transaction(['settings'], 'readwrite');
-  let store = tx.objectStore('settings');
-  store.put(settings,1);
-  tx.oncomplete = () => { console.log('Update settings in DB') }
-  tx.onerror = event => console.error(event.target.errorCode);
-}

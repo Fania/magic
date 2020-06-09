@@ -53,6 +53,7 @@ addEventListener('activate', event => {
       return Promise.all(
         names.map( cn => {
           if (whitelist.indexOf(cn) === -1) {
+            console.log('[SW] deleting ', cn);
             return caches.delete(cn);
           }
         })
@@ -82,6 +83,7 @@ addEventListener('fetch', event => {
           return cachedResponse
         } else {
           console.log('[Service Worker] Fetch from NETWORK ', event.request.url);
+          updateDataResources();
           return fetch(event.request)
         }
         // return cachedResponse || fetch(event.request);
@@ -132,6 +134,7 @@ async function cacheAllThings() {
 
 // IndexedDB
 async function updateDataResources() {
+  console.log('updating cache from iDB via service worker');
   const request = indexedDB.open('magic', 1);
   request.onerror = event => console.error(event.target.errorCode);
   request.onupgradeneeded = event => {
