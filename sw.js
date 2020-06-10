@@ -83,7 +83,7 @@ addEventListener('fetch', event => {
           return cachedResponse
         } else {
           console.log('[Service Worker] Fetch from NETWORK ', event.request.url);
-          updateDataResources();
+          // updateDataResources();
           return fetch(event.request)
         }
         // return cachedResponse || fetch(event.request);
@@ -94,11 +94,12 @@ addEventListener('fetch', event => {
 
 
 // automatically add any new things to cache
-// self.addEventListener('fetch', event => {
+// careful, this will add all images and videos too, not just data
+// addEventListener('fetch', event => {
 //   event.respondWith(
 //     caches.match(event.request)
 //       .then((r) => {
-//         console.log('[Service Worker] Fetching resource: ' + event.request.url);
+//         console.log('[Service Worker] Fetching NETWORK resource: ' + event.request.url);
 //         return r || fetch(event.request)
 //           .then(async response => {
 //             const cache = await caches.open(cacheName);
@@ -123,11 +124,12 @@ async function cacheAssets(name,things) {
   const cache = await caches.open(name);
   return cache.addAll(things);
 }
+
 async function cacheAllThings() {
   console.log('[Service Worker] caching ...');
   const cache = await caches.open(cacheName);
   cache.addAll(postcacheResources.concat(dataResources));
-  updateDataResources();
+  // updateDataResources();
   return cache.addAll(precacheResources.concat(staticResources));
 }
 

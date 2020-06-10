@@ -576,7 +576,7 @@ function saveSettings(settingsJSON) {
   // applyStyles();
   // console.log("saving", settingsJSON);
   updateCache(settingsJSON);
-  saveSettingsDB(settingsJSON);
+  // saveSettingsDB(settingsJSON);
 }
 
 function getSettings() {
@@ -595,29 +595,31 @@ function getSettings() {
 
 
 // IndexedDB
-function saveSettingsDB(settings) {
-  console.log('saveSettings to IDB via front end');
-  const request = indexedDB.open('magic', 1);
-  request.onerror = event => console.error(event.target.errorCode);
-  request.onupgradeneeded = event => {
-    const db = event.target.result;
-    db.createObjectStore('settings');
-  };
-  request.onsuccess = event => {
-    const db = event.target.result;
-    updateData(db, settings);
-  };
-}
-function updateData(db, settings) {
-  let tx = db.transaction(['settings'], 'readwrite');
-  let store = tx.objectStore('settings');
-  store.put(settings,1);
-  tx.oncomplete = () => { console.log('Updated settings in IDB') }
-  tx.onerror = event => console.error(event.target.errorCode);
-}
+// function saveSettingsDB(settings) {
+//   console.log('saveSettings to IDB via front end');
+//   const request = indexedDB.open('magic', 1);
+//   request.onerror = event => console.error(event.target.errorCode);
+//   request.onupgradeneeded = event => {
+//     const db = event.target.result;
+//     db.createObjectStore('settings');
+//   };
+//   request.onsuccess = event => {
+//     const db = event.target.result;
+//     updateData(db, settings);
+//   };
+// }
+// function updateData(db, settings) {
+//   let tx = db.transaction(['settings'], 'readwrite');
+//   let store = tx.objectStore('settings');
+//   store.put(settings,1);
+//   tx.oncomplete = () => { console.log('Updated settings in IDB') }
+//   tx.onerror = event => console.error(event.target.errorCode);
+// }
 async function updateCache(settings) {
   console.log('updating cache from front end');
-  const sty = settings.amount === 'unique' && settings.style === 'quadvertex' 
+  const sty = settings.amount === 'unique' 
+              && settings.style === 'quadvertex'
+              && settings.order === 4
               ? 'unique' : settings.style;
   const url = `/data/${settings.order}/${sty}/0`;
   const cache = await caches.open('magic-v0.1');
