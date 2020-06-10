@@ -134,7 +134,7 @@ async function cacheAllThings() {
 
 // IndexedDB
 async function updateDataResources() {
-  console.log('updating cache from iDB via service worker');
+  console.log('updating cache from IDB via service worker');
   const request = indexedDB.open('magic', 1);
   request.onerror = event => console.error(event.target.errorCode);
   request.onupgradeneeded = event => {
@@ -148,7 +148,10 @@ async function updateDataResources() {
     const item = store.get(1);
     item.onsuccess = async () => {
       const output = await item.result;
-      const url = `/data/${output.order}/${output.style}/0`
+      const sty = output.amount === 'unique' && output.style === 'quadvertex' 
+                  ? 'unique' : output.style;
+      const url = `/data/${output.order}/${sty}/0`;
+      // const url = `/data/${output.order}/${output.style}/0` || '/data/4/unique/0'
       const cache = await caches.open(cacheName);
       cache.add(url);
     };

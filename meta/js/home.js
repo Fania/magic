@@ -1,12 +1,12 @@
 'use strict';
 
-if ('serviceWorker' in navigator) {
+// if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     await navigator.serviceWorker.register('sw.js');
     // const resp = await navigator.serviceWorker.ready;
     // resp.sync.register('update-assets');
   });
-}
+// }
 
 
 
@@ -575,7 +575,7 @@ function saveSettings(settingsJSON) {
   loadSettings();
   // applyStyles();
   // console.log("saving", settingsJSON);
-
+  updateCache(settingsJSON);
   saveSettingsDB(settingsJSON);
 }
 
@@ -596,7 +596,7 @@ function getSettings() {
 
 // IndexedDB
 function saveSettingsDB(settings) {
-  console.log('saveSettings to iDB via front end');
+  console.log('saveSettings to IDB via front end');
   const request = indexedDB.open('magic', 1);
   request.onerror = event => console.error(event.target.errorCode);
   request.onupgradeneeded = event => {
@@ -612,8 +612,16 @@ function updateData(db, settings) {
   let tx = db.transaction(['settings'], 'readwrite');
   let store = tx.objectStore('settings');
   store.put(settings,1);
-  tx.oncomplete = () => { console.log('Update settings in DB') }
+  tx.oncomplete = () => { console.log('Updated settings in IDB') }
   tx.onerror = event => console.error(event.target.errorCode);
+}
+async function updateCache(settings) {
+  console.log('updating cache from front end');
+  const sty = settings.amount === 'unique' && settings.style === 'quadvertex' 
+              ? 'unique' : settings.style;
+  const url = `/data/${settings.order}/${sty}/0`;
+  const cache = await caches.open('magic-v0.1');
+  cache.add(url);
 }
 
 
