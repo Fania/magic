@@ -46,6 +46,7 @@ Don't forget to set up a .env file with login info.
 - [ ] move generateSharedLengths to mapreduce filter view in couch?
 - [ ] update/push cache with changes
 - [ ] use indexedDB to be able to access settings via service worker
+- [ ] digital root, connect number pairs
 
 
 
