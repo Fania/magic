@@ -47,7 +47,7 @@ Don't forget to set up a .env file with login info.
 - [ ] update/push cache with changes
 - [ ] use indexedDB to be able to access settings via service worker
 - [ ] digital root, connect number pairs
-
+- [ ] art sketch, basic dasharray len / order^2
 
 
 

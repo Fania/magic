@@ -29,3 +29,34 @@
 
 <svg id='colours-4-0' class='order-xt pad' viewbox='-50 -50 450 450'>undefined<path class='num-1' d="M0,0 h50 v50 h-50 z"/><path class='num-2' d="M100,0 h100 v50 h-100 z"/><path class='num-3' d="M200,100 h50 v100 h-50 z"/><path class='num-4' d="M250,150 h100 v50 h-50 v50 h-50 z"/><path class='num-5' d="M300,50 h50 v50 h50 v100 h-50 v-50 h-50 z"/><path class='num-6' d="M200,300 v-50 h100 v50 h-50 v50 h-100 v-50 z"/><path class='num-7' d="M50,200 h100 v-50 h50 v100 h-150 z"/><path class='num-8' d="M0,300 h100 v100 h-100 z"/><path class='num-9' d="M250,250 h100 v50 h-50 v50 h-50 z"/><path class='num-1' d="M200,200 h50 v50 h-50 z"/><path class='num-2' d="M100,300 h100 v50 h-100 z"/><path class='num-3' d="M0,100 h50 v100 h-50 z"/><path class='num-4' d="M-50,150 h100 v50 h-50 v50 h-50 z"/><path class='num-5' d="M100,50 
 h50 v50 h50 v100 h-50 v-50 h-50 z"/><path class='num-6' d="M200,0 v-50 h100 v50 h-50 v50 h-100 v-50 z"/><path class='num-7' d="M250,0 h100 v-50 h50 v100 h-150 z"/></svg>
+
+
+<svg width="800px" height="600px">
+  <defs>    
+    <g id="colormask">
+      <rect  x="0" y="0" height="600" width="50" fill="red"   stroke="none" />
+      <rect  x="50" y="0" height="600" width="20" fill="blue"  stroke="none"   />
+      <rect  x="70" y="0" height="600" width="50" fill="green"    stroke="none" />
+      <rect  x="120" y="0" height="600" width="30" fill="grey"  stroke="none"   />
+      <rect  x="150" y="0" height="600" width="15" fill="black" stroke="none"   />
+      <rect  x="165" y="0" height="600" width="50" fill="blue"   stroke="none"  />
+      <rect  x="215" y="0" height="600" width="20" fill="cyan"  stroke="none"   />
+      <rect  x="235" y="0" height="600" width="50" fill="red"   stroke="none"  />
+      <rect  x="285" y="0" height="600" width="30" fill="pink"  stroke="none"   /> 
+      <rect  x="315" y="0" height="600" width="15" fill="magenta" stroke="none" />
+      <rect  x="330" y="0" height="600" width="50" fill="yellow"   stroke="none"/>
+      <rect  x="380" y="0" height="600" width="20" fill="purple"   stroke="none"/>
+      <rect  x="400" y="0" height="600" width="50" fill="red"   stroke="none"  />
+      <rect  x="450" y="0" height="600" width="30" fill="blue"  stroke="none"  /> 
+      <rect  x="480" y="0" height="600" width="50" fill="pink"   stroke="none" />
+      <rect  x="530" y="0" height="600" width="15" fill="grey" stroke="none"  />
+    <g>
+      
+    <filter id="colormask" x="0" y="0" width="800" height="600" filterUnits="userSpaceOnUse">
+     <feImage xlink:href="#colormask" result="mask1"/>
+      <feComposite in2="SourceGraphic" in="mask1" operator="in" />
+    </filter>
+  </defs>
+  
+  <path filter="url(#colormask)" d="M0 100 l50,30 20,-15 50,-40 30,20 15,40 50,30 20,-15 50,-40 30,20 15,40 50,30 20,-15 50,-40 30,20 15,40 50,30 20,-15 50,-40 30,20 15,40 50,30 20,-15 50,-40 30,20 15,40 " fill="none " stroke="black" stroke-width="3"/>
+</svg>
