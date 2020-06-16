@@ -5,5 +5,5 @@ package-lock.json
 *.hi
 *.o
 *.txt
-output.txt
-test.drawio
+*.drawio
+data/contributions.log
