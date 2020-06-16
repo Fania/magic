@@ -48,6 +48,11 @@ Don't forget to set up a .env file with login info.
 - [ ] use indexedDB to be able to access settings via service worker
 - [ ] digital root, connect number pairs
 - [ ] art sketch, basic dasharray len / order^2
+- [ ] animation broken?
+- [ ] couch sharedLengths reducer for all orders
+- [ ] couch remove shared lengths from index (not needed)
+- [ ] couch don't regen index on contribute - change _ids and sorting
+
 
 
 
