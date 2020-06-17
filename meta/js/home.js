@@ -61,6 +61,7 @@ else {
   // clean load, possibly from memory
   loadSettings();
   getData();
+  populateLengthOptions();
 }
 
 
@@ -77,6 +78,7 @@ function loadBookmark(params) {
   saveSettings(settings);
   loadSettings();
   getData();
+  populateLengthOptions();
 }
 
 
@@ -421,9 +423,38 @@ settings.addEventListener('submit', async ()=> {
 
 
 
-
-
 // OK TO HERE
+
+
+// POPULATE LENGTHS OPTIONS
+const lengths = document.getElementById('lengths');
+populateLengthOptions();
+async function populateLengthOptions() {
+  console.log('populateLengthOptions');
+  try {
+    const settings = getSettings();
+    const order = settings.order;
+    const style = settings.style;
+    const url = `/data/lengths/${order}/${style}`;
+    const rawData = await fetch(url);
+    const data = await rawData.json();
+    lengths.innerHTML = '<option value="">Choose</option>';
+    for (let i in data.rows) {
+      const len = data.rows[i].key;
+      const num = data.rows[i].value.length;
+      const option = document.createElement('option');
+      option.value = len;
+      option.innerText = `${len} (${num})`;
+      lengths.appendChild(option);
+    }
+    updateCache(settings);
+  } catch (error) { console.log(error) }
+}
+
+
+
+
+
 
 
 
@@ -462,7 +493,10 @@ function adjust(thing) {
   }
   settings[thing] = x;
   saveSettings(settings);
-  if(['order','style','amount'].includes(thing)) getData();
+  if(['order','style','amount'].includes(thing)) {
+    getData();
+    populateLengthOptions();
+  }
 }
 
 
@@ -617,13 +651,22 @@ function getSettings() {
 // }
 async function updateCache(settings) {
   console.log('updating cache from front end');
-  const sty = settings.amount === 'unique' 
-              && settings.style === 'quadvertex'
-              && settings.order === 4
-              ? 'unique' : settings.style;
-  const url = `/data/${settings.order}/${sty}/0`;
-  const cache = await caches.open('magic-v0.1');
-  cache.add(url);
+  try {
+    loading.classList.add('show'); 
+    const sty = settings.amount === 'unique' 
+                && settings.style === 'quadvertex'
+                && settings.order === 4
+                ? 'unique' : settings.style;
+    const url = `/data/${settings.order}/${sty}/0`;
+    const lenurl = `/data/lengths/${settings.order}/${sty}`;
+    const cache = await caches.open('magic-v0.1');
+    cache.add(url);
+    cache.add(lenurl);
+  }
+  catch (error) { console.log('updateCache', error) }
+  finally { 
+    console.log('finished updating cache');
+    loading.classList.remove('show'); }
 }
 
 

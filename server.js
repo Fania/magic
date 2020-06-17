@@ -147,10 +147,21 @@ app.use( (req, res, next) => {
 })
 
 
+// order matters
 app.get('/data/:n', async (req, res) => {
   const order = req.params.n
   const data = await couch.viewAllDB(order)
   res.send( data )
+})
+app.get('/data/lengths/:n/:s', async (req, res) => {
+  const order = req.params.n
+  const style = req.params.s
+  const data = await couch.getSharedLengths(order,style)
+  res.send( data )
+})
+app.get('/data/:n/source', async (req, res) => {
+  const order = req.params.n
+  res.sendFile(`./data/source${order}.json`, {root: './'})
 })
 app.get('/data/:n/:s/:o', async (req, res) => {
   const order = req.params.n
@@ -159,17 +170,7 @@ app.get('/data/:n/:s/:o', async (req, res) => {
   const data = await couch.viewDB(order, 'filters', style, offset)
   res.send( data )
 })
-app.get('/data/:n/source', async (req, res) => {
-  const order = req.params.n
-  res.sendFile(`./data/source${order}.json`, {root: './'})
-})
 app.get('/data/themes', async (req, res) => {
   const data = await couch.viewAllDB('themes')
-  res.send( data )
-})
-app.get('/data/lengths/:n/:s', async (req, res) => {
-  const order = req.params.n
-  const style = req.params.s
-  const data = await couch.getSharedLengths(order,style)
   res.send( data )
 })
