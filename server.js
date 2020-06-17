@@ -167,3 +167,9 @@ app.get('/data/themes', async (req, res) => {
   const data = await couch.viewAllDB('themes')
   res.send( data )
 })
+app.get('/data/lengths/:n/:s', async (req, res) => {
+  const order = req.params.n
+  const style = req.params.s
+  const data = await couch.getSharedLengths(order,style)
+  res.send( data )
+})

@@ -34,6 +34,13 @@ Don't forget to set up a .env file with login info.
 - [x] add share button
 - [x] enable query parameters for bookmarking and sharing
 - [x] PWA stuff, service workers, etc
+- [x] couch sharedLengths reducer for all orders
+- [x] couch remove shared lengths from index (not needed)
+- [x] reverse update sources from COUCH to LOCAL (for stuff added online but not via localhost)
+- [x] still a problem with local having more new items than server and then ignoring and overwriting server... needs cross checking both ways, item by item
+- [x] update/push cache with changes
+- [x] move generateSharedLengths to mapreduce filter view in couch?
+- [x] use indexedDB to be able to access settings via service worker
 - [ ] add printing options
 - [ ] add pin-to-top / favourite feature for individual squares
 - [ ] hover info for each square or put into modal
@@ -43,18 +50,12 @@ Don't forget to set up a .env file with login info.
 - [ ] manual order change triggers two draws of squares
 - [ ] finish defining data lists for ranges
 - [ ] insert intersection observer sooner? at 150?
-- [ ] move generateSharedLengths to mapreduce filter view in couch?
-- [ ] update/push cache with changes
-- [ ] use indexedDB to be able to access settings via service worker
 - [ ] digital root, connect number pairs
 - [ ] art sketch, basic dasharray len / order^2
 - [ ] animation broken?
-- [ ] couch sharedLengths reducer for all orders
-- [ ] couch remove shared lengths from index (not needed)
 - [ ] couch don't regen index on contribute - change _ids and sorting
-- [ ] reverse update sources from COUCH to LOCAL (for stuff added online but not via localhost)
-- [ ] still a problem with local having more new items than server and then ignoring and overwriting server... needs cross checking both ways, item by item
 - [ ] check if contribute allows higher orders than exist on server at that point
+- [ ] enable a fixed width rather than percentage to allow different line breaks in svg grid
 
 
 
