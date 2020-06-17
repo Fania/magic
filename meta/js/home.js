@@ -693,26 +693,6 @@ function animationCSS(id, order, style, len) {
   sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
   // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
 
-//   let output = '';
-//   orders.forEach( order => {
-//     output += `\n\n/* Order-${order} ${style} ${sync ? 'lengths' : 'speeds'} */`;
-//     const index = indices[order];
-//     index.forEach( idx => {
-//       const len = Object.keys(idx[style])[0];
-//       if (sync) {
-//         const lengths = `
-// #${style}-${order}-${idx.id} .lines { stroke-dasharray: ${len}; stroke-dashoffset: ${len}; }`;
-//         output += lengths;
-//       } else {
-//         const speeds = `
-// #${style}-${order}-${idx.id} .lines { animation: dash ${len/1000 * 2}s ease-in-out alternate infinite; }`;
-//         output += speeds;
-//       }
-//     });
-//   });
-//   download.href = makeTextFile( output );
-//   download.innerText = `Download css for ${style} ${sync ? 'lengths' : 'speeds'}`;
-//   download.setAttribute('download', `${style}${sync ? 'Lengths' : 'Speeds'}.css`);
 }
 
 
