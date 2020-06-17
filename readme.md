@@ -56,29 +56,16 @@ Don't forget to set up a .env file with login info.
 - [ ] still a problem with local having more new items than server and then ignoring and overwriting server... needs cross checking both ways, item by item
 
 
-1. render page, load default settings, store settings in localStorage and iDB
-2. add static assets, data to cache if it doesn't exist?
-3. any interaction on page, add data to cache
-4. 
 
 
 
-
-
-## IA
-
-pages:
-  - home
-  - gallery
-  - contribute
-  - about
 
 
 filters:
   - length
   - id/order + ranges
 
-info:
+hover info modal?:
   - id
   - order
   - style
