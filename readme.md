@@ -61,6 +61,14 @@ Don't forget to set up a .env file with login info.
 
 
 
+
+add dropdown for shared lengths per order
+add search box for single input and multiple inputs
+
+
+
+
+
 filters:
   - length
   - id/order + ranges

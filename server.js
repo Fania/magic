@@ -49,7 +49,7 @@ const gallery = require('./lib/gallery.js')
 
 
 
-couch.areThereChanges(12)
+// couch.areThereChanges(12)
 
 
 
@@ -59,7 +59,7 @@ async function setupOrder(n) {
   await couch.populateDB(result, n)
 }
 // setupOrder('4a')
-// setupOrder(20)
+// setupOrder(5)
 
 
 async function initialiseAll() {
@@ -156,7 +156,7 @@ app.get('/data/:n/:s/:o', async (req, res) => {
   const order = req.params.n
   const style = req.params.s
   const offset = req.params.o
-  const data = await couch.viewDB(order, 'filter', style, offset)
+  const data = await couch.viewDB(order, 'filters', style, offset)
   res.send( data )
 })
 app.get('/data/:n/source', async (req, res) => {
