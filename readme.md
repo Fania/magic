@@ -54,7 +54,7 @@ Don't forget to set up a .env file with login info.
 - [ ] couch don't regen index on contribute - change _ids and sorting
 - [ ] reverse update sources from COUCH to LOCAL (for stuff added online but not via localhost)
 - [ ] still a problem with local having more new items than server and then ignoring and overwriting server... needs cross checking both ways, item by item
-
+- [ ] check if contribute allows higher orders than exist on server at that point
 
 
 

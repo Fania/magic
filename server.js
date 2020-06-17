@@ -50,14 +50,11 @@ const gallery = require('./lib/gallery.js')
 
 
 couch.areThereChanges(12)
-couch.getChanges(12)
-
 
 
 
 async function setupOrder(n) {
-  const changes = await couch.areThereChanges(n)
-  if(changes) couch.getChanges(n)
+  await couch.areThereChanges(n)
   const result = await generate.index(n)
   await couch.populateDB(result, n)
 }
