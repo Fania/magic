@@ -546,7 +546,7 @@ function applyStyles() {
   }`;
   sheet.insertRule(text, sheet.cssRules.length);
   document.body.style.background = settings.background;
-  applyOverlap(settings.overlap === 'true');
+  applyOverlap(settings.overlap === 'true' || settings.overlap);
   loading.classList.remove('show');
 }
 
@@ -596,7 +596,7 @@ async function getData(offset = 0) {
       squares.appendChild(sentinel);
       io.observe(sentinel);
     }
-    applyOverlap(getSettings().overlap === 'true');
+    applyOverlap(getSettings().overlap === 'true' || getSettings().overlap);
   } 
   catch (error) { console.log(error) }
   finally { loading.classList.remove('show'); }
@@ -693,10 +693,12 @@ function getRandomColour() {
 
 function applyOverlap(state) {
   if (state) { // true
+    console.log('enable overlap');
     squares.classList.add('overlap');
     if(overlap200.checked) { squares.classList.add('few'); }
     else { squares.classList.remove('few'); }
   } else { // false
+    console.log('disable overlap');
     squares.classList.remove('overlap');
   }
 }

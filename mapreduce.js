@@ -2,47 +2,56 @@
 //   { "key": [1857,1857,2332,3663,2284], "value": "2" },
 
 function(doc) {
-  let arr = [doc.quadvertex.length,doc.quadline.length,doc.straight.length,doc.arc.length,doc.altarc.length];
+  let stl = [doc.quadvertex.length,doc.quadline.length,doc.straight.length,doc.arc.length,doc.altarc.length];
   let nms = ['quadvertex','quadline','straight','arc','altarc'];
-  for (i=0,l=arr.length; i < l; i++) {
-    emit([arr[i], nms[i]], doc._id);
+  for (i=0; i < 5; i++) {
+    emit(stl[i], nms[i]);
   }
 }
 
 
 function(keys, values, rereduce) {
-    // keys = array of arrays of lengths
-    // values = array of ids
+    for(i=0,l=values.length; i < l; i++) { 
+        if(rereduce) { 
+            return values[i];
+        } else { 
+            return values;
+        } 
+    } 
+}
 
-    let output = [];
+    let ids = []; 
+    for(i=0,l=values.length; i < l; i++) { 
+        if(rereduce) { 
+            ids.push(values[i]); 
+        } else { 
+            ids.push(values[i]);
+        } 
+    } 
+    return ids;
 
-    keys.forEach(k => {
-      
-        let result = [];
-        values.forEach(v => {
-            if (rereduce) {
-                return v;
-            } else {
-                return values;
-            }
-        });
-        output.push(result);
 
-    });
-
-    return output;
+// built in count
+function (keys, values, rereduce) {
+  if (rereduce) {
+    return sum(values);
+  } else {
+    return values.length;
+  }
 }
 
 
 
 
-
-
-
-
-
-
-
+function (keys, values, rereduce) { 
+  for(i=0,v=values.length; i < v; i++) { 
+    if(rereduce) { 
+      return values[i]; 
+    } else { 
+      return values; 
+    } 
+  } 
+}
 
 
 
