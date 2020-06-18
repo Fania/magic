@@ -8,3 +8,5 @@ package-lock.json
 *.drawio
 data/contributions.log
 *.log
+data
+data/*

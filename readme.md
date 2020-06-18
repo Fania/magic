@@ -53,11 +53,12 @@ Don't forget to set up a .env file with login info.
 - [ ] digital root, connect number pairs
 - [ ] art sketch, basic dasharray len / order^2
 - [ ] animation broken?
+- [ ] overlay broken?
 - [ ] couch don't regen index on contribute - change _ids and sorting
 - [ ] check if contribute allows higher orders than exist on server at that point
 - [ ] enable a fixed width rather than percentage to allow different line breaks in svg grid
 - [ ] merge sharedLengths into one file via couch? to simplify caching
-
+- [ ] cache needs updating if changes on server
 
 
 
