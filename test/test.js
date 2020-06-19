@@ -41,6 +41,13 @@ const expect = require("chai").expect
 
 
 // describe('hooks', function () {
+
+  // before(() => alert("Testing started – before all tests"));
+  // after(() => alert("Testing finished – after all tests"));
+
+  // beforeEach(() => alert("Before a test – enter a test"));
+  // afterEach(() => alert("After a test – exit a test"));
+
 //   before(function () {
 //     // runs once before the first test in this block
 //   });

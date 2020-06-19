@@ -61,7 +61,7 @@ else {
   // clean load, possibly from memory
   loadSettings();
   getData();
-  populateLengthOptions();
+  // populateLengthOptions();
 }
 
 
@@ -78,7 +78,7 @@ function loadBookmark(params) {
   saveSettings(settings);
   loadSettings();
   getData();
-  populateLengthOptions();
+  // populateLengthOptions();
 }
 
 
@@ -264,6 +264,12 @@ falpha.addEventListener('wheel', ()=> {
 const syncA = document.getElementById('sync');
 const asyncA = document.getElementById('async');
 const offA = document.getElementById('off');
+if(offA.checked) {
+  document.getElementById('speed').disabled = true;
+} else {
+  document.getElementById('speed').disabled = false;
+}
+
 [syncA,asyncA,offA].forEach( a => {
   a.addEventListener('change', ()=> { 
     console.log(`ANIMATION change triggered by ${a.id}`);
@@ -271,16 +277,19 @@ const offA = document.getElementById('off');
       squares.classList.add('animate'); 
       squares.classList.add('animateEvenly');
       squares.classList.remove('animateOddly'); 
+      document.getElementById('speed').disabled = false;
     }
     if(a.id === 'async') { 
       squares.classList.add('animate'); 
       squares.classList.add('animateOddly');
       squares.classList.remove('animateEvenly');
+      document.getElementById('speed').disabled = false;
     }
     if(a.id === 'off') {
       squares.classList.remove('animate');
       squares.classList.remove('animateOddly');
       squares.classList.remove('animateEvenly');
+      document.getElementById('speed').disabled = true;
     }
     adjust('animation');
   });
@@ -294,20 +303,21 @@ speed.addEventListener('input', ()=> {
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
   const animType = document.querySelector('[name="animation"]:checked').value;
-  let text = '';
   if(animType === 'sync') {
     const evenRuleIndex = rules.findIndex(rule => 
       rule.selectorText === "#squares.animateEvenly svg .lines");
     sheet.deleteRule(evenRuleIndex);
-    text = `#squares.animateEvenly svg .lines { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
+    const text = `#squares.animateEvenly svg .lines { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
+    sheet.insertRule(text, sheet.cssRules.length);
   } 
   if(animType === 'async') {
     const oddRuleIndex = rules.findIndex(rule => 
       rule.selectorText === "#squares.animateOddly");
     sheet.deleteRule(oddRuleIndex);
-    text = `#squares.animateOddly { --speed: ${speed.value / 2} }`;
+    const speed = parseInt(speed.value) / 2;
+    const text = `#squares.animateOddly { --speed: ${speed} }`;
+    sheet.insertRule(text, sheet.cssRules.length);
   }
-  sheet.insertRule(text, sheet.cssRules.length);
   adjust('speed');
 });
 speed.addEventListener('wheel', ()=> { 
@@ -335,6 +345,7 @@ const reset = document.getElementById('reset');
 reset.addEventListener('click', ()=> { 
   console.log('RESET click triggered');
   saveSettings(defaults);
+  loadSettings();
 });
 
 // RANDOM OPTION
@@ -350,7 +361,9 @@ random.addEventListener('click', ()=> {
   settings.salpha = getRandomInt(0, 255);
   settings.fill = getRandomColour();
   settings.falpha = getRandomInt(0, 255);
+  // TODO add animation and speed
   saveSettings(settings);
+  loadSettings();
 });
 
 // SHARE OPTION
@@ -430,7 +443,7 @@ settings.addEventListener('submit', async ()=> {
 
 // POPULATE LENGTHS OPTIONS
 const lengths = document.getElementById('lengths');
-populateLengthOptions();
+// populateLengthOptions();
 async function populateLengthOptions() {
   console.log('populateLengthOptions');
   try {
@@ -517,7 +530,7 @@ function adjust(thing) {
   saveSettings(settings);
   if(['order','style','amount'].includes(thing)) {
     getData();
-    populateLengthOptions();
+    // populateLengthOptions();
   }
 }
 
@@ -547,6 +560,7 @@ function loadSettings() {
     displayTheme.selectedIndex = parseInt(settings._id);
   }
   applyStyles();
+  // TODO: also apply animation styles?
 }
 
 
@@ -577,7 +591,7 @@ async function getData(offset = 0) {
   try {
     let order = getSettings().order;
     let style = getSettings().style;
-    // fix order 4 unique/all choice subsubmenu
+    // TODO fix order 4 unique/all choice subsubmenu
     const unique = document.getElementById('unique');
     const all = document.getElementById('all');
     if (order === 4 && style === 'quadvertex' && unique.checked) 
@@ -601,6 +615,7 @@ async function getData(offset = 0) {
                              data.rows[i].value['length']);
       }
     }
+    // TODO add sntinel earlier, at 150 or so
     // only add sentinel if we have more results left
     if(data.rows.length === 200) {
       const io = new IntersectionObserver(
@@ -681,10 +696,11 @@ async function updateCache(settings) {
                 && settings.order === 4
                 ? 'unique' : settings.style;
     const url = `/data/${settings.order}/${sty}/0`;
-    const lenurl = `/data/lengths/${settings.order}/${sty}`;
+    // TODO reenable cache of lengths
+    // const lenurl = `/data/lengths/${settings.order}/${sty}`;
     const cache = await caches.open('magic-v0.1');
     cache.add(url);
-    cache.add(lenurl);
+    // cache.add(lenurl);
   }
   catch (error) { console.log('updateCache', error) }
   finally { 
@@ -739,6 +755,7 @@ function animationCSS(id, order, style, len) {
   // console.log(id, order, style, len);
 
   const sheet = document.styleSheets[0];
+  const [...rules] = sheet.cssRules;
   // const [...rules] = sheet.cssRules;
   // const syncRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
   // sheet.deleteRule(syncRuleIndex);
@@ -749,10 +766,18 @@ function animationCSS(id, order, style, len) {
 
   const sheetNew = document.styleSheets[0];
   const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} .lines`;
+  
+  // need to do speed calculation here, not in CSS
+  // don't ask why. I guess the CSSOM inserted rules can't do calc
+  const asyncSpeedIndex = rules.findIndex(rule => 
+      rule.selectorText === "#squares.animateOddly");
+  const cssTextpre = rules[asyncSpeedIndex].style.cssText;
+  const asyncSpeed = cssTextpre.split(' ')[1].replace(';','');
+  const speed = (len/1000) * asyncSpeed;
   const asyncText = `
   ${asyncName}{
     animation-name: dash;
-    animation-duration: calc(${len}/1000 * var(--speed));
+    animation-duration: ${speed}s;
     animation-timing-function: ease-in-out;
     animation-direction: alternate; 
     animation-iteration-count: infinite; 
@@ -762,10 +787,3 @@ function animationCSS(id, order, style, len) {
   // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
 
 }
-
-
-
-
-
-
-

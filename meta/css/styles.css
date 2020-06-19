@@ -298,6 +298,7 @@ footer a, footer p {
 #squares.animateOddly svg .lines { 
   animation-name: dash;
   animation-duration: calc(2.5 * var(--speed))s;
+  /* animation-duration: 5s; */
   animation-timing-function: ease-in-out;
   animation-direction: alternate; 
   animation-iteration-count: infinite; 

@@ -24,7 +24,8 @@ hover info modal?:
 
 ## Todo
 
-- [ ] animation broken? cache problem?
+- [ ] add animation to presets and random?
+- [ ] animation broken? cache problem? no, i think this is CSSOM problem, see animationCSS function
 - [ ] overlay broken? cache problem?
 - [ ] add dropdown for shared lengths per order
 - [ ] cache needs updating if changes on server
