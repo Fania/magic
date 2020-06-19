@@ -4,8 +4,46 @@ Don't forget to set up a .env file with login info.
 
 
 
+
+filters:
+  - length
+  - id/order + ranges
+
+hover info modal?:
+  - id
+  - order
+  - style
+  - numbers
+  - similar ids?
+  - numbers overlay?
+
+
+
+
+
+
 ## Todo
 
+- [ ] animation broken? cache problem?
+- [ ] overlay broken? cache problem?
+- [ ] add dropdown for shared lengths per order
+- [ ] cache needs updating if changes on server
+- [ ] hover info for each square or put into modal
+- [ ] fix mobile style again
+- [ ] manual order change triggers two draws of squares
+- [ ] finish defining data lists for ranges
+- [ ] insert intersection observer sooner? at 150?
+- [ ] fix line width for arc and altarc
+- [ ] art digital root, connect number pairs
+- [ ] art sketch, basic dasharray len / order^2
+- [ ] number overlay?
+- [ ] couch don't regen index on contribute - change _ids and sorting
+- [ ] check if contribute allows higher orders than exist on server at that point
+- [ ] enable a fixed width rather than percentage to allow different line breaks in svg grid
+- [ ] merge sharedLengths into one file via couch? to simplify caching
+- [ ] add search box for single input and multiple inputs
+- [ ] add pin-to-top / favourite feature for individual squares
+- [ ] add printing options
 - [x] update design docs with rev if needed
 - [x] test and check the new createOrder function
 - [x] upload single input to DB
@@ -41,52 +79,4 @@ Don't forget to set up a .env file with login info.
 - [x] update/push cache with changes
 - [x] move generateSharedLengths to mapreduce filter view in couch?
 - [x] use indexedDB to be able to access settings via service worker
-- [ ] add printing options
-- [ ] add pin-to-top / favourite feature for individual squares
-- [ ] hover info for each square or put into modal
-- [ ] number overlay?
-- [ ] fix line width for arc and altarc
-- [ ] fix mobile style again
-- [ ] manual order change triggers two draws of squares
-- [ ] finish defining data lists for ranges
-- [ ] insert intersection observer sooner? at 150?
-- [ ] digital root, connect number pairs
-- [ ] art sketch, basic dasharray len / order^2
-- [ ] animation broken?
-- [ ] overlay broken?
-- [ ] couch don't regen index on contribute - change _ids and sorting
-- [ ] check if contribute allows higher orders than exist on server at that point
-- [ ] enable a fixed width rather than percentage to allow different line breaks in svg grid
-- [ ] merge sharedLengths into one file via couch? to simplify caching
-- [ ] cache needs updating if changes on server
 
-
-
-
-
-add dropdown for shared lengths per order
-add search box for single input and multiple inputs
-
-
-
-
-
-filters:
-  - length
-  - id/order + ranges
-
-hover info modal?:
-  - id
-  - order
-  - style
-  - numbers
-  - similar ids?
-  - numbers overlay?
-
-
-
-
-
-## Nano CouchDB
-
-https://jo.github.io/couchdb-best-practices/

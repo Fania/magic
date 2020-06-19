@@ -269,11 +269,13 @@ const offA = document.getElementById('off');
     console.log(`ANIMATION change triggered by ${a.id}`);
     if(a.id === 'sync') { 
       squares.classList.add('animate'); 
-      squares.classList.add('animateEvenly'); 
+      squares.classList.add('animateEvenly');
+      squares.classList.remove('animateOddly'); 
     }
     if(a.id === 'async') { 
       squares.classList.add('animate'); 
-      squares.classList.add('animateOddly'); 
+      squares.classList.add('animateOddly');
+      squares.classList.remove('animateEvenly');
     }
     if(a.id === 'off') {
       squares.classList.remove('animate');
@@ -450,6 +452,26 @@ async function populateLengthOptions() {
     updateCache(settings);
   } catch (error) { console.log(error) }
 }
+async function prepareLengthOptions() {
+  console.log('prepareLengthOptions');
+  try {
+    for (let i in data.rows) {
+      const len = data.rows[i].key;
+      const num = data.rows[i].value.length;
+      const option = document.createElement('option');
+      option.value = len;
+      option.innerText = `${len} (${num})`;
+      lengths.appendChild(option);
+    }
+    updateCache(settings);
+  } catch (error) { console.log(error) }
+}
+
+
+
+
+
+
 
 
 
@@ -595,8 +617,9 @@ async function getData(offset = 0) {
       sentinel.classList.add(`sentinel${offset}`);
       squares.appendChild(sentinel);
       io.observe(sentinel);
+      // enable overlap for new squares if checked
+      applyOverlap(getSettings().overlap === 'true' || getSettings().overlap);
     }
-    applyOverlap(getSettings().overlap === 'true' || getSettings().overlap);
   } 
   catch (error) { console.log(error) }
   finally { loading.classList.remove('show'); }
