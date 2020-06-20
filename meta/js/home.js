@@ -8,6 +8,55 @@
   });
 // }
 
+const CACHE = 'magic-v0.2';
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.onmessage = evt => {
+    var message = JSON.parse(evt.data);
+    var isRefresh = message.type === 'refresh';
+    var isAsset = message.url.includes('asset');
+    var lastETag = localStorage.currentETag;
+    var isNew =  lastETag !== message.eTag;
+
+    if (isRefresh && isAsset && isNew) {
+      // Escape the first time (when there is no ETag yet)
+      if (lastETag) {
+        // Inform the user about the update
+        notice.hidden = false;
+      }
+      // For teaching purposes, although this information is in the offline cache and it could be retrieved from the service worker, keeping track of the header in the localStorage keeps the implementation simple.
+      localStorage.currentETag = message.eTag;
+    }
+  };
+
+  var notice = document.querySelector('#update-notice');
+  var update = document.querySelector('#update');
+  update.onclick = function (evt) {
+    var img = document.querySelector('img');
+    evt.preventDefault();
+    caches.open(CACHE)
+    .then(function (cache) {
+      return cache.match(img.src);
+    })
+    // Extract the body as a blob.
+    .then(function (response) {
+      return response.blob();
+    })
+    // Update the image content.
+    .then(function (bodyBlob) {
+      var url = URL.createObjectURL(bodyBlob);
+      img.src = url;
+      notice.hidden = true;
+    });
+  };
+}
+
+
+
+
+
+
+
 
 
 const [...menuTriggers] = document.querySelectorAll('nav a');
@@ -698,7 +747,7 @@ async function updateCache(settings) {
     const url = `/data/${settings.order}/${sty}/0`;
     // TODO reenable cache of lengths
     // const lenurl = `/data/lengths/${settings.order}/${sty}`;
-    const cache = await caches.open('magic-v0.1');
+    const cache = await caches.open('magic-v0.2');
     cache.add(url);
     // cache.add(lenurl);
   }

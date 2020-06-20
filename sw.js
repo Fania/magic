@@ -53,7 +53,7 @@ addEventListener('activate', event => {
       return Promise.all(
         names.map( cn => {
           if (whitelist.indexOf(cn) === -1) {
-            console.log('[SW] deleting ', cn);
+            console.log('[Service Worker] deleting ', cn);
             return caches.delete(cn);
           }
         })
@@ -73,22 +73,34 @@ addEventListener('activate', event => {
 // });
 
 // https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Offline_Service_workers
+// addEventListener('fetch', event => {
+//   // console.log('[Service Worker] Fetching ', event.request.url);
+//   event.respondWith(caches.match(event.request)
+//     .then(cachedResponse => {
+//         // CACHE > NETWORK
+//         if (cachedResponse) {
+//           // console.log('[Service Worker] from CACHE');
+//           return cachedResponse
+//         } else {
+//           console.log('[Service Worker] Fetch from NETWORK ', event.request.url);
+//           // updateDataResources();
+//           return fetch(event.request)
+//         }
+//         // return cachedResponse || fetch(event.request);
+//       })
+//     );
+// });
+
+
 addEventListener('fetch', event => {
-  // console.log('[Service Worker] Fetching ', event.request.url);
-  event.respondWith(caches.match(event.request)
-    .then(cachedResponse => {
-        // CACHE > NETWORK
-        if (cachedResponse) {
-          // console.log('[Service Worker] from CACHE');
-          return cachedResponse
-        } else {
-          console.log('[Service Worker] Fetch from NETWORK ', event.request.url);
-          // updateDataResources();
-          return fetch(event.request)
-        }
-        // return cachedResponse || fetch(event.request);
-      })
-    );
+  console.log('[Service Worker] fetching/serving assets');
+  // respondWith() for ASAP answer from cache
+  event.respondWith(serveFromCache(event.request));
+  // don't put SW to sleep until we've done the following
+  event.waitUntil(
+    updateCacheFromNetwork(event.request)
+      .then(refreshContent)
+  );
 });
 
 
@@ -113,9 +125,9 @@ addEventListener('fetch', event => {
 
 
 async function getCache(req) {
-  console.log('[Service Worker] retrieving ', name);
+  console.log('[Service Worker] retrieving ', cacheName);
   // caches.match(event.request)
-  const cache = await caches.open(name);
+  const cache = await caches.open(cacheName);
   return await cache.match(req);
 }
 
@@ -132,6 +144,54 @@ async function cacheAllThings() {
   // updateDataResources();
   return cache.addAll(precacheResources.concat(staticResources));
 }
+
+
+
+
+
+// CACHE, UPDATE AND REFRESH
+
+// Open the cache where the assets were stored and search for the requested resource. Notice that in case of no matching, the promise still resolves but it does with undefined as value.
+async function serveFromCache(request) {
+  console.log('[Service Worker] serving from CACHE ', cacheName);
+  const cache = await caches.open(cacheName);
+  return await cache.match(request);
+}
+
+// Open cache, perform network request and update cache.
+async function updateCacheFromNetwork(request) {
+  console.log('[Service Worker] updating CACHE from NETWORK', cacheName);
+  return caches.open(cacheName).then(async cache => {
+    const response = await fetch(request);
+    // responses are one-time use so clone
+    await cache.put(request, response.clone());
+    return response; // this gets passed to refreshContent below
+  });
+}
+
+function refreshContent(response) {
+  console.log('[Service Worker] tell clients about cache update');
+  return self.clients.matchAll().then(clients => {
+    clients.forEach(client => {
+      // Encode which resource has been updated. By including the ETag the client can check if the content has changed.
+      const message = {
+        type: 'refresh',
+        url: response.url,
+        // Notice not all servers return the ETag header. If this is not provided you should use other cache headers or rely on your own means to check if the content has changed.
+        eTag: response.headers.get('ETag')
+      };
+
+      // Tell the client about the update.
+      client.postMessage(JSON.stringify(message));
+    });
+  });
+}
+
+
+
+
+
+
 
 
 // IndexedDB
