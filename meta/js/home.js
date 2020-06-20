@@ -264,7 +264,7 @@ falpha.addEventListener('wheel', ()=> {
 const syncA = document.getElementById('sync');
 const asyncA = document.getElementById('async');
 const offA = document.getElementById('off');
-if(offA.checked) {
+if(offA.checked || asyncA.checked) {
   document.getElementById('speed').disabled = true;
 } else {
   document.getElementById('speed').disabled = false;
@@ -283,7 +283,7 @@ if(offA.checked) {
       squares.classList.add('animate'); 
       squares.classList.add('animateOddly');
       squares.classList.remove('animateEvenly');
-      document.getElementById('speed').disabled = false;
+      document.getElementById('speed').disabled = true;
     }
     if(a.id === 'off') {
       squares.classList.remove('animate');
@@ -314,8 +314,8 @@ speed.addEventListener('input', ()=> {
     const oddRuleIndex = rules.findIndex(rule => 
       rule.selectorText === "#squares.animateOddly");
     sheet.deleteRule(oddRuleIndex);
-    const speed = parseInt(speed.value) / 2;
-    const text = `#squares.animateOddly { --speed: ${speed} }`;
+    const speedValue = parseInt(speed.value) / 2;
+    const text = `#squares.animateOddly { --speed: ${speedValue} }`;
     sheet.insertRule(text, sheet.cssRules.length);
   }
   adjust('speed');
@@ -751,6 +751,7 @@ function applyOverlap(state) {
 // #quadvertex-3-1 .lines { stroke-dasharray: 1040; stroke-dashoffset: 1040; }
 // #quadvertex-3-1 .lines { animation: dash 2.08s ease-in-out alternate infinite; }
 
+// called when grapping new data via api and intersection observer
 function animationCSS(id, order, style, len) {
   // console.log(id, order, style, len);
 
@@ -767,17 +768,20 @@ function animationCSS(id, order, style, len) {
   const sheetNew = document.styleSheets[0];
   const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} .lines`;
   
+  // TODO find fix
   // need to do speed calculation here, not in CSS
   // don't ask why. I guess the CSSOM inserted rules can't do calc
   const asyncSpeedIndex = rules.findIndex(rule => 
       rule.selectorText === "#squares.animateOddly");
   const cssTextpre = rules[asyncSpeedIndex].style.cssText;
+  // problem: does not update speed vairable multiplier dynamically,
+  // only reads it at first load (via getData)
   const asyncSpeed = cssTextpre.split(' ')[1].replace(';','');
-  const speed = (len/1000) * asyncSpeed;
+  const speedValue = (len/1000) * asyncSpeed;
   const asyncText = `
   ${asyncName}{
     animation-name: dash;
-    animation-duration: ${speed}s;
+    animation-duration: ${speedValue}s;
     animation-timing-function: ease-in-out;
     animation-direction: alternate; 
     animation-iteration-count: infinite; 

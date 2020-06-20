@@ -3,7 +3,7 @@
 
 // console.log('Inside service worker script!');
 
-const cacheName = 'magic-v0.1';
+const cacheName = 'magic-v0.2';
 
 const precacheResources = [
   '/',
