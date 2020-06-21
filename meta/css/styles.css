@@ -16,7 +16,6 @@ header { margin: 0; padding: 0 1em; }
 
 
 
-
 /* MAINMENU */
 .mainmenu { 
   background: var(--darkBackColour);
@@ -309,8 +308,6 @@ footer a, footer p {
 
 
 
-
-
 @media screen and (min-width: 500px) {
 
   svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 
@@ -318,6 +315,7 @@ footer a, footer p {
   }
 
 }
+
 
 
 @media screen and (min-width: 700px) {

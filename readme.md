@@ -24,6 +24,7 @@ hover info modal?:
 
 ## Todo
 
+- [ ] try inline styles for animation?
 - [ ] add animation to presets and random?
 - [ ] animation broken? cache problem? no, i think this is CSSOM problem, see animationCSS function
 - [ ] overlay broken? cache problem?

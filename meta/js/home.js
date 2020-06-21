@@ -1,38 +1,51 @@
 'use strict';
 
-// if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async () => {
-    await navigator.serviceWorker.register('sw.js');
-    // const resp = await navigator.serviceWorker.ready;
-    // resp.sync.register('update-assets');
-  });
-// }
+navigator.serviceWorker.register('sw.js');
 
 const CACHE = 'magic-v0.2';
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.onmessage = evt => {
-    var message = JSON.parse(evt.data);
-    var isRefresh = message.type === 'refresh';
-    var isAsset = message.url.includes('asset');
-    var lastETag = localStorage.currentETag;
-    var isNew =  lastETag !== message.eTag;
 
-    if (isRefresh && isAsset && isNew) {
+  navigator.serviceWorker.onmessage = async event => {
+    console.log('refresh message', event.data);
+    const message = JSON.parse(event.data);
+    const isRefresh = message.type === 'refresh';
+    // let isAsset = message.url.includes('asset');
+    const fullurl = new URL(message.url)
+    const resource = fullurl.pathname;
+
+    const cache = await caches.open(CACHE);
+    const thing = await cache.match(resource);
+    const oldEtag = thing.headers.get('Etag');
+    // console.log(thing);
+    // console.log(oldEtag);
+
+    // const ls = JSON.parse(localStorage.getItem('cacheEtags'));
+    // const lastETag = ls ? ls[resource] : 'new';
+    const lastETag = oldEtag ? oldEtag : 'new';
+    const isNew = lastETag !== message.eTag;
+    // console.log(`${resource}: ${lastETag} vs. ${message.eTag} = ${isNew}`);
+    // const etagobj = {"url": message.url, "etag": message.eTag};
+    cacheEtags[resource] = message.eTag;
+    // cacheEtags.push(etagobj);
+    // console.log('HELLO TEST', isRefresh && isNew)
+    // if (isRefresh && isAsset && isNew) {
+    if (isRefresh && isNew) {
       // Escape the first time (when there is no ETag yet)
-      if (lastETag) {
+      console.log(resource + " has new etag");
+      if (lastETag !== 'new') {
         // Inform the user about the update
         notice.hidden = false;
+        console.log(resource + " was replaced");
       }
-      // For teaching purposes, although this information is in the offline cache and it could be retrieved from the service worker, keeping track of the header in the localStorage keeps the implementation simple.
-      localStorage.currentETag = message.eTag;
+      // localStorage.setItem('cacheEtags', JSON.stringify(cacheEtags));
     }
   };
 
-  var notice = document.querySelector('#update-notice');
-  var update = document.querySelector('#update');
+  let notice = document.querySelector('#update-notice');
+  let update = document.querySelector('#update');
   update.onclick = function (evt) {
-    var img = document.querySelector('img');
+    let img = document.querySelector('img');
     evt.preventDefault();
     caches.open(CACHE)
     .then(function (cache) {
@@ -44,7 +57,7 @@ if ('serviceWorker' in navigator) {
     })
     // Update the image content.
     .then(function (bodyBlob) {
-      var url = URL.createObjectURL(bodyBlob);
+      let url = URL.createObjectURL(bodyBlob);
       img.src = url;
       notice.hidden = true;
     });
