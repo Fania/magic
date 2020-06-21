@@ -4,64 +4,51 @@ navigator.serviceWorker.register('sw.js');
 
 const CACHE = 'magic-v0.2';
 
-if ('serviceWorker' in navigator) {
 
-  navigator.serviceWorker.onmessage = async event => {
-    console.log('refresh message', event.data);
-    const message = JSON.parse(event.data);
-    const isRefresh = message.type === 'refresh';
-    // let isAsset = message.url.includes('asset');
-    const fullurl = new URL(message.url)
-    const resource = fullurl.pathname;
+navigator.serviceWorker.onmessage = async event => {
+  console.log('event listener for SW post message');
+  await refreshContent(event);
+};
 
-    const cache = await caches.open(CACHE);
-    const thing = await cache.match(resource);
-    const oldEtag = thing.headers.get('Etag');
-    // console.log(thing);
-    // console.log(oldEtag);
 
-    // const ls = JSON.parse(localStorage.getItem('cacheEtags'));
-    // const lastETag = ls ? ls[resource] : 'new';
-    const lastETag = oldEtag ? oldEtag : 'new';
-    const isNew = lastETag !== message.eTag;
-    // console.log(`${resource}: ${lastETag} vs. ${message.eTag} = ${isNew}`);
-    // const etagobj = {"url": message.url, "etag": message.eTag};
-    cacheEtags[resource] = message.eTag;
-    // cacheEtags.push(etagobj);
-    // console.log('HELLO TEST', isRefresh && isNew)
-    // if (isRefresh && isAsset && isNew) {
-    if (isRefresh && isNew) {
-      // Escape the first time (when there is no ETag yet)
-      console.log(resource + " has new etag");
-      if (lastETag !== 'new') {
-        // Inform the user about the update
-        notice.hidden = false;
-        console.log(resource + " was replaced");
-      }
-      // localStorage.setItem('cacheEtags', JSON.stringify(cacheEtags));
-    }
-  };
 
-  let notice = document.querySelector('#update-notice');
-  let update = document.querySelector('#update');
-  update.onclick = function (evt) {
-    let img = document.querySelector('img');
-    evt.preventDefault();
-    caches.open(CACHE)
-    .then(function (cache) {
-      return cache.match(img.src);
-    })
-    // Extract the body as a blob.
-    .then(function (response) {
-      return response.blob();
-    })
-    // Update the image content.
-    .then(function (bodyBlob) {
-      let url = URL.createObjectURL(bodyBlob);
-      img.src = url;
-      notice.hidden = true;
-    });
-  };
+async function refreshContent(event) {
+
+  console.log('refresh message', event.data);
+  const message = JSON.parse(event.data);
+  const isRefresh = message.type === 'refresh';
+  let isAsset = message.url.includes('meta/');
+  let isJSON = message.url.includes('data/');
+  let isImg = message.url.includes('.png');
+  let isScript = message.url.includes('.js');
+  let isStyle = message.url.includes('.css');
+  const fullurl = new URL(message.url)
+  const resource = fullurl.pathname;
+  const cache = await caches.open(CACHE);
+  const thing = await cache.match(resource);
+  
+  if (isRefresh && isStyle) {
+    console.log('stylesheet update');
+    // const sheet = document.querySelector(resource);
+    // sheet.href = 
+    // TODO path doesn't change, just content of file?
+    // how do i refresh an individual resource?
+    // just refresh whole page either way?
+  }
+  if (isRefresh && isImg) {
+    console.log('image update');
+  }
+  if (isRefresh && isScript) {
+    console.log('script update');
+  }
+  if (isRefresh && isJSON) {
+    console.log('data update');
+  }
+
+  if (isRefresh) {
+    console.log('RELOADING');
+    location.reload();
+  }
 }
 
 
@@ -760,7 +747,7 @@ async function updateCache(settings) {
     const url = `/data/${settings.order}/${sty}/0`;
     // TODO reenable cache of lengths
     // const lenurl = `/data/lengths/${settings.order}/${sty}`;
-    const cache = await caches.open('magic-v0.2');
+    const cache = await caches.open(CACHE);
     cache.add(url);
     // cache.add(lenurl);
   }

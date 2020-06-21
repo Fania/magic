@@ -170,12 +170,12 @@ async function updateCacheFromNetwork(request) {
     console.log('source: ' + resource);
     // responses are one-time use so clone
     await cache.put(request, response.clone());
-    await refreshContent(response);
+    await requestRefresh(response);
   }
   // return response; // gets passed to refreshContent
 }
 
-async function refreshContent(response) {
+async function requestRefresh(response) {
   console.log(`[Service Worker] post cache refresh message ${response.url}`);
   const clients = await self.clients.matchAll();
   clients.forEach(client => {
