@@ -1,34 +1,38 @@
 'use strict';
 
 navigator.serviceWorker.register('sw.js');
+  // .then(reg => {
+  //   // reg.update();
+  // });
 
 const CACHE = 'magic-v0.2';
 
 
 navigator.serviceWorker.onmessage = async event => {
-  console.log('event listener for SW post message');
+  // console.log('event listener for SW post message');
   await refreshContent(event);
 };
 
 
-
 async function refreshContent(event) {
 
-  console.log('refresh message', event.data);
+  // console.log('update for ', event.data);
   const message = JSON.parse(event.data);
   const isRefresh = message.type === 'refresh';
-  let isAsset = message.url.includes('meta/');
-  let isJSON = message.url.includes('data/');
-  let isImg = message.url.includes('.png');
-  let isScript = message.url.includes('.js');
-  let isStyle = message.url.includes('.css');
+  const isReload = message.type === 'reload';
+  const isAsset = message.url.includes('meta/');
+  const isJSON = message.url.includes('data/');
+  const isImg = message.url.includes('.png');
+  const isScript = message.url.includes('.js');
+  const isStyle = message.url.includes('.css');
   const fullurl = new URL(message.url)
   const resource = fullurl.pathname;
-  const cache = await caches.open(CACHE);
-  const thing = await cache.match(resource);
+  console.log('update for', resource);
+  // const cache = await caches.open(CACHE);
+  // const thing = await cache.match(resource);
   
   if (isRefresh && isStyle) {
-    console.log('stylesheet update');
+    // console.log('stylesheet update');
     // const sheet = document.querySelector(resource);
     // sheet.href = 
     // TODO path doesn't change, just content of file?
@@ -36,23 +40,40 @@ async function refreshContent(event) {
     // just refresh whole page either way?
   }
   if (isRefresh && isImg) {
-    console.log('image update');
+    // console.log('image update');
   }
   if (isRefresh && isScript) {
-    console.log('script update');
+    // console.log('script update');
   }
   if (isRefresh && isJSON) {
-    console.log('data update');
+    // console.log('data update');
   }
 
   if (isRefresh) {
-    console.log('RELOADING');
-    location.reload();
+    // console.log('RELOADING');
+    // newStuff.push(resource);
+    // location.reload();
+  }
+
+
+  if (isReload) {
+    console.log('reloading page with up-to-date assets');
+    // location.reload();
   }
 }
 
-
-
+// function reloadThing(path) {
+//   var h, a, f;
+//   const thing = document.querySelector('link');
+//   for (let i=0; i < a.length; i++) {
+//     f = thing[i];
+//     if (f.rel.toLowerCase().match(/stylesheet/) && f.href) {
+//       var g = f.href.replace(/(&|\?)rnd=\d+/, '');
+//       f.href = g + (g.match(/\?/) ? '&' : '?');
+//       f.href += 'rnd=' + (new Date().valueOf());
+//     }
+//   } // for
+// }
 
 
 

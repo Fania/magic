@@ -57,6 +57,7 @@ addEventListener('activate', event => {
       );
     })
   );
+  // event.waitUntil(requestReload());
 });
 
 
@@ -96,7 +97,7 @@ addEventListener('fetch', event => {
   // don't put SW to sleep until we've done the following
   event.waitUntil(
     updateCacheFromNetwork(event.request)
-      // .then(refreshContent)
+      // .then(requestRefresh)
   );
 });
 
@@ -162,21 +163,26 @@ async function updateCacheFromNetwork(request) {
   const thing = await cache.match(resource);
   const oldEtag = thing.headers.get('ETag');
   const response = await fetch(request);
+  // const responseCopy = response.clone();
   const newEtag = response.headers.get('ETag');
+
   // only update and refresh changed resources
+    // console.log('old: ' + oldEtag);
+    // console.log('new: ' + newEtag);
+    // console.log('source: ' + resource);
   if (oldEtag !== newEtag) {
     console.log('old: ' + oldEtag);
     console.log('new: ' + newEtag);
     console.log('source: ' + resource);
     // responses are one-time use so clone
     await cache.put(request, response.clone());
-    await requestRefresh(response);
+    await requestRefresh(response.clone());
   }
-  // return response; // gets passed to refreshContent
+  // return response;
 }
 
 async function requestRefresh(response) {
-  console.log(`[Service Worker] post cache refresh message ${response.url}`);
+  // console.log(`[Service Worker] post cache refresh message ${response.url}`);
   const clients = await self.clients.matchAll();
   clients.forEach(client => {
     const message = {
@@ -187,4 +193,12 @@ async function requestRefresh(response) {
     client.postMessage(JSON.stringify(message));
   });
 }
+// async function requestReload() {
+//   console.log(`[Service Worker] post cache reload message`);
+//   const clients = await self.clients.matchAll();
+//   clients.forEach(client => {
+//     const message = { type: 'reload', url: '/whole/site' };
+//     client.postMessage(JSON.stringify(message));
+//   });
+// }
 
