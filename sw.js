@@ -105,38 +105,6 @@ addEventListener('fetch', event => {
 
 
 
-// automatically add any new things to cache
-// careful, this will add all images and videos too, not just data
-// addEventListener('fetch', event => {
-//   event.respondWith(
-//     caches.match(event.request)
-//       .then((r) => {
-//         console.log('[Service Worker] Fetching NETWORK resource: ' + event.request.url);
-//         return r || fetch(event.request)
-//           .then(async response => {
-//             const cache = await caches.open(cacheName);
-//             console.log('[Service Worker] Caching new resource: ' + event.request.url);
-//             cache.put(event.request, response.clone());
-//             return response;
-//           });
-//       })
-//   );
-// });
-
-
-// async function getCache(req) {
-//   console.log('[Service Worker] retrieving ', cacheName);
-//   // caches.match(event.request)
-//   const cache = await caches.open(cacheName);
-//   return await cache.match(req);
-// }
-
-// async function cacheAssets(name,things) {
-//   console.log('[Service Worker] caching ', name);
-//   const cache = await caches.open(name);
-//   return cache.addAll(things);
-// }
-
 async function cacheAllThings() {
   console.log('[Service Worker] caching ...');
   const cache = await caches.open(cacheName);
@@ -144,9 +112,6 @@ async function cacheAllThings() {
   // updateDataResources();
   return cache.addAll(precacheResources.concat(staticResources));
 }
-
-
-
 
 
 // CACHE, UPDATE AND REFRESH
@@ -163,49 +128,10 @@ async function updateCacheFromNetwork(request) {
   const cache = await caches.open(cacheName);
   const fullurl = new URL(request.url)
   const resource = fullurl.pathname;
-  // const thing = await cache.match(resource) || await fetch(request);
   let thing = await cache.match(resource);
   if (thing === undefined) {
     thing = await fetch(request);
     await cache.put(request, thing);
   }
-  const oldEtag = thing.headers.get('ETag');
-  const response = await fetch(request);
-  const newEtag = response.headers.get('ETag');
 
-  // only update and refresh changed resources
-    // console.log('old: ' + oldEtag);
-    // console.log('new: ' + newEtag);
-    // console.log('source: ' + resource);
-  if (oldEtag !== newEtag) {
-    console.log('old: ' + oldEtag);
-    console.log('new: ' + newEtag);
-    console.log('source: ' + resource);
-    // responses are one-time use so clone
-    await cache.put(request, response.clone());
-    await requestRefresh(response.clone());
-  }
-  // return response;
 }
-
-async function requestRefresh(response) {
-  // console.log(`[Service Worker] post cache refresh message ${response.url}`);
-  const clients = await self.clients.matchAll();
-  clients.forEach(client => {
-    const message = {
-      type: 'refresh',
-      url: response.url,
-      eTag: response.headers.get('ETag')
-    };
-    client.postMessage(JSON.stringify(message));
-  });
-}
-// async function requestReload() {
-//   console.log(`[Service Worker] post cache reload message`);
-//   const clients = await self.clients.matchAll();
-//   clients.forEach(client => {
-//     const message = { type: 'reload', url: '/whole/site' };
-//     client.postMessage(JSON.stringify(message));
-//   });
-// }
-
