@@ -93,7 +93,9 @@ addEventListener('activate', event => {
 addEventListener('fetch', event => {
   // console.log('[Service Worker] fetching/serving assets');
   // respondWith() for ASAP answer from cache
-  event.respondWith(serveFromCache(event.request));
+  event.respondWith(
+    serveFromCache(event.request)
+  );
   // don't put SW to sleep until we've done the following
   event.waitUntil(
     updateCacheFromNetwork(event.request)
@@ -152,7 +154,8 @@ async function cacheAllThings() {
 async function serveFromCache(request) {
   // console.log(`[Service Worker] serving from CACHE: ${request.url}`);
   const cache = await caches.open(cacheName);
-  return await cache.match(request);
+  // get it from cache or fetch from network if new
+  return await cache.match(request) || await fetch(request);
 }
 
 async function updateCacheFromNetwork(request) {
@@ -160,10 +163,14 @@ async function updateCacheFromNetwork(request) {
   const cache = await caches.open(cacheName);
   const fullurl = new URL(request.url)
   const resource = fullurl.pathname;
-  const thing = await cache.match(resource);
+  // const thing = await cache.match(resource) || await fetch(request);
+  let thing = await cache.match(resource);
+  if (thing === undefined) {
+    thing = await fetch(request);
+    await cache.put(request, thing);
+  }
   const oldEtag = thing.headers.get('ETag');
   const response = await fetch(request);
-  // const responseCopy = response.clone();
   const newEtag = response.headers.get('ETag');
 
   // only update and refresh changed resources
