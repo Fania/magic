@@ -138,6 +138,7 @@ app.post('/contribute', async (req, res) => {
 // s = ['arrays','arc','altarc','quadvertex','quadline','numbers','unique','straight','circles','blocks','tetromino']
 // o = [0,200,400,600, etc]
 
+// TODO add http://localhost to cors ?
 // NEW - Add CORS headers - see https://enable-cors.org/server_expressjs.html
 app.use( (req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://magic.fania.eu')
