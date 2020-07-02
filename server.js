@@ -62,6 +62,35 @@ async function setupOrder(n) {
 // setupOrder(5)
 
 
+async function setupOrderLARGE(n) {
+  const sourceData = fs.readFileSync(`./data/source${n}.json`)
+  const data = JSON.parse(sourceData)
+  const len = data.length
+  console.log('total source squares', len)
+  const chunks = _.chunk(data, 1000)
+  console.log(chunks.length)
+
+  const forLoop = async _ => {
+    console.log('Start async loop')
+    for (let i=0; i < chunks.length; i++) {
+      console.log('inside chunks loop', i, chunks[i].length)
+      const result = await generate.indexLARGE(n,chunks[i])
+      await couch.populateDBLARGE(result, n)
+    }
+    console.log('End async loop')
+  }
+  forLoop(chunks)
+
+  // chunks.forEach(async (ch,i) => {
+  //   console.log('inside chunks loop', i, ch.length)
+  //   const result = await generate.indexLARGE(n,ch)
+  //   await couch.populateDBLARGE(result, n)
+  // })
+}
+// setupOrderLARGE('5a')
+
+
+
 async function initialiseAll() {
   await setupOrder(3)
   await setupOrder(4)

@@ -82,3 +82,9 @@ hover info modal?:
 - [x] move generateSharedLengths to mapreduce filter view in couch?
 - [x] use indexedDB to be able to access settings via service worker
 
+
+
+
+- partition order 5 by magic square classification?
+- partition by number, e.g. simply group every 1000?
+
