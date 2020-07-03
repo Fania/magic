@@ -24,6 +24,9 @@ hover info modal?:
 
 ## Todo
 
+
+- [ ] partition order 5 by magic square classification?
+- [ ] partition by number, e.g. simply group every 1000?
 - [ ] try inline styles for animation?
 - [ ] add animation to presets and random?
 - [ ] animation broken? cache problem? no, i think this is CSSOM problem, see animationCSS function
@@ -85,6 +88,20 @@ hover info modal?:
 
 
 
-- partition order 5 by magic square classification?
-- partition by number, e.g. simply group every 1000?
 
+
+
+
+Error running query. Reason: Unexpected token < in JSON at position 0
+
+
+
+https://couch.fania.eu/index5a/_design/styles/_view/quadvertex?limit=100
+
+"error": "timeout",
+"reason": "The request could not be processed in a reasonable amount of time."
+
+
+502 Bad Gateway
+
+504 Gateway Time-out
