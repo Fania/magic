@@ -10,3 +10,6 @@ data/contributions.log
 *.log
 data
 data/*
+logs/*
+logs
+forever.json

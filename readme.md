@@ -1,6 +1,8 @@
 # Magic Squares
 
-Don't forget to set up a .env file with login info.
+Don't forget to set up `.env` and `forever.json` files.
+
+Run with `node server` or the daemon `forever start forever.json`.
 
 
 
