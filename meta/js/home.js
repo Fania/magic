@@ -733,6 +733,7 @@ function applyOverlap(state) {
   if (state) { // true
     console.log('enable overlap');
     squares.classList.add('overlap');
+    const overlap200 = document.getElementById('overlap200');
     if(overlap200.checked) { squares.classList.add('few'); }
     else { squares.classList.remove('few'); }
   } else { // false

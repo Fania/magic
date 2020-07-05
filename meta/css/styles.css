@@ -108,6 +108,14 @@ form option {
 
 
 
+#squares.overlap { position: relative; }
+#squares.overlap svg { position: absolute; 
+  width: 90%; height: 75vh; max-height: 75vh; }
+/* enabling this only shows the first 200, not the whole set */
+#squares.overlap.few [class^="sentinel"] { display: none; }
+
+
+
 
 
 /* .home { padding-top: 0 } */
@@ -372,7 +380,6 @@ footer a, footer p {
 
   #order4quadOptions span,
   #overlapOptions span { font-size: .8em }
-  
   /* #styleOptions img {
     width: 40px; padding: 4px; box-sizing: border-box; filter: grayscale(1);
   } */
@@ -428,11 +435,7 @@ footer a, footer p {
   #advancedOptions #search { width: 115px }
 
 
-  #squares.overlap { position: relative; }
-  #squares.overlap svg { position: absolute; 
-    width: 100%; height: 75vh; max-height: 75vh; }
-  /* enabling this only shows the first 200, not the whole set */
-  #squares.overlap.few [class^="sentinel"] { display: none; }
+
 
 
   main { margin: 2em }

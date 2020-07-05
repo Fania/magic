@@ -26,7 +26,7 @@ hover info modal?:
 
 ## Todo
 
-- [ ] fix mobile form field sizes (to avoid default zoom to pt 16)
+- [ ] use raw data in couch for order 5s and generate svgs on the fly
 - [ ] partition order 5 by magic square classification?
 - [ ] partition by number, e.g. simply group every 1000?
 - [ ] try inline styles for animation?
@@ -51,6 +51,7 @@ hover info modal?:
 - [ ] add search box for single input and multiple inputs
 - [ ] add pin-to-top / favourite feature for individual squares
 - [ ] add printing options
+- [x] fix mobile form field sizes (to avoid default zoom to pt 16)
 - [x] make PWA app fullscreen (minimal ui)
 - [x] daemonise app on server
 - [x] update design docs with rev if needed
