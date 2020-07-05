@@ -81,6 +81,18 @@ header { margin: 0; padding: 0 1em; }
 
 
 
+form input,
+form label,
+form select,
+form option {
+  font-size: 16px;
+}
+
+#order4quadOptions span,
+#overlapOptions span { font-size: .8em }
+
+
+
 #styleOptions svg {
   width: 40px; padding: 4px; box-sizing: border-box; filter: grayscale(1); margin: 0;
 }
@@ -358,7 +370,9 @@ footer a, footer p {
   label { cursor: pointer; font-size: 0.9em; }
 
 
-
+  #order4quadOptions span,
+  #overlapOptions span { font-size: .8em }
+  
   /* #styleOptions img {
     width: 40px; padding: 4px; box-sizing: border-box; filter: grayscale(1);
   } */
