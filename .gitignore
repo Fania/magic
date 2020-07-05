@@ -13,3 +13,4 @@ data/*
 logs/*
 logs
 forever.json
+.gitignore
