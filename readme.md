@@ -27,6 +27,7 @@ hover info modal?:
 ## Todo
 
 
+- [ ] make PWA app fullscreen (minimal ui)
 - [ ] partition order 5 by magic square classification?
 - [ ] partition by number, e.g. simply group every 1000?
 - [ ] try inline styles for animation?
