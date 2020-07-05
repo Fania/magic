@@ -26,8 +26,7 @@ hover info modal?:
 
 ## Todo
 
-
-- [ ] make PWA app fullscreen (minimal ui)
+- [ ] fix mobile form field sizes (to avoid default zoom to pt 16)
 - [ ] partition order 5 by magic square classification?
 - [ ] partition by number, e.g. simply group every 1000?
 - [ ] try inline styles for animation?
@@ -52,6 +51,7 @@ hover info modal?:
 - [ ] add search box for single input and multiple inputs
 - [ ] add pin-to-top / favourite feature for individual squares
 - [ ] add printing options
+- [x] make PWA app fullscreen (minimal ui)
 - [x] daemonise app on server
 - [x] update design docs with rev if needed
 - [x] test and check the new createOrder function

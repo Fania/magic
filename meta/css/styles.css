@@ -25,8 +25,11 @@ header { margin: 0; padding: 0 1em; }
 .mainmenu div .logo { width: 50px; height: 50px }
 .mainmenu div h1 { display: none }
 
-#hamburger { display: block; font-size: 3em; transition: all 1s }
-#hamburger.rotate { transform: rotate(90deg); transition: all 1s }
+#hamburger svg { 
+  width: 30px; height: 30px; 
+  margin: 0; padding: 13px;
+  transition: all 1s }
+#hamburger.rotate svg { transform: rotate(90deg); transition: all 1s }
 #mainnav { 
   box-sizing: border-box; z-index: 2;
   background: #111111CC; padding: 1em;
@@ -45,15 +48,11 @@ header { margin: 0; padding: 0 1em; }
 
 
 /* SUBMENU */
-#subway { font-size: 48px; position: relative; transition: all 1s }
-#subway.rotate { transform: rotate(-90deg); transition: all 1s }
-#subway span { font-size: 48px; position: absolute; top: 28px; right: 7px }
-#subway::before {
-  content: "'"; font-size: 48px; position: absolute; top: 8px; right: 11px }
-#subway::after {
-  content: "'"; font-size: 48px; position: absolute; top: 18px; right: 21px }
-
-
+#subway svg { 
+  width: 30px; height: 30px; 
+  margin: 0; padding: 13px;
+  transition: all 1s }
+#subway.rotate svg { transform: rotate(-90deg); transition: all 1s }
 
 .submenu { box-sizing: border-box; background: #111111CC }
 .submenu nav a { 
