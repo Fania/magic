@@ -51,6 +51,7 @@ hover info modal?:
 - [ ] add search box for single input and multiple inputs
 - [ ] add pin-to-top / favourite feature for individual squares
 - [ ] add printing options
+- [x] daemonise app on server
 - [x] update design docs with rev if needed
 - [x] test and check the new createOrder function
 - [x] upload single input to DB
