@@ -183,7 +183,7 @@ const overlap200 = document.getElementById('overlap200');
 overlap.addEventListener('change', () => { 
   console.log('OVERLAP change triggered');
   adjust('overlap');
-  applyOverlap(overlap.checked);
+  applyOverlap(document.getElementById('overlap').checked);
 });
 [overlapAll,overlap200].forEach( oa => {
   oa.addEventListener('change', ()=> { 
@@ -733,8 +733,7 @@ function applyOverlap(state) {
   if (state) { // true
     console.log('enable overlap');
     squares.classList.add('overlap');
-    const overlap200 = document.getElementById('overlap200');
-    if(overlap200.checked) { squares.classList.add('few'); }
+    if(document.getElementById('overlap200').checked) { squares.classList.add('few'); }
     else { squares.classList.remove('few'); }
   } else { // false
     console.log('disable overlap');

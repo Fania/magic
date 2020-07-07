@@ -1,8 +1,8 @@
 # Magic Squares
 
-Don't forget to set up `.env` and `forever.json` files.
+Don't forget to set up `.env` and `magic.json` files.
 
-Run with `node server` or start the daemon `forever start forever.json`.
+Run with `node server` or start the daemon `pm2 start magic.json`.
 
 
 
