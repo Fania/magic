@@ -88,8 +88,6 @@ form option {
   font-size: 16px;
 }
 
-#order4quadOptions span,
-#overlapOptions span { font-size: .8em }
 
 
 
@@ -104,6 +102,30 @@ form option {
 #styleOptions [type="radio"] { display: none; }
 #styleOptions [type="radio"]:checked + svg { border: 1px dotted #666; }
 #styleOptions [type="radio"]:checked + img { border: 1px dotted #666; }
+
+
+#order4quadOptions { border: 0; position: absolute; top: 8px; right: 8px; }
+#order4quadOptions.hide { display: none }
+
+
+#sizeOptions { position: relative; display: flex; }
+#sizeOptions > label:not(:last-of-type) { display: table; width: 100%; } 
+#sizeOptions > label:not(:last-of-type) span, 
+#sizeOptions > label:not(:last-of-type) input { display: table-cell; } 
+#sizeOptions > label:not(:last-of-type) span {  width: 50%; } 
+#sizeOptions > label:not(:last-of-type) input {  width: 100%; } 
+#overlapOptions { position: absolute; bottom: 0; right: 0; border: 0; }
+
+
+#colourOptions [type="color"] { 
+  width: 35px; padding: 0; margin: 0; border: 0; }
+#colourOptions label { display: flex; justify-content: space-between; }
+#colourOptions [type="range"] { width: 70px }
+
+
+
+
+
 
 
 
@@ -384,12 +406,10 @@ footer a, footer p {
     width: 40px; padding: 4px; box-sizing: border-box; filter: grayscale(1);
   } */
   #order4quadOptions { border: 0; padding: 0; text-align: right; 
-    /* position: relative; top: 5px; font-size: .8em;  */
     display: flex; flex-direction: column;
     line-height: .95em;
     position: absolute; top: 8px; right: 8px; font-size: .8em; 
   }
-  #order4quadOptions.hide { display: none }
   #order4quadOptions [type="radio"] { display: none }
   #order4quadOptions [type="radio"]:not(:checked) + span::after { 
     content: " ✘"; color: #666; }
@@ -398,7 +418,12 @@ footer a, footer p {
 
 
 
-  #sizeOptions { position: relative; }
+  #sizeOptions > label:not(:last-of-type) { display: unset; } 
+  #sizeOptions > label:not(:last-of-type) span, 
+  #sizeOptions > label:not(:last-of-type) input { display: unset; } 
+  #sizeOptions > label:not(:last-of-type) span {  width: unset; } 
+  #sizeOptions > label:not(:last-of-type) input {  width: unset; } 
+
   #overlapOptions { border: 0; padding: 0; text-align: right; 
     display: flex; flex-direction: column;
     line-height: .95em;
