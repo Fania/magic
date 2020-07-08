@@ -523,7 +523,8 @@ function adjust(thing) {
       x = document.querySelector('[name="animation"]:checked').value;
       break;
     default:
-      x = document.getElementById(thing).value;
+      const y = document.getElementById(thing).value;
+      x = parseInt(y) !== NaN ? parseInt(y) : y;
   }
   settings[thing] = x;
   saveSettings(settings);
