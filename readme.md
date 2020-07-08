@@ -32,9 +32,9 @@ hover info modal?:
 - [ ] try inline styles for animation?
 - [ ] add animation to presets and random?
 - [ ] animation broken? cache problem? no, i think this is CSSOM problem, see animationCSS function
-- [ ] overlay broken? cache problem?
 - [ ] add dropdown for shared lengths per order
 - [ ] cache needs updating if changes on server
+- [ ] cache only adds new resources in, not updates out-of-date ones?
 - [ ] hover info for each square or put into modal
 - [ ] fix mobile style again
 - [ ] manual order change triggers two draws of squares
@@ -51,6 +51,7 @@ hover info modal?:
 - [ ] add search box for single input and multiple inputs
 - [ ] add pin-to-top / favourite feature for individual squares
 - [ ] add printing options
+- [x] overlay broken? cache problem?
 - [x] fix mobile form field sizes (to avoid default zoom to pt 16)
 - [x] make PWA app fullscreen (minimal ui)
 - [x] daemonise app on server

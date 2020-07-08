@@ -129,6 +129,7 @@ async function updateCacheFromNetwork(request) {
   const fullurl = new URL(request.url)
   const resource = fullurl.pathname;
   let thing = await cache.match(resource);
+  // only adds new resources in, not updates out-of-date ones?
   if (thing === undefined) {
     thing = await fetch(request);
     await cache.put(request, thing);

@@ -35,16 +35,16 @@ const defaults = {
   "order":         4,
   "amount":        "unique",
   "style":         "quadvertex",
-  "size":          "16",
-  "gap":           "20",
+  "size":          16,
+  "gap":           20,
   "overlap":       false,
   "overlapAmount": "overlap200",
   "background":    "#222222",
   "stroke":        "#FFFFFF",
-  "strokeWidth":   "2",
-  "salpha":        "255",
+  "strokeWidth":   2,
+  "salpha":        255,
   "fill":          "#666666",
-  "falpha":        "0",
+  "falpha":        0,
   "animation":     "off",
   "speed":         50
 };
@@ -544,7 +544,7 @@ function loadSettings() {
   document.getElementById('size').value = settings.size;
   document.getElementById('gap').value = settings.gap;
   document.getElementById('strokeWidth').value = settings.strokeWidth;
-  document.getElementById('overlap').checked = settings.overlap === 'true';
+  document.getElementById('overlap').checked = settings.overlap === true;
   document.querySelector(`#${settings.overlapAmount}`).checked = true;
   document.getElementById('background').value = settings.background;
   document.getElementById('stroke').value = settings.stroke;
