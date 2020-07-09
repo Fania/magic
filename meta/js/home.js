@@ -70,6 +70,7 @@ else {
 
 
 function loadBookmark(params) {
+  console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
   const settings = {};
   keyValueStrings.forEach(x => {
@@ -110,7 +111,7 @@ displayOrder.addEventListener('change', () => {
 
 displayAmounts.forEach( da => {
   da.addEventListener('change', () => { 
-    console.log('AMOUNT change triggered');
+    // console.log('AMOUNT change triggered');
     adjust('amount');
   });
 });
@@ -277,24 +278,6 @@ if(offA.checked || asyncA.checked) {
   a.addEventListener('change', ()=> { 
     console.log(`ANIMATION change triggered by ${a.id}`);
     triggerAnimation();
-    // if(a.id === 'sync') { 
-    //   squares.classList.add('animate'); 
-    //   squares.classList.add('animateEvenly');
-    //   squares.classList.remove('animateOddly'); 
-    //   document.getElementById('speed').disabled = false;
-    // }
-    // if(a.id === 'async') { 
-    //   squares.classList.add('animate'); 
-    //   squares.classList.add('animateOddly');
-    //   squares.classList.remove('animateEvenly');
-    //   document.getElementById('speed').disabled = true;
-    // }
-    // if(a.id === 'off') {
-    //   squares.classList.remove('animate');
-    //   squares.classList.remove('animateOddly');
-    //   squares.classList.remove('animateEvenly');
-    //   document.getElementById('speed').disabled = true;
-    // }
     adjust('animation');
   });
 });
@@ -764,12 +747,12 @@ function getRandomColour() {
 
 function applyOverlap(state) {
   if (state) { // true
-    console.log('enable overlap');
+    // console.log('enable overlap');
     squares.classList.add('overlap');
     if(document.getElementById('overlap200').checked) { squares.classList.add('few'); }
     else { squares.classList.remove('few'); }
   } else { // false
-    console.log('disable overlap');
+    // console.log('disable overlap');
     squares.classList.remove('overlap');
   }
 }
