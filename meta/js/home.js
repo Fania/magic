@@ -524,8 +524,11 @@ function adjust(thing) {
       break;
     default:
       const y = document.getElementById(thing).value;
-      x = parseInt(y) !== NaN ? parseInt(y) : y;
+      console.log(`adjusting ${y}, ${parseInt(y)}, ${x}`);
+      x = Number.isNaN(parseInt(y)) ? y : parseInt(y);
+      console.log(`adjusting ${x}, ${y}`);
   }
+  console.log(`adjusting ${x}`);
   settings[thing] = x;
   saveSettings(settings);
   if(['order','style','amount'].includes(thing)) {
