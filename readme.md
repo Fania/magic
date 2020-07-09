@@ -26,13 +26,10 @@ hover info modal?:
 
 ## Todo
 
-- [ ] add animation to bookmarks
 - [ ] use raw data in couch for order 5s and generate svgs on the fly
 - [ ] partition order 5 by magic square classification?
 - [ ] partition by number, e.g. simply group every 1000?
 - [ ] try inline styles for animation?
-- [ ] add animation to presets and random?
-- [ ] animation broken? cache problem? no, i think this is CSSOM problem, see animationCSS function
 - [ ] add dropdown for shared lengths per order
 - [ ] cache needs updating if changes on server
 - [ ] cache only adds new resources in, not updates out-of-date ones?
@@ -52,6 +49,10 @@ hover info modal?:
 - [ ] add search box for single input and multiple inputs
 - [ ] add pin-to-top / favourite feature for individual squares
 - [ ] add printing options
+- [x] add animation to presets and random?
+- [x] animation broken? cache problem? no, i think this is CSSOM problem, see animationCSS function
+- [x] add animation to bookmarks
+- [x] make reset trigger a redraw of data as well
 - [x] add fullscreen mode hiding interface
 - [x] stroke/background/fill broken
 - [x] overlay broken? cache problem?

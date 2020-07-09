@@ -60,8 +60,12 @@ else {
   // clean load, possibly from memory
   loadSettings();
   getData();
+  triggerAnimation();
+
   // populateLengthOptions();
 }
+
+
 
 
 
@@ -77,6 +81,7 @@ function loadBookmark(params) {
   saveSettings(settings);
   loadSettings();
   getData();
+  triggerAnimation();
   // populateLengthOptions();
 }
 
@@ -268,31 +273,51 @@ if(offA.checked || asyncA.checked) {
 } else {
   document.getElementById('speed').disabled = false;
 }
-
 [syncA,asyncA,offA].forEach( a => {
   a.addEventListener('change', ()=> { 
     console.log(`ANIMATION change triggered by ${a.id}`);
-    if(a.id === 'sync') { 
-      squares.classList.add('animate'); 
-      squares.classList.add('animateEvenly');
-      squares.classList.remove('animateOddly'); 
-      document.getElementById('speed').disabled = false;
-    }
-    if(a.id === 'async') { 
-      squares.classList.add('animate'); 
-      squares.classList.add('animateOddly');
-      squares.classList.remove('animateEvenly');
-      document.getElementById('speed').disabled = true;
-    }
-    if(a.id === 'off') {
-      squares.classList.remove('animate');
-      squares.classList.remove('animateOddly');
-      squares.classList.remove('animateEvenly');
-      document.getElementById('speed').disabled = true;
-    }
+    triggerAnimation();
+    // if(a.id === 'sync') { 
+    //   squares.classList.add('animate'); 
+    //   squares.classList.add('animateEvenly');
+    //   squares.classList.remove('animateOddly'); 
+    //   document.getElementById('speed').disabled = false;
+    // }
+    // if(a.id === 'async') { 
+    //   squares.classList.add('animate'); 
+    //   squares.classList.add('animateOddly');
+    //   squares.classList.remove('animateEvenly');
+    //   document.getElementById('speed').disabled = true;
+    // }
+    // if(a.id === 'off') {
+    //   squares.classList.remove('animate');
+    //   squares.classList.remove('animateOddly');
+    //   squares.classList.remove('animateEvenly');
+    //   document.getElementById('speed').disabled = true;
+    // }
     adjust('animation');
   });
 });
+function triggerAnimation() {
+  if(document.getElementById('sync').checked) { 
+    squares.classList.add('animate'); 
+    squares.classList.add('animateEvenly');
+    squares.classList.remove('animateOddly'); 
+    document.getElementById('speed').disabled = false;
+  }
+  if(document.getElementById('async').checked) { 
+    squares.classList.add('animate'); 
+    squares.classList.add('animateOddly');
+    squares.classList.remove('animateEvenly');
+    document.getElementById('speed').disabled = true;
+  }
+  if(document.getElementById('off').checked) {
+    squares.classList.remove('animate');
+    squares.classList.remove('animateOddly');
+    squares.classList.remove('animateEvenly');
+    document.getElementById('speed').disabled = true;
+  }
+}
 
 // ANIMATION SPEED OPTION
 const speed = document.getElementById('speed');
@@ -344,7 +369,8 @@ const reset = document.getElementById('reset');
 reset.addEventListener('click', ()=> { 
   console.log('RESET click triggered');
   saveSettings(defaults);
-  loadSettings();
+  getData();
+  triggerAnimation();
 });
 
 // RANDOM OPTION
@@ -360,9 +386,12 @@ random.addEventListener('click', ()=> {
   settings.salpha = getRandomInt(0, 255);
   settings.fill = getRandomColour();
   settings.falpha = getRandomInt(0, 255);
-  // TODO add animation and speed
+  settings.animation = ['sync','async','off'][getRandomInt(0, 2)];
+  settings.speed = getRandomInt(0, 100);
+  settings.overlap = [true,false][getRandomInt(0, 1)];
   saveSettings(settings);
-  loadSettings();
+  getData();
+  triggerAnimation();
 });
 
 // SHARE OPTION
@@ -424,7 +453,7 @@ async function getTheme(name) {
     const theme = data.rows.find(item => item.id === name).doc;
     saveSettings(theme);
     getData();
-    loadSettings();
+    triggerAnimation();
   } catch (error) { console.log(error) }
 }
 
