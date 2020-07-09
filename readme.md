@@ -26,7 +26,6 @@ hover info modal?:
 
 ## Todo
 
-- [ ] add fullscreen mode hiding interface
 - [ ] add animation to bookmarks
 - [ ] use raw data in couch for order 5s and generate svgs on the fly
 - [ ] partition order 5 by magic square classification?
@@ -53,6 +52,7 @@ hover info modal?:
 - [ ] add search box for single input and multiple inputs
 - [ ] add pin-to-top / favourite feature for individual squares
 - [ ] add printing options
+- [x] add fullscreen mode hiding interface
 - [x] stroke/background/fill broken
 - [x] overlay broken? cache problem?
 - [x] fix mobile form field sizes (to avoid default zoom to pt 16)

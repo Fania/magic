@@ -794,3 +794,18 @@ function animationCSS(id, order, style, len) {
   // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
 
 }
+
+
+
+
+
+// FULLSCREEN OPTIONS
+
+document.addEventListener("keydown", event => {
+  if (event.key === "i") {
+    const elems = document.querySelectorAll("header, footer");
+    elems.forEach(e => {
+      e.classList.toggle('hide');
+    });
+  }
+});
