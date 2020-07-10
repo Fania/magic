@@ -242,9 +242,6 @@ order5x c3 = sequence_ [ write2File
 
 
 
-
-
-
 -- generateSquares [x]    = writeToFile x
 -- generateSquares (x:xs) = do writeToFile x; generateSquares xs
 -- writeToFile x = appendFile "again.txt" $ show x

@@ -3,185 +3,126 @@ import System.IO
 import System.Environment
 
 
--- SLIGHTLY MORE CLEVER
-
-order3x = [ 
-  [a1,b1,c1, 
-   a2,b2,c2, 
-   a3,b3,c3] | 
-    a1 <-  [1..9],
-    b1 <- ([1..9] \\ [a1]), b1<(15-a1), 
-    c1 <- ([1..9] \\ [a1,b1]), c1<(15-a1+b1), 15==a1+b1+c1,
-    a2 <- ([1..9] \\ [a1,b1,c1]), a2<(15-a1),
-    b2 <- ([1..9] \\ [a1,b1,c1,a2]), b2<(15-a2), b2<(15-b1), b2<(15-a1), b2<(15-c1),
-    c2 <- ([1..9] \\ [a1,b1,c1,a2,b2]), c2<(15-a2+b2), c2<(15-c1), 15==a2+b2+c2,
-    a3 <- ([1..9] \\ [a1,b1,c1,a2,b2,c2]), a3<(15-a1+a2), a3<(15-c1+b2), 15==a1+a2+a3, 15==a3+b2+c1,
-    b3 <- ([1..9] \\ [a1,b1,c1,a2,b2,c2,a3]), b3<(15-a3), b3<(15-b1+b2), 15==b1+b2+b3,
-    c3 <- ([1..9] \\ [a1,b1,c1,a2,b2,c2,a3,b3]), c3<(15-a3+b3), c3<(15-c1+c2), c3<(15-a1+b2), 15==a3+b3+c3, 15==c1+c2+c3, 15==a1+b2+c3
-  ]
+lsx :: [[Int]]
+lsx = [[2,10,19,11,23,12,25,7,18,3,20,15,1,8,21,14,6,16,24,5,17,9,22,4,13],[2,15,20,5,23,8,25,11,18,3,22,9,1,14,19,16,6,12,24,7,17,10,21,4,13],[2,15,21,4,23,8,25,11,18,3,22,9,1,14,19,16,6,12,24,7,17,10,20,5,13],[2,15,21,4,23,10,25,9,18,3,20,11,1,14,19,16,6,12,24,7,17,8,22,5,13],[2,15,21,4,23,8,25,11,18,3,22,14,1,9,19,16,6,12,24,7,17,5,20,10,13],[2,15,21,4,23,10,25,9,18,3,20,14,1,11,19,16,6,12,24,7,17,5,22,8,13],[2,10,21,9,23,7,25,11,19,3,22,14,1,8,20,16,4,15,24,6,18,12,17,5,13],[2,12,20,8,23,10,25,6,19,5,21,15,1,11,17,14,4,16,24,7,18,9,22,3,13],[2,14,20,6,23,8,25,10,19,3,21,15,1,11,17,16,4,12,24,9,18,7,22,5,13]]
 
 
+getChunks :: Int -> [Int] -> [[Int]]
+getChunks n [] = []
+getChunks n xs = (take n xs) : (getChunks n (drop n xs))
+
+getOrder :: [Int] -> Int
+getOrder xs = floor $ sqrt $ fromIntegral $ length xs
 
 
--- http://archive.oreilly.com/oreillyschool/courses/data-structures-algorithms/bruteForce.html
--- https://youtu.be/_uQCgss-aB4
--- https://monoid.xyz/posts/magicsquares1
+identity :: [Int] -> [Int]
+identity xs = xs
 
--- -fno-full-laziness
+reflectH :: [Int] -> [Int]
+reflectH xs = concat $ map reverse rows
+  where n = getOrder xs
+        rows = getChunks n xs
 
--- compile: 
--- ghc magic -O2 -prof
--- -fllvm ?
+reflectV :: [Int] -> [Int]
+reflectV xs = concat $ reverse rows
+  where n = getOrder xs
+        rows = getChunks n xs
+
+reflectD1 :: [Int] -> [Int]
+reflectD1 xs = concat $ transpose rows
+  where n = getOrder xs
+        rows = getChunks n xs
+
+reflectD2 :: [Int] -> [Int]
+reflectD2 xs = concat $ map reverse $ reverse cols
+  where n = getOrder xs
+        rows = getChunks n xs
+        cols = transpose rows
+
+rotate90 :: [Int] -> [Int]
+rotate90 xs = concat $ map reverse cols
+  where n = getOrder xs
+        rows = getChunks n xs
+        cols = transpose rows
+
+rotate180 :: [Int] -> [Int]
+rotate180 xs = concat $ map reverse $ reverse rows
+  where n = getOrder xs
+        rows = getChunks n xs
+
+rotate270 :: [Int] -> [Int]
+rotate270 xs = concat $ reverse cols
+  where n = getOrder xs
+        rows = getChunks n xs
+        cols = transpose rows
+
+-- identity
+-- 2,10,19,11,23
+-- 12,25,7,18,3
+-- 20,15,1,8,21
+-- 14,6,16,24,5
+-- 17,9,22,4,13
 
 
--- run:
--- ./magic -RTS
-
--- 7040
-order4x = [ 
-  [a1,b1,c1,d1, 
-   a2,b2,c2,d2, 
-   a3,b3,c3,d3, 
-   a4,b4,c4,d4] |
-      a1 <-  [1..16],
-      b1 <- ([1..16] \\ [a1]), b1<(34-a1),
-      c1 <- ([1..16] \\ [a1,b1]), c1<(34-a1+b1),
-      d1 <- ([1..16] \\ [a1,b1,c1]), d1<(34-a1+b1+c1), 34==a1+b1+c1+d1,
-      a2 <- ([1..16] \\ [a1,b1,c1,d1]), a2<(34-a1),
-      b2 <- ([1..16] \\ [a1,b1,c1,d1,a2]), b2<(34-a2), b2<(34-b1), b2<(34-a1),
-      c2 <- ([1..16] \\ [a1,b1,c1,d1,a2,b2]), c2<(34-a2+b2), c2<(34-c1), c2<(34-d1),
-      d2 <- ([1..16] \\ [a1,b1,c1,d1,a2,b2,c2]), d2<(34-a2+b2+c2), d2<(34-d1), 34==a2+b2+c2+d2,
-      a3 <- ([1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2]), a3<(34-a1+a2),
-      b3 <- ([1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3]), b3<(34-a3), b3<(34-b1+b2), b3<(34-d1+c2),
-      c3 <- ([1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3]), c3<(34-a3+b3), c3<(34-c1+c2), c3<(34-a1+b2),
-      d3 <- ([1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3]), d3<(34-a3+b3+c3), d3<(34-d1+d2), 34==a3+b3+c3+d3,
-      a4 <- ([1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3,d3]), a4<(34-a1+a2+a3), a4<(34-d1+c2+b3), 34==a1+a2+a3+a4, 34==d1+c2+b3+a4,
-      b4 <- ([1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3,d3,a4]), b4<(34-a4), b4<(34-b1+b2+b3), 34==b1+b2+b3+b4,
-      c4 <- ([1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3,d3,a4,b4]), c4<(34-a4+b4), c4<(34-c1+c2+c3), 34==c1+c2+c3+c4,
-      d4 <- ([1..16] \\ [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3,d3,a4,b4,c4]), d4<(34-a4+b4+c4), d4<(34-d1+d2+d3), d4<(34-a1+b2+c3), 34==a4+b4+c4+d4, 34==d1+d2+d3+d4, 34==a1+b2+c3+d4
-  ]
+test = 
+  (reflectH $ head lsx) == [23,11,19,10,2,3,18,7,25,12,21,8,1,15,20,5,24,16,6,14,13,4,22,9,17] 
+  &&
+  (reflectV $ head lsx) == [17,9,22,4,13,14,6,16,24,5,20,15,1,8,21,12,25,7,18,3,2,10,19,11,23]
+  &&
+  (reflectD1 $ head lsx) == [2,12,20,14,17,10,25,15,6,9,19,7,1,16,22,11,18,8,24,4,23,3,21,5,13]
+  &&
+  (reflectD2 $ head lsx) == [13,5,21,3,23,4,24,8,18,11,22,16,1,7,19,9,6,15,25,10,17,14,20,12,2]
+  &&
+  (rotate90 $ head lsx) == [17,14,20,12,2,9,6,15,25,10,22,16,1,7,19,4,24,8,18,11,13,5,21,3,23]
+  &&
+  (rotate180 $ head lsx) == [13,4,22,9,17,5,24,16,6,14,21,8,1,15,20,3,18,7,25,12,23,11,19,10,2]
+  &&
+  (rotate270 $ head lsx) == [23,3,21,5,13,11,18,8,24,4,19,7,1,16,22,10,25,15,6,9,2,12,20,14,17]
 
 
--- REDUCERS
--- identity, mirrorLR, mirrorUD, mirrorD1, mirrorD2, rotate90,  rotate180, rotate-90
--- ORDER 3
-mirrorLR3  [a1,a2,a3,b1,b2,b3,c1,c2,c3] = [a3,a2,a1,b3,b2,b1,c3,c2,c1]
-mirrorUD3  [a1,a2,a3,b1,b2,b3,c1,c2,c3] = [c1,c2,c3,b1,b2,b3,a1,a2,a3]
-mirrorD13  [a1,a2,a3,b1,b2,b3,c1,c2,c3] = [a1,b1,c1,a2,b2,c2,a3,b3,c3]
-mirrorD23  [a1,a2,a3,b1,b2,b3,c1,c2,c3] = [c3,b3,a3,c2,b2,a2,c1,b1,a1]
-rotate903  [a1,a2,a3,b1,b2,b3,c1,c2,c3] = [c1,b1,a1,c2,b2,a2,c3,b3,a3]
-rotate1803 [a1,a2,a3,b1,b2,b3,c1,c2,c3] = [c3,c2,c1,b3,b2,b1,a3,a2,a1]
-rotateM903 [a1,a2,a3,b1,b2,b3,c1,c2,c3] = [a3,b3,c3,a2,b2,c2,a1,b1,c1]
+-- main = do
+  -- s <- readFile "order5-1-2.txt"
+  -- print $ getOrder $ head lsx
+  -- print $ length order4s
+  -- x <- getArgs
+  -- y <- [ z::Int | z <- words getArgs ]
+  -- print $ transform3 [ x | x <- words getArgs ]
 
--- ORDER 4
-mirrorLR  [a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4] = 
-          [a4,a3,a2,a1,b4,b3,b2,b1,c4,c3,c2,c1,d4,d3,d2,d1]
-mirrorUD  [a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4] = 
-          [d1,d2,d3,d4,c1,c2,c3,c4,b1,b2,b3,b4,a1,a2,a3,a4]
-mirrorD1  [a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4] = 
-          [a1,b1,c1,d1,a2,b2,c2,d2,a3,b3,c3,d3,a4,b4,c4,d4]
-mirrorD2  [a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4] = 
-          [d4,c4,b4,a4,d3,c3,b3,a3,d2,c2,b2,a2,d1,c1,b1,a1]
-rotate90  [a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4] = 
-          [d1,c1,b1,a1,d2,c2,b2,a2,d3,c3,b3,a3,d4,c4,b4,a4]
-rotate180 [a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4] = 
-          [d4,d3,d2,d1,c4,c3,c2,c1,b4,b3,b2,b1,a4,a3,a2,a1]
-rotateM90 [a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4] = 
-          [a4,b4,c4,d4,a3,b3,c3,d3,a2,b2,c2,d2,a1,b1,c1,d1]
 
--- XrefV(9,13)
-xMV1 [a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4] = 
-     [a2,a1,a4,a3,b2,b1,b4,b3,d2,d1,d4,d3,c2,c1,c4,c3]
--- XrefV(308,317)
-xMV2 [a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4] = 
-     [c1,c2,c3,c4,d1,d2,d3,d4,a1,a2,a3,a4,b1,b2,b3,b4]
--- XrefV(418,808)
-xMV3 [a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4] = 
-     [b4,d3,d2,b1,a4,c3,c2,a1,d4,b3,b2,d1,c4,a3,a2,c1]
+
+
 
 
 -- cmpl order num
 -- e.g. cmpl 4 1 = 16
-cmpl :: Int -> Int -> Int
-cmpl n x = ((n^2) + 1) - x
+-- cmpl :: Int -> Int -> Int
+-- cmpl n x = ((n^2) + 1) - x
 
--- complement square -> square
-complement :: [Int] -> [Int]
-complement ns = map (cmpl 4) ns
+-- -- complement square -> square
+-- complement :: [Int] -> [Int]
+-- complement ns = Data.List.map (cmpl 4) ns
 
 -- complement $ order4s !! 0
 
 
-transform3 :: [Int] -> [[Int]]
-transform3 ns = [ns,
-                mirrorLR3 ns,
-                mirrorUD3 ns,
-                mirrorD13 ns,
-                mirrorD23 ns,
-                rotate903 ns,
-                rotate1803 ns,
-                rotateM903 ns]
+-- transform :: [Int] -> [[Int]]
+-- transform ns = [ns,
+--                 mirrorLR ns,
+--                 mirrorUD ns,
+--                 mirrorD1 ns,
+--                 mirrorD2 ns,
+--                 rotate90 ns,
+--                 rotate180 ns,
+--                 rotateM90 ns]
 
-transform :: [Int] -> [[Int]]
-transform ns = [ns,
-                mirrorLR ns,
-                mirrorUD ns,
-                mirrorD1 ns,
-                mirrorD2 ns,
-                rotate90 ns,
-                rotate180 ns,
-                rotateM90 ns]
+-- -- /8
+-- reduceD4 :: [[Int]] -> [[Int]]
+-- reduceD4 [] = []
+-- reduceD4 (n:ns) = n : reduceD4 (ns \\ (tail $ transform n))
 
-
-transformExtras ns = [ns,
-                xMV1 ns,
-                xMV2 ns,
-                xMV3 ns]
-
-reduceD43 :: [[Int]] -> [[Int]]
-reduceD43 [] = []
-reduceD43 (n:ns) = n : reduceD43 (ns \\ (tail $ transform3 n))
-
--- /8
-reduceD4 :: [[Int]] -> [[Int]]
-reduceD4 [] = []
-reduceD4 (n:ns) = n : reduceD4 (ns \\ (tail $ transform n))
-
--- /2
-removeCompls :: [[Int]] -> [[Int]]
-removeCompls [] = []
-removeCompls (n:ns) = n : removeCompls (delete (complement n) ns)
+-- -- /2
+-- removeCompls :: [[Int]] -> [[Int]]
+-- removeCompls [] = []
+-- removeCompls (n:ns) = n : removeCompls (delete (complement n) ns)
 
 
--- main = do
-  -- print $ length order4s
-  -- print order4x
-  -- print $ transform $ head order4x
-  -- print $ order3x
-  -- print $ transform3 $ head order3x
-  -- print $ reduceD43 order3x
-
-  -- print $ length fania7040                           -- 7040
-  -- print $ length $ reduceD4 fania7040                -- 880
-  -- print $ length $ removeCompls fania7040            -- 3520
-  -- print $ length $ removeCompls $ reduceD4 fania7040 -- 880
-  -- print $ length $ reduceD4 $ removeCompls fania7040 -- 880
-
-  -- print $ length suzuki                              -- 880
-  -- print $ length $ reduceD4 suzuki                   -- 880
-  -- print $ length $ removeCompls suzuki               -- 748
-  -- print $ length $ reduceD4 $ removeCompls suzuki    -- 748
-  -- print $ length $ removeCompls $ reduceD4 suzuki    -- 748
-
-  -- print $ length $ reduceD4 ORDER4.order4s
-  -- print $ reduced == (sort suzuki)
-  -- print $ sort suzuki
-  -- print $ intersect reduced suzuki
-  -- print $ reduced \\ suzuki
-  -- print $ compareMS reduced suzuki
-  -- print $ transformExtras $ [2,1,15,16,14,13,3,4,11,8,10,5,7,12,6,9]
-  -- print $ transformExtras $ [1,2,16,15,13,14,4,3,12,7,9,6,8,11,5,10]
-  -- print $ removeCompls order4x
-  -- x <- getArgs
-  -- y <- [ z::Int | z <- words getArgs ]
-  -- print $ transform3 [ x | x <- words getArgs ]
