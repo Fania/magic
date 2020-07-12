@@ -8,9 +8,18 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Todo
 
+### Functionality
+
+- [ ] classification
+- [ ] length filter
+- [ ] search by (id:order, lists)
+- [ ] add search box for single input and multiple inputs
+
 ### Backend
 
-- [ ] when user contributes a square, cache needs to be refreshed
+- [ ] upload source files to db
+- [ ] extract more behaviour out to backend
+- [ ] when user contributes a square, cache needs to be refreshed **PRIORITY**
 - [ ] use raw data in couch for order 5s and generate svgs on the fly
 - [ ] partition order 5 by magic square classification?
 - [ ] partition by number, e.g. simply group every 1000?
@@ -22,19 +31,26 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Interface
 
+- [ ] disable gallery for now
+- [ ] mobile overlap broken (z-index) **PRIORITY**
+- [ ] prevent overlap for more than 200? e.g. for order 5s (with loads)
 - [ ] try inline styles for animation?
 - [ ] add dropdown for shared lengths per order
 - [ ] hover info for each square or put into modal
 - [ ] fix mobile style again
 - [ ] manual order change triggers two draws of squares
 - [ ] finish defining data lists for ranges
+- [ ] change width/size to be based on height, not width
 - [ ] insert intersection observer sooner? at 150?
 - [ ] fix line width for arc and altarc
 - [ ] number overlay?
 - [ ] enable a fixed width rather than percentage to allow different line breaks in svg grid
-- [ ] add search box for single input and multiple inputs
+- [ ] make sure new theme is added to dropdown when saved
 - [ ] add pin-to-top / favourite feature for individual squares
+- [ ] day/night mode
 - [ ] add printing options
+- [ ] change spinner
+- [ ] disable spinner
 
 ### Art
 
@@ -91,3 +107,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [x] update/push cache with changes
 - [x] move generateSharedLengths to mapreduce filter view in couch?
 - [x] use indexedDB to be able to access settings via service worker
+
+
+## References
+
+- https://eloquentjavascript.net/18_http.html
