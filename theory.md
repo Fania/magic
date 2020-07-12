@@ -15,6 +15,7 @@
 - https://archive.org/details/DeOccultaPhilosophiaLoc1533/page/n163/mode/2up
 - http://esotericarchives.com/agrippa/agrippa2.htm#contents
 - (H.E. Dudeney "Amusements in Mathematics" 1917)[https://www.gutenberg.org/files/16713/16713-h/16713-h.htm]
+- http://budshaw.ca/Download.html
 
 
 ## Order
