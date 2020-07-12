@@ -63,7 +63,7 @@ header.hide, footer.hide { display: none; }
   position: absolute;
   transform: translateX(-100%); transition: all 1s;
   width: 100%; height: calc(100vh - 70px) }
-.submenu.home.show { transform: translateX(0); transition: all 1s }
+.submenu.home.show { transform: translateX(0); transition: all 1s; z-index: 9; }
 .submenu.home form {  
   display: flex; flex-direction: column; justify-content: space-around;
   height: 100%; position: relative }
