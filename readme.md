@@ -6,50 +6,46 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 
 
-
-filters:
-  - length
-  - id/order + ranges
-
-hover info modal?:
-  - id
-  - order
-  - style
-  - numbers
-  - similar ids?
-  - numbers overlay?
-
-
-
-
-
-
 ## Todo
+
+### Backend
 
 - [ ] when user contributes a square, cache needs to be refreshed
 - [ ] use raw data in couch for order 5s and generate svgs on the fly
 - [ ] partition order 5 by magic square classification?
 - [ ] partition by number, e.g. simply group every 1000?
-- [ ] try inline styles for animation?
-- [ ] add dropdown for shared lengths per order
 - [ ] cache needs updating if changes on server
 - [ ] cache only adds new resources in, not updates out-of-date ones?
+- [ ] couch don't regen index on contribute - change _ids and sorting
+- [ ] check if contribute allows higher orders than exist on server at that point
+- [ ] merge sharedLengths into one file via couch? to simplify caching
+
+### Interface
+
+- [ ] try inline styles for animation?
+- [ ] add dropdown for shared lengths per order
 - [ ] hover info for each square or put into modal
 - [ ] fix mobile style again
 - [ ] manual order change triggers two draws of squares
 - [ ] finish defining data lists for ranges
 - [ ] insert intersection observer sooner? at 150?
 - [ ] fix line width for arc and altarc
-- [ ] art digital root, connect number pairs
-- [ ] art sketch, basic dasharray len / order^2
 - [ ] number overlay?
-- [ ] couch don't regen index on contribute - change _ids and sorting
-- [ ] check if contribute allows higher orders than exist on server at that point
 - [ ] enable a fixed width rather than percentage to allow different line breaks in svg grid
-- [ ] merge sharedLengths into one file via couch? to simplify caching
 - [ ] add search box for single input and multiple inputs
 - [ ] add pin-to-top / favourite feature for individual squares
 - [ ] add printing options
+
+### Art
+
+- [ ] art digital root, connect number pairs
+- [ ] art sketch, basic dasharray len / order^2
+
+
+
+
+## Done
+
 - [x] add animation to presets and random?
 - [x] animation broken? cache problem? no, i think this is CSSOM problem, see animationCSS function
 - [x] add animation to bookmarks
@@ -95,24 +91,3 @@ hover info modal?:
 - [x] update/push cache with changes
 - [x] move generateSharedLengths to mapreduce filter view in couch?
 - [x] use indexedDB to be able to access settings via service worker
-
-
-
-
-
-
-
-
-Error running query. Reason: Unexpected token < in JSON at position 0
-
-
-
-https://couch.fania.eu/index5a/_design/styles/_view/quadvertex?limit=100
-
-"error": "timeout",
-"reason": "The request could not be processed in a reasonable amount of time."
-
-
-502 Bad Gateway
-
-504 Gateway Time-out
