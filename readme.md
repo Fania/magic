@@ -8,7 +8,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Todo
 
-- [ ] mobile size sliders appear in line
+- [x] mobile size sliders appear in line
 
 ### Functionality
 

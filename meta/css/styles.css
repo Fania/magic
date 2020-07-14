@@ -112,7 +112,7 @@ input[type="button"] {
 #order4quadOptions.hide { display: none }
 
 
-#sizeOptions { position: relative; display: flex; }
+#sizeOptions { position: relative; display: flex; flex-direction: column; }
 #sizeOptions > label:not(:last-of-type) { display: table; width: 100%; } 
 #sizeOptions > label:not(:last-of-type) span, 
 #sizeOptions > label:not(:last-of-type) input { display: table-cell; } 
