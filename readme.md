@@ -8,7 +8,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Todo
 
-- [x] mobile size sliders appear in line
 
 ### Functionality
 
@@ -33,7 +32,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Interface
 
-- [ ] disable gallery for now
 - [ ] prevent overlap for more than 200? e.g. for order 5s (with loads)
 - [ ] try inline styles for animation?
 - [ ] add dropdown for shared lengths per order
@@ -63,6 +61,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] disable gallery for now
+- [x] mobile size sliders appear in line
 - [x] mobile overlap broken (z-index)
 - [x] add animation to presets and random?
 - [x] animation broken? cache problem? no, i think this is CSSOM problem, see animationCSS function
