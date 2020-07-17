@@ -1,6 +1,6 @@
 'use strict';
 
-const cacheName = 'magic-v0.2';
+const cacheName = 'magic-v0.8';
 
 const precacheResources = [
   '/',
@@ -69,6 +69,22 @@ addEventListener('activate', event => {
 //     );
 //   }
 // });
+
+addEventListener('sync', event => {
+  if ((event.tag).includes('contribution')) {
+    console.log('contribution sync event triggered');
+    const order = (event.tag).slice(13);
+    console.log(event.tag);
+    console.log(`[SW] ${order}`);
+    // event.waitUntil(updateCacheWith(thing));
+  }
+});
+
+async function updateCacheWith(thing) {
+  const cache = await caches.open(cacheName);
+  return cache.add(thing);
+}
+
 
 // https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Offline_Service_workers
 // addEventListener('fetch', event => {

@@ -28,6 +28,7 @@
   
   {# <script>console.log( {{ result | safe }} )</script> #}
   {% if result.magic %}
+    <meta id="resultOrder" value="{{ result.order }}">
     <hr>
     <p><strong>Congratulations, these numbers produce an order {{ result.order }} magic square.</strong></p>
     
