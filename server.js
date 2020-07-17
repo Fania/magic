@@ -116,6 +116,45 @@ async function initialiseAll() {
 
 
 
+async function setupOrderX(n) {
+  // await couch.areThereChanges(n)
+  const result = await generate.indexLive(n)
+  await couch.populateDB(result, n)
+}
+async function initialiseAllX() {
+  await setupOrderX(3)
+  await setupOrderX(4)
+  await setupOrderX(5)
+  await setupOrderX(6)
+  await setupOrderX(7)
+  await setupOrderX(8)
+  await setupOrderX(9)
+  await setupOrderX(10)
+  await setupOrderX(11)
+  await setupOrderX(12)
+  await setupOrderX(13)
+  await setupOrderX(14)
+  await setupOrderX(15)
+  await setupOrderX(16)
+  await setupOrderX(17)
+  await setupOrderX(18)
+  await setupOrderX(19)
+  await setupOrderX(20)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // START THE SERVER
 app.listen(3000, () => {
 	console.log('Listening at http://localhost:3000')
