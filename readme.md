@@ -56,6 +56,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 - [ ] art digital root, connect number pairs
 - [ ] art sketch, basic dasharray len / order^2
+- [ ] feed mesh into deep dream
 
 
 
