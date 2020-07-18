@@ -602,6 +602,59 @@ function applyStyles() {
 }
 
 
+// async function getData(offset = 0) {
+//   try {
+//     let order = getSettings().order;
+//     let style = getSettings().style;
+//     // TODO fix order 4 unique/all choice subsubmenu
+//     const unique = document.getElementById('unique');
+//     const all = document.getElementById('all');
+//     if (order === 4 && style === 'quadvertex' && unique.checked) 
+//       style = 'unique';
+//     if (order === 4 && style === 'quadvertex' && all.checked) 
+//       style = 'quadvertex';
+//     (order === 4 && (style === 'quadvertex' || style === 'unique'))
+//       ? document.getElementById('order4quadOptions').classList.remove('hide')
+//       : document.getElementById('order4quadOptions').classList.add('hide');
+//     console.log(`getData ${order} ${style} ${offset}`);
+//     if(offset === 0) squares.innerHTML = '';
+//     loading.classList.add('show'); 
+//     const url = `/data/${order}/${style}/${offset}`;
+//     const rawData = await fetch(url);
+//     const data = await rawData.json();
+//     for (let i in data.rows) {
+//       const elem = data.rows[i].value.svg;
+//       squares.insertAdjacentHTML('beforeend',elem);
+//       if(!['numbers','blocks','circles','tetromino'].includes(style)) {
+//         animationCSS(data.rows[i].id, order, style, 
+//                              data.rows[i].value['length']);
+//       }
+//     }
+//     // TODO add sntinel earlier, at 150 or so
+//     // only add sentinel if we have more results left
+//     if(data.rows.length === 200) {
+//       const io = new IntersectionObserver(
+//         entries => {
+//           if(entries[0].isIntersecting) {
+//             // console.log(entries[0].target, entries[0]);
+//             offset += 200;
+//             getData(offset);
+//             io.unobserve(entries[0].target);
+//           }
+//         },{}
+//       );
+//       const sentinel = document.createElement('div');
+//       sentinel.classList.add(`sentinel${offset}`);
+//       squares.appendChild(sentinel);
+//       io.observe(sentinel);
+//       // enable overlap for new squares if checked
+//       applyOverlap(getSettings().overlap === 'true' || getSettings().overlap);
+//     }
+//   } 
+//   catch (error) { console.log(error) }
+//   finally { loading.classList.remove('show'); }
+// }
+
 async function getData(offset = 0) {
   try {
     let order = getSettings().order;
@@ -622,17 +675,17 @@ async function getData(offset = 0) {
     const url = `/data/${order}/${style}/${offset}`;
     const rawData = await fetch(url);
     const data = await rawData.json();
-    for (let i in data.rows) {
-      const elem = data.rows[i].value.svg;
+    for (let i in data) {
+      const elem = data[i].svg;
       squares.insertAdjacentHTML('beforeend',elem);
       if(!['numbers','blocks','circles','tetromino'].includes(style)) {
-        animationCSS(data.rows[i].id, order, style, 
-                             data.rows[i].value['length']);
+        animationCSS((parseInt(i)+1), order, style, 
+                             data[i]['length']);
       }
     }
     // TODO add sntinel earlier, at 150 or so
     // only add sentinel if we have more results left
-    if(data.rows.length === 200) {
+    if(data.length === 200) {
       const io = new IntersectionObserver(
         entries => {
           if(entries[0].isIntersecting) {
@@ -651,7 +704,7 @@ async function getData(offset = 0) {
       applyOverlap(getSettings().overlap === 'true' || getSettings().overlap);
     }
   } 
-  catch (error) { console.log(error) }
+  catch (error) { console.log('getData', error) }
   finally { loading.classList.remove('show'); }
 }
 

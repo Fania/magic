@@ -9,8 +9,8 @@ package-lock.json
 data/contributions.log
 *.log
 data
-data/*
-logs/*
+data/**
+logs/**
 logs
 forever.json
 .gitignore

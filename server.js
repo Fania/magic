@@ -143,6 +143,7 @@ async function initialiseAllX() {
 }
 
 // initialiseAllX()
+
 couch.statusReport()
 
 
@@ -219,28 +220,31 @@ app.use( (req, res, next) => {
 
 
 // order matters
-app.get('/data/:n', async (req, res) => {
-  const order = req.params.n
-  const data = await couch.viewAllDB(order)
-  res.send( data )
-})
+// app.get('/data/:n', async (req, res) => {
+//   const order = req.params.n
+//   const data = await couch.viewAllDB(order)
+//   res.send( data )
+// })
 // app.get('/data/lengths/:n(\\d+)/:s', async (req, res) => {
-app.get('/data/lengths/:n/:s', async (req, res) => {
-  const order = req.params.n
-  const style = req.params.s
-  const data = await couch.getSharedLengths(order,style)
-  res.send( data )
-})
-app.get('/data/:n/source', async (req, res) => {
-  const order = req.params.n
-  res.sendFile(`./data/source${order}.json`, {root: './'})
-})
+// app.get('/data/lengths/:n/:s', async (req, res) => {
+//   const order = req.params.n
+//   const style = req.params.s
+//   const data = await couch.getSharedLengths(order,style)
+//   res.send( data )
+// })
+// app.get('/data/:n/source', async (req, res) => {
+//   const order = req.params.n
+//   res.sendFile(`./data/source${order}.json`, {root: './'})
+// })
 // app.get('/data/:n(\\d+)/:s/:o(\\d+)', async (req, res) => {
 app.get('/data/:n/:s/:o', async (req, res) => {
   const order = req.params.n
   const style = req.params.s
   const offset = req.params.o
-  const data = await couch.viewDB(order, 'filters', style, offset)
+  // const data = await couch.viewDB(order, 'filters', style, offset)
+  // const source = await couch.viewSourceDB(order,offset)
+  const source = await couch.viewSourceDB(order,offset)
+  const data = await generate.svgData(source,order,style)
   res.send( data )
 })
 app.get('/data/themes', async (req, res) => {

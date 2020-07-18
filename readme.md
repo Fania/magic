@@ -18,6 +18,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Backend
 
+- [ ] getData being called 4 times?
+- [ ] add check for uniques for new source db backend
 - [ ] use raw data in couch for order 5s and generate svgs on the fly
 - [ ] extract more behaviour out to backend
 - [ ] when user contributes a square, cache needs to be refreshed
