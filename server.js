@@ -242,7 +242,7 @@ app.get('/data/:n/:s/:o', async (req, res) => {
   const offset = req.params.o
   // const data = await couch.viewDB(order, 'filters', style, offset)
   // const source = await couch.viewSourceDB(order,offset)
-  const source = await couch.viewSourceDB(order,offset)
+  const source = await couch.viewSourceDB(order,style,offset)
   const data = await generate.svgData(source,order,style)
   res.send( data )
 })

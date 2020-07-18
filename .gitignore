@@ -6,14 +6,14 @@ package-lock.json
 *.o
 *.txt
 *.drawio
-data/contributions.log
+# data/contributions.log
 *.log
-data
+# data
 data/**
 logs/**
-logs
-forever.json
+# logs
+# forever.json
 .gitignore
 .foreverignore
 magic.json
-ecosystem.config.js
+# ecosystem.config.js

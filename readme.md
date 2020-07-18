@@ -18,9 +18,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Backend
 
+- [ ] delete unused code, clean, refactor
 - [ ] getData being called 4 times?
-- [ ] add check for uniques for new source db backend
-- [ ] use raw data in couch for order 5s and generate svgs on the fly
 - [ ] extract more behaviour out to backend
 - [ ] when user contributes a square, cache needs to be refreshed
 - [ ] partition order 5 by magic square classification?
@@ -63,6 +62,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] add check for uniques for new source db backend
+- [x] use raw data in couch for order 5s and generate svgs on the fly
 - [x] upload source files to db
 - [x] disable gallery for now
 - [x] mobile size sliders appear in line
