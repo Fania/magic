@@ -116,33 +116,32 @@ async function initialiseAll() {
 
 
 
-async function setupOrderX(n) {
-  // await couch.areThereChanges(n)
+async function setupSource(n) {
   const result = await generate.source(n)
   await couch.populateDBSource(result, n)
 }
-async function initialiseAllX() {
-  await setupOrderX(3)
-  await setupOrderX(4)
-  await setupOrderX(5)
-  await setupOrderX(6)
-  await setupOrderX(7)
-  await setupOrderX(8)
-  await setupOrderX(9)
-  await setupOrderX(10)
-  await setupOrderX(11)
-  await setupOrderX(12)
-  await setupOrderX(13)
-  await setupOrderX(14)
-  await setupOrderX(15)
-  await setupOrderX(16)
-  await setupOrderX(17)
-  await setupOrderX(18)
-  await setupOrderX(19)
-  await setupOrderX(20)
+async function initialiseSources() {
+  await setupSource(3)
+  await setupSource(4)
+  await setupSource(5)
+  await setupSource(6)
+  await setupSource(7)
+  await setupSource(8)
+  await setupSource(9)
+  await setupSource(10)
+  await setupSource(11)
+  await setupSource(12)
+  await setupSource(13)
+  await setupSource(14)
+  await setupSource(15)
+  await setupSource(16)
+  await setupSource(17)
+  await setupSource(18)
+  await setupSource(19)
+  await setupSource(20)
 }
 
-// initialiseAllX()
+// initialiseSources()
 
 couch.statusReport()
 
