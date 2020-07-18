@@ -118,8 +118,8 @@ async function initialiseAll() {
 
 async function setupOrderX(n) {
   // await couch.areThereChanges(n)
-  const result = await generate.indexLive(n)
-  await couch.populateDB(result, n)
+  const result = await generate.source(n)
+  await couch.populateDBSource(result, n)
 }
 async function initialiseAllX() {
   await setupOrderX(3)
@@ -142,8 +142,8 @@ async function initialiseAllX() {
   await setupOrderX(20)
 }
 
-
-
+// initialiseAllX()
+couch.statusReport()
 
 
 

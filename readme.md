@@ -18,10 +18,9 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Backend
 
-- [ ] upload source files to db
+- [ ] use raw data in couch for order 5s and generate svgs on the fly
 - [ ] extract more behaviour out to backend
 - [ ] when user contributes a square, cache needs to be refreshed
-- [ ] use raw data in couch for order 5s and generate svgs on the fly
 - [ ] partition order 5 by magic square classification?
 - [ ] partition by number, e.g. simply group every 1000?
 - [ ] cache needs updating if changes on server
@@ -61,6 +60,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] upload source files to db
 - [x] disable gallery for now
 - [x] mobile size sliders appear in line
 - [x] mobile overlap broken (z-index)
@@ -114,3 +114,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 ## References
 
 - https://eloquentjavascript.net/18_http.html
+
+`process.stdout.write("hello: ");`
+`process.stdout.write("Downloading " + data.length + " bytes\r");`
