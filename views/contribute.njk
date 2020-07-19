@@ -18,7 +18,7 @@
 <main class="contribute">
 
   <h2>Contribute</h2>
-  <p>You can contribute to our collection of higher order magic squares (n > 4) here.</p>
+  <p>You can contribute to our collection of higher order magic squares (n > 5) here.</p>
   <p>Simply enter a number sequence in the input box above.</p>
   <p>If you have a larger collection that you'd like to donate please contact us via email.</p>
 
@@ -26,11 +26,11 @@
     <input id="manualInput" name="manualInput" type="text" placeholder="Enter magic square here. Comma or space separated numbers are fine." pattern="(?:[0-9]+[\s|,]){8,}[0-9]+">
   </form>
   
-  <script>
+  {# <script>
     {% if result %} 
       console.log( {{ result | safe }} )
     {% endif %}
-  </script>
+  </script> #}
   {% if result.magic %}
     <meta id="resultOrder" value="{{ result.order }}">
     <hr>
@@ -45,14 +45,23 @@
       <p>This square didn't already exist in our collection and we added it with ID <strong>{{ result.newID }}</strong>.</p>
     {% endif %}
 
-    <div class="bothNumbers">{% if result.querySVG %}{{  result.querySVG | safe }} <span>&gt;</span> {% endif %}{{ result.doc.numbers.svg | safe }}</div>
+    <div class="bothNumbers">{% if result.numberSVG %}{{  result.numberSVG | safe }} <span>
+    {% if result.matchType == 'copy' %}<svg width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EEEEEE" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="3" x2="21" y2="3" /><line x1="3" y1="12" x2="21" y2="12" /></svg>{% endif %}
+    {% if result.matchType == '90 degree rotation' %}<svg width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EEEEEE" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M9 4.55a8 8 0 0 1 6 14.9m0 -4.45v5h5" /><path d="M11 19.95a8 8 0 0 1 -5.3 -12.8" stroke-dasharray=".001 4.13" /></svg>{% endif %}
+    {% if result.matchType == '180 degree rotation' %}<svg width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EEEEEE" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M4.05 11a8 8 0 1 1 .5 4m-.5 5v-5h5" /></svg>{% endif %}
+    {% if result.matchType == '270 degree rotation' %}<svg width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EEEEEE" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M15 4.55a8 8 0 0 0 -6 14.9m0 -4.45v5h-5" /><path d="M13 19.95a8 8 0 0 0 5.3 -12.8" stroke-dasharray=".001 4.13" /></svg>{% endif %}
+    {% if result.matchType == 'horizontal reflection' %}<svg width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EEEEEE" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="3" y1="12" x2="21" y2="12" /><polyline points="7 16 17 16 7 21 7 16" /><polyline points="7 8 17 8 7 3 7 8" /></svg>{% endif %}
+    {% if result.matchType == 'vertical reflection' %}<svg width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EEEEEE" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="12" y1="3" x2="12" y2="21" /><polyline points="16 7 16 17 21 17 16 7" /><polyline points="8 7 8 17 3 17 8 7" /></svg>{% endif %}
+    {% if result.matchType == 'diagonal reflection (D1)' %}<svg width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EEEEEE" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-45,0,0)"><path stroke="none" d="M0 0h24v24H0z"/><line x1="12" y1="3" x2="12" y2="21" /><polyline points="16 7 16 17 21 17 16 7" /><polyline points="8 7 8 17 3 17 8 7" /></svg>{% endif %}
+    {% if result.matchType == 'diagonal reflection (D2)' %}<svg width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EEEEEE" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="rotate(45,0,0)"><path stroke="none" d="M0 0h24v24H0z"/><line x1="12" y1="3" x2="12" y2="21" /><polyline points="16 7 16 17 21 17 16 7" /><polyline points="8 7 8 17 3 17 8 7" /></svg>{% endif %}
+    </span> {% endif %}{{ result.numberSVGOLD | safe }}</div>
 
     <div class="allStyles">
-      {{ result.doc.quadvertex.svg | safe }}
-      {{ result.doc.straight.svg | safe }}
-      {{ result.doc.quadline.svg | safe }}
-      {{ result.doc.arc.svg | safe }}
-      {{ result.doc.altarc.svg | safe }}
+      {{ result.quadvertexSVG | safe }}
+      {{ result.straightSVG | safe }}
+      {{ result.quadlineSVG | safe }}
+      {{ result.arcSVG | safe }}
+      {{ result.altarcSVG | safe }}
     </div>
 
   {% elif result %}

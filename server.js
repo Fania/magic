@@ -106,6 +106,7 @@ app.get('/about', (req, res) => { res.render('about.njk') })
 app.get('/contribute', (req, res) => { res.render('contribute.njk') })
 app.post('/contribute', async (req, res) => {
   const result = await checker.magic( req.body.manualInput )
+  // console.log(result)
   // TODO add to cache
   res.render('contribute.njk', { result: result } )
 })
