@@ -89,7 +89,7 @@ function loadBookmark(params) {
 
 
 displayOrder.addEventListener('wheel', () => {
-  console.log('ORDER wheel triggered');
+  // console.log('ORDER wheel triggered');
   const totalOptions = displayOrder.length;
   let fromIndex = displayOrder.selectedIndex;
   if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
@@ -105,7 +105,7 @@ displayOrder.addEventListener('wheel', () => {
   event.preventDefault();
 });
 displayOrder.addEventListener('change', () => {
-  console.log('ORDER change triggered');
+  // console.log('ORDER change triggered');
   adjust('order');
 });
 
@@ -118,18 +118,18 @@ displayAmounts.forEach( da => {
 
 displayStyles.forEach( ds => {
   ds.addEventListener('change', () => { 
-    console.log('STYLE change triggered');
+    // console.log('STYLE change triggered');
     adjust('style');
   });
 });
 
 const size = document.getElementById('size');
 size.addEventListener('input', ()=> { 
-  console.log('SIZE input triggered');
+  // console.log('SIZE input triggered');
   adjust('size');
 });
 size.addEventListener('wheel', ()=> { 
-  console.log('SIZE wheel triggered');
+  // console.log('SIZE wheel triggered');
   const old = parseInt(size.value);
   if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
     if(old > 5) { size.value = old - 5; } 
@@ -145,11 +145,11 @@ size.addEventListener('wheel', ()=> {
 
 const gap = document.getElementById('gap');
 gap.addEventListener('input', ()=> { 
-  console.log('GAP input triggered');
+  // console.log('GAP input triggered');
   adjust('gap');
 });
 gap.addEventListener('wheel', ()=> { 
-  console.log('GAP wheel triggered');
+  // console.log('GAP wheel triggered');
   const old = parseInt(gap.value);
   if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
     if(old >= 5) { gap.value = old - 5; } 
@@ -165,11 +165,11 @@ gap.addEventListener('wheel', ()=> {
 
 const strokeWidth = document.getElementById('strokeWidth');
 strokeWidth.addEventListener('input', ()=> { 
-  console.log('LINE-WIDTH input triggered');
+  // console.log('LINE-WIDTH input triggered');
   adjust('strokeWidth');
 });
 strokeWidth.addEventListener('wheel', ()=> { 
-  console.log('LINE-WIDTH wheel triggered');
+  // console.log('LINE-WIDTH wheel triggered');
   const old = parseInt(strokeWidth.value);
   if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
     if(old > 2) { strokeWidth.value = old - 2; } 
@@ -187,13 +187,13 @@ const overlap = document.getElementById('overlap');
 const overlapAll = document.getElementById('overlapAll');
 const overlap200 = document.getElementById('overlap200');
 overlap.addEventListener('change', () => { 
-  console.log('OVERLAP change triggered');
+  // console.log('OVERLAP change triggered');
   adjust('overlap');
   applyOverlap(document.getElementById('overlap').checked);
 });
 [overlapAll,overlap200].forEach( oa => {
   oa.addEventListener('change', ()=> { 
-    console.log('OVERLAP-AMOUNT change triggered');
+    // console.log('OVERLAP-AMOUNT change triggered');
     adjust('overlapAmount');
     if(event.target.value === 'overlap200') {
       squares.classList.add('few');
@@ -206,24 +206,24 @@ overlap.addEventListener('change', () => {
 
 const background = document.getElementById('background');
 background.addEventListener('input', ()=> { 
-  console.log('BACKGROUND input triggered');
+  // console.log('BACKGROUND input triggered');
   adjust('background');
 });
 
 const stroke = document.getElementById('stroke');
 stroke.addEventListener('input', ()=> { 
-  console.log('STROKE input triggered');
+  // console.log('STROKE input triggered');
   adjust('stroke');
 });
 
 // STROKE-ALPHA OPTION
 const salpha = document.getElementById('salpha');
 salpha.addEventListener('input', ()=> { 
-  console.log('STROKE-ALPHA input triggered');
+  // console.log('STROKE-ALPHA input triggered');
   adjust('salpha');
 });
 salpha.addEventListener('wheel', ()=> { 
-  console.log('STROKE-ALPHA wheel triggered');
+  // console.log('STROKE-ALPHA wheel triggered');
   const old = parseInt(salpha.value);
   if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
     if(old >= 5) { salpha.value = old - 5; } 
@@ -240,18 +240,18 @@ salpha.addEventListener('wheel', ()=> {
 // FILL OPTION
 const fill = document.getElementById('fill');
 fill.addEventListener('input', ()=> { 
-  console.log('FILL input triggered');
+  // console.log('FILL input triggered');
   adjust('fill');
 });
 
 // FILL-ALPHA OPTION
 const falpha = document.getElementById('falpha');
 falpha.addEventListener('input', ()=> { 
-  console.log('FILL-ALPHA input triggered');
+  // console.log('FILL-ALPHA input triggered');
   adjust('falpha');
 });
 falpha.addEventListener('wheel', ()=> { 
-  console.log('FILL-ALPHA wheel triggered');
+  // console.log('FILL-ALPHA wheel triggered');
   const old = parseInt(falpha.value);
   if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
     if(old >= 5) { falpha.value = old - 5; } 
@@ -276,7 +276,7 @@ if(offA.checked || asyncA.checked) {
 }
 [syncA,asyncA,offA].forEach( a => {
   a.addEventListener('change', ()=> { 
-    console.log(`ANIMATION change triggered by ${a.id}`);
+    // console.log(`ANIMATION change triggered by ${a.id}`);
     triggerAnimation();
     adjust('animation');
   });
@@ -305,8 +305,8 @@ function triggerAnimation() {
 // ANIMATION SPEED OPTION
 const speed = document.getElementById('speed');
 speed.addEventListener('input', ()=> { 
-  console.log('SPEED input triggered');
-  console.log('speed', speed.value);
+  // console.log('SPEED input triggered');
+  // console.log('speed', speed.value);
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
   const animType = document.querySelector('[name="animation"]:checked').value;
@@ -328,7 +328,7 @@ speed.addEventListener('input', ()=> {
   adjust('speed');
 });
 speed.addEventListener('wheel', ()=> { 
-  console.log('SPEED wheel triggered');
+  // console.log('SPEED wheel triggered');
   const old = parseInt(speed.value);
   if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
     if(old > 5) { speed.value = old - 5; } 
@@ -350,7 +350,7 @@ speed.addEventListener('wheel', ()=> {
 // RESET OPTION
 const reset = document.getElementById('reset');
 reset.addEventListener('click', ()=> { 
-  console.log('RESET click triggered');
+  // console.log('RESET click triggered');
   saveSettings(defaults);
   getData();
   triggerAnimation();
@@ -359,7 +359,7 @@ reset.addEventListener('click', ()=> {
 // RANDOM OPTION
 const random = document.getElementById('random');
 random.addEventListener('click', ()=> { 
-  console.log('RANDOM click triggered');
+  // console.log('RANDOM click triggered');
   const settings = getSettings();
   settings.size = getRandomInt(1, 50);
   settings.gap = getRandomInt(0, 50);
@@ -473,7 +473,7 @@ async function populateLengthOptions() {
       option.innerText = `${len} (${num})`;
       lengths.appendChild(option);
     }
-    updateCache(settings);
+    // updateCache(settings);
   } catch (error) { console.log(error) }
 }
 async function prepareLengthOptions() {
@@ -487,7 +487,7 @@ async function prepareLengthOptions() {
       option.innerText = `${len} (${num})`;
       lengths.appendChild(option);
     }
-    updateCache(settings);
+    // updateCache(settings);
   } catch (error) { console.log(error) }
 }
 
@@ -513,7 +513,8 @@ async function prepareLengthOptions() {
 function adjust(thing) {
   console.log(`adjust ${thing}`);
   const settings = getSettings();
-  loading.classList.add('show'); 
+  loading.classList.add('show');
+  document.body.style.cursor = 'wait !important';
   let x = "";
   switch(thing) {
     case 'order':
@@ -536,11 +537,11 @@ function adjust(thing) {
       break;
     default:
       const y = document.getElementById(thing).value;
-      console.log(`adjusting ${y}, ${parseInt(y)}, ${x}`);
+      // console.log(`adjusting ${y}, ${parseInt(y)}, ${x}`);
       x = Number.isNaN(parseInt(y)) ? y : parseInt(y);
-      console.log(`adjusting ${x}, ${y}`);
+      // console.log(`adjusting ${x}, ${y}`);
   }
-  console.log(`adjusting ${x}`);
+  // console.log(`adjusting ${x}`);
   settings[thing] = x;
   saveSettings(settings);
   if(['order','style','amount'].includes(thing)) {
@@ -599,61 +600,11 @@ function applyStyles() {
   document.body.style.background = settings.background;
   applyOverlap(settings.overlap === 'true' || settings.overlap);
   loading.classList.remove('show');
+  document.body.style.cursor = 'default !important';
 }
 
 
-// async function getData(offset = 0) {
-//   try {
-//     let order = getSettings().order;
-//     let style = getSettings().style;
-//     // TODO fix order 4 unique/all choice subsubmenu
-//     const unique = document.getElementById('unique');
-//     const all = document.getElementById('all');
-//     if (order === 4 && style === 'quadvertex' && unique.checked) 
-//       style = 'unique';
-//     if (order === 4 && style === 'quadvertex' && all.checked) 
-//       style = 'quadvertex';
-//     (order === 4 && (style === 'quadvertex' || style === 'unique'))
-//       ? document.getElementById('order4quadOptions').classList.remove('hide')
-//       : document.getElementById('order4quadOptions').classList.add('hide');
-//     console.log(`getData ${order} ${style} ${offset}`);
-//     if(offset === 0) squares.innerHTML = '';
-//     loading.classList.add('show'); 
-//     const url = `/data/${order}/${style}/${offset}`;
-//     const rawData = await fetch(url);
-//     const data = await rawData.json();
-//     for (let i in data.rows) {
-//       const elem = data.rows[i].value.svg;
-//       squares.insertAdjacentHTML('beforeend',elem);
-//       if(!['numbers','blocks','circles','tetromino'].includes(style)) {
-//         animationCSS(data.rows[i].id, order, style, 
-//                              data.rows[i].value['length']);
-//       }
-//     }
-//     // TODO add sntinel earlier, at 150 or so
-//     // only add sentinel if we have more results left
-//     if(data.rows.length === 200) {
-//       const io = new IntersectionObserver(
-//         entries => {
-//           if(entries[0].isIntersecting) {
-//             // console.log(entries[0].target, entries[0]);
-//             offset += 200;
-//             getData(offset);
-//             io.unobserve(entries[0].target);
-//           }
-//         },{}
-//       );
-//       const sentinel = document.createElement('div');
-//       sentinel.classList.add(`sentinel${offset}`);
-//       squares.appendChild(sentinel);
-//       io.observe(sentinel);
-//       // enable overlap for new squares if checked
-//       applyOverlap(getSettings().overlap === 'true' || getSettings().overlap);
-//     }
-//   } 
-//   catch (error) { console.log(error) }
-//   finally { loading.classList.remove('show'); }
-// }
+
 
 async function getData(offset = 0) {
   try {
@@ -672,8 +623,10 @@ async function getData(offset = 0) {
     console.log(`getData ${order} ${style} ${offset}`);
     if(offset === 0) squares.innerHTML = '';
     loading.classList.add('show'); 
+    document.body.style.cursor = 'wait !important';
     // debugger;
     const url = `/data/${order}/${style}/${offset}`;
+    if (url !== '/data/4/unique/0') updateCache(url);
     const rawData = await fetch(url);
     const data = await rawData.json();
     for (let i in data) {
@@ -706,7 +659,10 @@ async function getData(offset = 0) {
     }
   } 
   catch (error) { console.log('getData', error) }
-  finally { loading.classList.remove('show'); }
+  finally { 
+    loading.classList.remove('show'); 
+    document.body.style.cursor = 'default !important'; 
+  }
 }
 
 function saveSettings(settingsJSON) {
@@ -716,7 +672,7 @@ function saveSettings(settingsJSON) {
   loadSettings();
   // applyStyles();
   // console.log("saving", settingsJSON);
-  updateCache(settingsJSON);
+  // updateCache(settingsJSON);
   // saveSettingsDB(settingsJSON);
 }
 
@@ -735,38 +691,12 @@ function getSettings() {
 }
 
 
-// IndexedDB
-// function saveSettingsDB(settings) {
-//   console.log('saveSettings to IDB via front end');
-//   const request = indexedDB.open('magic', 1);
-//   request.onerror = event => console.error(event.target.errorCode);
-//   request.onupgradeneeded = event => {
-//     const db = event.target.result;
-//     db.createObjectStore('settings');
-//   };
-//   request.onsuccess = event => {
-//     const db = event.target.result;
-//     updateData(db, settings);
-//   };
-// }
-// function updateData(db, settings) {
-//   let tx = db.transaction(['settings'], 'readwrite');
-//   let store = tx.objectStore('settings');
-//   store.put(settings,1);
-//   tx.oncomplete = () => { console.log('Updated settings in IDB') }
-//   tx.onerror = event => console.error(event.target.errorCode);
-// }
-async function updateCache(settings) {
+
+async function updateCache(url) {
   console.log('updating cache from front end');
   try {
-    loading.classList.add('show'); 
-    const sty = settings.amount === 'unique' 
-                && settings.style === 'quadvertex'
-                && settings.order === 4
-                ? 'unique' : settings.style;
-    const url = `/data/${settings.order}/${sty}/0`;
+    // loading.classList.add('show'); 
     // TODO reenable cache of lengths
-    // const lenurl = `/data/lengths/${settings.order}/${sty}`;
     const cache = await caches.open(CACHE);
     cache.add(url);
     // cache.add(lenurl);
@@ -774,7 +704,8 @@ async function updateCache(settings) {
   catch (error) { console.log('updateCache', error) }
   finally { 
     console.log('finished updating cache');
-    loading.classList.remove('show'); }
+    // loading.classList.remove('show'); 
+  }
 }
 
 
@@ -803,11 +734,13 @@ function applyOverlap(state) {
   if (state) { // true
     // console.log('enable overlap');
     squares.classList.add('overlap');
+    document.body.style.cursor = 'wait !important';
     if(document.getElementById('overlap200').checked) { squares.classList.add('few'); }
     else { squares.classList.remove('few'); }
   } else { // false
     // console.log('disable overlap');
     squares.classList.remove('overlap');
+    document.body.style.cursor = 'default !important';
   }
 }
 

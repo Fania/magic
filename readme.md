@@ -19,7 +19,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 ### Backend
 
 - [ ] delete unused code, clean, refactor
-- [ ] getData being called 4 times?
 - [ ] extract more behaviour out to backend
 - [ ] when user contributes a square, cache needs to be refreshed
 - [ ] partition order 5 by magic square classification?
@@ -32,6 +31,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Interface
 
+- [ ] don't save to localstorage while live adjusting things like fill
 - [ ] prevent overlap for more than 200? e.g. for order 5s (with loads)
 - [ ] try inline styles for animation?
 - [ ] add dropdown for shared lengths per order
@@ -62,6 +62,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] getData being called 4 times? SW does that due to debug mode
 - [x] add check for uniques for new source db backend
 - [x] use raw data in couch for order 5s and generate svgs on the fly
 - [x] upload source files to db

@@ -37,82 +37,11 @@ const gallery = require('./lib/gallery.js')
 
 
 
-// couch.getDBInfo()
+// START THE SERVER
+app.listen(3000, () => {
+	// console.log('Magic Squares running on http://localhost:3000')
+})
 
-// const localData = fs.readFileSync(`./data/source4.json`)
-// const data = JSON.parse(localData)
-// data.forEach( d => {
-//   const coords = draw.getCoords(4,d)
-//   const svgString = draw.prepareSVG(4,'colours',coords,0)
-//   console.log(svgString)
-// })
-
-
-
-// couch.areThereChanges(12)
-
-
-
-async function setupOrder(n) {
-  await couch.areThereChanges(n)
-  const result = await generate.index(n)
-  await couch.populateDB(result, n)
-}
-// setupOrder('4a')
-// setupOrder(5)
-
-
-async function setupOrderLARGE(n) {
-  const sourceData = fs.readFileSync(`./data/source${n}.json`)
-  const data = JSON.parse(sourceData)
-  const len = data.length
-  console.log('total source squares', len)
-  const chunks = _.chunk(data, 1000)
-  console.log(chunks.length)
-
-  const forLoop = async _ => {
-    console.log('Start async loop')
-    for (let i=0; i < chunks.length; i++) {
-      console.log('inside chunks loop', i, chunks[i].length)
-      const result = await generate.indexLARGE(n,chunks[i])
-      await couch.populateDBLARGE(result, n)
-    }
-    console.log('End async loop')
-  }
-  forLoop(chunks)
-
-  // chunks.forEach(async (ch,i) => {
-  //   console.log('inside chunks loop', i, ch.length)
-  //   const result = await generate.indexLARGE(n,ch)
-  //   await couch.populateDBLARGE(result, n)
-  // })
-}
-// setupOrderLARGE('5a')
-
-
-
-async function initialiseAll() {
-  await setupOrder(3)
-  await setupOrder(4)
-  await setupOrder(5)
-  await setupOrder(6)
-  await setupOrder(7)
-  await setupOrder(8)
-  await setupOrder(9)
-  await setupOrder(10)
-  await setupOrder(11)
-  await setupOrder(12)
-  await setupOrder(13)
-  await setupOrder(14)
-  await setupOrder(15)
-  await setupOrder(16)
-  await setupOrder(17)
-  await setupOrder(18)
-  await setupOrder(19)
-  await setupOrder(20)
-}
-
-// initialiseAll()
 
 
 
@@ -155,10 +84,7 @@ couch.statusReport()
 
 
 
-// START THE SERVER
-app.listen(3000, () => {
-	console.log('Listening at http://localhost:3000')
-})
+
 
 
 
@@ -184,21 +110,6 @@ app.post('/contribute', async (req, res) => {
   res.render('contribute.njk', { result: result } )
 })
 
-// order 3
-// 4,9,2,3,5,7,8,1,6
-// 2,9,4,7,5,3,6,1,8
-// 8,1,6,3,5,7,4,9,2
-// 4,3,8,9,5,1,2,7,6
-// 6,7,2,1,5,9,8,3,4
-// 8,3,4,1,5,9,6,7,2
-// 6,1,8,7,5,3,2,9,4
-// 2,7,6,9,5,1,4,3,8
-// 1,4,14,15,13,16,2,3,12,9,7,6,8,5,11,10
-// 1,15,24,8,17,23,7,16,5,14,20,4,13,22,6,12,21,10,19,3,9,18,2,11,25
-
-
-
-
 
 
 // DATA API
@@ -219,22 +130,7 @@ app.use( (req, res, next) => {
 
 
 // order matters
-// app.get('/data/:n', async (req, res) => {
-//   const order = req.params.n
-//   const data = await couch.viewAllDB(order)
-//   res.send( data )
-// })
-// app.get('/data/lengths/:n(\\d+)/:s', async (req, res) => {
-// app.get('/data/lengths/:n/:s', async (req, res) => {
-//   const order = req.params.n
-//   const style = req.params.s
-//   const data = await couch.getSharedLengths(order,style)
-//   res.send( data )
-// })
-// app.get('/data/:n/source', async (req, res) => {
-//   const order = req.params.n
-//   res.sendFile(`./data/source${order}.json`, {root: './'})
-// })
+
 // app.get('/data/:n(\\d+)/:s/:o(\\d+)', async (req, res) => {
 app.get('/data/:n/:s/:o', async (req, res) => {
   const order = req.params.n
