@@ -76,7 +76,7 @@ app.get('/data/:n', async (req, res) => {
   const data = await couch.viewAllDB(order)
   res.send( data )
 })
-app.get('/data/lengths/:n(\\d+)/:s', async (req, res) => {
+// app.get('/data/lengths/:n(\\d+)/:s', async (req, res) => {
 app.get('/data/lengths/:n/:s', async (req, res) => {
   const order = req.params.n
   const style = req.params.s
@@ -235,8 +235,57 @@ async function populateDBLARGE(data, order) {
 // }
 
 
+// IS THIS NEEDED?
+async function populateDB(data, order) {
+  try {
+    console.log( `(Re-) Creating database for index${order}` )
+    // bulk docs needs individual rev ids for updates
+    const info = await nano.db.list()
 
+    // CREATE IF NEW OR REUSE OLD
+    // if (! info.includes(`index${order}`)) { 
+    //   await nano.db.create(`index${order}`)
+    // }
+    // const db = nano.use(`index${order}`)
+
+    // DELETE OLD AND CREATE NEW AND UPLOAD FROM SCRATCH
+    if (info.includes(`index${order}`)) { 
+      await nano.db.destroy(`index${order}`)
+    }
+    await nano.db.create(`index${order}`)
+    const db = nano.use(`index${order}`)
+
+    let output = data
+    output.push(getFilterDocs())
+    output.push(getReducerDocs())
+    await db.bulk({docs: output}).then((body) => {
+      // console.log(body);
+    });
+  } catch (error) { console.log( 'populateDB:', error ) }
+  finally {
+    console.log( '-------------------- END ---------------------' )
+  }
+}
+
+
+async function insertDoc(numbers, order) {
+  try {
+    await areThereChanges(order)
+
+    // LOCAL
+    const localData = fs.readFileSync(`./data/source${order}.json`)
+    const data = JSON.parse(localData)
+    data.push(numbers)
+    data.sort()
+    fs.writeFileSync(`./data/source${order}.json`, JSON.stringify(data))
+    // REMOTE
+    const result = await generate.index(order)
+    await populateDB(result, order)
+    // LOG
+    const date = (new Date()).toGMTString()
+    const entry = `Date: ${date} - order ${order} - numbers [${numbers}]\n`
+    fs.appendFileSync(`./data/contributions.log`, entry)
+  } catch (error) { console.log( 'insertDoc:', error ) }
+}
 
 // END OF COUCH.js
-
-

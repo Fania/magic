@@ -6,19 +6,19 @@ manualTrigger.addEventListener('submit', () => {
   console.log('contribute submit triggered');
 
 
-  const manualInput = document.querySelector('#manualInput').value;
-  const resultOrder = document.querySelector('#resultOrder').value;
-  console.log(manualInput);
-  console.log(resultOrder);
+  // const manualInput = document.querySelector('#manualInput').value;
+  // const resultOrder = document.querySelector('#resultOrder');
+  // console.log(manualInput);
+  // console.log(resultOrder.value);
   // console.log(JSON.parse(`[${manualInput}]`));
   // TODO finish this stuff, but only if the square is actually new!!
 
-  const syncText = `contribution-${resultOrder}`;
-  console.log(syncText);
+  // const syncText = `contribution-${resultOrder.value}`;
+  // console.log(syncText);
 
-  navigator.serviceWorker.ready.then(swRegistration => {
-    return swRegistration.sync.register(syncText);
-  });
+  // navigator.serviceWorker.ready.then(swRegistration => {
+  //   return swRegistration.sync.register(syncText);
+  // });
 
-  loading.classList.add('show');
+  // loading.classList.add('show');
 });

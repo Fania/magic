@@ -26,7 +26,11 @@
     <input id="manualInput" name="manualInput" type="text" placeholder="Enter magic square here. Comma or space separated numbers are fine." pattern="(?:[0-9]+[\s|,]){8,}[0-9]+">
   </form>
   
-  {# <script>console.log( {{ result | safe }} )</script> #}
+  <script>
+    {% if result %} 
+      console.log( {{ result | safe }} )
+    {% endif %}
+  </script>
   {% if result.magic %}
     <meta id="resultOrder" value="{{ result.order }}">
     <hr>

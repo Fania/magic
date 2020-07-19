@@ -22,9 +22,9 @@ const loadingTriggers = (menuTriggers.concat(displayStyles,displayOrder,displayA
 
 // LOADING ICON TRIGGERS
 
-loadingTriggers.forEach( lt => 
-  lt.addEventListener('change', () => loading.classList.add('show') )
-);
+// loadingTriggers.forEach( lt => 
+//   lt.addEventListener('change', () => loading.classList.add('show') )
+// );
 
 
 
@@ -511,9 +511,9 @@ async function prepareLengthOptions() {
 // UTILITY
 
 function adjust(thing) {
-  console.log(`adjust ${thing}`);
+  // console.log(`adjust ${thing}`);
   const settings = getSettings();
-  loading.classList.add('show');
+  // loading.classList.add('show');
   document.body.style.cursor = 'wait !important';
   let x = "";
   switch(thing) {
@@ -599,7 +599,7 @@ function applyStyles() {
   sheet.insertRule(text, sheet.cssRules.length);
   document.body.style.background = settings.background;
   applyOverlap(settings.overlap === 'true' || settings.overlap);
-  loading.classList.remove('show');
+  // loading.classList.remove('show');
   document.body.style.cursor = 'default !important';
 }
 
@@ -622,7 +622,7 @@ async function getData(offset = 0) {
       : document.getElementById('order4quadOptions').classList.add('hide');
     console.log(`getData ${order} ${style} ${offset}`);
     if(offset === 0) squares.innerHTML = '';
-    loading.classList.add('show'); 
+    // loading.classList.add('show'); 
     document.body.style.cursor = 'wait !important';
     // debugger;
     const url = `/data/${order}/${style}/${offset}`;
@@ -660,7 +660,7 @@ async function getData(offset = 0) {
   } 
   catch (error) { console.log('getData', error) }
   finally { 
-    loading.classList.remove('show'); 
+    // loading.classList.remove('show'); 
     document.body.style.cursor = 'default !important'; 
   }
 }

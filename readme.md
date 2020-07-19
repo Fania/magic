@@ -122,3 +122,16 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 `process.stdout.write("hello: ");`
 `process.stdout.write("Downloading " + data.length + " bytes\r");`
+
+
+
+
+1 22 23 17 2 15 6 12 14 18 20 13 9 7 16 8 19 10 24 4 21 5 11 3 25
+
+6 15 12 18 14 22 1 23 2 17 13 20 9 16 7 5 21 11 25 3 19 8 10 4 24
+
+25 5 11 3 21 18 6 12 14 15 16 13 9 7 20 4 19 10 24 8 2 22 23 17 1
+
+6 18 12 15 14 5 25 11 21 3 13 16 9 20 7 22 2 23 1 17 19 4 10 8 24
+
+1 22 23 17 2 15 6 18 14 12 20 13 9 7 16 8 19 4 24 10 21 5 11 3 25
