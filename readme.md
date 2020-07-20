@@ -18,15 +18,13 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Backend
 
+- [ ] contribute higher orders than exist on server at that point broken **!**
 - [ ] delete unused code, clean, refactor
 - [ ] extract more behaviour out to backend
-- [ ] when user contributes a square, cache needs to be refreshed
 - [ ] partition order 5 by magic square classification?
 - [ ] partition by number, e.g. simply group every 1000?
 - [ ] cache needs updating if changes on server
 - [ ] cache only adds new resources in, not updates out-of-date ones?
-- [ ] couch don't regen index on contribute - change _ids and sorting
-- [ ] check if contribute allows higher orders than exist on server at that point
 - [ ] merge sharedLengths into one file via couch? to simplify caching
 
 ### Interface
@@ -62,6 +60,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] when user contributes a square, cache needs to be refreshed
+- [x] couch don't regen index on contribute - change _ids and sorting
 - [x] getData being called 4 times? SW does that due to debug mode
 - [x] add check for uniques for new source db backend
 - [x] use raw data in couch for order 5s and generate svgs on the fly
