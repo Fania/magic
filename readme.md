@@ -29,6 +29,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Interface
 
+- [ ] create new research page
 - [ ] don't save to localstorage while live adjusting things like fill
 - [ ] prevent overlap for more than 200? e.g. for order 5s (with loads)
 - [ ] try inline styles for animation?

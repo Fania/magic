@@ -1,6 +1,6 @@
 'use strict';
 
-const cacheName = 'magic-v0.4';
+const cacheName = 'magic-v0.5';
 
 const precacheResources = [
   '/',
@@ -10,6 +10,8 @@ const precacheResources = [
 ];
 
 const postcacheResources = [
+  '/research',
+  '/meta/js/research.js',
   '/gallery',
   '/meta/js/gallery.js',
   '/contribute',
