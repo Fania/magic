@@ -1,6 +1,6 @@
 'use strict';
 
-const cacheName = 'magic-v0.2';
+const cacheName = 'magic-v0.4';
 
 const precacheResources = [
   '/',
@@ -23,10 +23,11 @@ const dataResources = [
 ];
 
 const staticResources = [
-  '/meta/imgs/favicons/android-chrome-192x192.png',
+  '/site.webmanifest',
+  '/meta/imgs/favicons/light-512.png',
+  '/meta/imgs/favicons/light-192.png',
   '/meta/imgs/favicons/favicon-32x32.png',
   '/meta/imgs/favicons/favicon-16x16.png',
-  '/meta/imgs/favicons/site.webmanifest',
   '/meta/imgs/favicons/favicon.ico',
   '/meta/imgs/spinning-arc.svg',
   '/meta/imgs/logo.svg'
