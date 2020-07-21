@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v0.2';
+const CACHE = 'magic-v0.4';
 
 
 
@@ -114,6 +114,15 @@ displayAmounts.forEach( da => {
     // console.log('AMOUNT change triggered');
     adjust('amount');
   });
+});
+
+const classification = document.getElementById('classification');
+classification.addEventListener('change', () => {
+  console.log('classification change triggered');
+  let x = classification[classification.selectedIndex].value;
+  console.log(x);
+  filterSquares(x);
+  // adjust('classification');
 });
 
 displayStyles.forEach( ds => {
@@ -498,7 +507,17 @@ async function prepareLengthOptions() {
 
 
 
+function filterSquares(c) {
 
+  const squares = document.querySelectorAll(`#squares svg`);
+  const matches = document.querySelectorAll(`#squares svg.${c}`);
+
+  squares.forEach( sq => { sq.classList.add('hide') });
+  matches.forEach( sq => { sq.classList.remove('hide') });
+
+  if (c == 'all') squares.forEach( sq => { sq.classList.remove('hide') });
+
+}
 
 
 
@@ -520,6 +539,9 @@ function adjust(thing) {
     case 'order':
       x = parseInt(displayOrder[displayOrder.selectedIndex].value);
       break;
+    // case 'classification':
+    //   x = classification[classification.selectedIndex].value;
+    //   break;
     case 'style':
       x = document.querySelector('[name="style"]:checked').value;
       break;

@@ -45,6 +45,18 @@
       </label>
     </fieldset>
 
+    <fieldset id="order4classOptions">
+      <label>
+        <span>Classification</span>
+        <select name="classification" id="classification">
+          <option value="all" selected>All</option>
+          <option value="pandiag">Pandiagonal</option>
+          <option value="symmetric">Associative</option>
+          <option value="self-compl">Self-compl.</option>
+        </select>
+      </label>
+    </fieldset>
+
     <fieldset id="styleOptions">
       <legend>Style</legend>
       <label>
@@ -190,13 +202,13 @@
       <input type="hidden" id="themeName" name="_id" value="">
     </fieldset>
 
-    <fieldset id="advancedOptions">
+    {# <fieldset id="advancedOptions">
       <label for="lengths">Length</label>
       <select id="lengths">
         <option value="">Choose</option>
       </select>
       <input type="input" id="search" placeholder="search id(s)">
-    </fieldset>
+    </fieldset> #}
 
   </form>
 </header>

@@ -141,6 +141,8 @@ input[type="button"] {
 #squares.overlap.few [class^="sentinel"] { display: none; }
 
 
+#squares svg.hide { display: none; }
+/* #squares svg { display: none; } */
 
 
 
