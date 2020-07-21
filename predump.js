@@ -16,6 +16,9 @@
 
 
 
+
+
+
 // async function setupOrder(n) {
 //   await couch.areThereChanges(n)
 //   const result = await generate.index(n)
@@ -194,6 +197,72 @@ app.get('/data/:n/source', async (req, res) => {
 // }).on('error', (e) => {
 //   console.error(e);
 // });
+
+
+// IS THIS NEEDED?
+// async function getLatestID(order) {
+//   try {
+//     const db = nano.use(`index${order}`)
+//     const dbList = await db.view('filter', 'arrays')
+//     return dbList.rows.pop().key
+//   } catch (error) { console.log( 'getLatestID:', error ) }
+// }
+
+
+// async function getDBInfo() {
+//   try {
+//     console.log('trying to get DB info')
+
+//     const options = new URL(base)
+
+//     // console.log(base)
+//     // console.log(options)
+//     const result = await myRequest(base)
+//     if(result === 'data') console.log(result)
+//     else console.log('oh no')
+
+//   } 
+//   catch (error) { console.log( 'getDBInfo:', error ) }
+// }
+
+
+
+// IS THIS NEEDED?
+// CHECK IF DB IS AHEAD LOCAL
+// async function areThereChanges(order) {
+//   try {
+//     // REMOTE STUFF
+//     const remote = await nano.db.changes(`index${order}`, {include_docs: true})
+//     const remoteObjects = remote.results.filter(res => ! res.id.includes('_design/'))
+//     const remoteData = remoteObjects.map(r => r.doc.numbers.array).sort()
+//     // LOCAL STUFF
+//     const localFile = fs.readFileSync(`./data/source${order}.json`)
+//     const localData = JSON.parse(localFile).sort()
+
+//     console.log(`Are there changes for order ${order}? `, JSON.stringify(remoteData) !== JSON.stringify(localData))
+
+//     if (JSON.stringify(remoteData) !== JSON.stringify(localData)) {
+//       await getSourceChanges(order, remoteData, localData)
+//     }
+//   } catch (error) { console.log( 'areThereChanges:', error ) }
+// }
+
+// IS THIS NEEDED?
+// async function getSourceChanges(order, remoteData, localData) {
+//   try {
+//     // get only changes from remote and add to local
+//     const diffRL = _.differenceWith(remoteData, localData, _.isEqual)
+//     if (diffRL.length > 0) {
+//       const localFile = fs.readFileSync(`./data/source${order}.json`)
+//       const data = JSON.parse(localFile)
+//       diffRL.forEach(dr => data.push(dr))
+//       data.sort()
+//       fs.writeFileSync(`./data/source${order}.json`, JSON.stringify(data))
+//     } else { console.log('Changes in local to be uploaded.') }
+//   } catch (error) { console.log( 'getChanges:', error ) }
+//   finally { console.log( 'Changes dealt with.' ) }
+// }
+
 
 
 async function populateDBLARGE(data, order) {
