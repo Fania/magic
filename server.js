@@ -97,6 +97,14 @@ app.post('/', async (req, res) => {
   res.render('home.njk')
 })
 
+app.get('/research', (req, res) => { res.render('research.njk') })
+app.post('/research', async (req, res) => { 
+  // const theme = req.body
+  // if(!theme.overlap) theme.overlap = 'false'
+  // await couch.insertTheme(theme)
+  res.render('research.njk')
+})
+
 app.get('/gallery', (req, res) => { 
   res.render('gallery.njk', { files: gallery.getFiles() })
 })

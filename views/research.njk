@@ -1,11 +1,11 @@
-{% set current = "home" %}
+{% set current = "research" %}
 {% extends "base.njk" %}
 
 
 {% block submenu %}
-<header class="submenu home">
+<header class="submenu research">
 
-  <form id="settings" action="/" method="POST" >
+  <form id="settings" action="/research" method="POST" >
   {# <form id="settings"> #}
   
     <fieldset id="orderOptions">
@@ -34,14 +34,16 @@
       </label>
     </fieldset>
 
-    <fieldset id="order4quadOptions">
+    <fieldset id="classOptions">
+      <legend>Classification</legend>
       <label>
-        <input type="radio" id="all" name="amount" value="all">
-        <span>880</span>
-      </label>
-      <label>
-        <input type="radio" id="unique" name="amount" value="unique" checked>
-        <span>383</span>
+        <span>Group</span>
+        <select name="classification" id="classification">
+          <option value="all" selected>All</option>
+          <option value="pandiag">Pandiagonal</option>
+          <option value="symmetric">Associative</option>
+          <option value="self-compl">Self-compl.</option>
+        </select>
       </label>
     </fieldset>
 
@@ -204,20 +206,7 @@
 
 
 {% block main %}
-
-
-
-
-
-
-
-<main class="home">
-
-<div id="update-notice" hidden>
-  Updates available
-  <button id="update">update</button>
-</div>
-
+<main class="research">
   <output id="squares"></output>
 </main>
 {% endblock %}
@@ -225,7 +214,7 @@
 
 {% block scripts %}
 {# <script src="lazysizes.min.js" async=""></script> #}
-<script src="meta/js/home.js"></script>
+<script src="meta/js/research.js"></script>
 {% endblock %}
 
 
