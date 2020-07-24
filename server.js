@@ -39,7 +39,7 @@ const gallery = require('./lib/gallery.js')
 
 // START THE SERVER
 app.listen(3000, () => {
-	// console.log('Magic Squares running on http://localhost:3000')
+	// console.log('Running on http://localhost:3000')
 })
 
 
@@ -50,27 +50,17 @@ async function setupSource(n) {
   await couch.populateDBSource(result, n)
 }
 async function initialiseSources() {
-  await setupSource(3)
-  await setupSource(4)
-  await setupSource(5)
-  await setupSource(6)
-  await setupSource(7)
-  await setupSource(8)
-  await setupSource(9)
-  await setupSource(10)
-  await setupSource(11)
-  await setupSource(12)
-  await setupSource(13)
-  await setupSource(14)
-  await setupSource(15)
-  await setupSource(16)
-  await setupSource(17)
-  await setupSource(18)
-  await setupSource(19)
-  await setupSource(20)
+  const orders = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,256]
+  const forLoop = async _ => { 
+    for (let i=0; i < orders.length; i++) {
+      await setupSource(orders[i])
+    } 
+  }
+  forLoop()
 }
 
 // initialiseSources()
+// setupSource(256)
 
 couch.statusReport()
 
@@ -153,5 +143,9 @@ app.get('/data/:n/:s/:o', async (req, res) => {
 })
 app.get('/data/themes', async (req, res) => {
   const data = await couch.viewAllDB('themes')
+  res.send( data )
+})
+app.get('/data/orders', async (req, res) => {
+  const data = await couch.getAllOrders()
   res.send( data )
 })

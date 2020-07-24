@@ -87,19 +87,25 @@ function loadBookmark(params) {
 }
 
 
-
 displayOrder.addEventListener('wheel', () => {
   // console.log('ORDER wheel triggered');
-  const totalOptions = displayOrder.length;
-  let fromIndex = displayOrder.selectedIndex;
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  const orderSelects = document.querySelector('#order');
+  const totalOptions = orderSelects.length;
+  const maxIndex = totalOptions;
+  let fromIndex = orderSelects.selectedIndex;
+  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN (e.g. 4 to 5)
+    // console.log(`down from (i): ${fromIndex}, (v): ${orderSelects[fromIndex].value}`);
+    if (fromIndex === maxIndex) fromIndex = 0;
     let toIndex = (fromIndex + 1) % totalOptions;
-    displayOrder.selectedIndex = toIndex;
+    orderSelects.selectedIndex = toIndex;
+    // console.log(`down to (i): ${orderSelects.selectedIndex}, (v): ${orderSelects[orderSelects.selectedIndex].value}`);
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
-    if (fromIndex === 0) fromIndex = 18;
+  if (Math.sign(event.wheelDeltaY) === 1) { // UP (e.g. 5 to 4)
+    // console.log(`up from (i): ${fromIndex}, (v): ${orderSelects[fromIndex].value}`);
+    if (fromIndex === 0) fromIndex = maxIndex;
     let toIndex = (fromIndex - 1) % totalOptions;
-    displayOrder.selectedIndex = toIndex;
+    orderSelects.selectedIndex = toIndex;
+    // console.log(`up to (i): ${orderSelects.selectedIndex}, (v): ${orderSelects[orderSelects.selectedIndex].value}`);
   }
   adjust('order');
   event.preventDefault();
@@ -115,14 +121,6 @@ displayAmounts.forEach( da => {
     adjust('amount');
   });
 });
-
-// const classification = document.getElementById('classification');
-// classification.addEventListener('change', () => {
-//   console.log('classification change triggered');
-//   let x = classification[classification.selectedIndex].value;
-//   console.log(x);
-//   filterSquares(x);
-// });
 
 displayStyles.forEach( ds => {
   ds.addEventListener('change', () => { 
@@ -410,11 +408,40 @@ share.addEventListener('click', ()=> {
 });
 
 
+// POPULATE ORDER OPTIONS
+async function getOrders() {
+  const remoteOrdersURL = '/data/orders';
+  const remoteOrdersRawData = await fetch(remoteOrdersURL);
+  const remoteOrders = await remoteOrdersRawData.json();
+  return remoteOrders;
+}
+const remoteOrders = getOrders();
+
+const orders = document.getElementById('order');
+populateOrderOptions();
+async function populateOrderOptions() {
+  // console.log('populateOrderOptions');
+  try {
+    const data = await remoteOrders;
+    orders.innerHTML = '';
+    for (let i in data) {
+      const order = data[i];
+      const option = document.createElement('option');
+      option.value = order;
+      option.innerText = order;
+      if(data[i] == 4) option.selected = true;
+      orders.appendChild(option);
+    }
+  console.log('total order choices',document.querySelector('#order').length);
+  } catch (error) { console.log(error) }
+}
+
+
 // POPULATE THEME OPTIONS
 const themes = document.getElementById('themes');
 populateThemeOptions();
 async function populateThemeOptions() {
-  console.log('populateThemeOptions');
+  // console.log('populateThemeOptions');
   try {
     const url = '/data/themes';
     const rawData = await fetch(url);
@@ -464,7 +491,7 @@ settings.addEventListener('submit', async ()=> {
 const lengths = document.getElementById('lengths');
 // populateLengthOptions();
 async function populateLengthOptions() {
-  console.log('populateLengthOptions');
+  // console.log('populateLengthOptions');
   try {
     const settings = getSettings();
     const order = settings.order;
@@ -485,7 +512,7 @@ async function populateLengthOptions() {
   } catch (error) { console.log(error) }
 }
 async function prepareLengthOptions() {
-  console.log('prepareLengthOptions');
+  // console.log('prepareLengthOptions');
   try {
     for (let i in data.rows) {
       const len = data.rows[i].key;
@@ -536,7 +563,9 @@ function adjust(thing) {
   let x = "";
   switch(thing) {
     case 'order':
-      x = parseInt(displayOrder[displayOrder.selectedIndex].value);
+      const orderSelect = document.querySelector('#order');
+      x = parseInt(orderSelect[orderSelect.selectedIndex].value);
+      // console.log(`adjust ${x}`);
       break;
     // case 'classification':
     //   x = classification[classification.selectedIndex].value;
@@ -573,10 +602,16 @@ function adjust(thing) {
 
 
 
-function loadSettings() {
-  console.log('loadSettings');
+async function loadSettings() {
+  // console.log('loadSettings');
   const settings = getSettings();
-  displayOrder.selectedIndex = parseInt(settings.order) - 3;
+  const orderSelect = document.querySelector('#order');
+  ;
+  const remoteOrders = await getOrders();
+  // console.log(remoteOrders);
+  // orderSelect.selectedIndex = parseInt(settings.order) - 3;
+  orderSelect.selectedIndex = remoteOrders.indexOf(settings.order);
+
   document.querySelector(`#${settings.amount}`).checked = true;
   document.querySelector(`#${settings.style}`).checked = true;
   document.getElementById('size').value = settings.size;
@@ -603,7 +638,7 @@ function loadSettings() {
 
 
 function applyStyles() {
-  console.log('applyStyles');
+  // console.log('applyStyles');
   const settings = getSettings();
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
@@ -641,7 +676,7 @@ async function getData(offset = 0) {
     (order === 4 && (style === 'quadvertex' || style === 'unique'))
       ? document.getElementById('order4quadOptions').classList.remove('hide')
       : document.getElementById('order4quadOptions').classList.add('hide');
-    console.log(`getData ${order} ${style} ${offset}`);
+    // console.log(`getData ${order} ${style} ${offset}`);
     if(offset === 0) squares.innerHTML = '';
     // loading.classList.add('show'); 
     document.body.style.cursor = 'wait !important';
@@ -687,7 +722,7 @@ async function getData(offset = 0) {
 }
 
 function saveSettings(settingsJSON) {
-  console.log('saveSettings to localStorage');
+  // console.log('saveSettings to localStorage');
   const settingsString = JSON.stringify(settingsJSON);
   localStorage.setItem("magicSettings", settingsString);
   loadSettings();
@@ -714,7 +749,7 @@ function getSettings() {
 
 
 async function updateCache(url) {
-  console.log('updating cache from front end');
+  // console.log('updating cache from front end');
   try {
     // loading.classList.add('show'); 
     // TODO reenable cache of lengths
@@ -724,7 +759,7 @@ async function updateCache(url) {
   }
   catch (error) { console.log('updateCache', error) }
   finally { 
-    console.log('finished updating cache');
+    // console.log('finished updating cache');
     // loading.classList.remove('show'); 
   }
 }

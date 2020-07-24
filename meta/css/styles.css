@@ -94,6 +94,7 @@ input[type="button"] {
 }
 
 
+#orderOptions select#order { min-width: 50px; }
 
 #styleOptions svg {
   width: 40px; padding: 4px; box-sizing: border-box; filter: grayscale(1); margin: 0;

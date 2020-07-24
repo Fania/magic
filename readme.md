@@ -18,6 +18,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Backend
 
+- [ ] order 256 not working
 - [ ] contribute higher orders than exist on server at that point broken **!**
 - [ ] delete unused code, clean, refactor
 - [ ] extract more behaviour out to backend
@@ -29,6 +30,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Interface
 
+- [ ] order selection is broken with wheel and click **!!!**
 - [ ] create new research page
 - [ ] don't save to localstorage while live adjusting things like fill
 - [ ] prevent overlap for more than 200? e.g. for order 5s (with loads)
@@ -49,6 +51,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] add printing options
 - [ ] change spinner
 - [ ] disable spinner
+- [ ] make sure number svgs are readable for larger orders
 
 ### Art
 
@@ -147,3 +150,11 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 // 8,3,4,1,5,9,6,7,2
 // 6,1,8,7,5,3,2,9,4
 // 2,7,6,9,5,1,4,3,8
+
+
+
+
+
+order 32
+
+

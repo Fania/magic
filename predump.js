@@ -357,4 +357,64 @@ async function insertDoc(numbers, order) {
   } catch (error) { console.log( 'insertDoc:', error ) }
 }
 
+
+
+// IS THIS NEEDED?
+function getFilterDocs() {
+  return {
+    "_id": "_design/filters",
+    "views": {
+      "arrays": {
+        "map": "function (doc) { emit(doc.numbers.array, parseInt(doc._id)) }"
+      },
+      "unique": {
+        "map": "function (doc) { if ( doc.quadvertex.type === 'unique' || doc.quadvertex.type === 'identity' ) { emit(parseInt(doc._id), doc.quadvertex) } }"
+      },
+      "quadvertex": {
+        "map": "function (doc) { emit(parseInt(doc._id), doc.quadvertex) }"
+      },
+      "numbers": {
+        "map": "function (doc) { emit(parseInt(doc._id), doc.numbers) }"
+      },
+      "quadline": {
+        "map": "function (doc) { emit(parseInt(doc._id), doc.quadline) }"
+      },
+      "straight": {
+        "map": "function (doc) { emit(parseInt(doc._id), doc.straight) }"
+      },
+      "arc": {
+        "map": "function (doc) { emit(parseInt(doc._id), doc.arc) }"
+      },
+      "altarc": {
+        "map": "function (doc) { emit(parseInt(doc._id), doc.altarc) }"
+      },
+      "circles": {
+        "map": "function (doc) { emit(parseInt(doc._id), doc.circles) }"
+      },
+      "blocks": {
+        "map": "function (doc) { emit(parseInt(doc._id), doc.blocks) }"
+      },
+      "tetromino": {
+        "map": "function (doc) { emit(parseInt(doc._id), doc.tetromino) }"
+      }
+    }
+  }
+}
+
+// IS THIS NEEDED?
+function getReducerDocs() {
+  return {
+    "_id": "_design/reducers",
+    "views": {
+      "lengths": {
+        "reduce": "function(keys, values, rereduce) { for(i=0,l=values.length; i < l; i++) { if(rereduce) { return values[i]; } else { return values; } } }",
+        "map": "function(doc) { let stl = [doc.quadvertex.length,doc.quadline.length,doc.straight.length,doc.arc.length,doc.altarc.length]; let nms = ['quadvertex','quadline','straight','arc','altarc']; for (i=0; i < 5; i++) { emit([stl[i],nms[i]], doc._id); } }"
+      }
+    }
+  }
+}
+
+
+
+
 // END OF COUCH.js
