@@ -58,6 +58,7 @@ const params = location.search;
 if(params) { loadBookmark(params); }
 else {
   // clean load, possibly from memory
+  populateOrderOptions();
   loadSettings();
   getData();
   triggerAnimation();
@@ -364,9 +365,13 @@ reset.addEventListener('click', ()=> {
 
 // RANDOM OPTION
 const random = document.getElementById('random');
-random.addEventListener('click', ()=> { 
+random.addEventListener('click', async ()=> { 
   // console.log('RANDOM click triggered');
   const settings = getSettings();
+  const orders = await remoteOrders;
+  const orderIndex = getRandomInt(0, (orders.length - 1));
+  const orderSelect = document.getElementById('order');
+  settings.order = orderSelect[orderIndex].value;
   settings.size = getRandomInt(1, 50);
   settings.gap = getRandomInt(0, 50);
   settings.background = getRandomColour();
@@ -415,14 +420,12 @@ async function getOrders() {
   const remoteOrders = await remoteOrdersRawData.json();
   return remoteOrders;
 }
-const remoteOrders = getOrders();
 
 const orders = document.getElementById('order');
-populateOrderOptions();
 async function populateOrderOptions() {
   // console.log('populateOrderOptions');
   try {
-    const data = await remoteOrders;
+    const data = await getOrders();
     orders.innerHTML = '';
     for (let i in data) {
       const order = data[i];
@@ -605,13 +608,8 @@ function adjust(thing) {
 async function loadSettings() {
   // console.log('loadSettings');
   const settings = getSettings();
-  const orderSelect = document.querySelector('#order');
-  ;
-  const remoteOrders = await getOrders();
-  // console.log(remoteOrders);
-  // orderSelect.selectedIndex = parseInt(settings.order) - 3;
-  orderSelect.selectedIndex = remoteOrders.indexOf(settings.order);
-
+  const rOrders = await getOrders();
+  document.querySelector('#order').selectedIndex = rOrders.indexOf(settings.order);
   document.querySelector(`#${settings.amount}`).checked = true;
   document.querySelector(`#${settings.style}`).checked = true;
   document.getElementById('size').value = settings.size;

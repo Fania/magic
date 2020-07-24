@@ -19,7 +19,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 ### Backend
 
 - [ ] order 256 not working
-- [ ] contribute higher orders than exist on server at that point broken **!**
 - [ ] delete unused code, clean, refactor
 - [ ] extract more behaviour out to backend
 - [ ] partition order 5 by magic square classification?
@@ -30,7 +29,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Interface
 
-- [ ] order selection is broken with wheel and click **!!!**
 - [ ] create new research page
 - [ ] don't save to localstorage while live adjusting things like fill
 - [ ] prevent overlap for more than 200? e.g. for order 5s (with loads)
@@ -38,7 +36,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] add dropdown for shared lengths per order
 - [ ] hover info for each square or put into modal
 - [ ] fix mobile style again
-- [ ] manual order change triggers two draws of squares
 - [ ] finish defining data lists for ranges
 - [ ] change width/size to be based on height, not width
 - [ ] insert intersection observer sooner? at 150?
@@ -64,6 +61,10 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] load order display broken
+- [x] contribute higher orders than exist on server at that point broken **!**
+- [x] order selection is broken with wheel and click **!!!**
+- [x] manual order change triggers two draws of squares
 - [x] when user contributes a square, cache needs to be refreshed
 - [x] couch don't regen index on contribute - change _ids and sorting
 - [x] getData being called 4 times? SW does that due to debug mode
