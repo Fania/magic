@@ -50,7 +50,7 @@ async function setupSource(n) {
   await couch.populateDBSource(result, n)
 }
 async function initialiseSources() {
-  const orders = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,256]
+  const orders = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,27,28,30,32,256]
   const forLoop = async _ => { 
     for (let i=0; i < orders.length; i++) {
       await setupSource(orders[i])
@@ -62,15 +62,12 @@ async function initialiseSources() {
 // initialiseSources()
 // setupSource(256)
 
-couch.statusReport()
+// couch.statusReport()
 
 // setupSource(4)
 
-
-
-
-
-
+// const url = "https://couch.fania.eu/_session"
+couch.request('_all_dbs')
 
 
 

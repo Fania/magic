@@ -226,3 +226,33 @@ order 32
 
 duplicate numbers?
 
+
+
+
+
+
+const fetch = require('node-fetch');
+const url = "https://couch.fania.eu/_all_dbs";
+var url ='https://example.com';
+var headers = {
+  "Content-Type": "application/json",
+  "client_id": "1001125",
+  "client_secret": "876JHG76UKFJYGVHf867rFUTFGHCJ8JHV"
+}
+// var data = {
+//   "name": "Wade Wilson",
+//   "occupation": "Murderer",
+//   "age": "30 (forever)"
+// }
+const get_data = async url => {
+  try {
+    // fetch(url, { method: 'POST', headers: headers, body: data})
+    const response = await fetch(url);
+    const json = await response.json();
+    console.log(json);
+  } catch (error) {
+    console.log(error);
+  }
+};
+get_data(url);
+
