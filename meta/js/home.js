@@ -450,8 +450,8 @@ async function populateThemeOptions() {
     const rawData = await fetch(url);
     const data = await rawData.json();
     themes.innerHTML = '<option value="">Choose</option>';
-    for (let i in data.rows) {
-      const name = data.rows[i].id;
+    for (let i in data) {
+      const name = data[i].id;
       const capName = name[0].toUpperCase() + name.slice(1);
       const option = document.createElement('option');
       option.value = name;

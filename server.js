@@ -61,18 +61,20 @@ async function initialiseSources() {
 
 // initialiseSources()
 // setupSource(256)
-
-couch.statusReport()
-
 // setupSource(4)
 
 
 
-async function testCouch() {
-  const resp = await couch.request(`_all_dbs`)
-  console.log(resp)
+// couch.statusReport()
+
+
+
+const test = async () => {
+  console.log( 
+    await couch.insertDoc([2,9,4,7,5,3,6,1,8], 3)
+  )
 }
-// testCouch()
+// test()
 
 
 
