@@ -228,31 +228,45 @@ duplicate numbers?
 
 
 
+## HTTPS Requests
 
+Use [Axios](https://github.com/axios/axios) library.
 
-
-const fetch = require('node-fetch');
-const url = "https://couch.fania.eu/_all_dbs";
-var url ='https://example.com';
-var headers = {
-  "Content-Type": "application/json",
-  "client_id": "1001125",
-  "client_secret": "876JHG76UKFJYGVHf867rFUTFGHCJ8JHV"
-}
-// var data = {
-//   "name": "Wade Wilson",
-//   "occupation": "Murderer",
-//   "age": "30 (forever)"
-// }
-const get_data = async url => {
+**Request** format:
+```
+const axios = require('axios')
+async function request(endpoint) {
   try {
-    // fetch(url, { method: 'POST', headers: headers, body: data})
-    const response = await fetch(url);
-    const json = await response.json();
-    console.log(json);
-  } catch (error) {
-    console.log(error);
-  }
-};
-get_data(url);
+    const config = {
+      url: endpoint,
+      method: 'get',
+      baseURL: `https://${host}`,
+      auth: {
+        username: user,
+        password: password
+      }
+      // params: {
+      //   ID: 12345
+      // },
+      // data: {
+      //   firstName: 'Fred'
+      // },
+    }
+    const response = await axios.request(config)
+    console.log(response)
+  } catch (error) { console.error(error) }
+}
+request(_all_dbs)
+```
 
+**Response** format:  
+```
+{
+  data: {},
+  status: 200,
+  statusText: 'OK',
+  headers: {},
+  config: {},
+  request: {}
+}
+```

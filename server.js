@@ -62,18 +62,17 @@ async function initialiseSources() {
 // initialiseSources()
 // setupSource(256)
 
-// couch.statusReport()
+couch.statusReport()
 
 // setupSource(4)
 
-// const url = "https://couch.fania.eu/_session"
-async function testCouch() {
-    
-  const resp = await couch.request('_all_dbs')
-  // console.log(resp.data)
 
+
+async function testCouch() {
+  const resp = await couch.request(`_all_dbs`)
+  console.log(resp)
 }
-testCouch()
+// testCouch()
 
 
 
