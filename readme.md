@@ -19,7 +19,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 ### Backend
 
 - [ ] order 256 not working
-- [ ] delete unused code, clean, refactor
 - [ ] extract more behaviour out to backend
 - [ ] partition order 5 by magic square classification?
 - [ ] partition by number, e.g. simply group every 1000?
@@ -61,6 +60,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] replace nano with generic http lib axios
+- [x] delete unused code, clean, refactor
 - [x] load order display broken
 - [x] contribute higher orders than exist on server at that point broken **!**
 - [x] order selection is broken with wheel and click **!!!**
