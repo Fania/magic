@@ -61,7 +61,7 @@ async function initialiseSources() {
 
 // initialiseSources()
 // setupSource(256)
-// setupSource(4)
+// setupSource(7)
 
 
 
@@ -71,6 +71,7 @@ async function initialiseSources() {
 
 const test = async () => {
   console.log('TEST COUCH AXIOS')
+  // TODO add test for bulk docs add, update and delete
   console.log('\nGET all dbs')
   const response = await couch.request(`_all_dbs`)
   console.log(response.status,response.statusText)
@@ -153,7 +154,7 @@ const test = async () => {
   console.log(response9.status,response9.statusText)
 
 }
-test()
+// test()
 
 
 

@@ -17,7 +17,6 @@
     "express": "^4.17.1",
     "express-minify": "^1.0.0",
     "lodash": "^4.17.19",
-    "nano": "^8.2.2",
     "nunjucks": "^3.2.1",
     "svg-path-properties": "^1.0.4"
   }

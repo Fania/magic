@@ -471,7 +471,7 @@ async function getTheme(name) {
     const url = '/data/themes';
     const rawData = await fetch(url);
     const data = await rawData.json();
-    const theme = data.rows.find(item => item.id === name).doc;
+    const theme = data.find(item => item.id === name).doc;
     saveSettings(theme);
     getData();
     triggerAnimation();
