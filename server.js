@@ -70,13 +70,14 @@ async function initialiseSources() {
 
 
 const test = async () => {
-  console.log('TEST COUCH AXIOS GET')
+  console.log('TEST COUCH AXIOS')
   console.log('\nGET all dbs')
   const response = await couch.request(`_all_dbs`)
   console.log(response.status,response.statusText)
 
   console.log('\nHEAD check doc exists - TRUE')
   const response2 = await couch.request(`themes/test`,'HEAD')
+  console.log(response2.headers.etag)
   console.log(response2.status,response2.statusText)
 
   console.log('\nHEAD check doc exists - FALSE')
@@ -109,23 +110,35 @@ const test = async () => {
   const response6 = await couch.request(`test`,'PUT')
   console.log(response6.status,response6.statusText)
 
-  console.log('\nPOST new doc to test')
+  console.log('\nPOST new doc to test - new (with typo)')
   const response7 = await couch.request(`test`,'POST',{
-    "numbers": [2,9,4,7,5,3,6,1,8]
+    "numbers": [2,9,4,7,5,3,6,1]
   })
   console.log(response7.status,response7.statusText)
 
-  console.log('\nDELETE new doc from test')
+  console.log('\nPOST new doc to test - update (fix typo)')
   const response70 = await couch.request(`test/_find`,'POST',{
+    "selector": {
+      "numbers": [2,9,4,7,5,3,6,1]
+    },
+    "fields": ["_id", "_rev"],
+    "limit": 1
+  })
+  console.log(response70.status,response70.statusText)
+  const response72 = await couch.request(`test/${response70.data.docs[0]["_id"]}?rev=${response70.data.docs[0]["_rev"]}`,'PUT',{
+    "numbers": [2,9,4,7,5,3,6,1,8]
+  })
+  console.log(response72.status,response72.statusText)
+
+  console.log('\nDELETE new doc from test')
+  const response73 = await couch.request(`test/_find`,'POST',{
     "selector": {
       "numbers": [2,9,4,7,5,3,6,1,8]
     },
     "fields": ["_id", "_rev"],
-    "limit": 1,
-    "execution_stats": true
+    "limit": 1
   })
-  console.log(response70.status,response70.statusText)
-  const response71 = await couch.request(`test/${response70.data.docs[0]["_id"]}?rev=${response70.data.docs[0]["_rev"]}`,'DELETE')
+  const response71 = await couch.request(`test/${response73.data.docs[0]["_id"]}?rev=${response73.data.docs[0]["_rev"]}`,'DELETE')
   console.log(response71.status,response71.statusText)
 
   console.log('\nPOST new view to test')
