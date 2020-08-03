@@ -14,7 +14,8 @@ body {
 a { color: var(--textColour) }
 header { margin: 0; padding: 0 1em; }
 header.hide, footer.hide { display: none; }
-.hide ~ main.home { margin-left: 2em; }
+.hide ~ main.home,
+.hide ~ main.research { margin-left: 2em; }
 
 
 
@@ -59,12 +60,15 @@ header.hide, footer.hide { display: none; }
 .submenu nav a { 
   color: var(--textColour); text-decoration: none; padding: 0 1em }
 .submenu nav p { padding: 0 1em }
-.submenu.home { 
+.submenu.home, 
+.submenu.research { 
   position: absolute;
   transform: translateX(-100%); transition: all 1s;
   width: 100%; height: calc(100vh - 70px) }
-.submenu.home.show { transform: translateX(0); transition: all 1s; z-index: 9; }
-.submenu.home form {  
+.submenu.home.show, 
+.submenu.research.show { transform: translateX(0); transition: all 1s; z-index: 9; }
+.submenu.home form, 
+.submenu.research form {  
   display: flex; flex-direction: column; justify-content: space-around;
   height: 100%; position: relative }
 
@@ -391,12 +395,14 @@ footer a, footer p {
 
   .submenu #manual { margin: 1em }
 
-  .submenu.home { 
+  .submenu.home, 
+  .submenu.research { 
     transform: translateX(0);
     width: 200px;
     height: calc(100vh - 80.88px);
   }
-  .submenu.home form {  
+  .submenu.home form, 
+  .submenu.research form {  
     justify-content: space-between;
     height: calc(100vh - 80.88px - 2em);
   }
@@ -471,7 +477,8 @@ footer a, footer p {
 
 
   main { margin: 2em; min-height: calc(100vh - 212px); }
-  main.home { margin-left: calc(200px + 2em) }
+  main.home,
+  main.research { margin-left: calc(200px + 2em) }
   
 
 

@@ -435,7 +435,7 @@ async function populateOrderOptions() {
       if(data[i] == 4) option.selected = true;
       orders.appendChild(option);
     }
-  console.log('total order choices',document.querySelector('#order').length);
+  // console.log('total order choices',document.querySelector('#order').length);
   } catch (error) { console.log(error) }
 }
 

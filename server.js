@@ -149,3 +149,8 @@ app.get('/data/orders', async (req, res) => {
   const data = await couch.getAllOrders()
   res.send( data )
 })
+
+// app.get('/data/lengths', async (req, res) => {
+//   // const data = await couch.getAllOrders()
+//   // res.send( data )
+// })
