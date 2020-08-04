@@ -28,23 +28,86 @@ main.home #squares.modalShowing {
   background-color: inherit; 
 }
 main.home { margin: 0 }
+
+
 /* size = how many columns */
 /* marg = how many rows */
 
-/* 880 */
-body.order4 {
-  --size: calc((100vw - 80px) / 40);
-  --marg: calc( ( 100vh - ( var(--size) * 22 ) ) / 2 );
+body.order3,
+body.order17,
+body.order19,
+body.order21,
+body.order25,
+body.order27,
+body.order28,
+body.order30,
+body.order32 {  /* 1 */
+  --size: calc((100vw - 80px) / 2);
+  --marg: calc( ( 100vh - ( var(--size) * 1 ) ) / 2 );
+}
+body.order11,
+body.order18,
+body.order24 {  /* 2 */
+  --size: calc((100vw - 80px) / 2);
+  --marg: calc( ( 100vh - ( var(--size) * 1 ) ) / 2 );
+}
+body.order13 {  /* 4 */
+  --size: calc((100vw - 80px) / 4);
+  --marg: calc( ( 100vh - ( var(--size) * 1 ) ) / 2 );
+}
+body.order14,
+body.order15 {  /* 5 */
+  --size: calc((100vw - 80px) / 3);
+  --marg: calc( ( 100vh - ( var(--size) * 2 ) ) / 2 );
+}
+body.order7 {  /* 8 */
+  --size: calc((100vw - 80px) / 4);
+  --marg: calc( ( 100vh - ( var(--size) * 2 ) ) / 2 );
+}
+body.order10 {  /* 9 */
+  --size: calc((100vw - 80px) / 5);
+  --marg: calc( ( 100vh - ( var(--size) * 2 ) ) / 2 );
+}
+body.order20 {  /* 12 */
+  --size: calc((100vw - 80px) / 4);
+  --marg: calc( ( 100vh - ( var(--size) * 3 ) ) / 2 );
+}
+body.order16 {  /* 15 */
+  --size: calc((100vw - 80px) / 5);
+  --marg: calc( ( 100vh - ( var(--size) * 3 ) ) / 2 );
+}
+body.order9 {  /* 17 */
+  --size: calc((100vw - 80px) / 6);
+  --marg: calc( ( 100vh - ( var(--size) * 3 ) ) / 2 );
+}
+body.order12 {  /* 22 */
+  --size: calc((100vw - 80px) / 6);
+  --marg: calc( ( 100vh - ( var(--size) * 4 ) ) / 2 );
+}
+body.order8 {  /* 25 */
+  --size: calc((100vw - 80px) / 7);
+  --marg: calc( ( 100vh - ( var(--size) * 4 ) ) / 2 );
+}
+body.order6 {  /* 35 */
+  --size: calc((100vw - 80px) / 7);
+  --marg: calc( ( 100vh - ( var(--size) * 5 ) ) / 2 );
 }
 body.order4U {  /* 383 */
   --size: calc((100vw - 80px) / 24);
   --marg: calc( ( 100vh - ( var(--size) * 16 ) ) / 2 );
 }
+body.order4 {  /* 880 */
+  --size: calc((100vw - 80px) / 40);
+  --marg: calc( ( 100vh - ( var(--size) * 22 ) ) / 2 );
+}
+body.order5 {  /* ~5000 */
+  --size: calc((100vw - 80px) / 40);
+  --marg: 40px;
+}
 
 
 
-
-body.order4U #squares {
+#squares {
   justify-content: start;
 }
 body.order4U.dayMode #squares:after {
