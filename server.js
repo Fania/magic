@@ -135,6 +135,7 @@ app.get('/data/:n/:s/:o', async (req, res) => {
   const order = req.params.n
   const style = req.params.s
   const offset = req.params.o
+  // console.log(order,style,offset)
   // const data = await couch.viewDB(order, 'filters', style, offset)
   // const source = await couch.viewSourceDB(order,offset)
   const source = await couch.viewSourceDB(order,style,offset)
