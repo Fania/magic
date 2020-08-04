@@ -28,6 +28,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Interface
 
+- [ ] dark mode
 - [ ] add other orders to print stylesheet
 - [ ] modal being added twice after print dialog triggered
 - [ ] create new research page
@@ -129,6 +130,9 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 ## References
 
 - https://eloquentjavascript.net/18_http.html
+- https://css-tricks.com/dark-modes-with-css/
+- https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme
+- https://www.w3schools.com/howto/howto_js_toggle_dark_mode.asp
 
 `process.stdout.write("hello: ");`
 `process.stdout.write("Downloading " + data.length + " bytes\r");`

@@ -876,12 +876,26 @@ document.addEventListener("keydown", event => {
 });
 
 
+function togglePrintStyles() {
+  const mainStyles = document.getElementById("mainStyles");
+  const printLink = document.getElementById("printStyle");
+  if (printLink) { 
+    printLink.remove();
+
+  } else {
+    mainStyles.insertAdjacentHTML('afterend', `
+      <link id="printStyle" rel="stylesheet" href="meta/css/print.css">
+    `)
+  }
+}
+
+
 
 
 // modals for all images and printing of singles
 function addModalListeners() {
   const [...images] = document.querySelectorAll("#squares svg");
-  images.forEach( i => i.addEventListener("click", () => addModal(i)) );
+  images.forEach( i => i.addEventListener("dblclick", () => addModal(i)) );
 }
 function addModal(image) {
   // console.log(`toggle modal by`,event.target);
@@ -903,15 +917,35 @@ function addModal(image) {
 
 
 
-function togglePrintStyles() {
-  const mainStyles = document.getElementById("mainStyles");
-  const printLink = document.getElementById("printStyle");
-  if (printLink) { 
-    printLink.remove();
 
+night.addEventListener("click", () => toggleDayNight() );
+day.addEventListener("click", () => toggleDayNight() );
+
+function toggleDayNight() {
+  if (night.checked) {
+    settings.classList.remove("dayMode");
+    document.querySelector(".instructions").classList.remove("dayMode");
+    document.querySelector("footer").classList.remove("dayMode");
+    document.querySelector("body").classList.remove("dayMode");
+    about.classList.remove("dayMode");
+    nightLabel.innerHTML = "<i class='fas fa-moon'></i>";
+    dayLabel.innerHTML = "<i class='far fa-sun'></i>";
+    backColour.value = "#222222";
+    strokeColour.value = "#ffffff";
+    textColour.value = "#ffffff";
+    document.querySelector("[alt='logo']").src = "imgs/logo.svg";
   } else {
-    mainStyles.insertAdjacentHTML('afterend', `
-      <link id="printStyle" rel="stylesheet" href="meta/css/print.css">
-    `)
+    settings.classList.add("dayMode");
+    document.querySelector(".instructions").classList.add("dayMode");
+    document.querySelector("footer").classList.add("dayMode");
+    document.querySelector("body").classList.add("dayMode");
+    about.classList.add("dayMode");
+    nightLabel.innerHTML = "<i class='far fa-moon'></i>";
+    dayLabel.innerHTML = "<i class='fas fa-sun'></i>";
+    backColour.value = "#ffffff";
+    strokeColour.value = "#000000";
+    textColour.value = "#000000";
+    document.querySelector("[alt='logo']").src = "imgs/logo-dark.svg";
   }
+  updateColours();
 }

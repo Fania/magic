@@ -274,6 +274,33 @@ svg * { box-sizing: border-box; }
 
 
 
+main.research #squares svg {
+  /* width: 125px; */
+  /* height: 125px; */
+  /* margin: 10px; */
+}
+main.research #squares svg.self-compl {
+  stroke: black;
+  fill: rgba(144, 238, 144, 0.2);
+}
+main.research #squares svg.unique {
+  stroke: cyan;
+  stroke-width: 10px;
+}
+main.research #squares svg.pandiag {
+  stroke: magenta;
+  stroke-width: 10px;
+}
+main.research #squares svg.symmetric {
+  stroke: yellow;
+  stroke-width: 10px;
+}
+
+
+
+
+
+
 
 
 
@@ -494,4 +521,22 @@ footer a, footer p {
 
 
 
+}
+
+  /* --backColour: #222222;
+  --mediumBackColour: #11111140;
+  --darkBackColour: #11111195;
+  --textColour: #eeeeee; */
+
+.day   { background: #ffffff; color: #000000; }
+.night { background: #222222; color: #eeeeee; }
+
+@media (prefers-color-scheme: dark) {
+  .day.dark-scheme   { background:  #333; color: white; }
+  .night.dark-scheme { background: black; color:  #ddd; }
+}
+
+@media (prefers-color-scheme: light) {
+  .day.light-scheme   { background: white; color:  #555; }
+  .night.light-scheme { background:  #eee; color: black; }
 }

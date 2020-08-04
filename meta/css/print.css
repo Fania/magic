@@ -1,4 +1,3 @@
-/* @media print { */
 
 @page {
   margin: 0;
@@ -20,15 +19,18 @@ header, .mainmenu, footer { display: none }
 .pad { padding: 3px; margin: 0; }
 
 /* hide main content if modal is showing */
-main.home #squares.modalShowing { 
+main #squares.modalShowing { 
   display: none;
 }
 #modal { 
   /* background-color: #FFFFFF;  */
   background-color: inherit; 
 }
-main.home { margin: 0 }
+main.home, main.research { margin: 0 }
 
+#squares {
+  justify-content: start;
+}
 
 /* size = how many columns */
 /* marg = how many rows */
@@ -44,6 +46,17 @@ body.order30,
 body.order32 {  /* 1 */
   --size: calc((100vw - 80px) / 2);
   --marg: calc( ( 100vh - ( var(--size) * 1 ) ) / 2 );
+}
+body.order3 #squares,
+body.order17 #squares,
+body.order19 #squares,
+body.order21 #squares,
+body.order25 #squares,
+body.order27 #squares,
+body.order28 #squares,
+body.order30 #squares,
+body.order32 #squares {
+  justify-content: center;
 }
 body.order11,
 body.order18,
@@ -107,9 +120,7 @@ body.order5 {  /* ~5000 */
 
 
 
-#squares {
-  justify-content: start;
-}
+
 body.order4U.dayMode #squares:after {
   content: url(../imgs/logo-dark.svg);
   width: calc( var(--size) - 2px );
@@ -121,7 +132,3 @@ body.order4U:not(.dayMode) #squares:after {
   height: calc( var(--size) - 2px );
 }
 
-
-
-
-/* } */

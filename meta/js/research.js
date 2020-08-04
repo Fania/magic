@@ -76,7 +76,7 @@ async function getData(filter) {
 
 
 // FULLSCREEN OPTIONS
-
+// for live display screens
 document.addEventListener("keydown", event => {
   if (event.key === "i") {
     const elems = document.querySelectorAll("header, footer");
@@ -84,4 +84,23 @@ document.addEventListener("keydown", event => {
       e.classList.toggle('hide');
     });
   }
+  if (event.key === "p") {
+    document.body.classList.toggle("order4");
+    togglePrintStyles();
+  }
 });
+
+
+function togglePrintStyles() {
+  const mainStyles = document.getElementById("mainStyles");
+  const printLink = document.getElementById("printStyle");
+  if (printLink) { 
+    printLink.remove();
+
+  } else {
+    mainStyles.insertAdjacentHTML('afterend', `
+      <link id="printStyle" rel="stylesheet" href="meta/css/print.css">
+    `)
+  }
+}
+
