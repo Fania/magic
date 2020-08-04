@@ -695,7 +695,7 @@ async function getData(offset = 0) {
       const elem = data[i].svg;
       squares.insertAdjacentHTML('beforeend',elem);
       if(!['numbers','blocks','circles','tetromino'].includes(style)) {
-        animationCSS((parseInt(i)+1), order, style, 
+        animationCSS(data[i]['id'], order, style, 
                              data[i]['length']);
       }
     }
@@ -884,7 +884,7 @@ function addModalListeners() {
   images.forEach( i => i.addEventListener("click", () => addModal(i)) );
 }
 function addModal(image) {
-  console.log(`toggle modal by`,event.target);
+  // console.log(`toggle modal by`,event.target);
   let modal = document.createElement("div");
   const squares = document.querySelector("#squares");
   squares.classList.add("modalShowing");
@@ -894,7 +894,9 @@ function addModal(image) {
   modal.appendChild(clone);
   foot.insertAdjacentElement("beforebegin", modal);
   modal.addEventListener("click", () => {
-    document.body.removeChild(modal);
+    // document.body.removeChild(modal);
+    const [...modals] = document.querySelectorAll('[id^="modal"]');
+    modals.forEach(m => m.remove());
     squares.classList.remove("modalShowing");
   });
 }
