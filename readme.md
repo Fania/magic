@@ -28,6 +28,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Interface
 
+- [ ] add other orders to print stylesheet
 - [ ] modal being added twice after print dialog triggered
 - [ ] create new research page
 - [ ] don't save to localstorage while live adjusting things like fill
