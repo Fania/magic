@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v0.6';
+const CACHE = 'magic-v0.7';
 
 
 
@@ -631,6 +631,14 @@ async function loadSettings() {
   }
   applyStyles();
   // TODO: also apply animation styles?
+  // add class to body for printing
+  document.body.removeAttribute("class");
+  const orderClass = 
+    settings.amount == "unique" && settings.order == 4
+    ? `order4U` 
+    : `order${settings.order}`;
+
+  document.body.classList.add(orderClass);
 }
 
 
@@ -716,6 +724,7 @@ async function getData(offset = 0) {
   finally { 
     // loading.classList.remove('show'); 
     document.body.style.cursor = 'default !important'; 
+    addModalListeners();
   }
 }
 
@@ -853,7 +862,7 @@ function animationCSS(id, order, style, len) {
 
 
 // FULLSCREEN OPTIONS
-
+// for live display screens
 document.addEventListener("keydown", event => {
   if (event.key === "i") {
     const elems = document.querySelectorAll("header, footer");
@@ -861,4 +870,46 @@ document.addEventListener("keydown", event => {
       e.classList.toggle('hide');
     });
   }
+  if (event.key === "p") {
+    togglePrintStyles();
+  }
 });
+
+
+
+
+// modals for all images and printing of singles
+function addModalListeners() {
+  const [...images] = document.querySelectorAll("#squares svg");
+  images.forEach( i => i.addEventListener("click", () => addModal(i)) );
+}
+function addModal(image) {
+  console.log(`toggle modal by`,event.target);
+  let modal = document.createElement("div");
+  const squares = document.querySelector("#squares");
+  squares.classList.add("modalShowing");
+  const foot = document.querySelector("footer");
+  modal.id = "modal";
+  let clone = image.cloneNode(true);
+  modal.appendChild(clone);
+  foot.insertAdjacentElement("beforebegin", modal);
+  modal.addEventListener("click", () => {
+    document.body.removeChild(modal);
+    squares.classList.remove("modalShowing");
+  });
+}
+
+
+
+function togglePrintStyles() {
+  const mainStyles = document.getElementById("mainStyles");
+  const printLink = document.getElementById("printStyle");
+  if (printLink) { 
+    printLink.remove();
+
+  } else {
+    mainStyles.insertAdjacentHTML('afterend', `
+      <link id="printStyle" rel="stylesheet" href="meta/css/print.css">
+    `)
+  }
+}
