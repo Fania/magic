@@ -18,7 +18,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Backend
 
-- [ ] research filters not based on class but on custom view directly
 - [ ] order 256 not working
 - [ ] extract more behaviour out to backend
 - [ ] partition order 5 by magic square classification?
@@ -29,6 +28,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Interface
 
+- [ ] modal being added twice after print dialog triggered
 - [ ] create new research page
 - [ ] don't save to localstorage while live adjusting things like fill
 - [ ] prevent overlap for more than 200? e.g. for order 5s (with loads)
@@ -62,6 +62,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] research filters not based on class but on custom view directly
 - [x] replace nano with generic http lib axios
 - [x] delete unused code, clean, refactor
 - [x] load order display broken
