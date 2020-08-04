@@ -130,7 +130,7 @@ app.use( (req, res, next) => {
 
 // order matters
 
-// app.get('/data/:n(\\d+)/:s/:o(\\d+)', async (req, res) => {
+// app.get('/data/:n(\\d+)/:s([a-z])/:o(\\d+)', async (req, res) => {
 app.get('/data/:n/:s/:o', async (req, res) => {
   const order = req.params.n
   const style = req.params.s
@@ -147,6 +147,12 @@ app.get('/data/themes', async (req, res) => {
 })
 app.get('/data/orders', async (req, res) => {
   const data = await couch.getAllOrders()
+  res.send( data )
+})
+app.get('/data/flags/:f', async (req, res) => {
+  const filter = req.params.f
+  const source = await couch.viewFilterDB(filter)
+  const data = await generate.svgData(source,4,"quadvertex")
   res.send( data )
 })
 

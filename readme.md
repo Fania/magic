@@ -18,6 +18,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Backend
 
+- [ ] research filters not based on class but on custom view directly
 - [ ] order 256 not working
 - [ ] extract more behaviour out to backend
 - [ ] partition order 5 by magic square classification?
