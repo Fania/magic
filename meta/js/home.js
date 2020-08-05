@@ -900,20 +900,34 @@ function addModalListeners() {
 function addModal(image) {
   // console.log(`toggle modal by`,event.target);
   let modal = document.createElement("div");
+  modal.id = "modal";
   const squares = document.querySelector("#squares");
   squares.classList.add("modalShowing");
   const foot = document.querySelector("footer");
-  modal.id = "modal";
-  let clone = image.cloneNode(true);
-  modal.appendChild(clone);
+  const clone = image.cloneNode(true);
+  const fig = document.createElement("figure");
+  let figcap = document.createElement("figcaption");
+  const idArray = (clone.id).split("-");
+  const classArray = ([...clone.classList]).join(", ");
+  figcap.innerHTML = `ID: <strong>${idArray[2]}</strong><br>Order: ${idArray[1]}  Style: ${idArray[0]}`;
+  if(classArray.includes("pandiag") || classArray.includes("symmetric") || classArray.includes("self-compl")) figcap.innerHTML += `<br>Classification: `
+  if(classArray.includes("pandiag")) figcap.innerHTML += `Pandiagonal `
+  if(classArray.includes("symmetric")) figcap.innerHTML += `Associative `
+  if(classArray.includes("self-compl")) figcap.innerHTML += `Self-complementary`
+  fig.appendChild(clone);
+  fig.appendChild(figcap);
+  modal.appendChild(fig);
   foot.insertAdjacentElement("beforebegin", modal);
-  modal.addEventListener("click", () => {
+  modal.addEventListener("dblclick", () => {
     // document.body.removeChild(modal);
     const [...modals] = document.querySelectorAll('[id^="modal"]');
     modals.forEach(m => m.remove());
     squares.classList.remove("modalShowing");
   });
 }
+/* <svg id="quadvertex-4-53db433d34ec8adecc3d7d192ad7eb7c" class="order-x pad unique self-compl l1918" viewBox="-2 -2 304 304"><path class="lines" d="M 150,100 Q 300,200 200,100 Q 100,0 150,50 Q 200,100 200,200 Q 200,300 150,250 Q 100,200 200,150 Q 300,100 150,200 Q 0,300 150,300 Q 300,300 150,200 Q 0,100 100,150 Q 200,200 150,250 Q 100,300 100,200 Q 100,100 150,50 Q 200,0 100,100 Q 0,200 150,100 Q 300,0 150,0 Q 0,0 150,100 "></path></svg> */
+
+
 
 
 
