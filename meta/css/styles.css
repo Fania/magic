@@ -302,11 +302,11 @@ svg * { box-sizing: border-box; }
 } */
 
 
-main.research #squares svg {
+/* main.research #squares svg { */
   /* width: 125px; */
   /* height: 125px; */
   /* margin: 10px; */
-}
+/* } */
 main.research #squares svg.self-compl {
   stroke: black;
   fill: rgba(144, 238, 144, 0.2);
