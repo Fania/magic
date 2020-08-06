@@ -7,8 +7,6 @@ const CACHE = 'magic-v0.7';
 
 
 
-
-
 const [...menuTriggers] = document.querySelectorAll('nav a');
 const [...displayStyles] = document.getElementsByName('style');
 const [...displayAmounts] = document.getElementsByName('amount');

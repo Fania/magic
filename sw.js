@@ -2,6 +2,7 @@
 
 const cacheName = 'magic-v0.7';
 
+
 const precacheResources = [
   '/',
   '/meta/js/general.js',
