@@ -5,17 +5,11 @@
   --textColour: #eeeeee;
 } */
 
-body:not(.dayMode) {
+body {
   --backColour: #222222;
   --mediumBackColour: #11111140;
   --darkBackColour: #11111195;
   --textColour: #eeeeee;
-}
-body.dayMode {
-  --backColour: #ffffff;
-  --mediumBackColour: #11111140;
-  --darkBackColour: #11111195;
-  --textColour: #000000;
 }
 
 /* BASE */
@@ -40,19 +34,7 @@ body.dayMode svg {
 
 
 
-.printSettings {
-  display: flex; justify-content: center;
-}
-.printSettings input { display: none; }
-.printSettings svg { width: 30px; height: 30px; margin: 0; }
-.printSettings #night + svg.moon { stroke-width: 2px; }
-.printSettings #day + svg.sun { stroke-width: 3px; }
-.printSettings #night:checked + svg.moon:last-child {
-  fill: #EEEEEE;
-}
-.printSettings #day:checked + svg.sun circle {
-  fill: #000000;
-}
+.printSettings { display: none; }
 
 
 
@@ -440,6 +422,33 @@ footer a, footer p {
 
 
 @media screen and (min-width: 700px) {
+
+  body:not(.dayMode) {
+    --backColour: #222222;
+    --mediumBackColour: #11111140;
+    --darkBackColour: #11111195;
+    --textColour: #eeeeee;
+  }
+  body.dayMode {
+    --backColour: #ffffff;
+    --mediumBackColour: #11111140;
+    --darkBackColour: #11111195;
+    --textColour: #000000;
+  }
+
+  .printSettings {
+    display: flex; justify-content: center;
+  }
+  .printSettings input { display: none; }
+  .printSettings svg { width: 30px; height: 30px; margin: 0; }
+  .printSettings #night + svg.moon { stroke-width: 2px; }
+  .printSettings #day + svg.sun { stroke-width: 3px; }
+  .printSettings #night:checked + svg.moon:last-child {
+    fill: #EEEEEE;
+  }
+  .printSettings #day:checked + svg.sun circle {
+    fill: #000000;
+  }
 
   header { padding: 0 2em }
 
