@@ -1,8 +1,21 @@
-html {
+/* html {
   --backColour: #222222;
   --mediumBackColour: #11111140;
   --darkBackColour: #11111195;
   --textColour: #eeeeee;
+} */
+
+body:not(.dayMode) {
+  --backColour: #222222;
+  --mediumBackColour: #11111140;
+  --darkBackColour: #11111195;
+  --textColour: #eeeeee;
+}
+body.dayMode {
+  --backColour: #ffffff;
+  --mediumBackColour: #11111140;
+  --darkBackColour: #11111195;
+  --textColour: #000000;
 }
 
 /* BASE */
@@ -18,23 +31,27 @@ header.hide, footer.hide { display: none; }
 .hide ~ main.research { margin-left: 2em; }
 
 
+header svg {
+  stroke: var(--textColour);
+}
+body.dayMode svg {
+  stroke: var(--textColour);
+}
+
+
 
 .printSettings {
   display: flex; justify-content: center;
 }
-.printSettings input {
-  display: none;
-}
-.printSettings svg {
-  width: 30px; height: 30px;
-}
-.printSettings #night:checked + svg.moon {
-  stroke-width: 2px;
+.printSettings input { display: none; }
+.printSettings svg { width: 30px; height: 30px; margin: 0; }
+.printSettings #night + svg.moon { stroke-width: 2px; }
+.printSettings #day + svg.sun { stroke-width: 3px; }
+.printSettings #night:checked + svg.moon:last-child {
   fill: #EEEEEE;
 }
-.printSettings #day:checked + svg.sun {
-  stroke-width: 3px;
-  fill: #EEEEEE;
+.printSettings #day:checked + svg.sun circle {
+  fill: #000000;
 }
 
 
@@ -377,15 +394,11 @@ hr { margin: 2em 0; }
 
 
 footer {
-  /* background: var(--darkBackColour); */
   margin-top: 3em; padding: 1em; 
   display: flex; 
   justify-content: flex-end; 
-  /* justify-content: space-between;  */
 }
 footer a, footer p { 
-  /* color: #eeeeee80;  */
-  /* color: var(--darkBackColour); */
   opacity: .8;
   mix-blend-mode: difference;
   text-decoration: none; margin: 0; }
@@ -555,7 +568,7 @@ footer a, footer p {
   --mediumBackColour: #11111140;
   --darkBackColour: #11111195;
   --textColour: #eeeeee; */
-
+/* 
 .day   { background: #ffffff; color: #000000; }
 .night { background: #222222; color: #eeeeee; }
 
@@ -567,4 +580,4 @@ footer a, footer p {
 @media (prefers-color-scheme: light) {
   .day.light-scheme   { background: white; color:  #555; }
   .night.light-scheme { background:  #eee; color: black; }
-}
+} */

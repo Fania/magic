@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v0.10';
+const CACHE = 'magic-v0.11';
 
 
 
@@ -44,7 +44,8 @@ const defaults = {
   "fill":          "#666666",
   "falpha":        0,
   "animation":     "off",
-  "speed":         50
+  "speed":         50,
+  "dayMode":       false
 };
 
 
@@ -580,6 +581,9 @@ function adjust(thing) {
     case 'overlap':
       x = document.getElementById('overlap').checked;
       break;
+    case 'dayMode':
+      x = document.getElementById('day').checked;
+      break;
     case 'overlapAmount':
       x = document.querySelector('[name="overlapAmount"]:checked').value;
       break;
@@ -622,6 +626,8 @@ async function loadSettings() {
   document.getElementById('falpha').value = settings.falpha;
   document.querySelector(`#${settings.animation}`).checked = true;
   document.getElementById('speed').value = settings.speed;
+  document.getElementById('day').checked = settings.dayMode;
+  document.getElementById('night').checked = !settings.dayMode;
   if(settings._id) {
     const displayTheme = document.getElementById('themes');
     const themeIndex = displayTheme[displayTheme.selectedIndex].value;
@@ -637,6 +643,11 @@ async function loadSettings() {
     : `order${settings.order}`;
 
   document.body.classList.add(orderClass);
+  if(day.checked) {
+    document.body.classList.add("dayMode");
+  } else {
+    document.body.classList.remove("dayMode");
+  }
 }
 
 
@@ -661,6 +672,11 @@ function applyStyles() {
   applyOverlap(settings.overlap === 'true' || settings.overlap);
   // loading.classList.remove('show');
   document.body.style.cursor = 'default !important';
+  if(day.checked) {
+    document.body.classList.add("dayMode");
+  } else {
+    document.body.classList.remove("dayMode");
+  }
 }
 
 
@@ -930,34 +946,21 @@ function addModal(image) {
 
 
 
-night.addEventListener("click", () => toggleDayNight() );
-day.addEventListener("click", () => toggleDayNight() );
-
-function toggleDayNight() {
-  if (night.checked) {
-    settings.classList.remove("dayMode");
-    document.querySelector(".instructions").classList.remove("dayMode");
-    document.querySelector("footer").classList.remove("dayMode");
-    document.querySelector("body").classList.remove("dayMode");
-    about.classList.remove("dayMode");
-    nightLabel.innerHTML = "<i class='fas fa-moon'></i>";
-    dayLabel.innerHTML = "<i class='far fa-sun'></i>";
-    backColour.value = "#222222";
-    strokeColour.value = "#ffffff";
-    textColour.value = "#ffffff";
-    document.querySelector("[alt='logo']").src = "imgs/logo.svg";
-  } else {
-    settings.classList.add("dayMode");
-    document.querySelector(".instructions").classList.add("dayMode");
-    document.querySelector("footer").classList.add("dayMode");
-    document.querySelector("body").classList.add("dayMode");
-    about.classList.add("dayMode");
-    nightLabel.innerHTML = "<i class='far fa-moon'></i>";
-    dayLabel.innerHTML = "<i class='fas fa-sun'></i>";
-    backColour.value = "#ffffff";
-    strokeColour.value = "#000000";
-    textColour.value = "#000000";
-    document.querySelector("[alt='logo']").src = "imgs/logo-dark.svg";
-  }
-  updateColours();
-}
+night.addEventListener("click", () => {
+  document.body.classList.remove("dayMode");
+  // document.body.style.background = "#222222";
+  document.getElementById('background').value = "#222222";
+  document.getElementById('stroke').value = "#EEEEEE";
+  adjust("background");
+  adjust("stroke");
+  adjust("dayMode");
+});
+day.addEventListener("click", () => {
+  document.body.classList.add("dayMode");
+  // document.body.style.background = "#FFFFFF";
+  document.getElementById('background').value = "#FFFFFF";
+  document.getElementById('stroke').value = "#000000";
+  adjust("background");
+  adjust("stroke");
+  adjust("dayMode");
+});
