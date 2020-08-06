@@ -22,13 +22,10 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] extract more behaviour out to backend
 - [ ] partition order 5 by magic square classification?
 - [ ] partition by number, e.g. simply group every 1000?
-- [ ] cache needs updating if changes on server
-- [ ] cache only adds new resources in, not updates out-of-date ones?
 - [ ] merge sharedLengths into one file via couch? to simplify caching
 
 ### Interface
 
-- [ ] dark mode
 - [ ] add other orders to print stylesheet
 - [ ] modal being added twice after print dialog triggered
 - [ ] create new research page
@@ -46,10 +43,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] enable a fixed width rather than percentage to allow different line breaks in svg grid
 - [ ] make sure new theme is added to dropdown when saved
 - [ ] add pin-to-top / favourite feature for individual squares
-- [ ] day/night mode
-- [ ] add printing options
-- [ ] change spinner
-- [ ] disable spinner
 - [ ] make sure number svgs are readable for larger orders
 
 ### Art
@@ -64,6 +57,13 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] cache needs updating if changes on server
+- [x] cache only adds new resources in, not updates out-of-date ones?
+- [x] change spinner
+- [x] disable spinner
+- [x] day/night mode
+- [x] add printing options
+- [x] dark mode
 - [x] research filters not based on class but on custom view directly
 - [x] replace nano with generic http lib axios
 - [x] delete unused code, clean, refactor
