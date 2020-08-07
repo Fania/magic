@@ -3,7 +3,7 @@
 
 getData("all");
 
-
+document.body.classList.add("order4");
 
 const classification = document.getElementById('classification');
 classification.addEventListener('change', () => {
@@ -85,7 +85,7 @@ document.addEventListener("keydown", event => {
     });
   }
   if (event.key === "p") {
-    document.body.classList.toggle("order4");
+    // document.body.classList.toggle("order4");
     togglePrintStyles();
   }
 });

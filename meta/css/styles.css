@@ -307,20 +307,25 @@ svg * { box-sizing: border-box; }
   /* margin: 10px; */
 /* } */
 main.research #squares svg.self-compl {
-  stroke: black;
-  fill: rgba(144, 238, 144, 0.2);
+  /* stroke: black; */
+  fill: rgba(209, 168, 255, 0.342);
 }
-main.research #squares svg.unique {
+main.research #squares svg.unique,
+main.research #squares svg.identity {
   stroke: cyan;
   stroke-width: 10px;
 }
 main.research #squares svg.pandiag {
-  stroke: magenta;
+  /* stroke: magenta; */
   stroke-width: 10px;
+  border-left: 1px dashed magenta;
+  border-right: 1px dashed magenta;
 }
 main.research #squares svg.symmetric {
-  stroke: yellow;
+  /* stroke: yellow; */
   stroke-width: 10px;
+  border-top: 1px dashed yellow;
+  border-bottom: 1px dashed yellow;
 }
 
 
@@ -397,7 +402,8 @@ footer a, footer p {
 } */
 
 #squares.animateOddly { --speed: 2; }
-#squares.animateOddly svg .lines { 
+#squares.animateOddly svg path { 
+/* #squares.animateOddly svg .lines {  */
   animation-name: dash;
   animation-duration: calc(2.5 * var(--speed))s;
   /* animation-duration: 5s; */
@@ -405,7 +411,7 @@ footer a, footer p {
   animation-direction: alternate; 
   animation-iteration-count: infinite; 
 }
-#squares.animateEvenly svg .lines {
+#squares.animateEvenly svg path {
   animation: dash 20s ease-in-out alternate infinite }
 @keyframes dash { to { stroke-dashoffset: 0 } }
 

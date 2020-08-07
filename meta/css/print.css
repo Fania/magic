@@ -8,15 +8,20 @@ body {
   margin: var(--marg) 40px;
   overflow: hidden;
 }
-.order-x, .order-xt { 
+#squares svg { 
   width: var(--size); 
   height: var(--size);
+  box-sizing: border-box;
 }
 
 header, .mainmenu, footer { display: none }
-.order-x, .order-xt { box-sizing: border-box }
-.order-xt { padding: 2px }
-.pad { padding: 3px; margin: 0; }
+[id^="numbers"] { padding: 2px }
+[id^="quadvertex"],
+[id^="quadline"],
+[id^="straight"],
+[id^="circles"],
+[id^="blocks"],
+[id^="tetromino"] { padding: 3px; margin: 0; }
 
 /* hide main content if modal is showing */
 main #squares.modalShowing { 
