@@ -28,9 +28,7 @@ header.hide, footer.hide { display: none; }
 header svg {
   stroke: var(--textColour);
 }
-body.dayMode svg {
-  stroke: var(--textColour);
-}
+
 
 
 
@@ -355,10 +353,11 @@ main.research #squares svg.symmetric {
 main { margin: 1em; min-height: calc(100vh - 175px); }
 main output { display: flex; justify-content: center; flex-wrap: wrap; }
 
-svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 
+/* this will be overwritten by js code when adjusting color */
+#squares svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 
   width: 100%; margin: 20px 0; }
-svg[id^='numbers'] { font-size: 3em; fill: var(--textColour); stroke: none; }
-svg[id^='arc'], svg[id^='altarc'] { stroke-width: 5px; }
+#squares svg[id^='numbers'] { font-size: 3em; fill: var(--textColour); stroke: none; }
+#squares svg[id^='arc'], svg[id^='altarc'] { stroke-width: 5px; }
 
 
 #loading {
@@ -441,6 +440,12 @@ footer a, footer p {
     --darkBackColour: #11111195;
     --textColour: #000000;
   }
+
+  /* .dayMode #squares svg {
+    stroke: var(--textColour);
+  } */
+
+
 
   .printSettings {
     display: flex; justify-content: center;

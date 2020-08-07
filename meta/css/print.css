@@ -12,6 +12,7 @@ body {
   width: var(--size); 
   height: var(--size);
   box-sizing: border-box;
+  margin: 0;
 }
 
 header, .mainmenu, footer { display: none }
