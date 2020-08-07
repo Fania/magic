@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v0.14';
+const CACHE = 'magic-v0.15';
 
 
 
@@ -638,7 +638,9 @@ async function loadSettings() {
   // add class to body for printing
   document.body.removeAttribute("class");
   const orderClass = 
-    settings.amount == "unique" && settings.order == 4
+    settings.amount == "unique" 
+    && settings.order == 4 
+    && settings.style == 'quadvertex'
     ? `order4U` 
     : `order${settings.order}`;
 
