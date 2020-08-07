@@ -26,6 +26,8 @@ main #squares.modalShowing {
   /* background-color: #FFFFFF;  */
   background-color: inherit; 
 }
+#modal figcaption { display: none; }
+
 main.home, main.research { margin: 0 }
 
 #squares {
