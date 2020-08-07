@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v0.18';
+const CACHE = 'magic-v0.19';
 
 
 
@@ -660,8 +660,8 @@ function applyStyles() {
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
   const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "#squares svg");
-  console.log(svgRuleIndex)
-  console.log(rules.find(rule => rule.selectorText === "#squares svg"))
+  // console.log(svgRuleIndex)
+  // console.log(rules.find(rule => rule.selectorText === "#squares svg"))
   sheet.deleteRule(svgRuleIndex)
   const text = `
   #squares svg {
