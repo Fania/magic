@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v0.16';
+const CACHE = 'magic-v0.17';
 
 
 
@@ -842,12 +842,12 @@ function animationCSS(id, order, style, len) {
   // const syncRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
   // sheet.deleteRule(syncRuleIndex);
   const styleName = style === 'unique' ? 'quadvertex' : style
-  const syncName = `#squares.animate #${styleName}-${order}-${id} .lines`;
+  const syncName = `#squares.animate #${styleName}-${order}-${id} path`;
   const syncText = `${syncName}{stroke-dasharray:${len};stroke-dashoffset:${len}}`;
   sheet.insertRule(syncText, sheet.cssRules.length);
 
   const sheetNew = document.styleSheets[0];
-  const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} .lines`;
+  const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} path`;
   
   // TODO find fix
   // need to do speed calculation here, not in CSS
