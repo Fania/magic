@@ -27,19 +27,16 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 ### Interface
 
 - [ ] make print stylesheet sizes dynamic
-- [x] add other orders to print stylesheet
 - [ ] modal being added twice after print dialog triggered
 - [ ] create new research page
 - [ ] don't save to localstorage while live adjusting things like fill
 - [ ] prevent overlap for more than 200? e.g. for order 5s (with loads)
 - [ ] try inline styles for animation?
 - [ ] add dropdown for shared lengths per order
-- [ ] hover info for each square or put into modal
 - [ ] fix mobile style again
 - [ ] finish defining data lists for ranges
 - [ ] change width/size to be based on height, not width
 - [ ] insert intersection observer sooner? at 150?
-- [ ] fix line width for arc and altarc
 - [ ] number overlay?
 - [ ] enable a fixed width rather than percentage to allow different line breaks in svg grid
 - [ ] make sure new theme is added to dropdown when saved
@@ -58,6 +55,9 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] add other orders to print stylesheet
+- [x] hover info for each square or put into modal
+- [x] fix line width for arc and altarc
 - [x] cache needs updating if changes on server
 - [x] cache only adds new resources in, not updates out-of-date ones?
 - [x] change spinner

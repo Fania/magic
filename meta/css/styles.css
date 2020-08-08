@@ -288,8 +288,7 @@ svg * { box-sizing: border-box; }
   width: 100vw; height: 100vh;
   display: flex; justify-content: center; align-items: center;
   background-color: rgba(0,0,0,0.9); }
-.dayMode #modal { background-color: rgba(255, 255, 255, 0.801); }
-/* #modal img, #modal svg { object-fit: contain; width: 90vw; height: 90vh; } */
+.dayMode #modal { background-color: rgba(255, 255, 255, 0.8); }
 /* gets overwritten by js */
 #modal svg { 
   object-fit: contain; 
@@ -304,14 +303,13 @@ svg * { box-sizing: border-box; }
 } */
 
 
-/* main.research #squares svg { */
-  /* width: 125px; */
-  /* height: 125px; */
-  /* margin: 10px; */
-/* } */
+main.research #squares svg {
+  width: 125px;
+  height: 125px;
+  margin: 10px;
+}
 main.research #squares svg.self-compl {
-  /* stroke: black; */
-  fill: rgba(209, 168, 255, 0.342);
+  fill: rgba(209, 168, 255, 0.8);
 }
 main.research #squares svg.unique,
 main.research #squares svg.identity {
@@ -377,7 +375,7 @@ main output { display: flex; justify-content: center; flex-wrap: wrap; }
 /* main img { width: 100%; border: 1px solid white } */
 main img.tinyLogo { width: 30px; border: none; position: relative; top: 5px }
 
-.illustration { float: right }
+.illustration { float: right; width: 250px; height: 250px; }
 .bothNumbers { display: flex; align-items: center; }
 .bothNumbers span { font-size: 5em; padding: 0 .5em; }
 hr { margin: 2em 0; }

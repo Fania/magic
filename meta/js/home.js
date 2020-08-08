@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.2';
+const CACHE = 'magic-v2.1.3';
 
 
 
@@ -660,10 +660,8 @@ function applyStyles() {
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
   const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "#squares svg");
-  const modalRuleIndex = rules.findIndex(rule => rule.selectorText === "#modal svg");
-  // console.log(svgRuleIndex)
-  // console.log(rules.find(rule => rule.selectorText === "#squares svg"))
   sheet.deleteRule(svgRuleIndex)
+  const modalRuleIndex = rules.findIndex(rule => rule.selectorText === "#modal svg");
   sheet.deleteRule(modalRuleIndex)
   const text = `
   #squares svg {
@@ -727,6 +725,15 @@ async function getData(offset = 0) {
         animationCSS(data[i]['id'], order, style, 
                              data[i]['length']);
       }
+    }
+    // recalc bounding box for arc and altarc styles
+    if(style === 'arc' || style === 'altarc') {
+      const [...sqs] = document.querySelectorAll("#squares svg");
+      sqs.forEach(sq => {
+        const p = sq.querySelector("path");
+        const bbx = p.getBBox();
+        sq.setAttribute('viewBox', `${bbx.x} ${bbx.y} ${bbx.width} ${bbx.height}`);
+      });
     }
     // TODO add sntinel earlier, at 150 or so
     // only add sentinel if we have more results left
