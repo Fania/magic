@@ -288,6 +288,7 @@ svg * { box-sizing: border-box; }
   width: 100vw; height: 100vh;
   display: flex; justify-content: center; align-items: center;
   background-color: rgba(0,0,0,0.9); }
+.dayMode #modal { background-color: rgba(255, 255, 255, 0.801); }
 /* #modal img, #modal svg { object-fit: contain; width: 90vw; height: 90vh; } */
 /* gets overwritten by js */
 #modal svg { 
