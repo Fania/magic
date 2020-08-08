@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v0.19';
+const CACHE = 'magic-v0.20';
 
 
 
@@ -660,9 +660,11 @@ function applyStyles() {
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
   const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "#squares svg");
+  const modalRuleIndex = rules.findIndex(rule => rule.selectorText === "#modal svg");
   // console.log(svgRuleIndex)
   // console.log(rules.find(rule => rule.selectorText === "#squares svg"))
   sheet.deleteRule(svgRuleIndex)
+  sheet.deleteRule(modalRuleIndex)
   const text = `
   #squares svg {
     stroke: ${settings.stroke}${getHex(settings.salpha)};
@@ -671,7 +673,16 @@ function applyStyles() {
     width: ${settings.size}%;
     margin: ${settings.gap}px;
   }`;
+  const modaltext = `
+  #modal svg {
+    stroke: ${settings.stroke}${getHex(settings.salpha)};
+    fill: ${settings.fill}${getHex(settings.falpha)};
+    stroke-width: ${settings.strokeWidth}px;
+    object-fit: contain; 
+    width: 80vw; height: 80vh; 
+  }`;
   sheet.insertRule(text, sheet.cssRules.length);
+  sheet.insertRule(modaltext, sheet.cssRules.length);
   document.body.style.background = settings.background;
   applyOverlap(settings.overlap === 'true' || settings.overlap);
   // loading.classList.remove('show');
