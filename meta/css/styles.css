@@ -449,7 +449,7 @@ footer a, footer p {
   /* .dayMode #squares svg {
     stroke: var(--textColour);
   } */
-
+  .dayMode #styleOptions svg text { fill: none; }
 
 
   .printSettings {
