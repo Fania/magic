@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.6';
+const CACHE = 'magic-v2.1.7';
 
 
 
@@ -138,12 +138,12 @@ size.addEventListener('wheel', ()=> {
   // console.log('SIZE wheel triggered');
   const old = parseInt(size.value);
   if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
-    if(old > 5) { size.value = old - 5; } 
+    if(old > 1) { size.value = old - 1; } 
     else        { size.value = 1; }
   }
   if (Math.sign(event.wheelDeltaY) === 1) { // UP
-    if(old < 95) { size.value = old + 5; } 
-    else         { size.value = 100; }
+    if(old < 69) { size.value = old + 1; } 
+    else         { size.value = 70; }
   }
   adjust('size');
   event.preventDefault();
@@ -667,6 +667,7 @@ function applyStyles() {
     fill: ${settings.fill}${getHex(settings.falpha)};
     stroke-width: ${settings.strokeWidth}px;
     width: ${settings.size}%;
+    max-height: 70vh; 
     margin: ${settings.gap}px;
   }`;
   sheet.insertRule(text, sheet.cssRules.length);
