@@ -35,13 +35,11 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] add dropdown for shared lengths per order
 - [ ] fix mobile style again
 - [ ] finish defining data lists for ranges
-- [ ] change width/size to be based on height, not width
 - [ ] insert intersection observer sooner? at 150?
 - [ ] number overlay?
 - [ ] enable a fixed width rather than percentage to allow different line breaks in svg grid
 - [ ] make sure new theme is added to dropdown when saved
 - [ ] add pin-to-top / favourite feature for individual squares
-- [ ] make sure number svgs are readable for larger orders
 
 ### Art
 
@@ -55,6 +53,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] change width/size to be based on height, not width
+- [x] make sure number svgs are readable for larger orders
 - [x] add other orders to print stylesheet
 - [x] hover info for each square or put into modal
 - [x] fix line width for arc and altarc
