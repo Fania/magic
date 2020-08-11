@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.4';
+const CACHE = 'magic-v2.1.5';
 
 
 
@@ -661,8 +661,6 @@ function applyStyles() {
   const [...rules] = sheet.cssRules;
   const svgRuleIndex = rules.findIndex(rule => rule.selectorText === "#squares svg");
   sheet.deleteRule(svgRuleIndex)
-  const modalRuleIndex = rules.findIndex(rule => rule.selectorText === "#modal svg");
-  sheet.deleteRule(modalRuleIndex)
   const text = `
   #squares svg {
     stroke: ${settings.stroke}${getHex(settings.salpha)};
@@ -671,6 +669,12 @@ function applyStyles() {
     width: ${settings.size}%;
     margin: ${settings.gap}px;
   }`;
+  sheet.insertRule(text, sheet.cssRules.length);
+
+  const sheet2 = document.styleSheets[0];
+  const [...rules2] = sheet2.cssRules;
+  const modalRuleIndex = rules2.findIndex(rule => rule.selectorText === "#modal svg");
+  sheet.deleteRule(modalRuleIndex)
   const modaltext = `
   #modal svg {
     stroke: ${settings.stroke}${getHex(settings.salpha)};
@@ -679,8 +683,8 @@ function applyStyles() {
     object-fit: contain; 
     width: 80vw; height: 80vh; 
   }`;
-  sheet.insertRule(text, sheet.cssRules.length);
-  sheet.insertRule(modaltext, sheet.cssRules.length);
+  sheet2.insertRule(modaltext, sheet.cssRules.length);
+
   document.body.style.background = settings.background;
   applyOverlap(settings.overlap === 'true' || settings.overlap);
   // loading.classList.remove('show');

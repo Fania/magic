@@ -290,10 +290,7 @@ svg * { box-sizing: border-box; }
   background-color: rgba(0,0,0,0.9); }
 .dayMode #modal { background-color: rgba(255, 255, 255, 0.8); }
 /* gets overwritten by js */
-#modal svg { 
-  object-fit: contain; 
-  width: 80vw; height: 80vh; 
-}
+#modal svg { object-fit: contain; width: 80vw; height: 80vh; }
 #modal figure { display: flex; flex-direction: column; align-items: center; }
 #modal figcaption { font-size: 2em; }
 
@@ -356,11 +353,16 @@ main.research #squares svg.symmetric {
 main { margin: 1em; min-height: calc(100vh - 175px); }
 main output { display: flex; justify-content: center; flex-wrap: wrap; }
 
-svg[id^='arc'], svg[id^='altarc'] { stroke-width: 5px; }
+
 /* this will be overwritten by js code when adjusting color */
-#squares svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 
-  width: 100%; margin: 20px 0; }
-#squares svg[id^='numbers'] { font-size: 3em; fill: var(--textColour); stroke: none; }
+#squares svg { fill: none; stroke: var(--textColour); stroke-width: 2px; margin: 20px 0; }
+#squares svg[id^='numbers'] { 
+  fill: var(--textColour); 
+  stroke: none; 
+}
+#squares svg[id^='numbers'] text { 
+  font-size: 35px;
+}
 
 
 #loading {
