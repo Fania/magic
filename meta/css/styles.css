@@ -328,6 +328,33 @@ main.research #squares svg.symmetric {
 
 
 
+/* image filters */ 
+label.fillab {
+  padding: 0 5px;
+  margin: 5px 5px;
+  line-height: 1.5em;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  display: inline-block;
+  border-radius: 3px;
+  border: 1px solid var(--dark);
+}
+label.fillab:hover {
+  background-color: var(--light);
+}
+
+/* hide svgs first */
+svg[class*="pandiag"],
+svg[class*="self-compl"],
+svg[class*="symmetric"]
+{
+  display: none;
+}
+
+
+
+
+
 
 
 
