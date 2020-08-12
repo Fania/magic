@@ -37,6 +37,10 @@ main #squares.modalShowing {
 
 main.home, main.research { margin: 0 }
 
+main.research #squares svg {
+  width: 28.8px; height: 28.8px; margin: 0;
+}
+
 #squares {
   justify-content: start;
 }
