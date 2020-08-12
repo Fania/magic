@@ -32,6 +32,7 @@ main #squares.modalShowing {
   /* background-color: #FFFFFF;  */
   background-color: inherit; 
 }
+#modal svg { width: 80vw; height: 80vh; }
 #modal figcaption { display: none; }
 
 main.home, main.research { margin: 0 }

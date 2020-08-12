@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.8';
+const CACHE = 'magic-v2.1.9';
 
 
 
@@ -682,7 +682,7 @@ function applyStyles() {
     fill: ${settings.fill}${getHex(settings.falpha)};
     stroke-width: ${settings.strokeWidth}px;
     object-fit: contain; 
-    width: 80vw; height: 80vh; 
+    width: 60vw; height: 60vh; 
   }`;
   sheet2.insertRule(modaltext, sheet.cssRules.length);
 
