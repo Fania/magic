@@ -5,14 +5,14 @@ getData("all");
 
 document.body.classList.add("order4");
 
-const classification = document.getElementById('classification');
-classification.addEventListener('change', () => {
-  console.log('classification change triggered');
-  let x = classification[classification.selectedIndex].value;
-  console.log(x);
-  // filterSquares(x);
-  getData(x);
-});
+// const classification = document.getElementById('classification');
+// classification.addEventListener('change', () => {
+//   console.log('classification change triggered');
+//   let x = classification[classification.selectedIndex].value;
+//   console.log(x);
+//   // filterSquares(x);
+//   getData(x);
+// });
 
 
 
@@ -108,14 +108,9 @@ function togglePrintStyles() {
 
 
 
-const fillabs = document.querySelectorAll(".fillab input");
-// console.log(fillabs)
+const fillabs = document.querySelectorAll("input[class^=filter]");
 fillabs.forEach(fl => {
   fl.addEventListener("change", () => { 
-    console.log(fl);
-    // console.log(fl.parentElement);
-    console.log(fl.checked);
-    // toggleFilter(fl.id);
     if(fl.checked) {
       showClass(fl.id);
     } else {
@@ -125,7 +120,7 @@ fillabs.forEach(fl => {
 })
 
 function showClass(thing) {
-  console.log("show", thing);
+  // console.log("show", thing);
   const sheet = document.styleSheets[0];
   const text = `
   svg[class*="${thing}"] {
@@ -135,10 +130,10 @@ function showClass(thing) {
 }
 
 function hideClass(thing) {
-  console.log("hide", thing);
+  // console.log("hide", thing);
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
   const svgRuleIndex = rules.findIndex(rule => rule.selectorText === `svg[class*="${thing}"]`);
-  console.log(svgRuleIndex);
+  // console.log(svgRuleIndex);
   sheet.deleteRule(svgRuleIndex);
 }

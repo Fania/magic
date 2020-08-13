@@ -36,7 +36,7 @@
 
     <fieldset id="advancedOptions">
       {# <legend>Advanced Options</legend> #}
-      <label>
+      {# <label>
         <span>Class</span>
         <select name="classification" id="classification">
           <option value="all" selected>All</option>
@@ -44,37 +44,54 @@
           <option value="symmetric">Associative</option>
           <option value="self-compl">Self-compl.</option>
         </select>
-      </label>
+      </label> #}
       <label>
         <span>Length</span>
         <select id="lengths">
           <option value="">Choose</option>
         </select>
       </label>
-
-      <br>
-      <br>
-      
-      <label class="fillab">
-        <span>all</span>
-        <input id="all" class="filter-all" type="checkbox"/>
-      </label>
-      <label class="fillab">
-        <span>Pandiagonal</span>
-        <input id="pandiag" class="filter-pandiag" type="checkbox"/>
-      </label>
-      <label class="fillab">
-        <span>Associative</span>
-        <input id="symmetric" class="filter-symmetric" type="checkbox"/>
-      </label>
-      <label class="fillab">
-        <span>Self-compl.</span>
-        <input id="self-compl" class="filter-self-compl" type="checkbox"/>
-      </label>
-
-
-
     </fieldset>
+
+    <fieldset id="filterOptions">
+      <legend>Tags</legend>
+      {# <input id="all" class="filter-all" type="checkbox"/>
+      <label for="all" class="tag">all</label>
+
+      <input id="none" class="filter-none" type="checkbox"/>
+      <label for="none" class="tag">none</label> #}
+      
+      <input id="MH" class="filter-MH" type="checkbox"/>
+      <label for="MH" class="tag">MH</label>
+      
+      <input id="MV" class="filter-MV" type="checkbox"/>
+      <label for="MV" class="tag">MV</label>
+      
+      <input id="MD1" class="filter-MD1" type="checkbox"/>
+      <label for="MD1" class="tag">MD1</label>
+      
+      <input id="MD2" class="filter-MD2" type="checkbox"/>
+      <label for="MD2" class="tag">MD2</label>
+      
+      <input id="R1" class="filter-R1" type="checkbox"/>
+      <label for="R1" class="tag">R1</label>
+      
+      <input id="R2" class="filter-R2" type="checkbox"/>
+      <label for="R2" class="tag">R2</label>
+      
+      <input id="R3" class="filter-R3" type="checkbox"/>
+      <label for="R3" class="tag">R3</label>
+      
+      <input id="pandiag" class="filter-pandiag" type="checkbox"/>
+      <label for="pandiag" class="tag">Pandiagonal</label>
+      
+      <input id="symmetric" class="filter-symmetric" type="checkbox"/>
+      <label for="symmetric" class="tag">Associative</label>
+      
+      <input id="self-compl" class="filter-self-compl" type="checkbox"/>
+      <label for="self-compl" class="tag">Self-compl.</label>
+    </fieldset>
+      
 
     {# <input type="input" id="search" placeholder="search id(s)"> #}
 

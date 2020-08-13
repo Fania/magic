@@ -301,9 +301,9 @@ svg * { box-sizing: border-box; }
 
 
 main.research #squares svg {
-  width: 125px;
-  height: 125px;
-  margin: 10px;
+  width: 50px;
+  height: 50px;
+  margin: 3px;
 }
 main.research #squares svg.self-compl {
   fill: rgba(209, 168, 255, 0.8);
@@ -329,7 +329,7 @@ main.research #squares svg.symmetric {
 
 
 /* image filters */ 
-label.fillab {
+label.tag {
   padding: 0 5px;
   margin: 5px 5px;
   line-height: 1.5em;
@@ -337,13 +337,25 @@ label.fillab {
   text-transform: uppercase;
   display: inline-block;
   border-radius: 3px;
-  border: 1px solid var(--dark);
+  border: 1px solid gray;
 }
-label.fillab:hover {
-  background-color: var(--light);
+input[class^="filter-"] { display: none; }
+input[class^="filter-"]:checked + label.tag,
+label.tag:hover {
+  background-color: #ccc;
+  color: #222;
 }
 
 /* hide svgs first */
+svg[class*="MD1"],
+svg[class*="MD2"],
+svg[class*="MH"],
+svg[class*="MV"],
+svg[class*="R1"],
+svg[class*="R2"],
+svg[class*="R3"],
+svg[class*="unique"],
+svg[class*="identity"],
 svg[class*="pandiag"],
 svg[class*="self-compl"],
 svg[class*="symmetric"]
