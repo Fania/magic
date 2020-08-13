@@ -113,8 +113,10 @@ fillabs.forEach(fl => {
   fl.addEventListener("change", () => { 
     if(fl.checked) {
       showClass(fl.id);
+      if(fl.id == "unique") showClass("identity");
     } else {
       hideClass(fl.id);
+      if(fl.id == "unique") hideClass("identity");
     }
   });
 })

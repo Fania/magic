@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.11';
+const CACHE = 'magic-v2.1.12';
 
 
 
