@@ -358,7 +358,19 @@ svg[class*="unique"],
 svg[class*="identity"],
 svg[class*="pandiag"],
 svg[class*="self-compl"],
-svg[class*="symmetric"]
+svg[class*="symmetric"],
+svg[class*="elara"],
+svg[class*="asteria"],
+svg[class*="hestia"],
+svg[class*="hera"],
+svg[class*="demeter"],
+svg[class*="niobe"],
+svg[class*="thaumas"],
+svg[class*="nemesis"],
+svg[class*="arges"],
+svg[class*="eris"],
+svg[class*="moros"],
+svg[class*="cottus"]
 {
   display: none;
 }

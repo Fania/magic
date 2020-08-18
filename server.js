@@ -62,7 +62,7 @@ async function initialiseSources() {
 
 // initialiseSources()
 // setupSource(256)
-// setupSource(7)
+// setupSource(4)
 
 
 
@@ -153,6 +153,7 @@ app.get('/data/orders', async (req, res) => {
 app.get('/data/flags/:f', async (req, res) => {
   const filter = req.params.f
   const source = await couch.viewFilterDB(filter)
+  // console.log(source[0])
   const data = await generate.svgData(source,4,"quadvertex")
   res.send( data )
 })
