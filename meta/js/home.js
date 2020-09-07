@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.14';
+const CACHE = 'magic-v2.1.15';
 
 
 
@@ -720,10 +720,12 @@ async function getData(offset = 0) {
     document.body.style.cursor = 'wait !important';
     // debugger;
     const url = `/data/${order}/${style}/${offset}`;
+    // console.log(url);
     if (url !== '/data/4/unique/0') updateCache(url);
     const rawData = await fetch(url);
     const data = await rawData.json();
     for (let i in data) {
+      // console.log(i);
       const elem = data[i].svg;
       squares.insertAdjacentHTML('beforeend',elem);
       if(!['numbers','blocks','circles','tetromino'].includes(style)) {

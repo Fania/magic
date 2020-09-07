@@ -125,7 +125,7 @@ function showClass(thing) {
   // console.log("show", thing);
   const sheet = document.styleSheets[0];
   const text = `
-  svg[class*="${thing}"] {
+  .research svg[class*="${thing}"] {
     display: block;
   }`;
   sheet.insertRule(text, sheet.cssRules.length);
@@ -135,7 +135,7 @@ function hideClass(thing) {
   // console.log("hide", thing);
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
-  const svgRuleIndex = rules.findIndex(rule => rule.selectorText === `svg[class*="${thing}"]`);
+  const svgRuleIndex = rules.findIndex(rule => rule.selectorText === `.research svg[class*="${thing}"]`);
   // console.log(svgRuleIndex);
   sheet.deleteRule(svgRuleIndex);
 }
