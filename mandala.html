@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mandala</title>
+</head>
+
+<style>
+
+svg {
+  width: 200px;
+  fill: none;
+  stroke: black;
+  stroke-width: 2px;
+}
+
+.hide {
+  display: none;
+}
+
+</style>
+
+<body>
+  
+<div id="mandala">
+</div>
+
+<svg id="quadvertex" class="hide" class="unique self-compl demeter l1918" viewBox="-2 -2 304 304"><path d="M 50,0 Q 100,0 150,50 Q 200,100 250,150 Q 300,200 300,150 Q 300,100 250,200 Q 200,300 150,250 Q 100,200 50,250 Q 0,300 150,300 Q 300,300 250,250 Q 200,200 150,250 Q 100,300 50,200 Q 0,100 0,150 Q 0,200 50,150 Q 100,100 150,50 Q 200,0 250,0 Q 300,0 150,0 Q 0,0 50,0 "></path></svg>
+
+<script>
+
+const quad = document.querySelector("#quadvertex");
+
+let r = 0;
+
+for(let i=0; i<6; i++) {
+
+  let q = quad.cloneNode(true);
+  q.classList.remove('hide');
+  q.style.transform = `rotate(${r}deg)`;
+  mandala.insertAdjacentElement('beforeend',q);
+  r += 60;
+
+}
+
+</script>
+
+</body>
+</html>
