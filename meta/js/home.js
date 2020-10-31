@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.17';
+const CACHE = 'magic-v2.1.18';
 
 
 
@@ -367,7 +367,7 @@ const random = document.getElementById('random');
 random.addEventListener('click', async ()=> { 
   // console.log('RANDOM click triggered');
   const settings = getSettings();
-  const orders = await remoteOrders;
+  const orders = await getOrders();
   const orderIndex = getRandomInt(0, (orders.length - 1));
   const orderSelect = document.getElementById('order');
   settings.order = orderSelect[orderIndex].value;

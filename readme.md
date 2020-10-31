@@ -16,6 +16,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] length filter
 - [ ] search by (id:order, lists)
 - [ ] add search box for single input and multiple inputs
+- [ ] remoteOrders ? randomise theme broken
 
 ### Backend
 
