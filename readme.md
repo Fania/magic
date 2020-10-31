@@ -11,6 +11,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Functionality
 
+- [ ] circle colours broken for n>4
 - [ ] classification
 - [ ] length filter
 - [ ] search by (id:order, lists)

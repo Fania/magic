@@ -40,7 +40,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3000, () => {
-	// console.log('Running on http://localhost:3000')
+	console.log('Running on http://localhost:3000')
 })
 
 
