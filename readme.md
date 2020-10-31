@@ -11,12 +11,10 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Functionality
 
-- [ ] circle colours broken for n>4
 - [ ] classification
 - [ ] length filter
 - [ ] search by (id:order, lists)
 - [ ] add search box for single input and multiple inputs
-- [ ] remoteOrders ? randomise theme broken
 
 ### Backend
 
@@ -55,6 +53,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] circle colours broken for n>4
+- [x] remoteOrders ? randomise theme broken
 - [x] change width/size to be based on height, not width
 - [x] make sure number svgs are readable for larger orders
 - [x] add other orders to print stylesheet
