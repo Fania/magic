@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.20';
+const CACHE = 'magic-v2.1.21';
 
 
 
@@ -318,9 +318,11 @@ speed.addEventListener('input', ()=> {
   const animType = document.querySelector('[name="animation"]:checked').value;
   if(animType === 'sync') {
     const evenRuleIndex = rules.findIndex(rule => 
-      rule.selectorText === "#squares.animateEvenly svg .lines");
+      // rule.selectorText === "#squares.animateEvenly svg .lines");
+      rule.selectorText === "#squares.animateEvenly svg path");
     sheet.deleteRule(evenRuleIndex);
-    const text = `#squares.animateEvenly svg .lines { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
+    // const text = `#squares.animateEvenly svg .lines { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
+    const text = `#squares.animateEvenly svg path { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
     sheet.insertRule(text, sheet.cssRules.length);
   } 
   if(animType === 'async') {
