@@ -472,6 +472,10 @@ footer a, footer p {
 
 
 
+
+
+
+
 @media screen and (min-width: 500px) {
 
   svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 

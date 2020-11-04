@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.21';
+const CACHE = 'magic-v2.1.22';
 
 
 
@@ -271,6 +271,8 @@ falpha.addEventListener('wheel', ()=> {
   event.preventDefault();
 });
 
+
+
 // ANIMATION OPTIONS
 const syncA = document.getElementById('sync');
 const asyncA = document.getElementById('async');
@@ -313,6 +315,27 @@ const speed = document.getElementById('speed');
 speed.addEventListener('input', ()=> { 
   // console.log('SPEED input triggered');
   // console.log('speed', speed.value);
+  speedCSS();
+  adjust('speed');
+});
+speed.addEventListener('wheel', ()=> { 
+  // console.log('SPEED wheel triggered');
+  const old = parseInt(speed.value);
+  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+    if(old > 6) { speed.value = old - 5; } 
+    else        { speed.value = 1; }
+  }
+  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+    if(old <= 95) { speed.value = old + 5; } 
+    else          { speed.value = 100; }
+  }
+  speedCSS();
+  adjust('speed');
+  event.preventDefault();
+});
+
+
+function speedCSS() {
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
   const animType = document.querySelector('[name="animation"]:checked').value;
@@ -333,23 +356,29 @@ speed.addEventListener('input', ()=> {
     const text = `#squares.animateOddly { --speed: ${speedValue} }`;
     sheet.insertRule(text, sheet.cssRules.length);
   }
-  adjust('speed');
-});
-speed.addEventListener('wheel', ()=> { 
-  // console.log('SPEED wheel triggered');
-  const old = parseInt(speed.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
-    if(old > 5) { speed.value = old - 5; } 
-    else        { speed.value = 1; }
-  }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
-    if(old <= 95) { speed.value = old + 5; } 
-    else          { speed.value = 100; }
-  }
-  adjust('speed');
-  event.preventDefault();
-});
+}
 
+
+
+// TODO pause button for animation 
+const pause = document.getElementById('pause');
+pause.addEventListener('change', ()=> { 
+  console.log('PAUSE change triggered');
+
+  const sheet = document.styleSheets[0];
+  const [...rules] = sheet.cssRules;
+  const animType = document.querySelector('[name="animation"]:checked').value;
+  if(animType === 'sync') {
+    const text = `#squares.animatesEvenly { animation-play-state: paused }`;
+    sheet.insertRule(text, sheet.cssRules.length);
+  } 
+  if(animType === 'async') {
+    const text = `#squares.animateOddly { --speed: ${2} }`;
+    // const text = `#squares.animateOddly { animation-play-state: paused }`;
+    sheet.insertRule(text, sheet.cssRules.length);
+  }
+
+});
 
 
 
