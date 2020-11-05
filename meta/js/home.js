@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.22';
+const CACHE = 'magic-v2.1.23';
 
 
 
@@ -315,7 +315,7 @@ const speed = document.getElementById('speed');
 speed.addEventListener('input', ()=> { 
   // console.log('SPEED input triggered');
   // console.log('speed', speed.value);
-  speedCSS();
+  insertSpeedStyles();
   adjust('speed');
 });
 speed.addEventListener('wheel', ()=> { 
@@ -329,13 +329,13 @@ speed.addEventListener('wheel', ()=> {
     if(old <= 95) { speed.value = old + 5; } 
     else          { speed.value = 100; }
   }
-  speedCSS();
+  insertSpeedStyles();
   adjust('speed');
   event.preventDefault();
 });
 
 
-function speedCSS() {
+function insertSpeedStyles() {
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
   const animType = document.querySelector('[name="animation"]:checked').value;
@@ -360,23 +360,91 @@ function speedCSS() {
 
 
 
+
+// #quadvertex-3-1 .lines { stroke-dasharray: 1040; stroke-dashoffset: 1040; }
+// #quadvertex-3-1 .lines { animation: dash 2.08s ease-in-out alternate infinite; }
+
+// called when grabbing new data via api and intersection observer
+function insertAnimationStyles(id, order, style, len) {
+  // console.log(id, order, style, len);
+
+  const sheet = document.styleSheets[0];
+  const [...rules] = sheet.cssRules;
+  // const [...rules] = sheet.cssRules;
+  // const syncRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
+  // sheet.deleteRule(syncRuleIndex);
+  const styleName = style === 'unique' ? 'quadvertex' : style
+  const syncName = `#squares.animate #${styleName}-${order}-${id} path`;
+  const syncText = `${syncName}{stroke-dasharray:${len};stroke-dashoffset:${len}}`;
+  sheet.insertRule(syncText, sheet.cssRules.length);
+
+  const sheetNew = document.styleSheets[0];
+  const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} path`;
+  
+  // TODO find fix
+  // need to do speed calculation here, not in CSS
+  // don't ask why. I guess the CSSOM inserted rules can't do calc
+  const asyncSpeedIndex = rules.findIndex(rule => 
+      rule.selectorText === "#squares.animateOddly");
+  const cssTextpre = rules[asyncSpeedIndex].style.cssText;
+  // problem: does not update speed vairable multiplier dynamically,
+  // only reads it at first load (via getData)
+  const asyncSpeed = cssTextpre.split(' ')[1].replace(';','');
+  const speedValue = (len/1000) * asyncSpeed;
+  const asyncText = `
+  ${asyncName}{
+    animation-name: dash;
+    animation-duration: ${speedValue}s;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate; 
+    animation-iteration-count: infinite; 
+  }`;
+  // console.log(asyncText);
+  sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
+  // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
+
+}
+
+
+
+
 // TODO pause button for animation 
 const pause = document.getElementById('pause');
 pause.addEventListener('change', ()=> { 
   console.log('PAUSE change triggered');
 
-  const sheet = document.styleSheets[0];
-  const [...rules] = sheet.cssRules;
-  const animType = document.querySelector('[name="animation"]:checked').value;
-  if(animType === 'sync') {
-    const text = `#squares.animatesEvenly { animation-play-state: paused }`;
-    sheet.insertRule(text, sheet.cssRules.length);
-  } 
-  if(animType === 'async') {
-    const text = `#squares.animateOddly { --speed: ${2} }`;
-    // const text = `#squares.animateOddly { animation-play-state: paused }`;
-    sheet.insertRule(text, sheet.cssRules.length);
+
+  // animation-play-state: paused;
+  // animation-play-state: running;
+
+  const paths = document.querySelectorAll('#squares svg path');
+  // console.log(paths);
+  console.log(pause);
+  console.log(pause.checked);
+  if (pause.checked) {
+    // animations are running and pause button can be checked
+    paths.forEach( p => {
+      p.style.animationPlayState = 'paused';
+    });
+  } else {
+    // animations are paused and pause button restarts them
+    paths.forEach( p => {
+      p.style.animationPlayState = 'running';
+    });
   }
+
+  // const sheet = document.styleSheets[0];
+  // const [...rules] = sheet.cssRules;
+  // const animType = document.querySelector('[name="animation"]:checked').value;
+  // if(animType === 'sync') {
+  //   const text = `#squares.animatesEvenly svg path { animation-play-state: paused }`;
+  //   sheet.insertRule(text, sheet.cssRules.length);
+  // } 
+  // if(animType === 'async') {
+  //   const text = `#squares.animateOddly svg path { animation-play-state: paused }`;
+  //   // const text = `#squares.animateOddly { animation-play-state: paused }`;
+  //   sheet.insertRule(text, sheet.cssRules.length);
+  // }
 
 });
 
@@ -760,8 +828,8 @@ async function getData(offset = 0) {
       const elem = data[i].svg;
       squares.insertAdjacentHTML('beforeend',elem);
       if(!['numbers','blocks','circles','tetromino'].includes(style)) {
-        animationCSS(data[i]['id'], order, style, 
-                             data[i]['length']);
+        insertAnimationStyles(data[i]['id'], order, style, 
+                              data[i]['length']);
       }
     }
     // recalc bounding box for arc and altarc styles
@@ -887,49 +955,6 @@ function applyOverlap(state) {
 
 
 
-// #quadvertex-3-1 .lines { stroke-dasharray: 1040; stroke-dashoffset: 1040; }
-// #quadvertex-3-1 .lines { animation: dash 2.08s ease-in-out alternate infinite; }
-
-// called when grapping new data via api and intersection observer
-function animationCSS(id, order, style, len) {
-  // console.log(id, order, style, len);
-
-  const sheet = document.styleSheets[0];
-  const [...rules] = sheet.cssRules;
-  // const [...rules] = sheet.cssRules;
-  // const syncRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
-  // sheet.deleteRule(syncRuleIndex);
-  const styleName = style === 'unique' ? 'quadvertex' : style
-  const syncName = `#squares.animate #${styleName}-${order}-${id} path`;
-  const syncText = `${syncName}{stroke-dasharray:${len};stroke-dashoffset:${len}}`;
-  sheet.insertRule(syncText, sheet.cssRules.length);
-
-  const sheetNew = document.styleSheets[0];
-  const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} path`;
-  
-  // TODO find fix
-  // need to do speed calculation here, not in CSS
-  // don't ask why. I guess the CSSOM inserted rules can't do calc
-  const asyncSpeedIndex = rules.findIndex(rule => 
-      rule.selectorText === "#squares.animateOddly");
-  const cssTextpre = rules[asyncSpeedIndex].style.cssText;
-  // problem: does not update speed vairable multiplier dynamically,
-  // only reads it at first load (via getData)
-  const asyncSpeed = cssTextpre.split(' ')[1].replace(';','');
-  const speedValue = (len/1000) * asyncSpeed;
-  const asyncText = `
-  ${asyncName}{
-    animation-name: dash;
-    animation-duration: ${speedValue}s;
-    animation-timing-function: ease-in-out;
-    animation-direction: alternate; 
-    animation-iteration-count: infinite; 
-  }`;
-  // console.log(asyncText);
-  sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
-  // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
-
-}
 
 
 
