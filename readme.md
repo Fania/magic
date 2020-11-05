@@ -31,7 +31,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] create new research page
 - [ ] don't save to localstorage while live adjusting things like fill
 - [ ] prevent overlap for more than 200? e.g. for order 5s (with loads)
-- [ ] try inline styles for animation?
 - [ ] add dropdown for shared lengths per order
 - [ ] fix mobile style again
 - [ ] finish defining data lists for ranges
@@ -53,6 +52,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] try inline styles for animation?
 - [x] circle colours broken for n>4
 - [x] remoteOrders ? randomise theme broken
 - [x] change width/size to be based on height, not width

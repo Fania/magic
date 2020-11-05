@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.23';
+const CACHE = 'magic-v2.1.24';
 
 
 
@@ -408,19 +408,15 @@ function insertAnimationStyles(id, order, style, len) {
 
 
 
-// TODO pause button for animation 
+
 const pause = document.getElementById('pause');
 pause.addEventListener('change', ()=> { 
-  console.log('PAUSE change triggered');
+  // console.log('PAUSE change triggered');
+  triggerAnimationPause();
+});
 
-
-  // animation-play-state: paused;
-  // animation-play-state: running;
-
+function triggerAnimationPause() {
   const paths = document.querySelectorAll('#squares svg path');
-  // console.log(paths);
-  console.log(pause);
-  console.log(pause.checked);
   if (pause.checked) {
     // animations are running and pause button can be checked
     paths.forEach( p => {
@@ -432,21 +428,8 @@ pause.addEventListener('change', ()=> {
       p.style.animationPlayState = 'running';
     });
   }
+}
 
-  // const sheet = document.styleSheets[0];
-  // const [...rules] = sheet.cssRules;
-  // const animType = document.querySelector('[name="animation"]:checked').value;
-  // if(animType === 'sync') {
-  //   const text = `#squares.animatesEvenly svg path { animation-play-state: paused }`;
-  //   sheet.insertRule(text, sheet.cssRules.length);
-  // } 
-  // if(animType === 'async') {
-  //   const text = `#squares.animateOddly svg path { animation-play-state: paused }`;
-  //   // const text = `#squares.animateOddly { animation-play-state: paused }`;
-  //   sheet.insertRule(text, sheet.cssRules.length);
-  // }
-
-});
 
 
 
@@ -971,6 +954,11 @@ document.addEventListener("keydown", event => {
   }
   if (event.key === "p") {
     togglePrintStyles();
+  }
+  if (event.key === "o") {
+    console.log('o pressed');
+    pause.checked = !pause.checked;
+    triggerAnimationPause();
   }
 });
 
