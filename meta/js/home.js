@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.1';
+const CACHE = 'magic-v2.2.2';
 
 
 
@@ -349,15 +349,16 @@ function insertSpeedStyles() {
     sheet.insertRule(text, sheet.cssRules.length);
   } 
   if(animType === 'async') {
-    const oddRuleIndex = rules.findIndex(rule => 
-      rule.selectorText === "#squares.animateOddly");
-    sheet.deleteRule(oddRuleIndex);
-    // animation-duration: calc(2.5 * var(--speed))s;
-    const speedValue = parseInt(speed.value) / 2;
-    const text = `#squares.animateOddly { --speed: ${speedValue}; }`;
-    sheet.insertRule(text, sheet.cssRules.length);
+    // const oddRuleIndex = rules.findIndex(rule => 
+    //   rule.selectorText === "#squares.animateOddly");
+    // sheet.deleteRule(oddRuleIndex);
+    // // animation-duration: calc(2.5 * var(--speed))s;
+    // const speedValue = parseInt(speed.value) / 2;
+    // const text = `#squares.animateOddly { --speed: ${speedValue}; }`;
+    // sheet.insertRule(text, sheet.cssRules.length);
   }
 }
+
 
 
 
@@ -367,46 +368,59 @@ function insertSpeedStyles() {
 
 // called when grabbing new data via api and intersection observer
 function insertAnimationStyles(id, order, style, len) {
-  console.log(id, order, style, len);
+    console.log(id, order, style, len);
+    const animType = document.querySelector('[name="animation"]:checked').value;
+    console.log(animType);
 
-  const sheet = document.styleSheets[0];
-  const [...rules] = sheet.cssRules;
-  console.log(sheet);
-  console.log(rules);
-  // const [...rules] = sheet.cssRules;
-  // const syncRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
-  // sheet.deleteRule(syncRuleIndex);
-  const styleName = style === 'unique' ? 'quadvertex' : style
-  const syncName = `#squares.animate #${styleName}-${order}-${id} path`;
-  const syncText = `${syncName}{stroke-dasharray:${len};stroke-dashoffset:${len};}`;
-  console.log(syncText);
-  sheet.insertRule(syncText, sheet.cssRules.length);
+  if(animType === 'async') {
+    console.log("hello");
+    const styleName = style === 'unique' ? 'quadvertex' : style
+    const thing = document.getElementById(`${styleName}-${order}-${id}`);
+    thing.setAttribute("animation-duration","4s");
 
-  const sheetNew = document.styleSheets[0];
-  const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} path`;
-  
-  // TODO find fix
-  // need to do speed calculation here, not in CSS
-  // don't ask why. I guess the CSSOM inserted rules can't do calc
-  const asyncSpeedIndex = rules.findIndex(rule => 
-      rule.selectorText === "#squares.animateOddly");
-  console.log(asyncSpeedIndex);    
-  let cssTextpre = rules[asyncSpeedIndex].style.cssText;
-  console.log(cssTextpre);
-  // problem: does not update speed vairable multiplier dynamically,
-  // only reads it at first load (via getData)
-  const asyncSpeed = cssTextpre.split(' ')[1].replace(';','');
-  const speedValue = (len/1000) * asyncSpeed;
+  } else {
 
-  
-  const asyncText = `
-  ${asyncName}{
-    animation-duration: ${speedValue}s;
-  }`;
-  // console.log(asyncText);
-  sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
-  // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
+    const sheet = document.styleSheets[0];
+    const [...rules] = sheet.cssRules;
+    // console.log(sheet);
+    // console.log(rules);
+    // const syncRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
+    // sheet.deleteRule(syncRuleIndex);
+    const styleName = style === 'unique' ? 'quadvertex' : style
+    const syncName = `#squares.animate #${styleName}-${order}-${id} path`;
+    const syncText = `${syncName}{stroke-dasharray:${len};stroke-dashoffset:${len};}`;
+    // console.log(syncText);
 
+
+    sheet.insertRule(syncText, sheet.cssRules.length);
+
+    const sheetNew = document.styleSheets[0];
+    const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} path`;
+    
+
+
+    // TODO find fix
+    // need to do speed calculation here, not in CSS
+    // don't ask why. I guess the CSSOM inserted rules can't do calc
+    const asyncSpeedIndex = rules.findIndex(rule => 
+        rule.selectorText === "#squares.animateOddly");
+    // console.log(asyncSpeedIndex);    
+    let cssTextpre = rules[asyncSpeedIndex].style.cssText;
+    // console.log(cssTextpre);
+    // // problem: does not update speed vairable multiplier dynamically,
+    // // only reads it at first load (via getData)
+    const asyncSpeed = cssTextpre.split(' ')[1].replace(';','');
+    const speedValue = (len/1000) * asyncSpeed;
+
+
+    const asyncText = `
+    ${asyncName}{
+      animation-duration: ${speedValue}s;
+    }`;
+    // console.log(asyncText);
+    // sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
+    // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
+  }
 }
 
 
