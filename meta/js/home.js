@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.1.24';
+const CACHE = 'magic-v2.2.1';
 
 
 
@@ -11,7 +11,7 @@ const [...menuTriggers] = document.querySelectorAll('nav a');
 const [...displayStyles] = document.getElementsByName('style');
 const [...displayAmounts] = document.getElementsByName('amount');
 const displayOrder = document.getElementById('order');
-const loadingTriggers = (menuTriggers.concat(displayStyles,displayOrder,displayAmounts)).flat(Infinity);
+// const loadingTriggers = (menuTriggers.concat(displayStyles,displayOrder,displayAmounts)).flat(Infinity);
 // const displayTriggers = (displayStyles.concat(displayOrder,displayAmounts)).flat(Infinity);
 // const unique = document.getElementById('unique');
 // const all = document.getElementById('all');
@@ -286,7 +286,7 @@ if(offA.checked || asyncA.checked) {
   a.addEventListener('change', ()=> { 
     // console.log(`ANIMATION change triggered by ${a.id}`);
     triggerAnimation();
-    adjust('animation');
+    // adjust('animation');
   });
 });
 function triggerAnimation() {
@@ -345,15 +345,16 @@ function insertSpeedStyles() {
       rule.selectorText === "#squares.animateEvenly svg path");
     sheet.deleteRule(evenRuleIndex);
     // const text = `#squares.animateEvenly svg .lines { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
-    const text = `#squares.animateEvenly svg path { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
+    const text = `#squares.animateEvenly svg path { animation: dash ${speed.value}s ease-in-out alternate infinite; }`;
     sheet.insertRule(text, sheet.cssRules.length);
   } 
   if(animType === 'async') {
     const oddRuleIndex = rules.findIndex(rule => 
       rule.selectorText === "#squares.animateOddly");
     sheet.deleteRule(oddRuleIndex);
+    // animation-duration: calc(2.5 * var(--speed))s;
     const speedValue = parseInt(speed.value) / 2;
-    const text = `#squares.animateOddly { --speed: ${speedValue} }`;
+    const text = `#squares.animateOddly { --speed: ${speedValue}; }`;
     sheet.insertRule(text, sheet.cssRules.length);
   }
 }
@@ -366,16 +367,19 @@ function insertSpeedStyles() {
 
 // called when grabbing new data via api and intersection observer
 function insertAnimationStyles(id, order, style, len) {
-  // console.log(id, order, style, len);
+  console.log(id, order, style, len);
 
   const sheet = document.styleSheets[0];
   const [...rules] = sheet.cssRules;
+  console.log(sheet);
+  console.log(rules);
   // const [...rules] = sheet.cssRules;
   // const syncRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
   // sheet.deleteRule(syncRuleIndex);
   const styleName = style === 'unique' ? 'quadvertex' : style
   const syncName = `#squares.animate #${styleName}-${order}-${id} path`;
-  const syncText = `${syncName}{stroke-dasharray:${len};stroke-dashoffset:${len}}`;
+  const syncText = `${syncName}{stroke-dasharray:${len};stroke-dashoffset:${len};}`;
+  console.log(syncText);
   sheet.insertRule(syncText, sheet.cssRules.length);
 
   const sheetNew = document.styleSheets[0];
@@ -386,18 +390,18 @@ function insertAnimationStyles(id, order, style, len) {
   // don't ask why. I guess the CSSOM inserted rules can't do calc
   const asyncSpeedIndex = rules.findIndex(rule => 
       rule.selectorText === "#squares.animateOddly");
-  const cssTextpre = rules[asyncSpeedIndex].style.cssText;
+  console.log(asyncSpeedIndex);    
+  let cssTextpre = rules[asyncSpeedIndex].style.cssText;
+  console.log(cssTextpre);
   // problem: does not update speed vairable multiplier dynamically,
   // only reads it at first load (via getData)
   const asyncSpeed = cssTextpre.split(' ')[1].replace(';','');
   const speedValue = (len/1000) * asyncSpeed;
+
+  
   const asyncText = `
   ${asyncName}{
-    animation-name: dash;
     animation-duration: ${speedValue}s;
-    animation-timing-function: ease-in-out;
-    animation-direction: alternate; 
-    animation-iteration-count: infinite; 
   }`;
   // console.log(asyncText);
   sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
@@ -786,6 +790,9 @@ async function getData(offset = 0) {
   try {
     let order = getSettings().order;
     let style = getSettings().style;
+    // console.log(order,style);
+
+
     // TODO fix order 4 unique/all choice subsubmenu
     const unique = document.getElementById('unique');
     const all = document.getElementById('all');
@@ -807,6 +814,7 @@ async function getData(offset = 0) {
     const rawData = await fetch(url);
     const data = await rawData.json();
     for (let i in data) {
+      // console.log(order,style);
       // console.log(i);
       const elem = data[i].svg;
       squares.insertAdjacentHTML('beforeend',elem);

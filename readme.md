@@ -4,9 +4,18 @@ Don't forget to set up `.env` and `magic.json` files.
 
 Run with `node server` or start the daemon `pm2 start magic.json`.
 
+<!-- Update sw.js and home.js cache version numbers -->
 
 
 ## Todo
+
+### Bugs ?
+
+- [ ] mobile and tablet screens have extra height between rows?
+- [ ] mobile and tablet screens don't show async animations?
+- [ ] tablet screens don't fit side settings menu? 
+- [ ] EDGE
+- [ ] edge scaling width/height probs past 150px
 
 
 ### Functionality
@@ -46,6 +55,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] art digital root, connect number pairs
 - [ ] art sketch, basic dasharray len / order^2
 - [ ] feed mesh into deep dream
+- [ ] make magic line glow neon (like window)?
 
 
 

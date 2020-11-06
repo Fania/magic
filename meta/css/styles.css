@@ -458,14 +458,14 @@ footer a, footer p {
 
 #squares.animateOddly { --speed: 2; }
 #squares.animateOddly svg path { 
-/* #squares.animateOddly svg .lines {  */
   animation-name: dash;
-  animation-duration: calc(2.5 * var(--speed))s;
-  /* animation-duration: 5s; */
   animation-timing-function: ease-in-out;
   animation-direction: alternate; 
   animation-iteration-count: infinite; 
 }
+/* #squares.animateOddly svg .lines {  */
+  /* animation-duration: calc(2.5 * var(--speed))s; */
+  /* animation-duration: 5s; */
 #squares.animateEvenly svg path {
   animation: dash 20s ease-in-out alternate infinite }
 @keyframes dash { to { stroke-dashoffset: 0 } }
