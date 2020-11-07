@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.6';
+const CACHE = 'magic-v2.2.7';
 
 
 
@@ -406,7 +406,8 @@ function insertAnimationStyles(id, order, style, len) {
         rule.selectorText === "#squares.animateOddly" || 
         rule.selectorText === ".animateOddly#squares"); // EDGE FFS ??!!
     // To clarify:
-    // Edge CSSOM
+    // Edge CSSOM formats CSS selectorTexts differently to other browsers
+    // are we surprised? no. Annoyed? yes.
     let cssTextpre = rules[asyncSpeedIndex].style.cssText;
     // // problem: does not update speed vairable multiplier dynamically,
     // // only reads it at first load (via getData)
