@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.5';
+const CACHE = 'magic-v2.2.6';
 
 
 
@@ -368,9 +368,9 @@ function insertSpeedStyles() {
 
 // called when grabbing new data via api and intersection observer
 function insertAnimationStyles(id, order, style, len) {
-    console.log(id, order, style, len);
+    // console.log(id, order, style, len);
     const animType = document.querySelector('[name="animation"]:checked').value;
-    console.log(animType);
+    // console.log(animType);
 
   if(animType === 'async') {
     console.log("hello");
@@ -403,10 +403,11 @@ function insertAnimationStyles(id, order, style, len) {
     // need to do speed calculation here, not in CSS
     // don't ask why. I guess the CSSOM inserted rules can't do calc
     const asyncSpeedIndex = rules.findIndex(rule => 
-        rule.selectorText === "#squares.animateOddly");
-    // console.log(asyncSpeedIndex);    
+        rule.selectorText === "#squares.animateOddly" || 
+        rule.selectorText === ".animateOddly#squares"); // EDGE FFS ??!!
+    // To clarify:
+    // Edge CSSOM
     let cssTextpre = rules[asyncSpeedIndex].style.cssText;
-    // console.log(cssTextpre);
     // // problem: does not update speed vairable multiplier dynamically,
     // // only reads it at first load (via getData)
     const asyncSpeed = cssTextpre.split(' ')[1].replace(';','');
@@ -801,11 +802,10 @@ function applyStyles() {
 
 
 async function getData(offset = 0) {
+  console.log('inside getData');
   try {
     let order = getSettings().order;
     let style = getSettings().style;
-    // console.log(order,style);
-
 
     // TODO fix order 4 unique/all choice subsubmenu
     const unique = document.getElementById('unique');
