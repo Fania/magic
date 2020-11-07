@@ -14,8 +14,9 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] mobile and tablet screens have extra height between rows?
 - [ ] mobile and tablet screens don't show async animations?
 - [ ] tablet screens don't fit side settings menu? 
-- [ ] EDGE
+- [ ] EDGE/SAFARI/FIREFOX animations
 - [ ] edge scaling width/height probs past 150px
+- [ ] 
 
 
 ### Functionality
