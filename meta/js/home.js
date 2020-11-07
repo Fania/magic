@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.8';
+const CACHE = 'magic-v2.2.9';
 
 
 
@@ -93,14 +93,14 @@ displayOrder.addEventListener('wheel', () => {
   const totalOptions = orderSelects.length;
   const maxIndex = totalOptions;
   let fromIndex = orderSelects.selectedIndex;
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN (e.g. 4 to 5)
+  if (Math.sign(wheelDeltaY) === -1) { // DOWN (e.g. 4 to 5)
     // console.log(`down from (i): ${fromIndex}, (v): ${orderSelects[fromIndex].value}`);
     if (fromIndex === maxIndex) fromIndex = 0;
     let toIndex = (fromIndex + 1) % totalOptions;
     orderSelects.selectedIndex = toIndex;
     // console.log(`down to (i): ${orderSelects.selectedIndex}, (v): ${orderSelects[orderSelects.selectedIndex].value}`);
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP (e.g. 5 to 4)
+  if (Math.sign(wheelDeltaY) === 1) { // UP (e.g. 5 to 4)
     // console.log(`up from (i): ${fromIndex}, (v): ${orderSelects[fromIndex].value}`);
     if (fromIndex === 0) fromIndex = maxIndex;
     let toIndex = (fromIndex - 1) % totalOptions;
@@ -108,7 +108,7 @@ displayOrder.addEventListener('wheel', () => {
     // console.log(`up to (i): ${orderSelects.selectedIndex}, (v): ${orderSelects[orderSelects.selectedIndex].value}`);
   }
   adjust('order');
-  event.preventDefault();
+  preventDefault();
 });
 displayOrder.addEventListener('change', () => {
   // console.log('ORDER change triggered');
@@ -137,16 +137,16 @@ size.addEventListener('input', ()=> {
 size.addEventListener('wheel', ()=> { 
   // console.log('SIZE wheel triggered');
   const old = parseInt(size.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(wheelDeltaY) === -1) { // DOWN
     if(old > 1) { size.value = old - 1; } 
     else        { size.value = 1; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(wheelDeltaY) === 1) { // UP
     if(old < 69) { size.value = old + 1; } 
     else         { size.value = 70; }
   }
   adjust('size');
-  event.preventDefault();
+  preventDefault();
 });
 
 const gap = document.getElementById('gap');
@@ -157,16 +157,16 @@ gap.addEventListener('input', ()=> {
 gap.addEventListener('wheel', ()=> { 
   // console.log('GAP wheel triggered');
   const old = parseInt(gap.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(wheelDeltaY) === -1) { // DOWN
     if(old >= 5) { gap.value = old - 5; } 
     else         { gap.value = 0; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(wheelDeltaY) === 1) { // UP
     if(old <= 95) { gap.value = old + 5; } 
     else          { gap.value = 100; }
   }
   adjust('gap');
-  event.preventDefault();
+  preventDefault();
 });
 
 const strokeWidth = document.getElementById('strokeWidth');
@@ -177,16 +177,16 @@ strokeWidth.addEventListener('input', ()=> {
 strokeWidth.addEventListener('wheel', ()=> { 
   // console.log('LINE-WIDTH wheel triggered');
   const old = parseInt(strokeWidth.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(wheelDeltaY) === -1) { // DOWN
     if(old > 2) { strokeWidth.value = old - 2; } 
     else        { strokeWidth.value = 1; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(wheelDeltaY) === 1) { // UP
     if(old <= 28) { strokeWidth.value = old + 2; } 
     else          { strokeWidth.value = 30; }
   }
   adjust('strokeWidth');
-  event.preventDefault();
+  preventDefault();
 });
 
 const overlap = document.getElementById('overlap');
@@ -201,7 +201,7 @@ overlap.addEventListener('change', () => {
   oa.addEventListener('change', ()=> { 
     // console.log('OVERLAP-AMOUNT change triggered');
     adjust('overlapAmount');
-    if(event.target.value === 'overlap200') {
+    if(target.value === 'overlap200') {
       squares.classList.add('few');
     }
     else { 
@@ -231,16 +231,16 @@ salpha.addEventListener('input', ()=> {
 salpha.addEventListener('wheel', ()=> { 
   // console.log('STROKE-ALPHA wheel triggered');
   const old = parseInt(salpha.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(wheelDeltaY) === -1) { // DOWN
     if(old >= 5) { salpha.value = old - 5; } 
     else        { salpha.value = 0; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(wheelDeltaY) === 1) { // UP
     if(old <= 250) { salpha.value = old + 5; } 
     else          { salpha.value = 255; }
   }
   adjust('salpha');
-  event.preventDefault();
+  preventDefault();
 });
 
 // FILL OPTION
@@ -259,16 +259,16 @@ falpha.addEventListener('input', ()=> {
 falpha.addEventListener('wheel', ()=> { 
   // console.log('FILL-ALPHA wheel triggered');
   const old = parseInt(falpha.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(wheelDeltaY) === -1) { // DOWN
     if(old >= 5) { falpha.value = old - 5; } 
     else        { falpha.value = 0; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(wheelDeltaY) === 1) { // UP
     if(old <= 250) { falpha.value = old + 5; } 
     else          { falpha.value = 255; }
   }
   adjust('falpha');
-  event.preventDefault();
+  preventDefault();
 });
 
 
@@ -316,22 +316,22 @@ speed.addEventListener('input', ()=> {
   // console.log('SPEED input triggered');
   // console.log('speed', speed.value);
   insertSpeedStyles();
-  adjust('speed');
+  // adjust('speed');
 });
 speed.addEventListener('wheel', ()=> { 
   // console.log('SPEED wheel triggered');
   const old = parseInt(speed.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(wheelDeltaY) === -1) { // DOWN
     if(old > 6) { speed.value = old - 5; } 
     else        { speed.value = 1; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(wheelDeltaY) === 1) { // UP
     if(old <= 95) { speed.value = old + 5; } 
     else          { speed.value = 100; }
   }
   insertSpeedStyles();
-  adjust('speed');
-  event.preventDefault();
+  // adjust('speed');
+  preventDefault();
 });
 
 
@@ -557,7 +557,7 @@ async function populateThemeOptions() {
 }
 
 themes.addEventListener('change', ()=> { 
-  getTheme(event.target.value);
+  getTheme(target.value);
 });
 
 async function getTheme(name) {
