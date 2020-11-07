@@ -583,7 +583,8 @@ footer a, footer p {
   #sizeOptions > label:not(:last-of-type) span, 
   #sizeOptions > label:not(:last-of-type) input { display: unset; } 
   #sizeOptions > label:not(:last-of-type) span {  width: unset; } 
-  #sizeOptions > label:not(:last-of-type) input {  width: unset; } 
+  /* line below can't be used as breaks firefox ? and edge ? */
+  /* #sizeOptions > label:not(:last-of-type) input {  width: unset; }  */
 
   #overlapOptions { border: 0; padding: 0; text-align: right; 
     display: flex; flex-direction: column;
