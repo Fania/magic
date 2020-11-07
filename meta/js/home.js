@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.7';
+const CACHE = 'magic-v2.2.8';
 
 
 
@@ -397,31 +397,25 @@ function insertAnimationStyles(id, order, style, len) {
     const sheetNew = document.styleSheets[0];
     const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} path`;
     
-
-
-    // TODO find fix
-    // need to do speed calculation here, not in CSS
-    // don't ask why. I guess the CSSOM inserted rules can't do calc
     const asyncSpeedIndex = rules.findIndex(rule => 
         rule.selectorText === "#squares.animateOddly" || 
         rule.selectorText === ".animateOddly#squares"); // EDGE FFS ??!!
     // To clarify:
     // Edge CSSOM formats CSS selectorTexts differently to other browsers
     // are we surprised? no. Annoyed? yes.
+    // Chrome, Firefox, Safari confirmed use #squares.animateOddly
+    // Edge WTF
+
+    // TODO find fix
+    // need to do speed calculation here, not in CSS
+    // don't ask why. I guess the CSSOM inserted rules can't do calc
     let cssTextpre = rules[asyncSpeedIndex].style.cssText;
     // // problem: does not update speed vairable multiplier dynamically,
     // // only reads it at first load (via getData)
     const asyncSpeed = cssTextpre.split(' ')[1].replace(';','');
     const speedValue = (len/1000) * asyncSpeed;
-
-
-    const asyncText = `
-    ${asyncName}{
-      animation-duration: ${speedValue}s;
-    }`;
-    // console.log(asyncText);
-    // sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
-    // const more = `#squares.animateEvenly svg .lines { animation: dash ${speed}s ease-in-out alternate infinite }`;
+    const asyncText = `${asyncName}{ animation-duration: ${speedValue}s; }`;
+    sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
   }
 }
 
