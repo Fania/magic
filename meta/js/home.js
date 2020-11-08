@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.12';
+const CACHE = 'magic-v2.2.13';
 
 
 
@@ -342,11 +342,17 @@ function insertSpeedStyles() {
   if(animType === 'sync') {
     const evenRuleIndex = rules.findIndex(rule => 
       // rule.selectorText === "#squares.animateEvenly svg .lines");
-      rule.selectorText === "#squares.animateEvenly svg path");
+      rule.selectorText === "#squares.animateEvenly svg path" ||
+      rule.selectorText === ".animateEvenly#squares svg path");
     sheet.deleteRule(evenRuleIndex);
     // const text = `#squares.animateEvenly svg .lines { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
+    console.log(speed.value);
     const text = `#squares.animateEvenly svg path { animation: dash ${speed.value}s ease-in-out alternate infinite; }`;
     sheet.insertRule(text, sheet.cssRules.length);
+    const textalt = `.animateEvenly#squares svg path { animation: dash ${speed.value}s ease-in-out alternate infinite; }`;
+    sheet.insertRule(textalt, sheet.cssRules.length);
+    
+
   } 
   if(animType === 'async') {
     // async speed is disabled anyway atm
