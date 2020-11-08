@@ -12,9 +12,9 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 ### Bugs ?
 
 - [ ] tablet screens don't fit side settings menu? 
-- [ ] EDGE/SAFARI/FIREFOX animations
-- [ ] check printing on all browsers
+- [ ] make Edge respect speed range adjustments without turning anim off/on
 - [ ] anim radio buttons not correct after making changes?
+- [ ] check printing on all browsers
 - [x] mobile and tablet screens have extra height between rows?
 - [x] mobile and tablet screens don't show async animations?
 - [x] edge scaling width/height probs past 150px
@@ -308,10 +308,12 @@ Sync
 |-------------|--------|---------|------|--------|-----|---------|
 | Sync        |   ok   |   ok    |  ok  |   ok   |     |         |
 | Sync Pause  |   ok   |   ok    |  ok  |   ok   |     |         |
-| Sync Speed  |   ok   |         |      |        |     |         |
-| Sync Scrll  |   ok   |   NO    |      |        |     |         |
+| Sync Speed  |   ok   |   ok    |  *   |   ok   |     |         |
+| Sync Scrll  |   ok   |   NO    |  *   |        |     |         |
 | Sync O      |   ok   |   ok    |  ok  |   ok   |     |         |
 | Sync IO     |   ok   |   ok    |  ok  |   ok   |     |         |
 | Async       |   ok   |   ok    |  ok  |   NO   |  NO |         |
 | Async IO    |   NO   |   NO    |  NO  |   NO   |     |         |
 |             |        |         |      |        |     |         |
+
+\* Edge only respects speed range adjustment on turning anim off/on
