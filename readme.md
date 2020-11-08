@@ -304,13 +304,14 @@ Animations
 
 Sync
 
-|            | Chrome | Firefox | Edge | Safari | iOS | Android |
-|------------|--------|---------|------|--------|-----|---------|
-| Sync       |   ok   |   ok    |  ok  |        |     |         |
-| Sync Pause |   ok   |   ok    |  ok  |        |     |         |
-| Sync O     |   ok   |   ok    |  ok  |        |     |         |
-| Sync IO    |   ok   |   ok    |  ok  |        |     |         |
-| Async IO   |   NO   |   NO    |  NO  |        |     |         |
-|            |        |         |      |        |     |         |
-|            |        |         |      |        |     |         |
-|            |        |         |      |        |     |         |
+|             | Chrome | Firefox | Edge | Safari | iOS | Android |
+|-------------|--------|---------|------|--------|-----|---------|
+| Sync        |   ok   |   ok    |  ok  |   ok   |     |         |
+| Sync Pause  |   ok   |   ok    |  ok  |   ok   |     |         |
+| Sync Speed  |   ok   |         |      |        |     |         |
+| Sync Scrll  |   ok   |   NO    |      |        |     |         |
+| Sync O      |   ok   |   ok    |  ok  |   ok   |     |         |
+| Sync IO     |   ok   |   ok    |  ok  |   ok   |     |         |
+| Async       |   ok   |   ok    |  ok  |   NO   |  NO |         |
+| Async IO    |   NO   |   NO    |  NO  |   NO   |     |         |
+|             |        |         |      |        |     |         |
