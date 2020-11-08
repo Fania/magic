@@ -308,13 +308,12 @@ Sync
 |-------------|--------|---------|------|--------|-----|---------|
 | Sync        |   ok   |   ok    |  ok  |   ok   | ok  |         |
 | Sync Pause  |   ok   |   ok    |  ok  |   ok   | ok  |         |
-| Sync Speed  |   ok   |   ok    |  *   |   ok   | ok  |         |
-| Sync Scrll  |   ok   |   NO    |  *   |   ??   | --  |         |
+| Sync Speed  |   ok   |   ok    |  ok  |   ok   | ok  |         |
+| Sync Scrll  |   ok   |   NO    |  ok  |   *    | --  |         |
 | Sync O      |   ok   |   ok    |  ok  |   ok   | --  |         |
 | Sync IO     |   ok   |   ok    |  ok  |   ok   | ok  |         |
 | Async       |   ok   |   ok    |  ok  |   NO   | **  |         |
 | Async IO    |   NO   |   NO    |  NO  |   NO   | **  |         |
 |             |        |         |      |        |     |         |
 
-\* Edge only respects speed range adjustment on turning anim off/on
-\*\* check if Safari async anim range needs setting to 1 not 0
+\* check if Safari async anim range needs setting to 1 not 0
