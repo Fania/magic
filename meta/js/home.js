@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.9';
+const CACHE = 'magic-v2.2.10';
 
 
 
@@ -349,6 +349,7 @@ function insertSpeedStyles() {
     sheet.insertRule(text, sheet.cssRules.length);
   } 
   if(animType === 'async') {
+    // async speed is disabled anyway atm
     // const oddRuleIndex = rules.findIndex(rule => 
     //   rule.selectorText === "#squares.animateOddly");
     // sheet.deleteRule(oddRuleIndex);
@@ -374,29 +375,19 @@ function insertAnimationStyles(id, order, style, len) {
 
   if(animType === 'async') {
     console.log("hello");
-    const styleName = style === 'unique' ? 'quadvertex' : style
-    const thing = document.getElementById(`${styleName}-${order}-${id}`);
-    thing.setAttribute("animation-duration","4s");
+    // const styleName = style === 'unique' ? 'quadvertex' : style
+    // const thing = document.querySelector(`#${styleName}-${order}-${id} path`);
+    // thing.setAttribute("animation-duration","4s");
 
   } else {
-
     const sheet = document.styleSheets[0];
     const [...rules] = sheet.cssRules;
-    // console.log(sheet);
-    // console.log(rules);
-    // const syncRuleIndex = rules.findIndex(rule => rule.selectorText === "svg");
-    // sheet.deleteRule(syncRuleIndex);
     const styleName = style === 'unique' ? 'quadvertex' : style
     const syncName = `#squares.animate #${styleName}-${order}-${id} path`;
     const syncText = `${syncName}{stroke-dasharray:${len};stroke-dashoffset:${len};}`;
-    // console.log(syncText);
-
-
     sheet.insertRule(syncText, sheet.cssRules.length);
-
     const sheetNew = document.styleSheets[0];
     const asyncName = `#squares.animateOddly #${styleName}-${order}-${id} path`;
-    
     const asyncSpeedIndex = rules.findIndex(rule => 
         rule.selectorText === "#squares.animateOddly" || 
         rule.selectorText === ".animateOddly#squares"); // EDGE FFS ??!!

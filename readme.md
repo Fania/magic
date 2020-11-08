@@ -16,7 +16,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] tablet screens don't fit side settings menu? 
 - [ ] EDGE/SAFARI/FIREFOX animations
 - [ ] edge scaling width/height probs past 150px
-- [ ] 
 
 
 ### Functionality
@@ -294,3 +293,22 @@ request(_all_dbs)
 }
 ```
 
+
+
+
+## Testing
+
+Animations
+
+Sync
+
+|            | Chrome | Firefox | Edge | Safari | iOS | Android |
+|------------|--------|---------|------|--------|-----|---------|
+| Sync       |   ok   |   ok    |  ok  |        |     |         |
+| Sync Pause |   ok   |   ok    |  ok  |        |     |         |
+| Sync O     |   ok   |   ok    |  ok  |        |     |         |
+| Sync IO    |   ok   |   ok    |  ok  |        |     |         |
+| Async IO   |   NO   |   NO    |  NO  |        |     |         |
+|            |        |         |      |        |     |         |
+|            |        |         |      |        |     |         |
+|            |        |         |      |        |     |         |
