@@ -157,11 +157,11 @@ input[type="button"] {
 
 
 
-#squares.overlap { position: relative; }
-#squares.overlap svg { position: absolute; 
+.home #squares.overlap { position: relative; }
+.home #squares.overlap svg { position: absolute; 
   width: 90%; height: 75vh; max-height: 75vh; }
 /* enabling this only shows the first 200, not the whole set */
-#squares.overlap.few [class^="sentinel"] { display: none; }
+.home #squares.overlap.few [class^="sentinel"] { display: none; }
 
 
 #squares svg.hide { display: none; }

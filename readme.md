@@ -306,6 +306,27 @@ Sync
 
 |             | Chrome | Firefox | Edge | Safari | iOS | Android |
 |-------------|--------|---------|------|--------|-----|---------|
+| Interface   |   ok   |         |      |        |     |         |
+| Chnge Order |   ok   |         |      |        |     |         |
+| Order Wheel |   ok   |         |      |        |     |         |
+| 383/880     |   ok   |         |      |        |     |         |
+| IO          |   ok   |         |      |        |     |         |
+| Style       |   ok   |         |      |        |     |         |
+| Size        |   ok   |         |      |        |     |         |
+| Size Wheel  |   ok   |         |      |        |     |         |
+| Gap         |   ok   |         |      |        |     |         |
+| Gap Wheel   |   ok   |         |      |        |     |         |
+| Line        |   ok   |         |      |        |     |         |
+| Line Wheeel |   ok   |         |      |        |     |         |
+| Overlap     |        |         |      |        |     |         |
+| Overlap All |        |         |      |        |     |         |
+| Day Mode    |        |         |      |        |     |         |
+| Night Mode  |        |         |      |        |     |         |
+| Background  |        |         |      |        |     |         |
+| Stroke      |        |         |      |        |     |         |
+| Strke Alpha |        |         |      |        |     |         |
+| Fill        |        |         |      |        |     |         |
+| Fill Alpha  |        |         |      |        |     |         |
 | Sync        |   ok   |   ok    |  ok  |   ok   | ok  |         |
 | Sync Pause  |   ok   |   ok    |  ok  |   ok   | ok  |         |
 | Sync Speed  |   ok   |   ok    |  ok  |   ok   | ok  |         |
@@ -314,6 +335,10 @@ Sync
 | Sync IO     |   ok   |   ok    |  ok  |   ok   | ok  |         |
 | Async       |   ok   |   ok    |  ok  |   NO   | **  |         |
 | Async IO    |   NO   |   NO    |  NO  |   NO   | **  |         |
-|             |        |         |      |        |     |         |
+| Pick Theme  |        |         |      |        |     |         |
+| Rndm Theme  |        |         |      |        |     |         |
+| Save Theme  |        |         |      |        |     |         |
+| Reset       |        |         |      |        |     |         |
+| Share Theme |        |         |      |        |     |         |
 
 \* check if Safari async anim range needs setting to 1 not 0
