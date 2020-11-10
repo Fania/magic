@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.17';
+const CACHE = 'magic-v2.2.18';
 
 
 
@@ -32,9 +32,9 @@ const displayOrder = document.getElementById('order');
 const defaults = { 
   "order":         4,
   "amount":        "unique",
-  "style":         "quadvertex",
-  "size":          16,
-  "gap":           20,
+  "style":         "straight",
+  "size":          11,
+  "gap":           26,
   "overlap":       false,
   "overlapAmount": "overlap200",
   "background":    "#222222",
