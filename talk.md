@@ -40,12 +40,15 @@ refer to theory in paper?
 
 ## 05:00 Mid
 
-- 
-
+- order 4 different styles
+- order 12 
+- order 4 quadline animation
+- order 6 quadvertex overlap async
 
 ## 10:00 End
 
-
+- blocks (digital roots)?
+- tetronimo ?
 
 
 ## 15:00 Death
