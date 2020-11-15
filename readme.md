@@ -301,6 +301,9 @@ request(_all_dbs)
 ## Testing
 
 
+- [ ] android menu doesn't close, top menu bar overlaps with
+
+
 |             | Chrome | Firefox | Edge | Safari | iOS | Android |
 |-------------|--------|---------|------|--------|-----|---------|
 | Interface   |   ok   |         |      |        |     |         |
@@ -328,14 +331,14 @@ request(_all_dbs)
 | Strke Alpha |        |         |      |        |     |         |
 | Fill        |        |         |      |        |     |         |
 | Fill Alpha  |        |         |      |        |     |         |
-| Sync        |   ok   |   ok    |  ok  |   ok   | ok  |         |
-| Sync Pause  |   ok   |   ok    |  ok  |   ok   | ok  |         |
-| Sync Speed  |   ok   |   ok    |  ok  |   ok   | ok  |         |
-| Sync Scrll  |   ok   |   --    |  ok  |   *    | --  |         |
-| Sync O      |   ok   |   ok    |  ok  |   ok   | --  |         |
-| Sync IO     |   ok   |   ok    |  ok  |   ok   | ok  |         |
-| Async       |   ok   |   ok    |  ok  |   --   | **  |         |
-| Async IO    |   --   |   --    |  --  |   --   | **  |         |
+| Sync        |   ok   |   ok    |  ok  |   ok   | ok  |   ok    |
+| Sync Pause  |   ok   |   ok    |  ok  |   ok   | ok  |   ok    |
+| Sync Speed  |   ok   |   ok    |  ok  |   ok   | ok  |   ok    |
+| Sync Scrll  |   ok   |   --    |  ok  |   *    | --  |   ok    |
+| Sync O      |   ok   |   ok    |  ok  |   ok   | --  |   ok    |
+| Sync IO     |   ok   |   ok    |  ok  |   ok   | ok  |   ok    |
+| Async       |   ok   |   ok    |  ok  |   --   | **  |   ok    |
+| Async IO    |   --   |   --    |  --  |   --   | **  |   --    |
 | Pick Theme  |        |         |      |        |     |         |
 | Rndm Theme  |        |         |      |        |     |         |
 | Save Theme  |        |         |      |        |     |         |
