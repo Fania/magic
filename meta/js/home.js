@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.23';
+const CACHE = 'magic-v2.2.24';
 
 
 
@@ -463,7 +463,7 @@ random.addEventListener('click', async ()=> {
   const orders = await getOrders();
   const orderIndex = getRandomInt(0, (orders.length - 1));
   const orderSelect = document.getElementById('order');
-  settings.order = orderSelect[orderIndex].value;
+  settings.order = parseInt(orderSelect[orderIndex].value);
   settings.size = getRandomInt(4, 50);
   settings.gap = getRandomInt(0, 50);
   settings.background = getRandomColour();
