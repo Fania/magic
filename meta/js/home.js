@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.22';
+const CACHE = 'magic-v2.2.23';
 
 
 
@@ -703,7 +703,7 @@ async function loadSettings() {
   // console.log('loadSettings');
   const settings = getSettings();
   const rOrders = await getOrders();
-  document.querySelector('#order').selectedIndex = rOrders.indexOf(settings.order);
+  document.querySelector('#order').selectedIndex = rOrders.indexOf(parseInt(settings.order));
   document.querySelector(`#${settings.amount}`).checked = true;
   document.querySelector(`#${settings.style}`).checked = true;
   document.getElementById('size').value = settings.size;
