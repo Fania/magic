@@ -15,9 +15,6 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] make Edge respect speed range adjustments without turning anim off/on
 - [ ] anim radio buttons not correct after making changes?
 - [ ] check printing on all browsers
-- [x] mobile and tablet screens have extra height between rows?
-- [x] mobile and tablet screens don't show async animations?
-- [x] edge scaling width/height probs past 150px
 
 
 ### Functionality
@@ -64,6 +61,9 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] mobile and tablet screens have extra height between rows?
+- [x] mobile and tablet screens don't show async animations?
+- [x] edge scaling width/height probs past 150px
 - [x] try inline styles for animation?
 - [x] circle colours broken for n>4
 - [x] remoteOrders ? randomise theme broken

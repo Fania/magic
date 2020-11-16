@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.24';
+const CACHE = 'magic-v2.2.25';
 
 
 
@@ -80,6 +80,7 @@ function loadBookmark(params) {
   });
   // console.log(settings);
   saveSettings(settings);
+  populateOrderOptions();
   loadSettings();
   getData();
   triggerAnimation();
@@ -464,7 +465,7 @@ random.addEventListener('click', async ()=> {
   const orderIndex = getRandomInt(0, (orders.length - 1));
   const orderSelect = document.getElementById('order');
   settings.order = parseInt(orderSelect[orderIndex].value);
-  settings.size = getRandomInt(4, 50);
+  settings.size = getRandomInt(10, 50);
   settings.gap = getRandomInt(0, 50);
   settings.background = getRandomColour();
   settings.stroke = getRandomColour();
@@ -481,28 +482,28 @@ random.addEventListener('click', async ()=> {
 });
 
 // SHARE OPTION
-const share = document.getElementById('share');
-share.addEventListener('click', ()=> { 
-  const settings = getSettings();
-  const params = new URLSearchParams(settings);
-  const bookmark = location + '?' + params.toString();
-  console.log(bookmark);
+// const share = document.getElementById('share');
+// share.addEventListener('click', ()=> { 
+//   const settings = getSettings();
+//   const params = new URLSearchParams(settings);
+//   const bookmark = location + '?' + params.toString();
+//   console.log(bookmark);
 
-  if (navigator.share) {
-    navigator.share({
-      title: 'squares.cubelife.org',
-      text: 'Magic Squares',
-      url: bookmark,
-    })
-    .then(() => console.log('Successful share'))
-    .catch((error) => console.log('Error sharing', error));
-  } else { console.log('no sharing possible'); }
+//   if (navigator.share) {
+//     navigator.share({
+//       title: 'squares.cubelife.org',
+//       text: 'Magic Squares',
+//       url: bookmark,
+//     })
+//     .then(() => console.log('Successful share'))
+//     .catch((error) => console.log('Error sharing', error));
+//   } else { console.log('no sharing possible'); }
 
-  location = bookmark;
-  // bookmark.select();
-  // document.execCommand("copy");
-  // alert('Added URL to clipboard.');
-});
+//   location = bookmark;
+//   // bookmark.select();
+//   // document.execCommand("copy");
+//   // alert('Added URL to clipboard.');
+// });
 
 
 // POPULATE ORDER OPTIONS
@@ -533,49 +534,49 @@ async function populateOrderOptions() {
 
 
 // POPULATE THEME OPTIONS
-const themes = document.getElementById('themes');
-populateThemeOptions();
-async function populateThemeOptions() {
-  // console.log('populateThemeOptions');
-  try {
-    const url = '/data/themes';
-    const rawData = await fetch(url);
-    const data = await rawData.json();
-    themes.innerHTML = '<option value="">Choose</option>';
-    for (let i in data) {
-      const name = data[i].id;
-      const capName = name[0].toUpperCase() + name.slice(1);
-      const option = document.createElement('option');
-      option.value = name;
-      option.innerText = capName;
-      themes.appendChild(option);
-    }
-  } catch (error) { console.log(error) }
-}
+// const themes = document.getElementById('themes');
+// populateThemeOptions();
+// async function populateThemeOptions() {
+//   // console.log('populateThemeOptions');
+//   try {
+//     const url = '/data/themes';
+//     const rawData = await fetch(url);
+//     const data = await rawData.json();
+//     themes.innerHTML = '<option value="">Choose</option>';
+//     for (let i in data) {
+//       const name = data[i].id;
+//       const capName = name[0].toUpperCase() + name.slice(1);
+//       const option = document.createElement('option');
+//       option.value = name;
+//       option.innerText = capName;
+//       themes.appendChild(option);
+//     }
+//   } catch (error) { console.log(error) }
+// }
 
-themes.addEventListener('change', ()=> { 
-  getTheme(target.value);
-});
+// themes.addEventListener('change', ()=> { 
+//   getTheme(event.target.value);
+// });
 
-async function getTheme(name) {
-  console.log(`getTheme ${name}`);
-  try {
-    const url = '/data/themes';
-    const rawData = await fetch(url);
-    const data = await rawData.json();
-    const theme = data.find(item => item.id === name).doc;
-    saveSettings(theme);
-    getData();
-    triggerAnimation();
-  } catch (error) { console.log(error) }
-}
+// async function getTheme(name) {
+//   console.log(`getTheme ${name}`);
+//   try {
+//     const url = '/data/themes';
+//     const rawData = await fetch(url);
+//     const data = await rawData.json();
+//     const theme = data.find(item => item.id === name).doc;
+//     saveSettings(theme);
+//     getData();
+//     triggerAnimation();
+//   } catch (error) { console.log(error) }
+// }
 
-const settings = document.getElementById('settings');
-const themeName = document.getElementById('themeName');
-settings.addEventListener('submit', async ()=> {
-  const name = prompt('What do you want to call this theme?\nPlease enter a single word name below.');
-  themeName.value = name;
-});
+// const settings = document.getElementById('settings');
+// const themeName = document.getElementById('themeName');
+// settings.addEventListener('submit', async ()=> {
+//   const name = prompt('What do you want to call this theme?\nPlease enter a single word name below.');
+//   themeName.value = name;
+// });
 
 
 
@@ -583,43 +584,43 @@ settings.addEventListener('submit', async ()=> {
 
 
 // POPULATE LENGTHS OPTIONS
-const lengths = document.getElementById('lengths');
-// populateLengthOptions();
-async function populateLengthOptions() {
-  // console.log('populateLengthOptions');
-  try {
-    const settings = getSettings();
-    const order = settings.order;
-    const style = settings.style;
-    const url = `/data/lengths/${order}/${style}`;
-    const rawData = await fetch(url);
-    const data = await rawData.json();
-    lengths.innerHTML = '<option value="">Choose</option>';
-    for (let i in data.rows) {
-      const len = data.rows[i].key;
-      const num = data.rows[i].value.length;
-      const option = document.createElement('option');
-      option.value = len;
-      option.innerText = `${len} (${num})`;
-      lengths.appendChild(option);
-    }
-    // updateCache(settings);
-  } catch (error) { console.log(error) }
-}
-async function prepareLengthOptions() {
-  // console.log('prepareLengthOptions');
-  try {
-    for (let i in data.rows) {
-      const len = data.rows[i].key;
-      const num = data.rows[i].value.length;
-      const option = document.createElement('option');
-      option.value = len;
-      option.innerText = `${len} (${num})`;
-      lengths.appendChild(option);
-    }
-    // updateCache(settings);
-  } catch (error) { console.log(error) }
-}
+// const lengths = document.getElementById('lengths');
+// // populateLengthOptions();
+// async function populateLengthOptions() {
+//   // console.log('populateLengthOptions');
+//   try {
+//     const settings = getSettings();
+//     const order = settings.order;
+//     const style = settings.style;
+//     const url = `/data/lengths/${order}/${style}`;
+//     const rawData = await fetch(url);
+//     const data = await rawData.json();
+//     lengths.innerHTML = '<option value="">Choose</option>';
+//     for (let i in data.rows) {
+//       const len = data.rows[i].key;
+//       const num = data.rows[i].value.length;
+//       const option = document.createElement('option');
+//       option.value = len;
+//       option.innerText = `${len} (${num})`;
+//       lengths.appendChild(option);
+//     }
+//     // updateCache(settings);
+//   } catch (error) { console.log(error) }
+// }
+// async function prepareLengthOptions() {
+//   // console.log('prepareLengthOptions');
+//   try {
+//     for (let i in data.rows) {
+//       const len = data.rows[i].key;
+//       const num = data.rows[i].value.length;
+//       const option = document.createElement('option');
+//       option.value = len;
+//       option.innerText = `${len} (${num})`;
+//       lengths.appendChild(option);
+//     }
+//     // updateCache(settings);
+//   } catch (error) { console.log(error) }
+// }
 
 
 
