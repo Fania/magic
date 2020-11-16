@@ -80,3 +80,16 @@
 {% block scripts %}
 <script src="meta/js/contribute.js"></script>
 {% endblock %}
+
+<script>
+  // recalc bounding box for arc and altarc styles
+
+  const [...sqs] = document.querySelectorAll("svg [id*='arc']");
+  console.log(sqs);
+  sqs.forEach(sq => {
+    const p = sq.querySelector("path");
+    const bbx = p.getBBox();
+    sq.setAttribute('viewBox', `${bbx.x} ${bbx.y} ${bbx.width} ${bbx.height}`);
+  });
+
+</script>
