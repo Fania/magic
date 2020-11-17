@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.26';
+const CACHE = 'magic-v2.2.27';
 
 
 
@@ -456,6 +456,7 @@ reset.addEventListener('click', ()=> {
   triggerAnimation();
 });
 
+
 // RANDOM OPTION
 const random = document.getElementById('random');
 random.addEventListener('click', async ()=> { 
@@ -481,29 +482,30 @@ random.addEventListener('click', async ()=> {
   triggerAnimation();
 });
 
+
 // SHARE OPTION
-// const share = document.getElementById('share');
-// share.addEventListener('click', ()=> { 
-//   const settings = getSettings();
-//   const params = new URLSearchParams(settings);
-//   const bookmark = location + '?' + params.toString();
-//   console.log(bookmark);
+const share = document.getElementById('share');
+share.addEventListener('click', ()=> { 
+  const settings = getSettings();
+  const params = new URLSearchParams(settings);
+  const bookmark = location + '?' + params.toString();
+  console.log(bookmark);
 
-//   if (navigator.share) {
-//     navigator.share({
-//       title: 'squares.cubelife.org',
-//       text: 'Magic Squares',
-//       url: bookmark,
-//     })
-//     .then(() => console.log('Successful share'))
-//     .catch((error) => console.log('Error sharing', error));
-//   } else { console.log('no sharing possible'); }
+  if (navigator.share) {
+    navigator.share({
+      title: 'squares.cubelife.org',
+      text: 'Magic Squares',
+      url: bookmark,
+    })
+    .then(() => console.log('Successful share'))
+    .catch((error) => console.log('Error sharing', error));
+  } else { console.log('no sharing possible'); }
 
-//   location = bookmark;
-//   // bookmark.select();
-//   // document.execCommand("copy");
-//   // alert('Added URL to clipboard.');
-// });
+  location = bookmark;
+  // bookmark.select();
+  // document.execCommand("copy");
+  // alert('Added URL to clipboard.');
+});
 
 
 // POPULATE ORDER OPTIONS
