@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.32';
+const CACHE = 'magic-v2.2.33';
 
 
 
@@ -73,12 +73,19 @@ function loadBookmark(params) {
   console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
   const settings = {};
+  const checkBool = ['dayMode', 'overlap'];
+  const checkNum = ['falpha', 'gap', 'order', 'salpha', 'size', 'speed', 'strokeWidth'];
   keyValueStrings.forEach(x => {
     const pair = x.split('=');
-    const value = pair[1].replace('%23','#');
+    let value = pair[1].replace('%23','#');
+    if(checkNum.includes(pair[0])) {
+      value = parseInt(value);
+    }
+    if(checkBool.includes(pair[0])) {
+      value = value === 'true' ? true : false;
+    }
     settings[pair[0]] = value;
   });
-  // console.log(settings);
   saveSettings(settings);
   populateOrderOptions();
   loadSettings();
