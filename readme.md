@@ -35,6 +35,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Interface
 
+- [ ] add option to hide interface via share button / bookmarks
 - [ ] make print stylesheet sizes dynamic
 - [ ] modal being added twice after print dialog triggered
 - [ ] create new research page

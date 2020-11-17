@@ -159,6 +159,8 @@ input[type="button"] {
 /* .home #squares svg { height: 10%; } */
 
 
+
+
 .home #squares.overlap { position: relative; }
 .home #squares.overlap svg { position: absolute; 
   width: 90%; height: 75vh; max-height: 75vh; }
@@ -665,3 +667,12 @@ footer a, footer p {
   .day.light-scheme   { background: white; color:  #555; }
   .night.light-scheme { background:  #eee; color: black; }
 } */
+
+
+
+/* hack to give Safari something in the CSS to recalculate */
+@media not all and (min-resolution: .001dpcm) {
+  @supports( -webkit-appearance:none) {
+    .home #squares svg { height: 10%; }
+  }
+}
