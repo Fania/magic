@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.31';
+const CACHE = 'magic-v2.2.32';
 
 
 
@@ -60,7 +60,7 @@ else {
   populateOrderOptions();
   loadSettings();
   getData();
-  triggerAnimation();
+  handleAnimationRadios();
 
   // populateLengthOptions();
 }
@@ -83,7 +83,7 @@ function loadBookmark(params) {
   populateOrderOptions();
   loadSettings();
   getData();
-  triggerAnimation();
+  handleAnimationRadios();
   // populateLengthOptions();
 }
 
@@ -286,11 +286,11 @@ if(offA.checked || asyncA.checked) {
 [syncA,asyncA,offA].forEach( a => {
   a.addEventListener('change', ()=> { 
     // console.log(`ANIMATION change triggered by ${a.id}`);
-    triggerAnimation();
+    handleAnimationRadios();
     // adjust('animation');
   });
 });
-function triggerAnimation() {
+function handleAnimationRadios() {
   if(document.getElementById('sync').checked) { 
     squares.classList.add('animate'); 
     squares.classList.add('animateEvenly');
@@ -453,7 +453,7 @@ reset.addEventListener('click', ()=> {
   // console.log('RESET click triggered');
   saveSettings(defaults);
   getData();
-  triggerAnimation();
+  handleAnimationRadios();
 });
 
 
@@ -479,7 +479,7 @@ random.addEventListener('click', async ()=> {
   settings.overlap = [true,false][getRandomInt(0, 1)];
   saveSettings(settings);
   getData();
-  triggerAnimation();
+  handleAnimationRadios();
 });
 
 
@@ -569,7 +569,7 @@ async function populateOrderOptions() {
 //     const theme = data.find(item => item.id === name).doc;
 //     saveSettings(theme);
 //     getData();
-//     triggerAnimation();
+//     handleAnimationRadios();
 //   } catch (error) { console.log(error) }
 // }
 
