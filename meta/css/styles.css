@@ -155,6 +155,8 @@ input[type="button"] {
 #animationOptions label:last-child { display: block; }
 
 
+/* hack to give Safari something in the CSS to recalculate */
+/* .home #squares svg { height: 10%; } */
 
 
 .home #squares.overlap { position: relative; }
@@ -167,8 +169,6 @@ input[type="button"] {
 #squares svg.hide { display: none; }
 /* #squares svg { display: none; } */
 
-/* hack to give Safari something in the CSS to recalculate */
-.home #squares svg { height: 10%; }
 
 
 /* .home { padding-top: 0 } */
