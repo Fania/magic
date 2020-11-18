@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.35';
+const CACHE = 'magic-v2.2.36';
 
 
 
@@ -489,6 +489,7 @@ random.addEventListener('click', async ()=> {
   settings.speed = getRandomInt(0, 100);
   settings.overlap = [true,false][getRandomInt(0, 1)];
   saveSettings(settings);
+  loadSettings();
   getData();
   handleAnimationRadios();
 });
@@ -740,7 +741,8 @@ async function loadSettings() {
     displayTheme.selectedIndex = parseInt(settings._id);
   }
   applyStyles();
-  // TODO: also apply animation styles?
+  handleAnimationRadios();
+
   // add class to body for printing
   document.body.removeAttribute("class");
   const orderClass = 
