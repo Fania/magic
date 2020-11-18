@@ -11,11 +11,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ### Bugs ?
 
-- [ ] test
 - [ ] tablet screens don't fit side settings menu? 
 - [ ] make Edge respect speed range adjustments without turning anim off/on
-- [ ] anim radio buttons not correct after making changes?
-- [ ] reset button triggering animations?
 - [ ] check printing on all browsers
 
 
@@ -64,6 +61,8 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 
 ## Done
 
+- [x] anim radio buttons not correct after making changes?
+- [x] reset button triggering animations?
 - [x] mobile and tablet screens have extra height between rows?
 - [x] mobile and tablet screens don't show async animations?
 - [x] edge scaling width/height probs past 150px
