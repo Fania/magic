@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.38';
+const CACHE = 'magic-v2.2.39';
 
 
 
@@ -465,6 +465,7 @@ reset.addEventListener('click', ()=> {
   squares.classList.remove('animate');
   squares.classList.remove('animateOddly');
   squares.classList.remove('animateEvenly');
+  location = location.origin;
 });
 
 
