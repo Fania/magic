@@ -3,10 +3,10 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.3.1';
+const CACHE = 'magic-v2.3.2';
 
 
-
+const pause = document.getElementById('pause');
 const [...menuTriggers] = document.querySelectorAll('nav a');
 const [...displayStyles] = document.getElementsByName('style');
 const [...displayAmounts] = document.getElementsByName('amount');
@@ -61,6 +61,7 @@ else {
   loadSettings();
   getData();
   handleAnimationRadios();
+  triggerAnimationPause();
   // populateLengthOptions();
 }
 
@@ -90,6 +91,7 @@ function loadBookmark(params) {
   loadSettings();
   getData();
   handleAnimationRadios();
+  triggerAnimationPause();
   // populateLengthOptions();
 }
 
@@ -385,14 +387,6 @@ function insertAnimationStyles(id, order, style, len) {
     // console.log(id, order, style, len);
     const animType = document.querySelector('[name="animation"]:checked').value;
     // console.log(animType);
-
-  if(animType === 'async') {
-    console.log("...");
-    // const styleName = style === 'unique' ? 'quadvertex' : style
-    // const thing = document.querySelector(`#${styleName}-${order}-${id} path`);
-    // thing.setAttribute("animation-duration","4s");
-
-  } else {
     const sheet = document.styleSheets[0];
     const [...rules] = sheet.cssRules;
     const styleName = style === 'unique' ? 'quadvertex' : style
@@ -420,14 +414,13 @@ function insertAnimationStyles(id, order, style, len) {
     const speedValue = (len/1000) * asyncSpeed;
     const asyncText = `${asyncName}{ animation-duration: ${speedValue}s; }`;
     sheetNew.insertRule(asyncText, sheetNew.cssRules.length);
-  }
 }
 
 
 
 
 
-const pause = document.getElementById('pause');
+
 pause.addEventListener('change', ()=> { 
   // console.log('PAUSE change triggered');
   triggerAnimationPause();
@@ -461,6 +454,7 @@ reset.addEventListener('click', ()=> {
   loadSettings();
   getData();
   handleAnimationRadios();
+  triggerAnimationPause();
   //TODO find better solution for this
   squares.classList.remove('animate');
   squares.classList.remove('animateOddly');
@@ -493,6 +487,7 @@ random.addEventListener('click', async ()=> {
   loadSettings();
   getData();
   handleAnimationRadios();
+  triggerAnimationPause();
 });
 
 
@@ -711,6 +706,8 @@ function adjust(thing) {
   saveSettings(settings);
   if(['order','style','amount'].includes(thing)) {
     getData();
+    handleAnimationRadios();
+    triggerAnimationPause();
     // populateLengthOptions();
   }
 }
@@ -745,6 +742,7 @@ async function loadSettings() {
   }
   applyStyles();
   handleAnimationRadios();
+  triggerAnimationPause();
 
   // add class to body for printing
   document.body.removeAttribute("class");
