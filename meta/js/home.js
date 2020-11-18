@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.34';
+const CACHE = 'magic-v2.2.35';
 
 
 
@@ -461,6 +461,7 @@ reset.addEventListener('click', ()=> {
   loadSettings();
   getData();
   handleAnimationRadios();
+  //TODO find better solution for this
   squares.classList.remove('animate');
   squares.classList.remove('animateOddly');
   squares.classList.remove('animateEvenly');
