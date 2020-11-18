@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.3.2';
+const CACHE = 'magic-v2.3.3';
 
 
 const pause = document.getElementById('pause');
@@ -325,7 +325,7 @@ speed.addEventListener('input', ()=> {
   // console.log('SPEED input triggered');
   // console.log('speed', speed.value);
   insertSpeedStyles();
-  // adjust('speed');
+  adjust('speed');
 });
 speed.addEventListener('wheel', ()=> { 
   // console.log('SPEED wheel triggered');
@@ -339,7 +339,7 @@ speed.addEventListener('wheel', ()=> {
     else          { speed.value = 100; }
   }
   insertSpeedStyles();
-  // adjust('speed');
+  adjust('speed');
   event.preventDefault();
 });
 
