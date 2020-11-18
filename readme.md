@@ -15,6 +15,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] tablet screens don't fit side settings menu? 
 - [ ] make Edge respect speed range adjustments without turning anim off/on
 - [ ] anim radio buttons not correct after making changes?
+- [ ] reset button triggering animations?
 - [ ] check printing on all browsers
 
 

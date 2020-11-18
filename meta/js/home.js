@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.33';
+const CACHE = 'magic-v2.2.34';
 
 
 
@@ -61,7 +61,6 @@ else {
   loadSettings();
   getData();
   handleAnimationRadios();
-
   // populateLengthOptions();
 }
 
@@ -82,7 +81,7 @@ function loadBookmark(params) {
       value = parseInt(value);
     }
     if(checkBool.includes(pair[0])) {
-      value = value === 'true' ? true : false;
+      value = value === 'true';
     }
     settings[pair[0]] = value;
   });
@@ -459,8 +458,12 @@ const reset = document.getElementById('reset');
 reset.addEventListener('click', ()=> { 
   // console.log('RESET click triggered');
   saveSettings(defaults);
+  loadSettings();
   getData();
   handleAnimationRadios();
+  squares.classList.remove('animate');
+  squares.classList.remove('animateOddly');
+  squares.classList.remove('animateEvenly');
 });
 
 
