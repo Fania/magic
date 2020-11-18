@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.2.36';
+const CACHE = 'magic-v2.2.37';
 
 
 
@@ -293,7 +293,7 @@ if(offA.checked || asyncA.checked) {
   a.addEventListener('change', ()=> { 
     // console.log(`ANIMATION change triggered by ${a.id}`);
     handleAnimationRadios();
-    // adjust('animation');
+    adjust('animation');
   });
 });
 function handleAnimationRadios() {
@@ -387,7 +387,7 @@ function insertAnimationStyles(id, order, style, len) {
     // console.log(animType);
 
   if(animType === 'async') {
-    console.log("hello");
+    console.log("...");
     // const styleName = style === 'unique' ? 'quadvertex' : style
     // const thing = document.querySelector(`#${styleName}-${order}-${id} path`);
     // thing.setAttribute("animation-duration","4s");
@@ -500,8 +500,7 @@ const share = document.getElementById('share');
 share.addEventListener('click', ()=> { 
   const settings = getSettings();
   const params = new URLSearchParams(settings);
-  const bookmark = location + '?' + params.toString();
-  console.log(bookmark);
+  const bookmark = location.origin + '?' + params.toString();
 
   if (navigator.share) {
     navigator.share({
@@ -682,6 +681,9 @@ function adjust(thing) {
     //   break;
     case 'style':
       x = document.querySelector('[name="style"]:checked').value;
+      break;
+    case 'animation':
+      x = document.querySelector('[name="animation"]:checked').value;
       break;
     case 'amount':
       x = document.querySelector('[name="amount"]:checked').value;
