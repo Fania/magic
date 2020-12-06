@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.3.3';
+const CACHE = 'magic-v2.3.4';
 
 
 const pause = document.getElementById('pause');
@@ -85,6 +85,9 @@ function loadBookmark(params) {
       value = value === 'true';
     }
     settings[pair[0]] = value;
+    if(pair[0] == 'interface' && value == 'hidden') {
+      toggleInterface();
+    }
   });
   saveSettings(settings);
   populateOrderOptions();
@@ -977,10 +980,7 @@ function applyOverlap(state) {
 // for live display screens
 document.addEventListener("keydown", event => {
   if (event.key === "i") {
-    const elems = document.querySelectorAll("header, footer");
-    elems.forEach(e => {
-      e.classList.toggle('hide');
-    });
+    toggleInterface();
   }
   if (event.key === "p") {
     togglePrintStyles();
@@ -991,6 +991,13 @@ document.addEventListener("keydown", event => {
     triggerAnimationPause();
   }
 });
+
+function toggleInterface() {
+  const elems = document.querySelectorAll("header, footer");
+  elems.forEach(e => {
+    e.classList.toggle('hide');
+  });
+}
 
 
 function togglePrintStyles() {

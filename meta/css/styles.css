@@ -480,6 +480,28 @@ footer a, footer p {
 
 
 
+/* SCROLLBAR */
+/* chrome, edge, safari */
+body::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+body::-webkit-scrollbar-track {
+  background: #222222;        /* color of the tracking area */
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #333333;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid #222222;  /* creates padding around scroll thumb */
+}
+/* firefox */
+body {
+  scrollbar-width: thin;          /* "auto" or "thin"  */
+  scrollbar-color: #333333 #222222;   /* scroll thumb & track */
+}
+
+
+
+
 @media screen and (min-width: 500px) {
 
   svg { fill: none; stroke: var(--textColour); stroke-width: 2px; 
