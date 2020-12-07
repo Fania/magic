@@ -857,7 +857,7 @@ async function getData(offset = 0) {
         sq.setAttribute('viewBox', `${bbx.x} ${bbx.y} ${bbx.width} ${bbx.height}`);
       });
     }
-    // TODO add sntinel earlier, at 150 or so
+    // TODO add sentinel earlier, at 150 or so
     // only add sentinel if we have more results left
     if(data.length === 200) {
       const io = new IntersectionObserver(
