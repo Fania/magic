@@ -14,6 +14,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 - [ ] tablet screens don't fit side settings menu? 
 - [ ] make Edge respect speed range adjustments without turning anim off/on
 - [ ] check printing on all browsers
+- [ ] work out why 256 quadvertex, arc, blocks, etc aren't working
 
 
 ### Functionality

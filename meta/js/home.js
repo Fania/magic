@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.3.7';
+const CACHE = 'magic-v2.3.8';
 
 
 const pause = document.getElementById('pause');
@@ -87,6 +87,9 @@ function loadBookmark(params) {
     settings[pair[0]] = value;
     if(pair[0] == 'interface' && value == 'hidden') {
       toggleInterface();
+    }
+    if(pair[0] == 'gallery' && value == 'true') {
+      handleGalleryMode();
     }
   });
   saveSettings(settings);
@@ -1074,3 +1077,15 @@ day.addEventListener("click", () => {
   adjust("stroke");
   adjust("dayMode");
 });
+
+
+
+
+
+function handleGalleryMode() {
+  console.log('hello Gallery');
+
+
+
+
+}
