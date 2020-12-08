@@ -66,7 +66,7 @@ async function initialiseSources() {
 
 
 
-// couch.statusReport()
+couch.statusReport()
 // test.couchDB()
 
 
