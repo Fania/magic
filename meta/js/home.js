@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.3.8';
+const CACHE = 'magic-v2.3.9';
 
 
 const pause = document.getElementById('pause');
@@ -1083,9 +1083,51 @@ day.addEventListener("click", () => {
 
 
 function handleGalleryMode() {
-  console.log('hello Gallery');
+  // console.log('hello Gallery');
+
+
+  setTimeout(()=> { 
+
+    const sq = document.getElementById('squares');
+
+    // disable intersection observer
+    const sentinels = document.querySelectorAll("[class*='sentinel']");
+    sentinels.forEach(s => {
+      // console.log('sentinel');
+      s.style.display = 'none';
+    })
+
+    // console.dir(sq);
+
+    const cntWidth = sq.clientWidth;
+    const winHeigh = window.innerHeight;
+    const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
+
+    // const x = Math.floor(window.innerHeight / sq.children[0].clientWidth);
+    // const y = Math.floor(window.innerWidth / sq.children[0].clientWidth);
+    const x = Math.floor(cntWidth / svgWidth);
+    const y = Math.floor(winHeigh / svgWidth);
+    const z = Math.ceil(x*y);
+    // console.log(x,y,z);
+
+    // console.log(sq.children[z]);
+
+    for(let i=z; i < sq.children.length; i++){
+
+      // console.log('test');
+      sq.children[i].classList.add('hide');
+
+    }
+
+
+
+
+  }, 1000);
+  
+
 
 
 
 
 }
+
