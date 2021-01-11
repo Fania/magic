@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.3.9';
+const CACHE = 'magic-v2.3.10';
 
 
 const pause = document.getElementById('pause');
