@@ -2,6 +2,7 @@
 @page {
   margin: 0;
   size: A4 landscape;
+  /* size: A1 landscape; */
 }
 
 body { 
@@ -56,7 +57,8 @@ body.order25,
 body.order27,
 body.order28,
 body.order30,
-body.order32 {  /* 1 */
+body.order32,
+body.order256 {  /* 1 */
   --size: calc((100vw - 80px) / 2);
   --marg: calc( ( 100vh - ( var(--size) * 1 ) ) / 2 );
 }
@@ -68,7 +70,8 @@ body.order25 #squares,
 body.order27 #squares,
 body.order28 #squares,
 body.order30 #squares,
-body.order32 #squares {
+body.order32 #squares,
+body.order256 #squares {
   justify-content: center;
 }
 body.order11,
