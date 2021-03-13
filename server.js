@@ -51,7 +51,7 @@ async function setupSource(n) {
   await couch.populateDBSource(result, n)
 }
 async function initialiseSources() {
-  const orders = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,27,28,30,32,256]
+  const orders = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,27,28,30,32]
   const forLoop = async _ => { 
     for (let i=0; i < orders.length; i++) {
       await setupSource(orders[i])
@@ -60,17 +60,13 @@ async function initialiseSources() {
   forLoop()
 }
 
-// initialiseSources()
+initialiseSources()
 // setupSource(256)
 // setupSource(4)
 
 
-
-// couch.statusReport()
+couch.statusReport()
 // test.couchDB()
-
-
-
 
 
 
