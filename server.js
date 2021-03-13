@@ -60,12 +60,12 @@ async function initialiseSources() {
   forLoop()
 }
 
-initialiseSources()
+// initialiseSources()
 // setupSource(256)
 // setupSource(4)
 
 
-couch.statusReport()
+// couch.statusReport()
 // test.couchDB()
 
 
