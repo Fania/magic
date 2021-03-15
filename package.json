@@ -1,6 +1,6 @@
 {
   "name": "magic",
-  "version": "2.3.15",
+  "version": "2.4.1",
   "description": "A magic square page.",
   "main": "server",
   "repository": "http://github.com/fania/magic",
@@ -11,6 +11,7 @@
   "license": "CC-BY-NC-SA-4.0",
   "dependencies": {
     "axios": "^0.21.1",
+    "chokidar": "^3.5.1",
     "compression": "^1.7.4",
     "dom-parser": "^0.1.6",
     "dotenv": "^8.2.0",
