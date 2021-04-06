@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.4.2';
+const CACHE = 'magic-v2.4.3';
 
 
 const pause = document.getElementById('pause');
@@ -1079,15 +1079,9 @@ day.addEventListener("click", () => {
 });
 
 
-
-
-
 function handleGalleryMode() {
   // console.log('hello Gallery');
-
-
   setTimeout(()=> { 
-
     const sq = document.getElementById('squares');
 
     // disable intersection observer
@@ -1098,7 +1092,6 @@ function handleGalleryMode() {
     })
 
     // console.dir(sq);
-
     const cntWidth = sq.clientWidth;
     const winHeigh = window.innerHeight;
     const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
@@ -1109,25 +1102,11 @@ function handleGalleryMode() {
     const y = Math.floor(winHeigh / svgWidth);
     const z = Math.ceil(x*y);
     // console.log(x,y,z);
-
     // console.log(sq.children[z]);
 
     for(let i=z; i < sq.children.length; i++){
-
       // console.log('test');
       sq.children[i].classList.add('hide');
-
     }
-
-
-
-
   }, 1000);
-  
-
-
-
-
-
 }
-

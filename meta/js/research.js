@@ -31,12 +31,8 @@ document.body.classList.add("order4");
 
 
 
-
-
-
-
-
 async function getData(filter) {
+  // console.log(filter);
   try {
     const squares = document.querySelector(`#squares`);
     squares.innerHTML = "";
@@ -46,6 +42,7 @@ async function getData(filter) {
     const data = await rawData.json();
     for (let i in data) {
       const elem = data[i].svg;
+      // console.log(elem);
       squares.insertAdjacentHTML('beforeend',elem);
     }
     // if(data.length === 200) {

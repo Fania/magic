@@ -150,7 +150,8 @@ app.get('/data/flags/:f', async (req, res) => {
   const filter = req.params.f
   const source = await couch.viewFilterDB(filter)
   // console.log(source[0])
-  const data = await generate.svgData(source,4,"quadvertex")
+  // const data = await generate.svgData(source,4,"quadvertex")
+  const data = await generate.svgData(source,4,"straight")
   res.send( data )
 })
 
