@@ -1,6 +1,6 @@
 'use strict';
 
-const cacheName = 'magic-v2.4.1';
+const cacheName = 'magic-v2.4.2';
 
 
 const precacheResources = [
@@ -152,7 +152,7 @@ async function updateCacheFromNetwork(request) {
   let thing = await cache.match(resource);
   // only adds new resources in, not updates out-of-date ones?
   if (thing === undefined) {
-    thing = await fetch(request);
+    thing = await fetch(request.clone());
     await cache.put(request, thing);
   }
 

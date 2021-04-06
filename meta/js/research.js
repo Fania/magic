@@ -1,7 +1,7 @@
 'use strict';
 
 
-getData("all");
+getData("i");
 
 document.body.classList.add("order4");
 
