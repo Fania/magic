@@ -41,8 +41,8 @@ async function getData(filter) {
     const rawData = await fetch(url);
     const data = await rawData.json();
     for (let i in data) {
+      // console.log(data[i]);
       const elem = data[i].svg;
-      // console.log(elem);
       squares.insertAdjacentHTML('beforeend',elem);
     }
     // if(data.length === 200) {
@@ -136,3 +136,126 @@ function hideClass(thing) {
   // console.log(svgRuleIndex);
   sheet.deleteRule(svgRuleIndex);
 }
+
+
+
+
+// 7,14,4,9,15,6,12,1,2,3,13,16,10,11,5,8
+// "<svg id='straight-4-2b133453f4f02a667910db1ef7cd6c88' class='identity l3659' viewBox='-2 -2 304 304'><path d='M300,100 0,200 100,200 200,0 200,300 100,100 0,0 300,300 300,0 0,300 100,300 200,100 200,200 100,0 0,100 300,200 300,100 '></path></svg>"
+
+polygon_length();
+console.log("test");
+
+function polygon_length() {
+  console.log("inside polygon length");
+  // let points = el.attr('points');
+  // points = points.split(' ');
+  let points = '300,100 0,200 100,200 200,0 200,300 100,100 0,0 300,300 300,0 0,300 100,300 200,100 200,200 100,0 0,100 300,200 300,100'.split(' ');
+  console.log(points);
+  if (points.length > 1) {
+    let len = 0;
+    console.log("points len > 1", len);
+    // measure polygon
+    if (points.length > 2) {
+      console.log("points len > 2", len);
+      for (let i=0; i<points.length-1; i++) {
+        console.log(points[i], points[i+1], len);
+        len += distance(coord(points[i]), coord(points[i+1]));
+      }
+    }
+    // measure line or measure polygon close line
+    len += distance(coord(points[0]), coord(points[points.length-1]));
+    console.log("points len end", len);
+    return len;
+  } else {
+    return 0;
+  }
+}
+
+// distance between two coordinates (vector points)
+function distance(c1, c2) {
+  if (c1 != undefined && c2 != undefined) {
+    return Math.sqrt(Math.pow((c2[0]-c1[0]), 2) + Math.pow((c2[1]-c1[1]), 2));
+  } else {
+    return 0;
+  }
+}
+
+// parse a pair of string-floats as actual floats
+function coord(c_str) {
+  let c = c_str.split(',');
+  if (c.length != 2) {
+    return; // return undefined
+  }
+  if (isNaN(c[0]) || isNaN(c[1])) {
+    return;
+  }
+  return [parseFloat(c[0]), parseFloat(c[1])];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// https://stackoverflow.com/questions/30355241/get-the-length-of-a-svg-line-rect-polygon-and-circle-tags
+
+// function polygon_length(el) {
+//   var points = el.attr('points');
+//   points = points.split(' ');
+//   if (points.length > 1) {
+//     function coord(c_str) {
+//       var c = c_str.split(',');
+//       if (c.length != 2) {
+//         return; // return undefined
+//       }
+//       if (isNaN(c[0]) || isNaN(c[1])) {
+//         return;
+//       }
+//       return [parseFloat(c[0]), parseFloat(c[1])];
+//     }
+
+//     function dist(c1, c2) {
+//       if (c1 != undefined && c2 != undefined) {
+//         return Math.sqrt(Math.pow((c2[0]-c1[0]), 2) + Math.pow((c2[1]-c1[1]), 2));
+//       } else {
+//         return 0;
+//       }
+//     }
+
+//     var len = 0;
+//     // measure polygon
+//     if (points.length > 2) {
+//       for (var i=0; i<points.length-1; i++) {
+//         len += dist(coord(points[i]), coord(points[i+1]));
+//       }
+//     }
+//     // measure line or measure polygon close line
+//     len += dist(coord(points[0]), coord(points[points.length-1]));
+//     return len;
+//   } else {
+//     return 0;
+//   }
+// }
