@@ -1,8 +1,6 @@
 'use strict';
 
 
-getData("i");
-
 document.body.classList.add("order4");
 
 // const classification = document.getElementById('classification');
@@ -30,6 +28,7 @@ document.body.classList.add("order4");
 // }
 
 
+getData("i");
 
 async function getData(filter) {
   // console.log(filter);
@@ -103,20 +102,10 @@ function togglePrintStyles() {
 
 
 
-
+// first check before any change is done
+showClass("identity");
 
 const fillabs = document.querySelectorAll("input[class^=filter]");
-fillabs.forEach(fl => {
-  fl.addEventListener("change", () => { 
-    if(fl.checked) {
-      showClass(fl.id);
-      if(fl.id == "unique") showClass("identity");
-    } else {
-      hideClass(fl.id);
-      if(fl.id == "unique") hideClass("identity");
-    }
-  });
-})
 
 function showClass(thing) {
   // console.log("show", thing);
@@ -137,6 +126,18 @@ function hideClass(thing) {
   sheet.deleteRule(svgRuleIndex);
 }
 
+fillabs.forEach(fl => {
+  // any subsequent changes
+  fl.addEventListener("change", () => { 
+    if(fl.checked) {
+      // showClass(fl.id);
+      (fl.id == "unique") ? showClass("identity") : showClass(fl.id);
+    } else {
+      // hideClass(fl.id);
+      (fl.id == "unique") ? hideClass("identity") : hideClass(fl.id);
+    }
+  });
+})
 
 
 
