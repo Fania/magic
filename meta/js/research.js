@@ -43,6 +43,9 @@ async function getData(filter) {
       // console.log(data[i]);
       const elem = data[i].svg;
       squares.insertAdjacentHTML('beforeend',elem);
+
+      // calculate new lengths for straight lines
+      polygon_length(data[i].svg);
     }
     // if(data.length === 200) {
       // const io = new IntersectionObserver(
@@ -130,10 +133,8 @@ fillabs.forEach(fl => {
   // any subsequent changes
   fl.addEventListener("change", () => { 
     if(fl.checked) {
-      // showClass(fl.id);
       (fl.id == "unique") ? showClass("identity") : showClass(fl.id);
     } else {
-      // hideClass(fl.id);
       (fl.id == "unique") ? hideClass("identity") : hideClass(fl.id);
     }
   });
@@ -144,36 +145,29 @@ fillabs.forEach(fl => {
 // 7,14,4,9,15,6,12,1,2,3,13,16,10,11,5,8
 // "<svg id='straight-4-2b133453f4f02a667910db1ef7cd6c88' class='identity l3659' viewBox='-2 -2 304 304'><path d='M300,100 0,200 100,200 200,0 200,300 100,100 0,0 300,300 300,0 0,300 100,300 200,100 200,200 100,0 0,100 300,200 300,100 '></path></svg>"
 
-polygon_length();
-console.log("test");
-
-function polygon_length() {
-  console.log("inside polygon length");
-  // let points = el.attr('points');
-  // points = points.split(' ');
-  let points = '300,100 0,200 100,200 200,0 200,300 100,100 0,0 300,300 300,0 0,300 100,300 200,100 200,200 100,0 0,100 300,200 300,100'.split(' ');
-  console.log(points);
+function polygon_length(svg_str) {
+  const re = /(\d+,\d+\s)+/g;
+  let points = svg_str.match(re);
+  points = points[0].trim();
+  points = points.split(' ');
   if (points.length > 1) {
     let len = 0;
-    console.log("points len > 1", len);
-    // measure polygon
     if (points.length > 2) {
-      console.log("points len > 2", len);
       for (let i=0; i<points.length-1; i++) {
-        console.log(points[i], points[i+1], len);
         len += distance(coord(points[i]), coord(points[i+1]));
       }
     }
     // measure line or measure polygon close line
     len += distance(coord(points[0]), coord(points[points.length-1]));
-    console.log("points len end", len);
-    return len;
+    console.log("final polygon length", Math.round(len));
+    return Math.round(len);
   } else {
     return 0;
   }
 }
 
 // distance between two coordinates (vector points)
+// remember SVG coords have origin in top left corner
 function distance(c1, c2) {
   if (c1 != undefined && c2 != undefined) {
     return Math.sqrt(Math.pow((c2[0]-c1[0]), 2) + Math.pow((c2[1]-c1[1]), 2));
