@@ -1,6 +1,6 @@
 {
   "name": "magic",
-  "version": "2.5.14",
+  "version": "2.5.15",
   "description": "A magic square page.",
   "main": "server",
   "repository": "http://github.com/fania/magic",

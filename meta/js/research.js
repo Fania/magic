@@ -1,6 +1,5 @@
 'use strict';
 
-
 document.body.classList.add("order4");
 
 // const classification = document.getElementById('classification');
@@ -27,6 +26,7 @@ document.body.classList.add("order4");
 
 // }
 
+const lengths = [];
 
 getData("i");
 
@@ -46,7 +46,18 @@ async function getData(filter) {
 
       // calculate new lengths for straight lines
       polygon_length(data[i].svg);
+      console.log(data[i]);
+
+
     }
+    console.log(lengths);
+    const uniqlen = _.sortedUniq(lengths);
+    // console.log(uniqlen);
+    const difflen = _.intersection(uniqlen,lengths);
+    // console.log(difflen);
+
+
+
     // if(data.length === 200) {
       // const io = new IntersectionObserver(
       //   entries => {
@@ -159,8 +170,11 @@ function polygon_length(svg_str) {
     }
     // measure line or measure polygon close line
     len += distance(coord(points[0]), coord(points[points.length-1]));
-    console.log("final polygon length", Math.round(len));
-    return Math.round(len);
+    // lengths.push(Math.round(len));
+    lengths.push(len);
+    // console.log("final polygon length", Math.round(len));
+    return len;
+    // return Math.round(len);
   } else {
     return 0;
   }
