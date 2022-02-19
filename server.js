@@ -40,7 +40,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 2.5.19')
+	console.log('Magic Squares Version 2.5.20')
 	console.log('Running on http://localhost:3001')
 })
 

@@ -46,7 +46,9 @@ async function getData(filter) {
 
       // calculate new lengths for straight lines
       polygon_length(data[i].svg);
-      console.log(data[i]);
+      console.log(data[i].array);
+      console.log(data[i].length);
+      console.log(data[i].svg);
 
 
     }
