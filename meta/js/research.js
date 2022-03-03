@@ -39,23 +39,24 @@ async function getData(filter) {
     const url = `/data/flags/${filter}`;
     const rawData = await fetch(url);
     const data = await rawData.json();
-    for (let i in data) {
+    const dataSorted = _.sortBy(data, [function(d) { return d.length }]); 
+    for (let i in dataSorted) {
       // console.log(data[i]);
-      const elem = data[i].svg;
+      const elem = dataSorted[i].svg;
       squares.insertAdjacentHTML('beforeend',elem);
 
       // calculate new lengths for straight lines
-      polygon_length(data[i].svg);
-      console.log(data[i].array);
-      console.log(data[i].length);
-      console.log(data[i].svg);
+      polygon_length(dataSorted[i].svg);
+      // console.log(dataSorted[i].array);
+      // console.log(dataSorted[i].length);
+      // console.log(dataSorted[i].svg);
 
 
     }
-    console.log(lengths);
-    const uniqlen = _.sortedUniq(lengths);
+    // console.log(lengths);
+    // const uniqlen = _.sortedUniq(lengths);
     // console.log(uniqlen);
-    const difflen = _.intersection(uniqlen,lengths);
+    // const difflen = _.intersection(uniqlen,lengths);
     // console.log(difflen);
 
 
@@ -152,6 +153,56 @@ fillabs.forEach(fl => {
     }
   });
 })
+
+
+
+
+// const noneButt = document.querySelector("#none");
+// console.log(noneButt);
+// noneButt.addEventListener("change", () => { 
+
+//   const [...sqsvgs] = document.querySelectorAll("#squares svg");
+//   sqsvgs.forEach(sq => {
+
+//     sq.classList.add("none");
+
+//   });
+
+// });
+
+
+
+
+const lenButt = document.getElementById('lengthRadio');
+const classButt = document.getElementById('classesRadio');
+const lenOptButt = document.getElementById('lenOptions');
+const ourOptButt = document.getElementById('ourOptions');
+const moranOptButt = document.getElementById('moranOptions');
+const filterOptButt = document.getElementById('filterOptions');
+
+[lenButt,classButt].forEach( b => {
+  b.addEventListener('change', ()=> { 
+    console.log(`change triggered by ${b.id}`);
+    
+    if(lenButt.checked) {
+      lenOptButt.classList.remove('hide');
+      ourOptButt.classList.add('hide');
+      moranOptButt.classList.add('hide');
+      filterOptButt.classList.add('hide');
+    } else {
+      lenOptButt.classList.add('hide');
+      ourOptButt.classList.remove('hide');
+      moranOptButt.classList.remove('hide');
+      filterOptButt.classList.remove('hide');
+    }
+
+  });
+});
+
+
+
+
+
 
 
 

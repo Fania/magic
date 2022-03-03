@@ -8,54 +8,33 @@
   <form id="settings" action="/research" method="POST" >
   {# <form id="settings"> #}
   
-    {# <fieldset id="orderOptions">
+    <fieldset id="researchType">
       <label>
-        <span>Order</span>
-        <select name="order" id="order">
-          <option value="3">3</option>
-          <option value="4" selected>4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-          <option value="13">13</option>
-          <option value="14">14</option>
-          <option value="15">15</option>
-          <option value="16">16</option>
-          <option value="17">17</option>
-          <option value="18">18</option>
-          <option value="19">19</option>
-          <option value="20">20</option>
-        </select>
+        <input type="radio" id="lengthRadio" name="type" value="lengthRadio" checked>
+        <span>length</span>
       </label>
-    </fieldset> #}
-
-    <fieldset id="advancedOptions">
-      {# <legend>Advanced Options</legend> #}
-      {# <label>
-        <span>Class</span>
-        <select name="classification" id="classification">
-          <option value="all" selected>All</option>
-          <option value="pandiag">Pandiagonal</option>
-          <option value="symmetric">Associative</option>
-          <option value="self-compl">Self-compl.</option>
-        </select>
-      </label> #}
+      <br>
       <label>
-        <span>Length</span>
-        <select id="lengths">
-          <option value="">Choose</option>
-        </select>
+        <input type="radio" id="classesRadio" name="type" value="classes">
+        <span>classes</span>
       </label>
     </fieldset>
 
-    <fieldset id="ourOptions">
+    <fieldset id="lenOptions">
+      <legend>Length Options</legend>
+      <label>
+        <span>Lengths</span>
+        <select id="lengths">
+          <option value="">Choose</option>
+        </select>
+        <input id="none" class="filter-none" type="checkbox"/>
+        <label for="none" class="tag">none</label>
+      </label>
+    </fieldset>
+
+    <fieldset id="ourOptions" class="hide">
       <legend>Our Tags</legend>
-      <input id="unique" class="filter-unique" type="checkbox" checked/>
+      <input id="unique" class="filter-unique" type="checkbox"/>
       <label for="unique" class="tag">unique</label>
 
       <input id="MH" class="filter-MH" type="checkbox"/>
@@ -80,7 +59,7 @@
       <label for="R3" class="tag">R3</label>
     </fieldset>
 
-    <fieldset id="moranOptions">
+    <fieldset id="moranOptions" class="hide">
       <legend>Moran Classes</legend>
       <input id="elara" class="filter-elara" type="checkbox"/>
       <label for="elara" class="tag">elara</label>
@@ -119,7 +98,7 @@
       <label for="cottus" class="tag">cottus</label>
     </fieldset>
 
-    <fieldset id="filterOptions">
+    <fieldset id="filterOptions" class="hide">
       <legend>Class Tags</legend>
       <input id="pandiag" class="filter-pandiag" type="checkbox"/>
       <label for="pandiag" class="tag">Pandiagonal</label>
