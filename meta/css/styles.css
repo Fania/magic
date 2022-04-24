@@ -382,7 +382,7 @@ label.tag:hover {
 .research svg[class*="moros"],
 .research svg[class*="cottus"]
 {
-  display: none;
+  /* display: none; */
 }
 
 
