@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.5.16';
+const CACHE = 'magic-v2.5.21';
 
 
 const pause = document.getElementById('pause');
@@ -124,7 +124,7 @@ displayOrder.addEventListener('wheel', () => {
   }
   adjust('order');
   event.preventDefault();
-});
+}, { passive: false });
 displayOrder.addEventListener('change', () => {
   // console.log('ORDER change triggered');
   adjust('order');
@@ -162,7 +162,7 @@ size.addEventListener('wheel', ()=> {
   }
   adjust('size');
   event.preventDefault();
-});
+}, { passive: false });
 
 const gap = document.getElementById('gap');
 gap.addEventListener('input', ()=> { 
@@ -182,7 +182,7 @@ gap.addEventListener('wheel', ()=> {
   }
   adjust('gap');
   event.preventDefault();
-});
+}, { passive: false });
 
 const strokeWidth = document.getElementById('strokeWidth');
 strokeWidth.addEventListener('input', ()=> { 
@@ -202,7 +202,7 @@ strokeWidth.addEventListener('wheel', ()=> {
   }
   adjust('strokeWidth');
   event.preventDefault();
-});
+}, { passive: false });
 
 const overlap = document.getElementById('overlap');
 const overlapAll = document.getElementById('overlapAll');
@@ -256,7 +256,7 @@ salpha.addEventListener('wheel', ()=> {
   }
   adjust('salpha');
   event.preventDefault();
-});
+}, { passive: false });
 
 // FILL OPTION
 const fill = document.getElementById('fill');
@@ -284,7 +284,7 @@ falpha.addEventListener('wheel', ()=> {
   }
   adjust('falpha');
   event.preventDefault();
-});
+}, { passive: false });
 
 
 
@@ -347,7 +347,7 @@ speed.addEventListener('wheel', ()=> {
   insertSpeedStyles();
   adjust('speed');
   event.preventDefault();
-});
+}, { passive: false });
 
 
 function insertSpeedStyles() {
