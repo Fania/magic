@@ -9,6 +9,10 @@ const _ = require('lodash')
 // const dotenv = require('dotenv').config()
 const app = express()
 app.use(compression())
+
+// disallow http headers
+app.disable('x-powered-by')
+
 // app.use(minify())
 app.use(express.static('./'))
 
@@ -40,7 +44,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 2.5.21')
+	console.log('Magic Squares Version 2.5.23')
 	console.log('Running on http://localhost:3001')
 })
 
