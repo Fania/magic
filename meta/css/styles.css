@@ -357,7 +357,7 @@ label.tag:hover {
 }
 
 /* hide svgs first */
-.research svg[class*="MD1"],
+/* .research svg[class*="MD1"],
 .research svg[class*="MD2"],
 .research svg[class*="MH"],
 .research svg[class*="MV"],
@@ -382,8 +382,8 @@ label.tag:hover {
 .research svg[class*="moros"],
 .research svg[class*="cottus"]
 {
+} */
   /* display: none; */
-}
 
 
 
@@ -500,9 +500,11 @@ body::-webkit-scrollbar-thumb {
   border: 3px solid #222222;  /* creates padding around scroll thumb */
 }
 /* firefox */
-body {
-  scrollbar-width: thin;          /* "auto" or "thin"  */
-  scrollbar-color: #333333 #222222;   /* scroll thumb & track */
+@supports(scrollbar-width: thin) {
+  body {
+    scrollbar-width: thin;          /* "auto" or "thin"  */
+    scrollbar-color: #333333 #222222;   /* scroll thumb & track */
+  }
 }
 
 
