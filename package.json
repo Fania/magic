@@ -1,6 +1,6 @@
 {
   "name": "magic",
-  "version": "2.5.23",
+  "version": "2.5.24",
   "description": "A magic square page.",
   "main": "server",
   "repository": "http://github.com/fania/magic",
@@ -13,6 +13,7 @@
     "axios": "^0.21.1",
     "chokidar": "^3.5.1",
     "compression": "^1.7.4",
+    "create-hintrc": "^4.0.5",
     "dom-parser": "^0.1.6",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -27,8 +28,12 @@
     "connector": {
       "name": "magicConnector"
     },
-    "formatters": ["magicFormatter"],
-    "parsers": ["magicParser"],
+    "formatters": [
+      "magicFormatter"
+    ],
+    "parsers": [
+      "magicParser"
+    ],
     "hints": {
       "hint1": "error",
       "hint2": "warning",
