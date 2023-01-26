@@ -10,7 +10,7 @@
     "hint3": "off",
     "content-type": ["error", {
         ".*\\.js": "application/javascript; charset=utf-8"
-    }],
+    }]
   },
   "hintsTimeout": 120000,
   "extends": [
