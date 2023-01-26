@@ -1,0 +1,19 @@
+{
+  "connector": {
+    "name": "magicConnector"
+  },
+  "formatters": ["magicFormatter"],
+  "parsers": ["magicParser"],
+  "hints": {
+    "hint1": "error",
+    "hint2": "warning",
+    "hint3": "off",
+    "content-type": ["error", {
+        ".*\\.js": "application/javascript; charset=utf-8"
+    }],
+  },
+  "hintsTimeout": 120000,
+  "extends": [
+    "progressive-web-apps"
+  ]
+}
