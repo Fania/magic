@@ -5,7 +5,7 @@ Don't forget to set up `.env` and `magic.json` files.
 Run with `node server` or start the daemon `pm2 start magic.json`.
 
 <!-- Update sw.js and home.js cache version numbers -->
-
+<!-- Check  package.json and server.js as well -->
 
 ## Todo
 
