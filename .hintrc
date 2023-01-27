@@ -2,7 +2,7 @@
   "connector": {
     "name": "magicConnector"
   },
-  "formatters": ["magicFormatter"],
+  "formatters": ["stylish"],
   "parsers": ["magicParser"],
   "hints": {
     "hint1": "error",

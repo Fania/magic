@@ -5,7 +5,8 @@
   "main": "server",
   "repository": "http://github.com/fania/magic",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "webhint": "hint http://localhost:8080"
   },
   "author": "Fania Everitt",
   "license": "CC-BY-NC-SA-4.0",
@@ -28,17 +29,16 @@
     "connector": {
       "name": "magicConnector"
     },
-    "formatters": [
-      "magicFormatter"
-    ],
-    "parsers": [
-      "magicParser"
-    ],
+    "formatters": ["stylish"],
+    "parsers": ["magicParser"],
     "hints": {
       "hint1": "error",
       "hint2": "warning",
       "hint3": "off"
     },
     "hintsTimeout": 120000
+  },
+  "devDependencies": {
+    "hint": "^2.0.0"
   }
 }
