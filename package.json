@@ -6,11 +6,20 @@
   "repository": "http://github.com/fania/magic",
   "scripts": {
     "start": "node server.js",
-    "webhint": "hint http://localhost:8080"
+    "webhint": "hint http://localhost:3001"
   },
   "author": "Fania Everitt",
   "license": "CC-BY-NC-SA-4.0",
   "dependencies": {
+    "@hint/configuration-web-recommended": "^8.2.16",
+    "@hint/connector-puppeteer": "^2.5.21",
+    "@hint/formatter-html": "^4.3.14",
+    "@hint/formatter-stylish": "^3.1.33",
+    "@hint/hint-content-type": "^4.2.23",
+    "@hint/parser-css": "^3.0.36",
+    "@hint/parser-html": "^3.1.2",
+    "@hint/parser-javascript": "^3.1.22",
+    "@hint/parser-manifest": "^2.3.16",
     "axios": "^0.21.1",
     "chokidar": "^3.5.1",
     "compression": "^1.7.4",
@@ -21,24 +30,40 @@
     "express-minify": "^1.0.0",
     "lodash": "^4.17.21",
     "nunjucks": "^3.2.3",
+    "puppeteer": "^19.6.2",
     "randomcolor": "^0.6.2",
     "svg-path-bounding-box": "^1.0.4",
     "svg-path-properties": "^1.0.11"
   },
   "hintConfig": {
     "connector": {
-      "name": "magicConnector"
+      "name": "puppeteer"
     },
-    "formatters": ["stylish"],
-    "parsers": ["magicParser"],
+    "formatters": [
+      "stylish",
+      "html"
+    ],
+    "parsers": [
+      "@hint/parser-html",
+      "@hint/parser-css",
+      "@hint/parser-javascript",
+      "@hint/parser-manifest"
+    ],
     "hints": {
-      "hint1": "error",
-      "hint2": "warning",
-      "hint3": "off"
+      "content-type": [
+        "error",
+        {
+          ".*\\.js": "application/javascript; charset=utf-8"
+        }
+      ]
     },
-    "hintsTimeout": 120000
+    "hintsTimeout": 120000,
+    "extends": [
+      "web-recommended",
+      "progressive-web-apps"
+    ]
   },
   "devDependencies": {
-    "hint": "^2.0.0"
+    "hint": "^7.1.3"
   }
 }

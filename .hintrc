@@ -1,19 +1,26 @@
 {
   "connector": {
-    "name": "magicConnector"
+    // "name": "local",
+    "name": "puppeteer"
   },
-  "formatters": ["stylish"],
-  "parsers": ["magicParser"],
+  "formatters": [
+    "stylish", 
+    "html"
+  ],
+  "parsers": [
+    "@hint/parser-html",
+    "@hint/parser-css",
+    "@hint/parser-javascript",
+    "@hint/parser-manifest"
+  ],
   "hints": {
-    "hint1": "error",
-    "hint2": "warning",
-    "hint3": "off",
     "content-type": ["error", {
-        ".*\\.js": "application/javascript; charset=utf-8"
+      ".*\\.js": "application/javascript; charset=utf-8"
     }]
   },
   "hintsTimeout": 120000,
   "extends": [
+    "web-recommended",
     "progressive-web-apps"
   ]
 }
