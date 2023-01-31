@@ -40,8 +40,7 @@
       "name": "puppeteer"
     },
     "formatters": [
-      "stylish",
-      "html"
+      "stylish"
     ],
     "parsers": [
       "@hint/parser-html",

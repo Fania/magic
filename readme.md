@@ -8,7 +8,7 @@ Run with `node server` or start the daemon `pm2 start magic.json`.
 <!-- Check  package.json and server.js as well -->
 
 Run webhint with `npm run webhint`
-
+or pipe it into text file with `npm run webhint > hint-report.txt`
 
 
 
