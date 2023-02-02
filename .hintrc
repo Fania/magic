@@ -1,0 +1,25 @@
+{
+  "connector": {
+    // "name": "local",
+    "name": "puppeteer"
+  },
+  "formatters": [
+    "stylish"
+  ],
+  "parsers": [
+    "@hint/parser-html",
+    "@hint/parser-css",
+    "@hint/parser-javascript",
+    "@hint/parser-manifest"
+  ],
+  "hints": {
+    "content-type": ["error", {
+      ".*\\.js": "application/javascript; charset=utf-8"
+    }]
+  },
+  "hintsTimeout": 120000,
+  "extends": [
+    "web-recommended",
+    "progressive-web-apps"
+  ]
+}

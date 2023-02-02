@@ -53,11 +53,7 @@ async function getData(filter) {
 
 
     }
-    // console.log(lengths);
-    // const uniqlen = _.sortedUniq(lengths);
-    // console.log(uniqlen);
-    // const difflen = _.intersection(uniqlen,lengths);
-    // console.log(difflen);
+
 
 
 
@@ -83,6 +79,47 @@ async function getData(filter) {
     document.body.style.cursor = 'default !important'; 
   }
 }
+
+
+
+
+
+
+
+
+
+// Lengths dropdown
+const lengthsdropdown = document.querySelector("#lengths");
+lengthsdropdown.addEventListener("change", event => {
+  
+  // squares.innerHTML = ""
+  // getData("i");
+  // CHANGE THE CSS
+
+
+  let fromIndex = lengthsdropdown.selectedIndex;
+  console.log(fromIndex);
+
+  // console.log(lengths);
+  const uniqlen = _.uniq(lengths);
+  // console.log(uniqlen);
+  const difflen = _.intersection(lengths,uniqlen);
+  // console.log(difflen);
+  // console.log(uniqlen === difflen)
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
 
 
 
@@ -116,6 +153,12 @@ function togglePrintStyles() {
     `)
   }
 }
+
+
+
+
+
+
 
 
 
