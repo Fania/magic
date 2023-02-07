@@ -28,6 +28,26 @@ document.body.classList.add("order4");
 
 const lengths = [];
 
+
+const lengthsdropdown = document.querySelector("#lengths");
+async function populateLengthOptions() {
+  // console.log('populateOrderOptions');
+  try {
+    // const data = await getOrders();
+    lengthsdropdown.innerHTML = '';
+    for (let i in lengths) {
+      const order = lengths[i];
+      const option = document.createElement('option');
+      option.value = order;
+      option.innerText = order;
+      if(lengths[i] == 4) option.selected = true;
+      lengthsdropdown.appendChild(option);
+    }
+  // console.log('total order choices',document.querySelector('#order').length);
+  } catch (error) { console.log(error) }
+}
+
+
 getData("i");
 
 async function getData(filter) {
@@ -46,17 +66,14 @@ async function getData(filter) {
       squares.insertAdjacentHTML('beforeend',elem);
 
       // calculate new lengths for straight lines
-      polygon_length(dataSorted[i].svg);
+      const polylen = polygon_length(dataSorted[i].svg);
+      // console.log(polylen);
+      lengths.push(polylen);
+      // console.log(lengthsdropdown);
       // console.log(dataSorted[i].array);
       // console.log(dataSorted[i].length);
       // console.log(dataSorted[i].svg);
-
-
     }
-
-
-
-
     // if(data.length === 200) {
       // const io = new IntersectionObserver(
       //   entries => {
@@ -77,6 +94,10 @@ async function getData(filter) {
   finally { 
     // loading.classList.remove('show'); 
     document.body.style.cursor = 'default !important'; 
+
+    // console.log(lengths.length);
+    populateLengthOptions();
+
   }
 }
 
@@ -87,11 +108,11 @@ async function getData(filter) {
 
 
 
-
 // Lengths dropdown
-const lengthsdropdown = document.querySelector("#lengths");
+// const lengthsdropdown = document.querySelector("#lengths");
 lengthsdropdown.addEventListener("change", event => {
-  
+  console.log("lengths dropdown");
+
   // squares.innerHTML = ""
   // getData("i");
   // CHANGE THE CSS
@@ -102,10 +123,12 @@ lengthsdropdown.addEventListener("change", event => {
 
   // console.log(lengths);
   const uniqlen = _.uniq(lengths);
-  // console.log(uniqlen);
+  // console.log("uniqlen",uniqlen);
+  // same as above ??
   const difflen = _.intersection(lengths,uniqlen);
-  // console.log(difflen);
-  // console.log(uniqlen === difflen)
+  // console.log("difflen",difflen);
+  console.log(uniqlen === difflen);
+  console.log(uniqlen == difflen);
 
 
 
@@ -362,5 +385,35 @@ function coord(c_str) {
 //     return len;
 //   } else {
 //     return 0;
+//   }
+// }
+
+
+
+
+
+// --------------------------------------
+// code from original magic-SVG prototype
+// --------------------------------------
+// function populateOptions(order,style) {
+//   // console.log(order, style);
+//   lenOptions.innerHTML = "";
+//   if(style !== "numbers") {
+//     const allLengths = indices[order].map(o => `${Object.keys(o[style])[0]} (${o[style][Object.keys(o[style])[0]].length + 1})`);
+//     const list = [...new Set(allLengths.sort())];
+//     lenOptions.disabled = false;
+//     for (let l in list) {
+//       // console.log(list[l]);
+//       // let rgx = /\d+/;
+//       // const match = list[l].match(/\d+/);
+//       const opt = document.createElement("option");
+//       // opt.value = list[l].slice(0,4);
+//       opt.value = list[l].match(/\d+/);
+//       opt.innerText = list[l];
+//       // console.log(list[l]);
+//       lenOptions.appendChild(opt);
+//     }
+//   } else {
+//     lenOptions.disabled = true;
 //   }
 // }
