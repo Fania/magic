@@ -38,9 +38,11 @@ async function populateLengthOptions() {
 
     // console.log(lengths);
     const uniqlen = _.uniq(lengths);
-    console.log("uniqlen",uniqlen);
+    // console.log("uniqlen",uniqlen);
     const countlen = _.countBy(lengths);
     console.log("countlen",countlen);
+
+
     // same as above ??
     // const difflen = _.intersection(lengths,uniqlen);
     // const difflen = _.difference(lengths,uniqlen);
@@ -51,8 +53,6 @@ async function populateLengthOptions() {
     // console.log(uniqlen == difflen);
 
     for (let i in countlen) {
-      console.log(i);
-      console.log(countlen[i]);
       const itemLen = i;
       const itemCount= countlen[i];
       const option = document.createElement('option');
@@ -135,9 +135,14 @@ lengthsdropdown.addEventListener("change", event => {
   // getData("i");
   // CHANGE THE CSS
 
+  // data/:n/:s/:o
+  // data/order/style/offset
+
 
   let fromIndex = lengthsdropdown.selectedIndex;
   console.log(fromIndex);
+
+
 
 
 
