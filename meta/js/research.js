@@ -35,12 +35,30 @@ async function populateLengthOptions() {
   try {
     // const data = await getOrders();
     lengthsdropdown.innerHTML = '';
-    for (let i in lengths) {
-      const order = lengths[i];
+
+    // console.log(lengths);
+    const uniqlen = _.uniq(lengths);
+    console.log("uniqlen",uniqlen);
+    const countlen = _.countBy(lengths);
+    console.log("countlen",countlen);
+    // same as above ??
+    // const difflen = _.intersection(lengths,uniqlen);
+    // const difflen = _.difference(lengths,uniqlen);
+    // const grouplen = _.groupBy(lengths, Math.round(12));
+    // console.log("grouplen",grouplen);
+    // console.log("difflen",difflen);
+    // console.log(uniqlen === difflen);
+    // console.log(uniqlen == difflen);
+
+    for (let i in countlen) {
+      console.log(i);
+      console.log(countlen[i]);
+      const itemLen = i;
+      const itemCount= countlen[i];
       const option = document.createElement('option');
-      option.value = order;
-      option.innerText = order;
-      if(lengths[i] == 4) option.selected = true;
+      option.value = itemLen;
+      option.innerText = `(${itemCount}) ${itemLen}`;
+      if(countlen[i] == 4) option.selected = true;
       lengthsdropdown.appendChild(option);
     }
   // console.log('total order choices',document.querySelector('#order').length);
@@ -121,14 +139,7 @@ lengthsdropdown.addEventListener("change", event => {
   let fromIndex = lengthsdropdown.selectedIndex;
   console.log(fromIndex);
 
-  // console.log(lengths);
-  const uniqlen = _.uniq(lengths);
-  // console.log("uniqlen",uniqlen);
-  // same as above ??
-  const difflen = _.intersection(lengths,uniqlen);
-  // console.log("difflen",difflen);
-  console.log(uniqlen === difflen);
-  console.log(uniqlen == difflen);
+
 
 
 
