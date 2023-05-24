@@ -139,8 +139,9 @@ lengthsdropdown.addEventListener("change", event => {
   // data/order/style/offset
 
 
-  let fromIndex = lengthsdropdown.selectedIndex;
-  console.log(fromIndex);
+  const fromIndex = lengthsdropdown.selectedIndex;
+  const selectedLength = event.target[fromIndex].value;
+  console.log(selectedLength);
 
 
 
@@ -261,7 +262,7 @@ const lenOptButt = document.getElementById('lenOptions');
 const ourOptButt = document.getElementById('ourOptions');
 const moranOptButt = document.getElementById('moranOptions');
 const filterOptButt = document.getElementById('filterOptions');
-
+const mainElem = document.querySelector("main.research");
 [lenButt,classButt].forEach( b => {
   b.addEventListener('change', ()=> { 
     console.log(`change triggered by ${b.id}`);
@@ -271,11 +272,13 @@ const filterOptButt = document.getElementById('filterOptions');
       ourOptButt.classList.add('hide');
       moranOptButt.classList.add('hide');
       filterOptButt.classList.add('hide');
+      mainElem.classList.add("lengthClass");
     } else {
       lenOptButt.classList.add('hide');
       ourOptButt.classList.remove('hide');
       moranOptButt.classList.remove('hide');
       filterOptButt.classList.remove('hide');
+      mainElem.classList.remove("lengthClass");
     }
 
   });

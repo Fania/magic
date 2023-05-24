@@ -303,39 +303,44 @@ svg * { box-sizing: border-box; }
   background: none;
 } */
 
-.research.submenu #settings fieldset.hide {
+.research:not(.lengthClass).submenu #settings fieldset.hide {
   display: none;
 }
 
-main.research #squares svg {
+main.research:not(.lengthClass) #squares svg {
   width: 50px;
   height: 50px;
   margin: 3px;
 }
-main.research #squares svg.unique,
-main.research #squares svg.identity {
+main.research:not(.lengthClass) #squares svg.unique,
+main.research:not(.lengthClass) #squares svg.identity {
   stroke: cyan;
   stroke-width: 10px;
 }
-main.research #squares svg.pandiag {
+main.research:not(.lengthClass) #squares svg.pandiag {
   /* stroke: magenta; */
   stroke-width: 10px;
   border-left: 1px dashed magenta;
   border-right: 1px dashed magenta;
 }
-main.research #squares svg.symmetric {
+main.research:not(.lengthClass) #squares svg.symmetric {
   /* stroke: yellow; */
   stroke-width: 10px;
   border-top: 1px dashed yellow;
   border-bottom: 1px dashed yellow;
 }
-main.research #squares svg.self-compl {
+main.research:not(.lengthClass) #squares svg.self-compl {
   fill: rgba(209, 168, 255, 0.8);
 }
-main.research #squares svg.none {
+main.research:not(.lengthClass) #squares svg.none {
   stroke: white;
   stroke-width: 8px;
 }
+
+
+
+
+
 
 
 /* image filters */ 
