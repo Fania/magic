@@ -312,6 +312,15 @@ main.research:not(.lengthClass) #squares svg {
   height: 50px;
   margin: 3px;
 }
+main.research:not(.lengthClass) #squares figure {
+  margin: 1px;
+}
+main.research:not(.lengthClass) #squares figure div svg:last-child {
+  display: none;
+}
+main.research:not(.lengthClass) #squares figure figcaption {
+  display: none;
+}
 main.research:not(.lengthClass) #squares svg.unique,
 main.research:not(.lengthClass) #squares svg.identity {
   stroke: cyan;
@@ -337,6 +346,10 @@ main.research:not(.lengthClass) #squares svg.none {
   stroke-width: 8px;
 }
 
+
+main.lengthClass #squares figure {
+  margin: 10px;
+}
 main.lengthClass #squares figure div {
   display: flex;
   justify-content: space-between;
