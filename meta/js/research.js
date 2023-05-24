@@ -40,17 +40,7 @@ async function populateLengthOptions() {
     const uniqlen = _.uniq(lengths);
     // console.log("uniqlen",uniqlen);
     const countlen = _.countBy(lengths);
-    console.log("countlen",countlen);
-
-
-    // same as above ??
-    // const difflen = _.intersection(lengths,uniqlen);
-    // const difflen = _.difference(lengths,uniqlen);
-    // const grouplen = _.groupBy(lengths, Math.round(12));
-    // console.log("grouplen",grouplen);
-    // console.log("difflen",difflen);
-    // console.log(uniqlen === difflen);
-    // console.log(uniqlen == difflen);
+    // console.log("countlen",countlen);
 
     for (let i in countlen) {
       const itemLen = i;
@@ -79,17 +69,18 @@ async function getData(filter) {
     const data = await rawData.json();
     const dataSorted = _.sortBy(data, [function(d) { return d.length }]); 
     for (let i in dataSorted) {
+      // console.log(dataSorted[i]);
       const elemSVG = dataSorted[i].svg;
       const elemNums = dataSorted[i].array;
       const elemNumsClean = elemNums.toString().replace(/,/g,' ');
       const elemID = dataSorted[i].id;
       const elemFlags = dataSorted[i].flags;
+      const elemLen = dataSorted[i].length;
       // display curved line as well as straight line?
       const elemCoords = getCoords(4,elemNums);
       const elemNumSVG = createNumberSVGs(4,elemCoords,elemID,elemFlags);
-
       const elemText = `
-      <figure>
+      <figure data-length="${elemLen}">
         <div>${elemSVG}${elemNumSVG}</div>
         <figcaption>
           <p>#${elemID}:</p>
@@ -97,18 +88,11 @@ async function getData(filter) {
         </figcaption>
       </figure>
       `
-
       // squares.insertAdjacentHTML('beforeend',elemSVG);
       squares.insertAdjacentHTML('beforeend',elemText);
-
       // calculate new lengths for straight lines
       const polylen = polygon_length(dataSorted[i].svg);
-      // console.log(polylen);
       lengths.push(polylen);
-      // console.log(lengthsdropdown);
-      // console.log(dataSorted[i].array);
-      // console.log(dataSorted[i].length);
-      // console.log(dataSorted[i].svg);
     }
     // if(data.length === 200) {
       // const io = new IntersectionObserver(
@@ -147,27 +131,21 @@ async function getData(filter) {
 // Lengths dropdown
 // const lengthsdropdown = document.querySelector("#lengths");
 lengthsdropdown.addEventListener("change", event => {
-  console.log("lengths dropdown");
-
-  // squares.innerHTML = ""
-  // getData("i");
-  // CHANGE THE CSS
-
-  // data/:n/:s/:o
-  // data/order/style/offset
-
-
+  // console.log("lengths dropdown");
   const fromIndex = lengthsdropdown.selectedIndex;
   const selectedLength = event.target[fromIndex].value;
-  console.log(selectedLength);
-
-
-
-
-
-
-
-
+  // console.log(selectedLength);
+  const [...squaresSVGs] = document.querySelectorAll(`#squares figure`);
+  squaresSVGs.forEach(sq => {
+    // console.log(sq);
+    const len = sq.getAttribute("data-length");
+    // console.log(len);
+    if(len != selectedLength) {
+      sq.style.display = "none";
+    } else {
+      sq.style.display = "block";
+    }
+  });
 });
 
 
