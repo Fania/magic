@@ -79,9 +79,27 @@ async function getData(filter) {
     const data = await rawData.json();
     const dataSorted = _.sortBy(data, [function(d) { return d.length }]); 
     for (let i in dataSorted) {
-      // console.log(data[i]);
-      const elem = dataSorted[i].svg;
-      squares.insertAdjacentHTML('beforeend',elem);
+      const elemSVG = dataSorted[i].svg;
+      const elemNums = dataSorted[i].array;
+      const elemNumsClean = elemNums.toString().replace(/,/g,' ');
+      const elemID = dataSorted[i].id;
+      const elemFlags = dataSorted[i].flags;
+      // display curved line as well as straight line?
+      const elemCoords = getCoords(4,elemNums);
+      const elemNumSVG = createNumberSVGs(4,elemCoords,elemID,elemFlags);
+
+      const elemText = `
+      <figure>
+        <div>${elemSVG}${elemNumSVG}</div>
+        <figcaption>
+          <p>#${elemID}:</p>
+          <p>${elemNumsClean}</p>
+        </figcaption>
+      </figure>
+      `
+
+      // squares.insertAdjacentHTML('beforeend',elemSVG);
+      squares.insertAdjacentHTML('beforeend',elemText);
 
       // calculate new lengths for straight lines
       const polylen = polygon_length(dataSorted[i].svg);
@@ -342,7 +360,33 @@ function coord(c_str) {
 
 
 
+const sizeInc = 100; // scale (line weight hack) 100 is optimal
 
+// order, valuesArray
+// export function getCoords(order, valuesArray) {
+function getCoords(order=4, valuesArray) {
+  // console.log(`creating coordinate system for square ${c}`);
+  const coordsObject = {};
+  let offset = 0;
+  for (let row=0; row < order; row++) {
+    for (let col=0; col < order; col++) {
+      coordsObject[valuesArray[col+offset]] = [col,row];  // x,y
+    }
+    offset += order;  // increase offset by one row every 4(order) columns
+  }
+  return coordsObject;
+}
+
+function createNumberSVGs(order=4,coordsObject,id,classes) {
+  // console.log(`preparing number matrix svg for square ${counter}`);
+  let texts;
+  let w = parseInt(order) * sizeInc;
+  for (let a in coordsObject) {
+    texts += `<text x='${coordsObject[a][0] * 100}' y='${coordsObject[a][1] * 100}'>${a.padStart(2, '0')}</text>`;
+  }
+  // 0 -50 380 370 for order 4
+  return `<svg id='numbers-${order}-${id}' class='${classes}' viewBox='${0} ${-50} ${w-sizeInc+50+30} ${w-sizeInc+50+20}'>${texts}</svg>`;
+}
 
 
 

@@ -337,7 +337,19 @@ main.research:not(.lengthClass) #squares svg.none {
   stroke-width: 8px;
 }
 
-
+main.lengthClass #squares figure div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+main.lengthClass #squares svg {
+  stroke-width: 2px;
+  width: 150px;
+  margin: 10px;
+}
+main.lengthClass #squares svg[id^="numbers"] text {
+  font-size: 60px;
+}
 
 
 
