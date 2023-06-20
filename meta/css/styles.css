@@ -587,7 +587,7 @@ body::-webkit-scrollbar-thumb {
 
   header { padding: 0 2em }
 
-  .mainmenu div h1 { display: block; margin-left: 1em; width: 250px }
+  .mainmenu div h1 { display: block; margin-left: 1em; width: 275px }
 
   #hamburger { display: none }
   #mainnav { 

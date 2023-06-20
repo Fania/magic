@@ -1,6 +1,6 @@
 'use strict';
 
-const cacheName = 'magic-v2.5.24';
+const cacheName = 'magic-v2.5.25';
 
 
 const precacheResources = [
@@ -137,23 +137,23 @@ async function cacheAllThings() {
 
 // CACHE, UPDATE AND REFRESH
 
-async function serveFromCache(request) {
+async function serveFromCache(req) {
   // console.log(`[Service Worker] serving from CACHE: ${request.url}`);
   const cache = await caches.open(cacheName);
   // get it from cache or fetch from network if new
-  return await cache.match(request) || await fetch(request);
+  return await cache.match(req) || await fetch(req);
 }
 
-async function updateCacheFromNetwork(request) {
+async function updateCacheFromNetwork(req) {
   // console.log(`[Service Worker] updating CACHE from NETWORK: ${request.url}`);
   const cache = await caches.open(cacheName);
-  const fullurl = new URL(request.url)
+  const fullurl = new URL(req.url)
   const resource = fullurl.pathname;
   let thing = await cache.match(resource);
   // only adds new resources in, not updates out-of-date ones?
   if (thing === undefined) {
-    thing = await fetch(request.clone());
-    await cache.put(request, thing);
+    thing = await fetch(req.clone());
+    await cache.put(req, thing);
   }
 
 }
