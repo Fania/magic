@@ -35,13 +35,14 @@ async function populateLengthOptions() {
   try {
     // const data = await getOrders();
     lengthsdropdown.innerHTML = '';
-
     // console.log(lengths);
     const uniqlen = _.uniq(lengths);
     // console.log("uniqlen",uniqlen);
     const countlen = _.countBy(lengths);
+    const countlenNew = lengths.length;
+    // console.log("lengths",lengths);
     // console.log("countlen",countlen);
-
+    // console.log("countlenNew",countlenNew);
     for (let i in countlen) {
       const itemLen = i;
       const itemCount= countlen[i];
@@ -67,7 +68,8 @@ async function getData(filter) {
     const url = `/data/flags/${filter}`;
     const rawData = await fetch(url);
     const data = await rawData.json();
-    const dataSorted = _.sortBy(data, [function(d) { return d.length }]); 
+    const dataSorted = _.sortBy(data, [(d)=> { return d.length }]); 
+    // console.log(dataSorted);
     for (let i in dataSorted) {
       // console.log(dataSorted[i]);
       const elemSVG = dataSorted[i].svg;
@@ -92,6 +94,7 @@ async function getData(filter) {
       squares.insertAdjacentHTML('beforeend',elemText);
       // calculate new lengths for straight lines
       const polylen = polygon_length(dataSorted[i].svg);
+      // polygon_length(dataSorted[i].svg);
       lengths.push(polylen);
     }
     // if(data.length === 200) {
@@ -114,10 +117,8 @@ async function getData(filter) {
   finally { 
     // loading.classList.remove('show'); 
     document.body.style.cursor = 'default !important'; 
-
     // console.log(lengths.length);
     populateLengthOptions();
-
   }
 }
 
@@ -129,6 +130,7 @@ async function getData(filter) {
 
 
 // Lengths dropdown
+// filter display of squares based on selection of dropdown
 // const lengthsdropdown = document.querySelector("#lengths");
 lengthsdropdown.addEventListener("change", event => {
   // console.log("lengths dropdown");
@@ -305,7 +307,7 @@ function polygon_length(svg_str) {
     // measure line or measure polygon close line
     len += distance(coord(points[0]), coord(points[points.length-1]));
     // lengths.push(Math.round(len));
-    lengths.push(len);
+    // lengths.push(len);
     // console.log("final polygon length", Math.round(len));
     return len;
     // return Math.round(len);
