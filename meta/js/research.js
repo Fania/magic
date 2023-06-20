@@ -39,17 +39,18 @@ async function populateLengthOptions() {
     const uniqlen = _.uniq(lengths);
     // console.log("uniqlen",uniqlen);
     const countlen = _.countBy(lengths);
-    const countlenNew = lengths.length;
+    // const countlenNew = lengths.length;
     // console.log("lengths",lengths);
     // console.log("countlen",countlen);
     // console.log("countlenNew",countlenNew);
+    // selected="selected"
     for (let i in countlen) {
       const itemLen = i;
       const itemCount= countlen[i];
       const option = document.createElement('option');
       option.value = itemLen;
       option.innerText = `(${itemCount}) ${itemLen}`;
-      if(countlen[i] == 4) option.selected = true;
+      // if(countlen[i] == 0) option.selected = true;
       lengthsdropdown.appendChild(option);
     }
   // console.log('total order choices',document.querySelector('#order').length);
