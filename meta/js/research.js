@@ -37,13 +37,7 @@ async function populateLengthOptions() {
     lengthsdropdown.innerHTML = '';
     // console.log(lengths);
     const uniqlen = _.uniq(lengths);
-    // console.log("uniqlen",uniqlen);
     const countlen = _.countBy(lengths);
-    // const countlenNew = lengths.length;
-    // console.log("lengths",lengths);
-    // console.log("countlen",countlen);
-    // console.log("countlenNew",countlenNew);
-    // selected="selected"
     for (let i in countlen) {
       const itemLen = i;
       const itemCount= countlen[i];
@@ -80,11 +74,17 @@ async function getData(filter) {
       const elemFlags = dataSorted[i].flags;
       const elemLen = dataSorted[i].length;
       // display curved line as well as straight line?
-      const elemCoords = getCoords(4,elemNums);
-      const elemNumSVG = createNumberSVGs(4,elemCoords,elemID,elemFlags);
+      const elemCoords = await getCoords(4,elemNums);
+      const elemNumSVG = await createNumberSVGs(4,elemCoords,elemID,elemFlags);
       const elemText = `
       <figure data-length="${elemLen}">
         <div>${elemSVG}${elemNumSVG}</div>
+        <div class="orient">
+          <svg id="rot-left" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/></svg>
+          <svg id="refl-up-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 256 512"><path d="M145.6 7.7C141 2.8 134.7 0 128 0s-13 2.8-17.6 7.7l-104 112c-6.5 7-8.2 17.2-4.4 25.9S14.5 160 24 160H80V352H24c-9.5 0-18.2 5.7-22 14.4s-2.1 18.9 4.4 25.9l104 112c4.5 4.9 10.9 7.7 17.6 7.7s13-2.8 17.6-7.7l104-112c6.5-7 8.2-17.2 4.4-25.9s-12.5-14.4-22-14.4H176V160h56c9.5 0 18.2-5.7 22-14.4s2.1-18.9-4.4-25.9l-104-112z"/></svg>
+          <svg id="refl-left-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M504.3 273.6c4.9-4.5 7.7-10.9 7.7-17.6s-2.8-13-7.7-17.6l-112-104c-7-6.5-17.2-8.2-25.9-4.4s-14.4 12.5-14.4 22l0 56-192 0 0-56c0-9.5-5.7-18.2-14.4-22s-18.9-2.1-25.9 4.4l-112 104C2.8 243 0 249.3 0 256s2.8 13 7.7 17.6l112 104c7 6.5 17.2 8.2 25.9 4.4s14.4-12.5 14.4-22l0-56 192 0 0 56c0 9.5 5.7 18.2 14.4 22s18.9 2.1 25.9-4.4l112-104z"/></svg>
+          <svg id="rot-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M125.7 160H176c17.7 0 32 14.3 32 32s-14.3 32-32 32H48c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"/></svg>
+        </div>
         <figcaption>
           <p>#${elemID}:</p>
           <p>${elemNumsClean}</p>
@@ -94,7 +94,7 @@ async function getData(filter) {
       // squares.insertAdjacentHTML('beforeend',elemSVG);
       squares.insertAdjacentHTML('beforeend',elemText);
       // calculate new lengths for straight lines
-      const polylen = polygon_length(dataSorted[i].svg);
+      const polylen = await polygon_length(dataSorted[i].svg);
       // polygon_length(dataSorted[i].svg);
       lengths.push(polylen);
     }
@@ -113,13 +113,14 @@ async function getData(filter) {
       // squares.appendChild(sentinel);
       // io.observe(sentinel);
     // }
+    
   } 
   catch (error) { console.log('getData', error) }
   finally { 
     // loading.classList.remove('show'); 
     document.body.style.cursor = 'default !important'; 
     // console.log(lengths.length);
-    populateLengthOptions();
+    await populateLengthOptions();
   }
 }
 
@@ -293,7 +294,7 @@ const mainElem = document.querySelector("main.research");
 // 7,14,4,9,15,6,12,1,2,3,13,16,10,11,5,8
 // "<svg id='straight-4-2b133453f4f02a667910db1ef7cd6c88' class='identity l3659' viewBox='-2 -2 304 304'><path d='M300,100 0,200 100,200 200,0 200,300 100,100 0,0 300,300 300,0 0,300 100,300 200,100 200,200 100,0 0,100 300,200 300,100 '></path></svg>"
 
-function polygon_length(svg_str) {
+async function polygon_length(svg_str) {
   const re = /(\d+,\d+\s)+/g;
   let points = svg_str.match(re);
   points = points[0].trim();
@@ -307,11 +308,7 @@ function polygon_length(svg_str) {
     }
     // measure line or measure polygon close line
     len += distance(coord(points[0]), coord(points[points.length-1]));
-    // lengths.push(Math.round(len));
-    // lengths.push(len);
-    // console.log("final polygon length", Math.round(len));
     return len;
-    // return Math.round(len);
   } else {
     return 0;
   }
@@ -345,7 +342,7 @@ const sizeInc = 100; // scale (line weight hack) 100 is optimal
 
 // order, valuesArray
 // export function getCoords(order, valuesArray) {
-function getCoords(order=4, valuesArray) {
+async function getCoords(order=4, valuesArray) {
   // console.log(`creating coordinate system for square ${c}`);
   const coordsObject = {};
   let offset = 0;
@@ -355,10 +352,10 @@ function getCoords(order=4, valuesArray) {
     }
     offset += order;  // increase offset by one row every 4(order) columns
   }
-  return coordsObject;
+  return await coordsObject;
 }
 
-function createNumberSVGs(order=4,coordsObject,id,classes) {
+async function createNumberSVGs(order=4,coordsObject,id,classes) {
   // console.log(`preparing number matrix svg for square ${counter}`);
   let texts;
   let w = parseInt(order) * sizeInc;
@@ -366,12 +363,95 @@ function createNumberSVGs(order=4,coordsObject,id,classes) {
     texts += `<text x='${coordsObject[a][0] * 100}' y='${coordsObject[a][1] * 100}'>${a.padStart(2, '0')}</text>`;
   }
   // 0 -50 380 370 for order 4
-  return `<svg id='numbers-${order}-${id}' class='${classes}' viewBox='${0} ${-50} ${w-sizeInc+50+30} ${w-sizeInc+50+20}'>${texts}</svg>`;
+  return await `<svg id='numbers-${order}-${id}' class='${classes}' viewBox='${0} ${-50} ${w-sizeInc+50+30} ${w-sizeInc+50+20}'>${texts}</svg>`;
 }
 
 
 
 
+// async function reorient(direction) {
+//   try {
+//     console.log('reorient main part');
+//     // document.addEventListener('DOMContentLoaded', function(e){
+//     if (document.readyState === 'complete') {
+// console.log('reorient inside if part');
+// console.log(`state: ${document.readyState}`);
+// const rot_left = document.getElementById('rot-left');
+// console.log(rot_left);
+// const rot_right = document.getElementById('rot-right');
+// console.log(rot_right);
+// const refl_up_down = document.getElementById('refl-up-down');
+// console.log(refl_up_down);
+// const refl_left_right = document.getElementById('refl-left-right');
+// console.log(refl_left_right);
+
+// rot_left.addEventListener("click", () => {
+//   console.log(rot_left);
+// });
+// rot_right.addEventListener("click", () => {
+//   console.log(rot_right);
+// });
+// refl_up_down.addEventListener("click", () => {
+//   console.log(refl_up_down);
+// });
+// refl_left_right.addEventListener("click", () => {
+//   console.log(refl_left_right);
+// });
+
+
+
+
+
+// can't be ids - need to be classes!
+
+// MUTATION OBSERVER BABY
+// Select the node that will be observed for mutations
+const targetNode = document.getElementById('squares');
+// Options for the observer (which mutations to observe)
+const config = { childList: true };
+// Callback function to execute when mutations are observed
+const callback = (mutationList, observer) => {
+  for (const mutation of mutationList) {
+    if (mutation.type === "childList") {
+      console.log("Mutation Observer witnessed a change in childList.");
+
+      const listValues = Array.from(targetNode.children)
+          .map(node => node.innerHTML)
+          .filter(html => html !== '<br>');
+      console.log(listValues);
+
+      const rot_left = document.getElementById('rot-left');
+      console.log(rot_left);
+      const rot_right = document.getElementById('rot-right');
+      console.log(rot_right);
+      const refl_up_down = document.getElementById('refl-up-down');
+      console.log(refl_up_down);
+      const refl_left_right = document.getElementById('refl-left-right');
+      console.log(refl_left_right);
+
+      rot_left.addEventListener("click", () => {
+        console.log(rot_left);
+      });
+      rot_right.addEventListener("click", () => {
+        console.log(rot_right);
+      });
+      refl_up_down.addEventListener("click", () => {
+        console.log(refl_up_down);
+      });
+      refl_left_right.addEventListener("click", () => {
+        console.log(refl_left_right);
+      });
+
+
+    }
+  }
+};
+// Create an observer instance linked to the callback function
+const observer = new MutationObserver(callback);
+// Start observing the target node for configured mutations
+observer.observe(targetNode, config);
+// Later, you can stop observing
+// observer.disconnect();
 
 
 
@@ -379,6 +459,68 @@ function createNumberSVGs(order=4,coordsObject,id,classes) {
 
 
 
+
+// document.addEventListener('readystatechange', e => {
+//   if(document.readyState === "complete"){
+//     console.log(e);
+//     // console.log(e);
+//     console.log(`state: ${document.readyState}`);
+//     console.log('inside readystatechange part');
+//     const rot_left = document.getElementById('rot-left');
+//     console.log(rot_left);
+//     const rot_right = document.getElementById('rot-right');
+//     console.log(rot_right);
+//     const refl_up_down = document.getElementById('refl-up-down');
+//     console.log(refl_up_down);
+//     const refl_left_right = document.getElementById('refl-left-right');
+//     console.log(refl_left_right);
+
+//   } else {
+//     console.log('still loading');
+//   }
+// });
+
+
+
+
+// const rot_left = document.getElementById('rot-left');
+// console.log(rot_left);
+
+// rot_left.addEventListener("click", () => {
+//   console.log(rot_left);
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// updown reflect
+// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 256 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M145.6 7.7C141 2.8 134.7 0 128 0s-13 2.8-17.6 7.7l-104 112c-6.5 7-8.2 17.2-4.4 25.9S14.5 160 24 160H80V352H24c-9.5 0-18.2 5.7-22 14.4s-2.1 18.9 4.4 25.9l104 112c4.5 4.9 10.9 7.7 17.6 7.7s13-2.8 17.6-7.7l104-112c6.5-7 8.2-17.2 4.4-25.9s-12.5-14.4-22-14.4H176V160h56c9.5 0 18.2-5.7 22-14.4s2.1-18.9-4.4-25.9l-104-112z"/></svg> */}
+// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg> */}
+
+
+// right-left refletc
+// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M504.3 273.6c4.9-4.5 7.7-10.9 7.7-17.6s-2.8-13-7.7-17.6l-112-104c-7-6.5-17.2-8.2-25.9-4.4s-14.4 12.5-14.4 22l0 56-192 0 0-56c0-9.5-5.7-18.2-14.4-22s-18.9-2.1-25.9 4.4l-112 104C2.8 243 0 249.3 0 256s2.8 13 7.7 17.6l112 104c7 6.5 17.2 8.2 25.9 4.4s14.4-12.5 14.4-22l0-56 192 0 0 56c0 9.5 5.7 18.2 14.4 22s18.9 2.1 25.9-4.4l112-104z"/></svg> */}
+// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M32 96l320 0V32c0-12.9 7.8-24.6 19.8-29.6s25.7-2.2 34.9 6.9l96 96c6 6 9.4 14.1 9.4 22.6s-3.4 16.6-9.4 22.6l-96 96c-9.2 9.2-22.9 11.9-34.9 6.9s-19.8-16.6-19.8-29.6V160L32 160c-17.7 0-32-14.3-32-32s14.3-32 32-32zM480 352c17.7 0 32 14.3 32 32s-14.3 32-32 32H160v64c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-96-96c-6-6-9.4-14.1-9.4-22.6s3.4-16.6 9.4-22.6l96-96c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 64H480z"/></svg> */}
+
+
+// arrow right
+// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/></svg> */}
+
+
+// arrow left
+// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M125.7 160H176c17.7 0 32 14.3 32 32s-14.3 32-32 32H48c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"/></svg> */}
 
 
 

@@ -303,10 +303,15 @@ svg * { box-sizing: border-box; }
   background: none;
 } */
 
+main.research.lengthClass #squares figure .orient {
+  width: 171px;
+}
+main.research.lengthClass #squares figure .orient svg {
+  fill: white;
+}
 .research:not(.lengthClass).submenu #settings fieldset.hide {
   display: none;
 }
-
 main.research:not(.lengthClass) #squares svg {
   width: 50px;
   height: 50px;
@@ -314,6 +319,9 @@ main.research:not(.lengthClass) #squares svg {
 }
 main.research:not(.lengthClass) #squares figure {
   margin: 1px;
+}
+.research:not(.lengthClass) #squares figure .orient {
+  display: none;
 }
 main.research:not(.lengthClass) #squares figure div svg:last-child {
   display: none;
