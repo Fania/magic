@@ -80,10 +80,10 @@ async function getData(filter) {
       <figure data-length="${elemLen}">
         <div>${elemSVG}${elemNumSVG}</div>
         <div class="orient">
-          <svg id="rot-left" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/></svg>
-          <svg id="refl-up-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 256 512"><path d="M145.6 7.7C141 2.8 134.7 0 128 0s-13 2.8-17.6 7.7l-104 112c-6.5 7-8.2 17.2-4.4 25.9S14.5 160 24 160H80V352H24c-9.5 0-18.2 5.7-22 14.4s-2.1 18.9 4.4 25.9l104 112c4.5 4.9 10.9 7.7 17.6 7.7s13-2.8 17.6-7.7l104-112c6.5-7 8.2-17.2 4.4-25.9s-12.5-14.4-22-14.4H176V160h56c9.5 0 18.2-5.7 22-14.4s2.1-18.9-4.4-25.9l-104-112z"/></svg>
-          <svg id="refl-left-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M504.3 273.6c4.9-4.5 7.7-10.9 7.7-17.6s-2.8-13-7.7-17.6l-112-104c-7-6.5-17.2-8.2-25.9-4.4s-14.4 12.5-14.4 22l0 56-192 0 0-56c0-9.5-5.7-18.2-14.4-22s-18.9-2.1-25.9 4.4l-112 104C2.8 243 0 249.3 0 256s2.8 13 7.7 17.6l112 104c7 6.5 17.2 8.2 25.9 4.4s14.4-12.5 14.4-22l0-56 192 0 0 56c0 9.5 5.7 18.2 14.4 22s18.9 2.1 25.9-4.4l112-104z"/></svg>
-          <svg id="rot-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M125.7 160H176c17.7 0 32 14.3 32 32s-14.3 32-32 32H48c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"/></svg>
+          <svg class="rot-left" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/></svg>
+          <svg class="refl-up-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 256 512"><path d="M145.6 7.7C141 2.8 134.7 0 128 0s-13 2.8-17.6 7.7l-104 112c-6.5 7-8.2 17.2-4.4 25.9S14.5 160 24 160H80V352H24c-9.5 0-18.2 5.7-22 14.4s-2.1 18.9 4.4 25.9l104 112c4.5 4.9 10.9 7.7 17.6 7.7s13-2.8 17.6-7.7l104-112c6.5-7 8.2-17.2 4.4-25.9s-12.5-14.4-22-14.4H176V160h56c9.5 0 18.2-5.7 22-14.4s2.1-18.9-4.4-25.9l-104-112z"/></svg>
+          <svg class="refl-left-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M504.3 273.6c4.9-4.5 7.7-10.9 7.7-17.6s-2.8-13-7.7-17.6l-112-104c-7-6.5-17.2-8.2-25.9-4.4s-14.4 12.5-14.4 22l0 56-192 0 0-56c0-9.5-5.7-18.2-14.4-22s-18.9-2.1-25.9 4.4l-112 104C2.8 243 0 249.3 0 256s2.8 13 7.7 17.6l112 104c7 6.5 17.2 8.2 25.9 4.4s14.4-12.5 14.4-22l0-56 192 0 0 56c0 9.5 5.7 18.2 14.4 22s18.9 2.1 25.9-4.4l112-104z"/></svg>
+          <svg class="rot-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M125.7 160H176c17.7 0 32 14.3 32 32s-14.3 32-32 32H48c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"/></svg>
         </div>
         <figcaption>
           <p>#${elemID}:</p>
@@ -407,44 +407,53 @@ async function createNumberSVGs(order=4,coordsObject,id,classes) {
 // MUTATION OBSERVER BABY
 // Select the node that will be observed for mutations
 const targetNode = document.getElementById('squares');
+
 // Options for the observer (which mutations to observe)
 const config = { childList: true };
 // Callback function to execute when mutations are observed
+// a mutation is a magic square figure being added into the targetNode
 const callback = (mutationList, observer) => {
-  for (const mutation of mutationList) {
+
+const [...listValues] = targetNode.children;
+console.log(listValues);
+
+  mutationList.forEach(mutation => {
     if (mutation.type === "childList") {
       console.log("Mutation Observer witnessed a change in childList.");
 
-      const listValues = Array.from(targetNode.children)
-          .map(node => node.innerHTML)
-          .filter(html => html !== '<br>');
-      console.log(listValues);
+      const [...rot_lefts] = document.querySelectorAll('.rot-left');
+      console.log(rot_lefts);
+      // const [...rot_rights] = document.querySelectorAll('.rot-right');
+      // console.log(rot_rights);
+      // const [...refl_up_downs] = document.querySelectorAll('.refl-up-down');
+      // console.log(refl_up_downs);
+      // const [...refl_left_rights] = document.querySelectorAll('.refl-left-right');
+      // console.log(refl_left_rights);
 
-      const rot_left = document.getElementById('rot-left');
-      console.log(rot_left);
-      const rot_right = document.getElementById('rot-right');
-      console.log(rot_right);
-      const refl_up_down = document.getElementById('refl-up-down');
-      console.log(refl_up_down);
-      const refl_left_right = document.getElementById('refl-left-right');
-      console.log(refl_left_right);
+      rot_lefts.forEach(rl => {
+        rl.addEventListener("click", (e) => {
+          console.log(rl);
+          rl.style.fill = 'red';
+          // console.log(e);
+          // console.log(e.target.parentElement);
+        });
+        console.log(`adding event listener to rot-left ${Event.target} button`);
+      });
 
-      rot_left.addEventListener("click", () => {
-        console.log(rot_left);
-      });
-      rot_right.addEventListener("click", () => {
-        console.log(rot_right);
-      });
-      refl_up_down.addEventListener("click", () => {
-        console.log(refl_up_down);
-      });
-      refl_left_right.addEventListener("click", () => {
-        console.log(refl_left_right);
-      });
+
+      // rot_right.addEventListener("click", () => {
+      //   console.log(rot_right);
+      // });
+      // refl_up_down.addEventListener("click", () => {
+      //   console.log(refl_up_down);
+      // });
+      // refl_left_right.addEventListener("click", () => {
+      //   console.log(refl_left_right);
+      // });
 
 
     }
-  }
+  });
 };
 // Create an observer instance linked to the callback function
 const observer = new MutationObserver(callback);
