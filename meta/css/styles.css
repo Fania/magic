@@ -309,6 +309,9 @@ main.research.lengthClass #squares figure .orient {
 main.research.lengthClass #squares figure .orient svg {
   fill: white;
 }
+main.research.lengthClass #squares figure .orient svg:hover {
+  fill: red;
+}
 .research:not(.lengthClass).submenu #settings fieldset.hide {
   display: none;
 }

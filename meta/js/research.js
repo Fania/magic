@@ -344,6 +344,7 @@ const sizeInc = 100; // scale (line weight hack) 100 is optimal
 // order, valuesArray
 // export function getCoords(order, valuesArray) {
 async function getCoords(order=4, valuesArray) {
+  // console.log("valuesArray", valuesArray);
   // console.log(`creating coordinate system for square ${c}`);
   const coordsObject = {};
   let offset = 0;
@@ -367,7 +368,23 @@ async function createNumberSVGs(order=4,coordsObject,id,classes) {
   return await `<svg id='numbers-${order}-${id}' class='${classes}' viewBox='${0} ${-50} ${w-sizeInc+50+30} ${w-sizeInc+50+20}'>${texts}</svg>`;
 }
 
+async function createPolyline(order=4,coordsObject,id,classes) {
+  // console.log(`preparing straight polyline svg for square ${counter}`);
+  let w = parseInt(order) * sizeInc;
+  let coords = "M";
+  for (let i in coordsObject) {
+    coords += `${coordsObject[i][0] * sizeInc},${coordsObject[i][1] * sizeInc} `;
+  }
+  coords += `${coordsObject[1][0] * sizeInc},${coordsObject[1][1] * sizeInc} `;
 
+  const properties = new path.svgPathProperties(coords)
+  // console.log(properties)
+  // const totalLength = Math.ceil(properties.getTotalLength())
+  const totalLength = properties.getTotalLength()
+
+  // return `<svg id="num-${num+1}" class="order-x pad" viewBox="${-2} ${-2} ${w-sizeInc+4} ${w-sizeInc+4}"><polyline id="square-${counter}" class="lines" points="${coords}"/></svg>`;
+  return await `<svg id='straight-${order}-${id}' data-num='${datanumcnt+1}' class='${classes} l${totalLength}' viewBox='${-2} ${-2} ${w-sizeInc+4} ${w-sizeInc+4}'><path d='${coords}'></path></svg>`;
+}
 
 
 
@@ -388,18 +405,29 @@ async function addRotationButtons() {
   // console.log("triggered addRotationButtons function");
   // can't be ids - need to be classes!
   const [...rot_lefts] = document.querySelectorAll('.rot-left');
-  // console.log(rot_lefts);
   const [...rot_rights] = document.querySelectorAll('.rot-right');
-  // console.log(rot_rights);
   const [...refl_up_downs] = document.querySelectorAll('.refl-up-down');
-  // console.log(refl_up_downs);
   const [...refl_left_rights] = document.querySelectorAll('.refl-left-right');
-  // console.log(refl_left_rights);
 
   rot_lefts.forEach(rl => {
     rl.addEventListener("click", () => {
-      rl.style.fill == 'red' ? rl.style.fill = 'white' 
-                             : rl.style.fill = 'red';
+      // rl.style.fill == 'red' ? rl.style.fill = 'white' 
+      //                        : rl.style.fill = 'red';
+      console.dir(rl);
+      const svg_rot = rl.parentElement.previousElementSibling.children[0];
+      console.log(svg_rot);
+      const str_nums = rl.parentElement.nextElementSibling.children[1].innerText.split(" ");
+      const id = rl.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
+      console.log(id);
+      const parsed_nums = str_nums.map(sn => Number(sn));
+      let rot_numbers = [];
+      rot_numbers = rotate90(parsed_nums);
+      console.log(rot_numbers);
+
+      const rot_coords = getCoords(4, rot_numbers);
+      const new_rot_svg = createPolyline(4,rot_coords,id,"");
+      console.log(new_rot_svg);
+      // rl.style.fill = 'white';
     });
   });
   rot_rights.forEach(rr => {
@@ -423,6 +451,20 @@ async function addRotationButtons() {
 }
 
 
+function rotateSVG() {
+
+  const test = [1,2,3,4,5,6,7,8,9];
+  console.log(rotate90(test)); // [7, 4, 1, 8, 5, 2, 9, 6, 3]
+  console.log(rotate180(test)); // [9, 8, 7, 6, 5, 4, 3, 2, 1]
+  console.log(rotate270(test)); // [3, 6, 9, 2, 5, 8, 1, 4, 7]
+  console.log(reflectV(test)); // [3, 2, 1, 6, 5, 4, 9, 8, 7]
+  console.log(reflectH(test)); // [7, 8, 9, 4, 5, 6, 1, 2, 3]
+  console.log(reflectD1(test)); // [1, 4, 7, 2, 5, 8, 3, 6, 9]
+  console.log(reflectD2(test)); // [9, 6, 3, 8, 5, 2, 7, 4, 1]
+
+}
+
+rotateSVG();
 
 
 
@@ -433,34 +475,99 @@ async function addRotationButtons() {
 
 
 
-// async function reorient(direction) {
-//   try {
-//     console.log('reorient main part');
-//     // document.addEventListener('DOMContentLoaded', function(e){
-//     if (document.readyState === 'complete') {
-// console.log('reorient inside if part');
-// console.log(`state: ${document.readyState}`);
-// const rot_left = document.getElementById('rot-left');
-// console.log(rot_left);
-// const rot_right = document.getElementById('rot-right');
-// console.log(rot_right);
-// const refl_up_down = document.getElementById('refl-up-down');
-// console.log(refl_up_down);
-// const refl_left_right = document.getElementById('refl-left-right');
-// console.log(refl_left_right);
 
-// rot_left.addEventListener("click", () => {
-//   console.log(rot_left);
-// });
-// rot_right.addEventListener("click", () => {
-//   console.log(rot_right);
-// });
-// refl_up_down.addEventListener("click", () => {
-//   console.log(refl_up_down);
-// });
-// refl_left_right.addEventListener("click", () => {
-//   console.log(refl_left_right);
-// });
+
+// D4 TRANSFORMATIONS
+
+// valuesArray = e.g. [1,2,3,4,5,6,7,8,9]
+
+
+function getSize(valuesArray) {
+  return Math.sqrt(valuesArray.length)
+}
+
+function rotate90(valuesArray) {
+  // 1 2 3         7 4 1
+  // 4 5 6  ---->  8 5 2
+  // 7 8 9         9 6 3
+  const s = getSize(valuesArray)
+  const rows = _.chunk(valuesArray,s)
+  const cols = _.zip.apply(_, rows)
+  const output = cols.map(c => _.reverse(c))
+  return _.flatten(output)
+}
+
+function rotate180(valuesArray) {
+  // 1 2 3         9 8 7
+  // 4 5 6  ---->  6 5 4
+  // 7 8 9         3 2 1
+  const s = getSize(valuesArray)
+  const rows = _.chunk(valuesArray,s)
+  const tmp = _.reverse(rows)
+  const output = tmp.map(r => _.reverse(r))
+  return _.flatten(output)
+}
+
+function rotate270(valuesArray) {
+  // 1 2 3         3 6 9
+  // 4 5 6  ---->  2 5 8
+  // 7 8 9         1 4 7
+  const s = getSize(valuesArray)
+  const rows = _.chunk(valuesArray,s)
+  const cols = _.zip.apply(_, rows)
+  const output = _.reverse(cols)
+  return _.flatten(output)
+}
+
+function reflectV(valuesArray) {
+  // 1 2 3         3 2 1
+  // 4 5 6  ---->  6 5 4
+  // 7 8 9         9 8 7
+  const s = getSize(valuesArray)
+  const rows = _.chunk(valuesArray,s)
+  const output = rows.map(r => _.reverse(r))
+  return _.flatten(output)
+}
+
+function reflectH(valuesArray) {
+  // 1 2 3         7 8 9
+  // 4 5 6  ---->  4 5 6
+  // 7 8 9         1 2 3
+  const s = getSize(valuesArray)
+  const rows = _.chunk(valuesArray,s)
+  const output = _.reverse(rows)
+  return _.flatten(output)
+}
+
+function reflectD1(valuesArray) {
+  // 1 2 3         1 4 7
+  // 4 5 6  ---->  2 5 8
+  // 7 8 9         3 6 9
+  const s = getSize(valuesArray)
+  const rows = _.chunk(valuesArray,s)
+  const output = _.zip.apply(_, rows)
+  return _.flatten(output)
+}
+
+function reflectD2(valuesArray) {
+  // 1 2 3         9 6 3
+  // 4 5 6  ---->  8 5 2
+  // 7 8 9         7 4 1
+  const s = getSize(valuesArray)
+  const rows = _.chunk(valuesArray,s)
+  const cols = _.zip.apply(_, rows)
+  const tmp = _.reverse(cols)
+  const output = tmp.map(t => _.reverse(t))
+  return _.flatten(output)
+}
+
+
+
+
+
+
+
+
 
 
 
