@@ -387,7 +387,6 @@ async function createNumberSVGs(order=4,coordsObject,id,classes) {
 async function addRotationButtons() {
   // console.log("triggered addRotationButtons function");
   // can't be ids - need to be classes!
-
   const [...rot_lefts] = document.querySelectorAll('.rot-left');
   // console.log(rot_lefts);
   const [...rot_rights] = document.querySelectorAll('.rot-right');
@@ -398,55 +397,27 @@ async function addRotationButtons() {
   // console.log(refl_left_rights);
 
   rot_lefts.forEach(rl => {
-    rl.addEventListener("click", (e) => {
-      console.log("clicked rl", rl);
-      console.log(rl.style.fill);
-      if(rl.style.fill == 'red') {
-        console.log("inside red, turning white");
-        rl.style.fill = 'white';
-      } else {
-        console.log("inside white, turning red");
-        rl.style.fill = 'red';
-      }
+    rl.addEventListener("click", () => {
+      rl.style.fill == 'red' ? rl.style.fill = 'white' 
+                             : rl.style.fill = 'red';
     });
   });
   rot_rights.forEach(rr => {
-    rr.addEventListener("click", (e) => {
-      console.log("clicked rr", rr);
-      console.log(rr.style.fill);
-      if(rr.style.fill == 'red') {
-        console.log("inside red, turning white");
-        rr.style.fill = 'white';
-      } else {
-        console.log("inside white, turning red");
-        rr.style.fill = 'red';
-      }
+    rr.addEventListener("click", () => {
+      rr.style.fill == 'red' ? rr.style.fill = 'white' 
+                             : rr.style.fill = 'red';
     });
   });
   refl_up_downs.forEach(rud => {
-    rud.addEventListener("click", (e) => {
-      console.log("clicked rud", rud);
-      console.log(rud.style.fill);
-      if(rud.style.fill == 'red') {
-        console.log("inside red, turning white");
-        rud.style.fill = 'white';
-      } else {
-        console.log("inside white, turning red");
-        rud.style.fill = 'red';
-      }
+    rud.addEventListener("click", () => {
+      rud.style.fill == 'red' ? rud.style.fill = 'white' 
+                              : rud.style.fill = 'red';
     });
   });
   refl_left_rights.forEach(rlr => {
-    rlr.addEventListener("click", (e) => {
-      console.log("clicked rlr", rlr);
-      console.log(rlr.style.fill);
-      if(rlr.style.fill == 'red') {
-        console.log("inside red, turning white");
-        rlr.style.fill = 'white';
-      } else {
-        console.log("inside white, turning red");
-        rlr.style.fill = 'red';
-      }
+    rlr.addEventListener("click", () => {
+      rlr.style.fill == 'red' ? rlr.style.fill = 'white' 
+                              : rlr.style.fill = 'red';
     });
   });
 }
