@@ -354,7 +354,7 @@ async function getCoords(order=4, valuesArray) {
     }
     offset += order;  // increase offset by one row every 4(order) columns
   }
-  return await coordsObject;
+  return coordsObject;
 }
 
 async function createNumberSVGs(order=4,coordsObject,id,classes) {
@@ -365,8 +365,10 @@ async function createNumberSVGs(order=4,coordsObject,id,classes) {
     texts += `<text x='${coordsObject[a][0] * 100}' y='${coordsObject[a][1] * 100}'>${a.padStart(2, '0')}</text>`;
   }
   // 0 -50 380 370 for order 4
-  return await `<svg id='numbers-${order}-${id}' class='${classes}' viewBox='${0} ${-50} ${w-sizeInc+50+30} ${w-sizeInc+50+20}'>${texts}</svg>`;
+  return `<svg id='numbers-${order}-${id}' class='${classes}' viewBox='${0} ${-50} ${w-sizeInc+50+30} ${w-sizeInc+50+20}'>${texts}</svg>`;
 }
+
+let datanumcnt = 0;
 
 async function createPolyline(order=4,coordsObject,id,classes) {
   // console.log(`preparing straight polyline svg for square ${counter}`);
@@ -377,13 +379,14 @@ async function createPolyline(order=4,coordsObject,id,classes) {
   }
   coords += `${coordsObject[1][0] * sizeInc},${coordsObject[1][1] * sizeInc} `;
 
-  const properties = new path.svgPathProperties(coords)
+  // const properties = new path.svgPathProperties(coords);
+  const properties = new svgPathProperties.svgPathProperties(coords);
   // console.log(properties)
   // const totalLength = Math.ceil(properties.getTotalLength())
-  const totalLength = properties.getTotalLength()
+  const totalLength = properties.getTotalLength();
 
   // return `<svg id="num-${num+1}" class="order-x pad" viewBox="${-2} ${-2} ${w-sizeInc+4} ${w-sizeInc+4}"><polyline id="square-${counter}" class="lines" points="${coords}"/></svg>`;
-  return await `<svg id='straight-${order}-${id}' data-num='${datanumcnt+1}' class='${classes} l${totalLength}' viewBox='${-2} ${-2} ${w-sizeInc+4} ${w-sizeInc+4}'><path d='${coords}'></path></svg>`;
+  return `<svg id='straight-${order}-${id}' data-num='${datanumcnt+1}' class='${classes} l${totalLength}' viewBox='${-2} ${-2} ${w-sizeInc+4} ${w-sizeInc+4}'><path d='${coords}'></path></svg>`;
 }
 
 
@@ -410,7 +413,7 @@ async function addRotationButtons() {
   const [...refl_left_rights] = document.querySelectorAll('.refl-left-right');
 
   rot_lefts.forEach(rl => {
-    rl.addEventListener("click", () => {
+    rl.addEventListener("click", async () => {
       // rl.style.fill == 'red' ? rl.style.fill = 'white' 
       //                        : rl.style.fill = 'red';
       console.dir(rl);
@@ -424,8 +427,9 @@ async function addRotationButtons() {
       rot_numbers = rotate90(parsed_nums);
       console.log(rot_numbers);
 
-      const rot_coords = getCoords(4, rot_numbers);
-      const new_rot_svg = createPolyline(4,rot_coords,id,"");
+      const rot_coords = await getCoords(4,rot_numbers);
+      console.log(rot_coords);
+      const new_rot_svg = await createPolyline(4,rot_coords,id,"");
       console.log(new_rot_svg);
       // rl.style.fill = 'white';
     });
