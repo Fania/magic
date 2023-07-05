@@ -122,8 +122,32 @@ async function getData(filter) {
     // console.log(lengths.length);
     await populateLengthOptions();
     await addRotationButtons();
-  }
-}
+
+    // // MUTATION OBSERVER BABY
+    // // Select the node that will be observed for mutations
+    // const targetNode = document.getElementById('squares');
+    // // Options for the observer (which mutations to observe)
+    // const config = { childList: true };
+    // // Callback function to execute when mutations are observed
+    // // a mutation is a magic square figure being added into the targetNode
+    // const callback = (mutationList, observer) => {
+    //   const [...listValues] = targetNode.children;
+    //   console.log(listValues);
+    //   mutationList.forEach(async mutation => {
+    //     if (mutation.type === "childList") {
+    //       console.log("Mutation Observer witnessed change in childList.");
+    //       await addRotationButtons();
+    //     }
+    //   });
+    // };
+    // // Create an observer instance linked to the callback function
+    // const observer = new MutationObserver(callback);
+    // // Start observing the target node for configured mutations
+    // observer.observe(targetNode, config);
+    // // Later, you can stop observing
+    // // observer.disconnect();
+  } // end of finally
+} // end of getData
 
 
 
@@ -412,25 +436,48 @@ async function addRotationButtons() {
   const [...refl_up_downs] = document.querySelectorAll('.refl-up-down');
   const [...refl_left_rights] = document.querySelectorAll('.refl-left-right');
 
+  let rot_left_count = 0;
+  let rot_right_count = 0;
+  let refl_up_down_count = 0;
+  let refl_left_right_count = 0;
+
   rot_lefts.forEach(rl => {
     rl.addEventListener("click", async () => {
-      // rl.style.fill == 'red' ? rl.style.fill = 'white' 
-      //                        : rl.style.fill = 'red';
-      console.dir(rl);
-      const svg_rot = rl.parentElement.previousElementSibling.children[0];
-      console.log(svg_rot);
-      const str_nums = rl.parentElement.nextElementSibling.children[1].innerText.split(" ");
+      // console.dir(rl);
+      //                   svg  div.orient      div               [svg,svg]
+      const old_line_svg = rl.parentElement.previousElementSibling.children[0];
+      const old_num_svg = rl.parentElement.previousElementSibling.children[1];
+      //               svg  div.orient      figcaption       [p,p]
       const id = rl.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
-      console.log(id);
+      const str_nums = rl.parentElement.nextElementSibling.children[1].innerText.split(" ");
       const parsed_nums = str_nums.map(sn => Number(sn));
+      // console.log('parsed_nums',parsed_nums);
       let rot_numbers = [];
-      rot_numbers = rotate90(parsed_nums);
-      console.log(rot_numbers);
-
+      if(rot_left_count == 0){
+        rot_numbers = rotate90(parsed_nums);
+      }
+      if(rot_left_count == 1){
+        rot_numbers = rotate180(parsed_nums);
+      }
+      if(rot_left_count == 2){
+        rot_numbers = rotate270(parsed_nums);
+      }
+      if(rot_left_count == 3){
+        rot_numbers = parsed_nums;
+        rot_left_count = -1;
+      }
+      // console.log('rot_numbers',rot_numbers);
       const rot_coords = await getCoords(4,rot_numbers);
-      console.log(rot_coords);
-      const new_rot_svg = await createPolyline(4,rot_coords,id,"");
-      console.log(new_rot_svg);
+      const new_rot_line_svg = await createPolyline(4,rot_coords,id,"");
+      const new_rot_num_svg = await createNumberSVGs(4,rot_coords,id,"");
+      // console.log(new_rot_line_svg);
+      // console.log(new_rot_num_svg);
+      old_line_svg.outerHTML = new_rot_line_svg;
+      old_num_svg.outerHTML = new_rot_num_svg;
+      rot_left_count += 1;
+      // const new_old_svg = document.
+      // console.log('after',old_line_svg.outerHTML);
+      // console.log('after',old_num_svg.outerHTML);
       // rl.style.fill = 'white';
     });
   });
@@ -455,6 +502,9 @@ async function addRotationButtons() {
 }
 
 
+
+
+
 function rotateSVG() {
 
   const test = [1,2,3,4,5,6,7,8,9];
@@ -468,7 +518,7 @@ function rotateSVG() {
 
 }
 
-rotateSVG();
+// rotateSVG();
 
 
 
@@ -614,68 +664,6 @@ function reflectD2(valuesArray) {
 // });
 
 
-
-
-// // MUTATION OBSERVER BABY
-//   // Select the node that will be observed for mutations
-//   const targetNode = document.getElementById('squares');
-
-//   // Options for the observer (which mutations to observe)
-//   const config = { childList: true };
-//   // Callback function to execute when mutations are observed
-//   // a mutation is a magic square figure being added into the targetNode
-//   const callback = (mutationList, observer) => {
-
-//   const [...listValues] = targetNode.children;
-//   console.log(listValues);
-
-//     mutationList.forEach(mutation => {
-//       if (mutation.type === "childList") {
-//         console.log("Mutation Observer witnessed a change in childList.");
-
-//         const [...rot_lefts] = document.querySelectorAll('.rot-left');
-//         console.log(rot_lefts);
-//         // const [...rot_rights] = document.querySelectorAll('.rot-right');
-//         // console.log(rot_rights);
-//         // const [...refl_up_downs] = document.querySelectorAll('.refl-up-down');
-//         // console.log(refl_up_downs);
-//         // const [...refl_left_rights] = document.querySelectorAll('.refl-left-right');
-//         // console.log(refl_left_rights);
-
-//         rot_lefts.forEach(rl => {
-//           rl.addEventListener("click", (e) => {
-//             console.log("clicked once", rl);
-//             console.log(rl.style.fill);
-//             if(rl.style.fill == 'red') {
-//               console.log("inside red, turning white");
-//               rl.style.fill = 'white';
-//             } else {
-//               console.log("inside white, turning red");
-//               rl.style.fill = 'red';
-//             }
-//             // console.log(e);
-//             // console.log(e.target.parentElement);
-//           });
-//           console.log(`adding event listener to rot-left ${Event.target} button`);
-//         });
-//         // rot_right.addEventListener("click", () => {
-//         //   console.log(rot_right);
-//         // });
-//         // refl_up_down.addEventListener("click", () => {
-//         //   console.log(refl_up_down);
-//         // });
-//         // refl_left_right.addEventListener("click", () => {
-//         //   console.log(refl_left_right);
-//         // });
-//       }
-//     });
-//   };
-//   // Create an observer instance linked to the callback function
-//   const observer = new MutationObserver(callback);
-//   // Start observing the target node for configured mutations
-//   observer.observe(targetNode, config);
-//   // Later, you can stop observing
-//   // observer.disconnect();
 
 
 
