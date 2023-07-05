@@ -442,7 +442,7 @@ async function addRotationButtons() {
   const [...refl_diag_left_rights] = document.querySelectorAll('.refl-diag-left-right');
   const [...refl_diag_right_lefts] = document.querySelectorAll('.refl-diag-right-left');
 
-  let identity_count = 0;
+  // let identity_count = 0;
   let rot_left_count = 0;
   let rot_right_count = 0;
   let refl_up_down_count = 0;
@@ -540,7 +540,6 @@ async function addRotationButtons() {
       old_line_svg.outerHTML = new_refl_line_svg;
       old_num_svg.outerHTML = new_refl_num_svg;
       refl_up_down_count += 1;
-
     });
   });
   refl_left_rights.forEach(rlr => {
@@ -566,31 +565,74 @@ async function addRotationButtons() {
       refl_left_right_count += 1;
     });
   });
-  refl_left_rights.forEach(rlr => {
-    rlr.addEventListener("click", async () => {
-      const old_line_svg = rlr.parentElement.previousElementSibling.children[0];
-      const old_num_svg = rlr.parentElement.previousElementSibling.children[1];
-      const id = rlr.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
-      const str_nums = rlr.parentElement.nextElementSibling.children[1].innerText.split(" ");
+  identities.forEach(i => {
+    i.addEventListener("click", async () => {
+      const old_line_svg = i.parentElement.previousElementSibling.children[0];
+      const old_num_svg = i.parentElement.previousElementSibling.children[1];
+      const id = i.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
+      const str_nums = i.parentElement.nextElementSibling.children[1].innerText.split(" ");
       const parsed_nums = str_nums.map(sn => Number(sn));
       let refl_numbers = [];
-      if(refl_left_right_count == 0){
-        refl_numbers = reflectV(parsed_nums);
+      refl_numbers = parsed_nums;
+      const refl_coords = await getCoords(4,refl_numbers);
+      const new_refl_line_svg = await createPolyline(4,refl_coords,id,"");
+      const new_refl_num_svg = await createNumberSVGs(4,refl_coords,id,"");
+      old_line_svg.outerHTML = new_refl_line_svg;
+      old_num_svg.outerHTML = new_refl_num_svg;
+    });
+  });
+  refl_diag_left_rights.forEach(rdlr => {
+    rdlr.addEventListener("click", async () => {
+      const old_line_svg = rdlr.parentElement.previousElementSibling.children[0];
+      const old_num_svg = rdlr.parentElement.previousElementSibling.children[1];
+      const id = rdlr.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
+      const str_nums = rdlr.parentElement.nextElementSibling.children[1].innerText.split(" ");
+      const parsed_nums = str_nums.map(sn => Number(sn));
+      let refl_numbers = [];
+      if(refl_diag_left_right_count == 0){
+        // 1 2 3         1 4 7
+        // 4 5 6  ---->  2 5 8
+        // 7 8 9         3 6 9
+        refl_numbers = reflectD1(parsed_nums);
       }
-      if(refl_left_right_count == 1){
+      if(refl_diag_left_right_count == 1){
         refl_numbers = parsed_nums;
-        refl_left_right_count = -1;
+        refl_diag_left_right_count = -1;
       }
       const refl_coords = await getCoords(4,refl_numbers);
       const new_refl_line_svg = await createPolyline(4,refl_coords,id,"");
       const new_refl_num_svg = await createNumberSVGs(4,refl_coords,id,"");
       old_line_svg.outerHTML = new_refl_line_svg;
       old_num_svg.outerHTML = new_refl_num_svg;
-      refl_left_right_count += 1;
+      refl_diag_left_right_count += 1;
     });
   });
-
-
+  refl_diag_right_lefts.forEach(rdrl => {
+    rdrl.addEventListener("click", async () => {
+      const old_line_svg = rdrl.parentElement.previousElementSibling.children[0];
+      const old_num_svg = rdrl.parentElement.previousElementSibling.children[1];
+      const id = rdrl.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
+      const str_nums = rdrl.parentElement.nextElementSibling.children[1].innerText.split(" ");
+      const parsed_nums = str_nums.map(sn => Number(sn));
+      let refl_numbers = [];
+      if(refl_diag_right_left_count == 0){
+        // 1 2 3         9 6 3
+        // 4 5 6  ---->  8 5 2
+        // 7 8 9         7 4 1
+        refl_numbers = reflectD2(parsed_nums);
+      }
+      if(refl_diag_right_left_count == 1){
+        refl_numbers = parsed_nums;
+        refl_diag_right_left_count = -1;
+      }
+      const refl_coords = await getCoords(4,refl_numbers);
+      const new_refl_line_svg = await createPolyline(4,refl_coords,id,"");
+      const new_refl_num_svg = await createNumberSVGs(4,refl_coords,id,"");
+      old_line_svg.outerHTML = new_refl_line_svg;
+      old_num_svg.outerHTML = new_refl_num_svg;
+      refl_diag_right_left_count += 1;
+    });
+  });
 }
 
 
