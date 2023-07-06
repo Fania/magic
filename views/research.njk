@@ -9,19 +9,20 @@
   {# <form id="settings"> #}
   
     <fieldset id="researchType">
+      <legend>Filter</legend>
       <label>
         <input type="radio" id="lengthRadio" name="type" value="lengthRadio" checked>
-        <span>length</span>
+        <span>by length</span>
       </label>
       <br>
       <label>
         <input type="radio" id="classesRadio" name="type" value="classes">
-        <span>classes</span>
+        <span>by classes</span>
       </label>
     </fieldset>
 
     <fieldset id="lenOptions">
-      <legend>Length Options</legend>
+      <legend>Options</legend>
       <label>
         <span>Lengths</span>
         <select id="lengths">
@@ -111,6 +112,18 @@
       <label for="self-compl" class="tag">Self-compl.</label>
     </fieldset>
       
+    <fieldset id="presetOptions">
+      <legend>Themes</legend>
+      {# <label for="themes">Choose theme</label> #}
+      {# <select id="themes">
+        <option value="">Choose</option>
+      </select> #}
+      <input type="button" id="random" value="random">
+      <input type="button" id="reset" value="reset">
+      {# <input type="submit" id="saveTheme" value="save"> #}
+      <input type="button" id="share" value="share">
+      <input type="hidden" id="themeName" name="_id" value="">
+    </fieldset>
 
     {# <input type="input" id="search" placeholder="search id(s)"> #}
 

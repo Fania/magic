@@ -86,7 +86,7 @@ async function getData(filter) {
           <svg class="identity" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><title>Identity</title><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm192-96H320c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32H192c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32z"/></svg>
           <svg class="refl-diag-right-left" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" transform="scale(-1,1)"><title>Reflect Right and Left Diagonally</title><path d="M344 0H488c13.3 0 24 10.7 24 24V168c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-39-39-87 87c-9.4 9.4-24.6 9.4-33.9 0l-32-32c-9.4-9.4-9.4-24.6 0-33.9l87-87L327 41c-6.9-6.9-8.9-17.2-5.2-26.2S334.3 0 344 0zM168 512H24c-13.3 0-24-10.7-24-24V344c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2l39 39 87-87c9.4-9.4 24.6-9.4 33.9 0l32 32c9.4 9.4 9.4 24.6 0 33.9l-87 87 39 39c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8z"/></svg>
           <svg class="refl-left-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><title>Reflect Left and Right</title><path d="M504.3 273.6c4.9-4.5 7.7-10.9 7.7-17.6s-2.8-13-7.7-17.6l-112-104c-7-6.5-17.2-8.2-25.9-4.4s-14.4 12.5-14.4 22l0 56-192 0 0-56c0-9.5-5.7-18.2-14.4-22s-18.9-2.1-25.9 4.4l-112 104C2.8 243 0 249.3 0 256s2.8 13 7.7 17.6l112 104c7 6.5 17.2 8.2 25.9 4.4s14.4-12.5 14.4-22l0-56 192 0 0 56c0 9.5 5.7 18.2 14.4 22s18.9 2.1 25.9-4.4l112-104z"/></svg>
-          <svg class="rot-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><title>Rotate Right</title><path d="M125.7 160H176c17.7 0 32 14.3 32 32s-14.3 32-32 32H48c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"/></svg>
+          <svg class="hide-svg" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zm151 118.3C226 97.7 269.5 80 320 80c65.2 0 118.8 29.6 159.9 67.7C518.4 183.5 545 226 558.6 256c-12.6 28-36.6 66.8-70.9 100.9l-53.8-42.2c9.1-17.6 14.2-37.5 14.2-58.7c0-70.7-57.3-128-128-128c-32.2 0-61.7 11.9-84.2 31.5l-46.1-36.1zM394.9 284.2l-81.5-63.9c4.2-8.5 6.6-18.2 6.6-28.3c0-5.5-.7-10.9-2-16c.7 0 1.3 0 2 0c44.2 0 80 35.8 80 80c0 9.9-1.8 19.4-5.1 28.2zm9.4 130.3C378.8 425.4 350.7 432 320 432c-65.2 0-118.8-29.6-159.9-67.7C121.6 328.5 95 286 81.4 256c8.3-18.4 21.5-41.5 39.4-64.8L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5l-41.9-33zM192 256c0 70.7 57.3 128 128 128c13.3 0 26.1-2 38.2-5.8L302 334c-23.5-5.4-43.1-21.2-53.7-42.3l-56.1-44.2c-.2 2.8-.3 5.6-.3 8.5z"/></svg>
         </div>
         <figcaption>
           <p>#${elemID}:</p>
@@ -435,6 +435,7 @@ async function addRotationButtons() {
   // console.log("triggered addRotationButtons function");
   // can't be ids - need to be classes!
   const [...identities] = document.querySelectorAll('.identity');
+  const [...hide_svgs] = document.querySelectorAll('.hide-svg');
   const [...rot_lefts] = document.querySelectorAll('.rot-left');
   const [...rot_rights] = document.querySelectorAll('.rot-right');
   const [...refl_up_downs] = document.querySelectorAll('.refl-up-down');
@@ -490,33 +491,10 @@ async function addRotationButtons() {
       // rl.style.fill = 'white';
     });
   });
-  rot_rights.forEach(rr => {
-    rr.addEventListener("click", async () => {
-      const old_line_svg = rr.parentElement.previousElementSibling.children[0];
-      const old_num_svg = rr.parentElement.previousElementSibling.children[1];
-      const id = rr.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
-      const str_nums = rr.parentElement.nextElementSibling.children[1].innerText.split(" ");
-      const parsed_nums = str_nums.map(sn => Number(sn));
-      let rot_numbers = [];
-      if(rot_right_count == 0){
-        rot_numbers = rotate270(parsed_nums);
-      }
-      if(rot_right_count == 1){
-        rot_numbers = rotate180(parsed_nums);
-      }
-      if(rot_right_count == 2){
-        rot_numbers = rotate90(parsed_nums);
-      }
-      if(rot_right_count == 3){
-        rot_numbers = parsed_nums;
-        rot_right_count = -1;
-      }
-      const rot_coords = await getCoords(4,rot_numbers);
-      const new_rot_line_svg = await createPolyline(4,rot_coords,id,"");
-      const new_rot_num_svg = await createNumberSVGs(4,rot_coords,id,"");
-      old_line_svg.outerHTML = new_rot_line_svg;
-      old_num_svg.outerHTML = new_rot_num_svg;
-      rot_right_count += 1;
+  hide_svgs.forEach(hs => {
+    hs.addEventListener("click", async () => {
+      const parentFig = hs.parentElement.parentElement;
+      parentFig.remove();
     });
   });
   refl_up_downs.forEach(rud => {

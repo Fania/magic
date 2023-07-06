@@ -618,10 +618,14 @@ body::-webkit-scrollbar-thumb {
 
   .submenu #manual { margin: 1em }
 
-  .submenu.home, 
-  .submenu.research { 
+  .submenu.home { 
     transform: translateX(0);
     width: 200px;
+    height: calc(100vh - 80.88px);
+  }
+  .submenu.research { 
+    transform: translateX(0);
+    width: calc(239px + 2em);
     height: calc(100vh - 80.88px);
   }
   .submenu.home form, 
@@ -702,9 +706,8 @@ body::-webkit-scrollbar-thumb {
 
 
   main { margin: 2em; min-height: calc(100vh - 212px); }
-  main.home,
-  main.research { margin-left: calc(200px + 2em) }
-  
+  main.home { margin-left: calc(200px + 2em) }
+  main.research { margin-left: calc(239px + 2em) }
 
 
 
