@@ -308,9 +308,12 @@ main.research.lengthClass #squares figure .orient {
 }
 main.research.lengthClass #squares figure .orient svg {
   fill: white;
+  padding: 10px 0;
+  margin: 0;
 }
 main.research.lengthClass #squares figure .orient svg:hover {
-  fill: red;
+  /* filter: drop-shadow(1px 1px 2px rgba(238,238,238,0.3)); */
+  cursor: pointer;
 }
 .research:not(.lengthClass).submenu #settings fieldset.hide {
   display: none;

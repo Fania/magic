@@ -761,7 +761,7 @@ share.addEventListener('click', ()=> {
 
 function getSettings() {
   // console.log('getSettings');
-  const settingsString = localStorage.getItem("magicSettings");
+  const settingsString = localStorage.getItem("researchSettings");
   let settingsJSON = {};
   if (settingsString === null) {
     settingsJSON = defaults;
@@ -777,7 +777,7 @@ function getSettings() {
 function saveSettings(settingsJSON) {
   // console.log('saveSettings to localStorage');
   const settingsString = JSON.stringify(settingsJSON);
-  localStorage.setItem("magicSettings", settingsString);
+  localStorage.setItem("researchSettings", settingsString);
   loadSettings();
   // applyStyles();
   // console.log("saving", settingsJSON);
@@ -786,37 +786,69 @@ function saveSettings(settingsJSON) {
 }
 
 
+const defaults = { 
+  "length-filter": true,
+  "class-filter": false,
+  "lengths-index": 0,
+  "unique": false,
+  "MH": false,
+  "MV": false,
+  "MD1": false,
+  "MD2": false,
+  "R1": false,
+  "R2": false,
+  "R3": false,
+  "ELARA": false,
+  "ASTERIA": false,
+  "HESTIA": false,
+  "HERA": false,
+  "DEMETER": false,
+  "NIOBE": false,
+  "THAUMAS": false,
+  "NEMESIS": false,
+  "ARGES": false,
+  "ERIS": false,
+  "MOROS": false,
+  "COTTUS": false,
+  "PANDIAGONAL": false,
+  "ASSOCIATIVE": false,
+  "SELF-COPML": false
+};
 
 
-// document.addEventListener('readystatechange', e => {
-//   if(document.readyState === "complete"){
-//     console.log(e);
-//     // console.log(e);
-//     console.log(`state: ${document.readyState}`);
-//     console.log('inside readystatechange part');
-//     const rot_left = document.getElementById('rot-left');
-//     console.log(rot_left);
-//     const rot_right = document.getElementById('rot-right');
-//     console.log(rot_right);
-//     const refl_up_down = document.getElementById('refl-up-down');
-//     console.log(refl_up_down);
-//     const refl_left_right = document.getElementById('refl-left-right');
-//     console.log(refl_left_right);
+async function loadSettings() {
+  console.log('loadSettings');
+  const settings = getSettings();
+  document.querySelector(`#lengthRadio`).checked = settings['length-filter'];
+  document.querySelector(`#classesRadio`).checked = settings['class-filter'];
+  document.querySelector('#lengths').selectedIndex = settings['lengths-index'];
+  
 
-//   } else {
-//     console.log('still loading');
+//   document.querySelector(`#${settings.amount}`).checked = true;
+//   document.querySelector(`#${settings.style}`).checked = true;
+//   document.getElementById('size').value = settings.size;
+//   document.getElementById('gap').value = settings.gap;
+//   document.getElementById('strokeWidth').value = settings.strokeWidth;
+//   document.getElementById('overlap').checked = settings.overlap === true;
+//   document.querySelector(`#${settings.overlapAmount}`).checked = true;
+//   document.getElementById('background').value = settings.background;
+//   document.getElementById('stroke').value = settings.stroke;
+//   document.getElementById('salpha').value = settings.salpha;
+//   document.getElementById('fill').value = settings.fill;
+//   document.getElementById('falpha').value = settings.falpha;
+//   document.querySelector(`#${settings.animation}`).checked = true;
+//   document.getElementById('speed').value = settings.speed;
+//   document.getElementById('day').checked = settings.dayMode;
+//   document.getElementById('night').checked = !settings.dayMode;
+//   if(settings._id) {
+//     const displayTheme = document.getElementById('themes');
+//     const themeIndex = displayTheme[displayTheme.selectedIndex].value;
+//     displayTheme.selectedIndex = parseInt(settings._id);
 //   }
-// });
-
-
-
-
-// const rot_left = document.getElementById('rot-left');
-// console.log(rot_left);
-
-// rot_left.addEventListener("click", () => {
-//   console.log(rot_left);
-// });
+//   // applyStyles();
+//   // handleAnimationRadios();
+//   // triggerAnimationPause();
+}
 
 
 
@@ -827,32 +859,6 @@ function saveSettings(settingsJSON) {
 
 
 
-
-
-
-// updown reflect
-// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 256 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M145.6 7.7C141 2.8 134.7 0 128 0s-13 2.8-17.6 7.7l-104 112c-6.5 7-8.2 17.2-4.4 25.9S14.5 160 24 160H80V352H24c-9.5 0-18.2 5.7-22 14.4s-2.1 18.9 4.4 25.9l104 112c4.5 4.9 10.9 7.7 17.6 7.7s13-2.8 17.6-7.7l104-112c6.5-7 8.2-17.2 4.4-25.9s-12.5-14.4-22-14.4H176V160h56c9.5 0 18.2-5.7 22-14.4s2.1-18.9-4.4-25.9l-104-112z"/></svg> */}
-// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg> */}
-
-
-// right-left refletc
-// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M504.3 273.6c4.9-4.5 7.7-10.9 7.7-17.6s-2.8-13-7.7-17.6l-112-104c-7-6.5-17.2-8.2-25.9-4.4s-14.4 12.5-14.4 22l0 56-192 0 0-56c0-9.5-5.7-18.2-14.4-22s-18.9-2.1-25.9 4.4l-112 104C2.8 243 0 249.3 0 256s2.8 13 7.7 17.6l112 104c7 6.5 17.2 8.2 25.9 4.4s14.4-12.5 14.4-22l0-56 192 0 0 56c0 9.5 5.7 18.2 14.4 22s18.9 2.1 25.9-4.4l112-104z"/></svg> */}
-// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M32 96l320 0V32c0-12.9 7.8-24.6 19.8-29.6s25.7-2.2 34.9 6.9l96 96c6 6 9.4 14.1 9.4 22.6s-3.4 16.6-9.4 22.6l-96 96c-9.2 9.2-22.9 11.9-34.9 6.9s-19.8-16.6-19.8-29.6V160L32 160c-17.7 0-32-14.3-32-32s14.3-32 32-32zM480 352c17.7 0 32 14.3 32 32s-14.3 32-32 32H160v64c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-96-96c-6-6-9.4-14.1-9.4-22.6s3.4-16.6 9.4-22.6l96-96c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 64H480z"/></svg> */}
-
-
-// arrow right
-// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/></svg> */}
-
-
-// arrow left
-// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M125.7 160H176c17.7 0 32 14.3 32 32s-14.3 32-32 32H48c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"/></svg> */}
-
-
-// left to right diagonal
-// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M344 0H488c13.3 0 24 10.7 24 24V168c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-39-39-87 87c-9.4 9.4-24.6 9.4-33.9 0l-32-32c-9.4-9.4-9.4-24.6 0-33.9l87-87L327 41c-6.9-6.9-8.9-17.2-5.2-26.2S334.3 0 344 0zM168 512H24c-13.3 0-24-10.7-24-24V344c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2l39 39 87-87c9.4-9.4 24.6-9.4 33.9 0l32 32c9.4 9.4 9.4 24.6 0 33.9l-87 87 39 39c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8z"/></svg> */}
-
-// right to left diagonal
-// {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M344 0H488c13.3 0 24 10.7 24 24V168c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-39-39-87 87c-9.4 9.4-24.6 9.4-33.9 0l-32-32c-9.4-9.4-9.4-24.6 0-33.9l87-87L327 41c-6.9-6.9-8.9-17.2-5.2-26.2S334.3 0 344 0zM168 512H24c-13.3 0-24-10.7-24-24V344c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2l39 39 87-87c9.4-9.4 24.6-9.4 33.9 0l32 32c9.4 9.4 9.4 24.6 0 33.9l-87 87 39 39c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8z"/></svg> */}
 
 
 

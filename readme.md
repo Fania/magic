@@ -15,6 +15,11 @@ or pipe it into text file with `npm run webhint > hint-report.txt`
 
 ## Todo
 
+### Research
+
+- [ ] remove IDs from display
+- [ ] add day/night modei
+
 ### Bugs ?
 
 - [ ] tablet screens don't fit side settings menu? 
