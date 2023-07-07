@@ -734,13 +734,56 @@ function reflectD2(valuesArray) {
 
 
 
+// SHARE OPTION
+const share = document.getElementById('share');
+share.addEventListener('click', ()=> { 
+  const settings = getSettings();
+  const params = new URLSearchParams(settings);
+  const bookmark = location.origin + '?' + params.toString();
+
+  if (navigator.share) {
+    navigator.share({
+      title: 'squares.cubelife.org',
+      text: 'Magic Squares',
+      url: bookmark,
+    })
+    .then(() => console.log('Successful share'))
+    .catch((error) => console.log('Error sharing', error));
+  } else { console.log('no sharing possible'); }
+
+  location = bookmark;
+  // bookmark.select();
+  // document.execCommand("copy");
+  // alert('Added URL to clipboard.');
+});
 
 
 
+function getSettings() {
+  // console.log('getSettings');
+  const settingsString = localStorage.getItem("magicSettings");
+  let settingsJSON = {};
+  if (settingsString === null) {
+    settingsJSON = defaults;
+    saveSettings(settingsJSON);
+    console.log("first-time setup");
+  } else {
+    settingsJSON = JSON.parse(settingsString);
+  }
+  return settingsJSON;
+}
 
 
-
-
+function saveSettings(settingsJSON) {
+  // console.log('saveSettings to localStorage');
+  const settingsString = JSON.stringify(settingsJSON);
+  localStorage.setItem("magicSettings", settingsString);
+  loadSettings();
+  // applyStyles();
+  // console.log("saving", settingsJSON);
+  // updateCache(settingsJSON);
+  // saveSettingsDB(settingsJSON);
+}
 
 
 
