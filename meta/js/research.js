@@ -854,6 +854,41 @@ async function loadSettings() {
 
 
 
+function adjust(thing) {
+  // console.log(`adjust ${thing}`);
+  const settings = getSettings();
+  // loading.classList.add('show');
+  document.body.style.cursor = 'wait !important';
+  let x = "";
+  switch(thing) {
+    case 'lengthRadio':
+      // bool
+      x = document.querySelector('#lengthRadio').checked;
+      break;
+    case 'classesRadio':
+      // bool
+      x = document.querySelector('#classesRadio').checked;
+      break;
+    case 'lengths':
+      // number
+      x = document.querySelector('#lengths').selectedIndex;
+      break;
+    case 'dayMode':
+      x = document.getElementById('day').checked;
+      break;
+    default:
+      const y = document.getElementById(thing).value;
+      x = Number.isNaN(parseInt(y)) ? y : parseInt(y);
+  }
+  settings[thing] = x;
+  saveSettings(settings);
+  if(['order','style','amount'].includes(thing)) {
+    getData();
+    // handleAnimationRadios();
+    // triggerAnimationPause();
+    // populateLengthOptions();
+  }
+}
 
 
 
@@ -863,6 +898,26 @@ async function loadSettings() {
 
 
 
+
+
+night.addEventListener("click", () => {
+  document.body.classList.remove("dayMode");
+  // document.body.style.background = "#222222";
+  document.getElementById('background').value = "#222222";
+  document.getElementById('stroke').value = "#EEEEEE";
+  adjust("background");
+  adjust("stroke");
+  adjust("dayMode");
+});
+day.addEventListener("click", () => {
+  document.body.classList.add("dayMode");
+  // document.body.style.background = "#FFFFFF";
+  document.getElementById('background').value = "#FFFFFF";
+  document.getElementById('stroke').value = "#000000";
+  adjust("background");
+  adjust("stroke");
+  adjust("dayMode");
+});
 
 
 

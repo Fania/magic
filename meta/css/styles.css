@@ -702,6 +702,15 @@ body::-webkit-scrollbar-thumb {
   #presetOptions label { display: none }
   #presetOptions input { width: 60px; margin: 2px 0;}
 
+  .submenu.research #presetOptions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .submenu.research #presetOptions label {
+    display: block;
+  }
+
   #advancedOptions #search { width: 115px }
 
 

@@ -114,15 +114,11 @@
       
     <fieldset id="presetOptions">
       <legend>Other</legend>
-      {# <label for="themes">Choose theme</label> #}
-      {# <select id="themes">
-        <option value="">Choose</option>
-      </select> #}
-      {# <input type="button" id="random" value="random"> #}
-      {# <input type="button" id="reset" value="reset"> #}
-      {# <input type="submit" id="saveTheme" value="save"> #}
       <input type="button" id="share" value="share">
-      <input type="hidden" id="themeName" name="_id" value="">
+      <div class="printSettings">
+        <label><input type="radio" name="lighting" id="night" checked><svg class="tablericon moon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16.2 4a9.03 9.03 0 1 0 3.9 12a6.5 6.5 0 1 1 -3.9 -12"></path></svg></label>
+        <label><input type="radio" name="lighting" id="day"><svg class="tablericon sun" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M3 12h1M12 3v1M20 12h1M12 20v1M5.6 5.6l.7 .7M18.4 5.6l-.7 .7M17.7 17.7l.7 .7M6.3 17.7l-.7 .7"></path></svg></label>
+      </div>
     </fieldset>
 
     {# <input type="input" id="search" placeholder="search id(s)"> #}
