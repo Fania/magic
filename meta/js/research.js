@@ -1,35 +1,55 @@
 'use strict';
 
 document.body.classList.add("order4");
-
-// const classification = document.getElementById('classification');
-// classification.addEventListener('change', () => {
-//   console.log('classification change triggered');
-//   let x = classification[classification.selectedIndex].value;
-//   console.log(x);
-//   // filterSquares(x);
-//   getData(x);
-// });
-
-
-
-
-// function filterSquares(c) {
-
-//   const squares = document.querySelectorAll(`#squares svg`);
-//   const matches = document.querySelectorAll(`#squares svg.${c}`);
-
-//   squares.forEach( sq => { sq.classList.add('hide') });
-//   matches.forEach( sq => { sq.classList.remove('hide') });
-
-//   if (c == 'all') squares.forEach( sq => { sq.classList.remove('hide') });
-
-// }
-
 const lengths = [];
-
-
 const lengthsdropdown = document.querySelector("#lengths");
+
+
+
+const defaults = { 
+  "length-filter": true,
+  "class-filter": false,
+  "lengths-index": 0,
+  "unique": false,
+  "dayMode": false,
+  "MH": false,
+  "MV": false,
+  "MD1": false,
+  "MD2": false,
+  "R1": false,
+  "R2": false,
+  "R3": false,
+  "ELARA": false,
+  "ASTERIA": false,
+  "HESTIA": false,
+  "HERA": false,
+  "DEMETER": false,
+  "NIOBE": false,
+  "THAUMAS": false,
+  "NEMESIS": false,
+  "ARGES": false,
+  "ERIS": false,
+  "MOROS": false,
+  "COTTUS": false,
+  "PANDIAGONAL": false,
+  "ASSOCIATIVE": false,
+  "SELF-COMPL": false
+};
+
+// FIRST LOAD
+const params = location.search;
+if(params) { loadBookmark(params); }
+else {
+  // clean load, possibly from memory
+  populateLengthOptions();
+  loadSettings();
+  getData();
+}
+
+
+
+
+
 async function populateLengthOptions() {
   // console.log('populateOrderOptions');
   try {
@@ -178,6 +198,7 @@ lengthsdropdown.addEventListener("change", event => {
       sq.style.display = "block";
     }
   });
+  adjust('lengths-index');
 });
 
 
@@ -733,13 +754,13 @@ function reflectD2(valuesArray) {
 
 
 
-
 // SHARE OPTION
 const share = document.getElementById('share');
 share.addEventListener('click', ()=> { 
   const settings = getSettings();
   const params = new URLSearchParams(settings);
-  const bookmark = location.origin + '?' + params.toString();
+  // const bookmark = location.origin + '?' + params.toString();
+  const bookmark = location.origin + '/research' + '?' + params.toString();
 
   if (navigator.share) {
     navigator.share({
@@ -760,7 +781,7 @@ share.addEventListener('click', ()=> {
 
 
 function getSettings() {
-  // console.log('getSettings');
+  console.log('getSettings');
   const settingsString = localStorage.getItem("researchSettings");
   let settingsJSON = {};
   if (settingsString === null) {
@@ -775,8 +796,9 @@ function getSettings() {
 
 
 function saveSettings(settingsJSON) {
-  // console.log('saveSettings to localStorage');
+  console.log('saveSettings to localStorage');
   const settingsString = JSON.stringify(settingsJSON);
+  // console.log(settingsString);
   localStorage.setItem("researchSettings", settingsString);
   loadSettings();
   // applyStyles();
@@ -786,34 +808,6 @@ function saveSettings(settingsJSON) {
 }
 
 
-const defaults = { 
-  "length-filter": true,
-  "class-filter": false,
-  "lengths-index": 0,
-  "unique": false,
-  "MH": false,
-  "MV": false,
-  "MD1": false,
-  "MD2": false,
-  "R1": false,
-  "R2": false,
-  "R3": false,
-  "ELARA": false,
-  "ASTERIA": false,
-  "HESTIA": false,
-  "HERA": false,
-  "DEMETER": false,
-  "NIOBE": false,
-  "THAUMAS": false,
-  "NEMESIS": false,
-  "ARGES": false,
-  "ERIS": false,
-  "MOROS": false,
-  "COTTUS": false,
-  "PANDIAGONAL": false,
-  "ASSOCIATIVE": false,
-  "SELF-COPML": false
-};
 
 
 async function loadSettings() {
@@ -822,8 +816,6 @@ async function loadSettings() {
   document.querySelector(`#lengthRadio`).checked = settings['length-filter'];
   document.querySelector(`#classesRadio`).checked = settings['class-filter'];
   document.querySelector('#lengths').selectedIndex = settings['lengths-index'];
-  
-
 //   document.querySelector(`#${settings.amount}`).checked = true;
 //   document.querySelector(`#${settings.style}`).checked = true;
 //   document.getElementById('size').value = settings.size;
@@ -861,15 +853,15 @@ function adjust(thing) {
   document.body.style.cursor = 'wait !important';
   let x = "";
   switch(thing) {
-    case 'lengthRadio':
+    case 'length-filter':
       // bool
       x = document.querySelector('#lengthRadio').checked;
       break;
-    case 'classesRadio':
+    case 'class-filter':
       // bool
       x = document.querySelector('#classesRadio').checked;
       break;
-    case 'lengths':
+    case 'lengths-index':
       // number
       x = document.querySelector('#lengths').selectedIndex;
       break;
@@ -884,11 +876,48 @@ function adjust(thing) {
   saveSettings(settings);
   if(['order','style','amount'].includes(thing)) {
     getData();
+    populateLengthOptions();
     // handleAnimationRadios();
     // triggerAnimationPause();
-    // populateLengthOptions();
   }
 }
+
+
+
+
+function loadBookmark(params) {
+  console.log('loading from BOOKMARK');
+  const keyValueStrings = (params.slice(1)).split('&');
+  console.log(keyValueStrings);
+  const settings = {};
+  const checkBool = ['dayMode','length-filter','class-filter','unique','MH','MV','MD1','MD2','R1','R2','R3','ELARA','ASTERIA','HESTIA','HERA','DEMETER','NIOBE','THAUMAS','NEMESIS','ARGES','ERIS','MOROS','COTTUS','PANDIAGONAL','ASSOCIATIVE','SELF-COMPL'];
+  const checkNum = ['lengths-index'];
+  keyValueStrings.forEach(x => {
+    const pair = x.split('=');
+    let value = pair[1].replace('%23','#');
+    if(checkNum.includes(pair[0])) {
+      value = parseInt(value);
+    }
+    if(checkBool.includes(pair[0])) {
+      value = value === 'true';
+    }
+    settings[pair[0]] = value;
+    // if(pair[0] == 'interface' && value == 'hidden') {
+    //   toggleInterface();
+    // }
+    // if(pair[0] == 'gallery' && value == 'true') {
+    //   handleGalleryMode();
+    // }
+  });
+  saveSettings(settings);
+  populateLengthOptions();
+  loadSettings();
+  getData();
+  // populateOrderOptions();
+  // handleAnimationRadios();
+  // triggerAnimationPause();
+}
+
 
 
 
