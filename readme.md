@@ -18,7 +18,13 @@ or pipe it into text file with `npm run webhint > hint-report.txt`
 ### Research
 
 - [ ] remove IDs from display
-- [ ] add day/night modei
+- [ ] update numbers based on current view?
+- [ ] highlight current/recent button pressed
+- [ ] change colour of buttons for dayMode
+- [ ] loading from localstorage
+- [ ] localstorage items need to be updated when making changes
+- [ ] make sure day/night model is added to localstorage
+- [x] add day/night model
 
 ### Bugs ?
 
