@@ -17,6 +17,7 @@ or pipe it into text file with `npm run webhint > hint-report.txt`
 
 ### Research
 
+- [ ] try and fix setTimeout warning??
 - [ ] remove IDs from display
 - [ ] update numbers based on current view?
 - [ ] highlight current/recent button pressed
