@@ -54,6 +54,7 @@ async function populateLengthOptions() {
   // console.log('populateOrderOptions');
   try {
     // const data = await getOrders();
+    const lengthsdropdown = document.querySelector("#lengths");
     lengthsdropdown.innerHTML = '';
     // console.log(lengths);
     const uniqlen = _.uniq(lengths);
@@ -70,6 +71,9 @@ async function populateLengthOptions() {
   // console.log('total order choices',document.querySelector('#order').length);
   } catch (error) { console.log(error) }
 }
+
+
+
 
 
 getData("i");
@@ -109,7 +113,7 @@ async function getData(filter) {
           <svg class="hide-svg" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zm151 118.3C226 97.7 269.5 80 320 80c65.2 0 118.8 29.6 159.9 67.7C518.4 183.5 545 226 558.6 256c-12.6 28-36.6 66.8-70.9 100.9l-53.8-42.2c9.1-17.6 14.2-37.5 14.2-58.7c0-70.7-57.3-128-128-128c-32.2 0-61.7 11.9-84.2 31.5l-46.1-36.1zM394.9 284.2l-81.5-63.9c4.2-8.5 6.6-18.2 6.6-28.3c0-5.5-.7-10.9-2-16c.7 0 1.3 0 2 0c44.2 0 80 35.8 80 80c0 9.9-1.8 19.4-5.1 28.2zm9.4 130.3C378.8 425.4 350.7 432 320 432c-65.2 0-118.8-29.6-159.9-67.7C121.6 328.5 95 286 81.4 256c8.3-18.4 21.5-41.5 39.4-64.8L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5l-41.9-33zM192 256c0 70.7 57.3 128 128 128c13.3 0 26.1-2 38.2-5.8L302 334c-23.5-5.4-43.1-21.2-53.7-42.3l-56.1-44.2c-.2 2.8-.3 5.6-.3 8.5z"/></svg>
         </div>
         <figcaption>
-          <p>#${elemID}:</p>
+          <!-- <p>#${elemID}:</p> -->
           <p>${elemNumsClean}</p>
         </figcaption>
       </figure>
@@ -182,10 +186,16 @@ async function getData(filter) {
 // Lengths dropdown
 // filter display of squares based on selection of dropdown
 // const lengthsdropdown = document.querySelector("#lengths");
-lengthsdropdown.addEventListener("change", event => {
+lengthsdropdown.addEventListener("change", async event => {
   // console.log("lengths dropdown");
   const fromIndex = lengthsdropdown.selectedIndex;
   const selectedLength = event.target[fromIndex].value;
+  await changeSelectedLength(selectedLength);
+});
+
+
+
+async function changeSelectedLength(selectedLength) {
   // console.log(selectedLength);
   const [...squaresSVGs] = document.querySelectorAll(`#squares figure`);
   squaresSVGs.forEach(sq => {
@@ -199,11 +209,7 @@ lengthsdropdown.addEventListener("change", event => {
     }
   });
   adjust('lengths-index');
-});
-
-
-
-
+}
 
 
 
@@ -813,25 +819,37 @@ function saveSettings(settingsJSON) {
 async function loadSettings() {
   console.log('loadSettings');
   const settings = getSettings();
+  console.log(settings);
+
   document.querySelector(`#lengthRadio`).checked = settings['length-filter'];
   document.querySelector(`#classesRadio`).checked = settings['class-filter'];
   document.querySelector('#lengths').selectedIndex = settings['lengths-index'];
-//   document.querySelector(`#${settings.amount}`).checked = true;
-//   document.querySelector(`#${settings.style}`).checked = true;
-//   document.getElementById('size').value = settings.size;
-//   document.getElementById('gap').value = settings.gap;
-//   document.getElementById('strokeWidth').value = settings.strokeWidth;
-//   document.getElementById('overlap').checked = settings.overlap === true;
-//   document.querySelector(`#${settings.overlapAmount}`).checked = true;
-//   document.getElementById('background').value = settings.background;
-//   document.getElementById('stroke').value = settings.stroke;
-//   document.getElementById('salpha').value = settings.salpha;
-//   document.getElementById('fill').value = settings.fill;
-//   document.getElementById('falpha').value = settings.falpha;
-//   document.querySelector(`#${settings.animation}`).checked = true;
-//   document.getElementById('speed').value = settings.speed;
-//   document.getElementById('day').checked = settings.dayMode;
-//   document.getElementById('night').checked = !settings.dayMode;
+  document.querySelector('#day').checked = settings['dayMode'];
+  document.querySelector('#night').checked = !settings['dayMode'];
+  document.querySelector('#unique').checked = settings['unique'];
+  document.querySelector('#MH').checked = settings['MH'];
+  document.querySelector('#MV').checked = settings['MV'];
+  document.querySelector('#MD1').checked = settings['MD1'];
+  document.querySelector('#MD2').checked = settings['MD2'];
+  document.querySelector('#R1').checked = settings['R1'];
+  document.querySelector('#R2').checked = settings['R2'];
+  document.querySelector('#R3').checked = settings['R3'];
+  document.querySelector('#elara').checked = settings['ELARA'];
+  document.querySelector('#asteria').checked = settings['ASTERIA'];
+  document.querySelector('#hestia').checked = settings['HESTIA'];
+  document.querySelector('#hera').checked = settings['HERA'];
+  document.querySelector('#demeter').checked = settings['DEMETER'];
+  document.querySelector('#niobe').checked = settings['NIOBE'];
+  document.querySelector('#thaumas').checked = settings['THAUMAS'];
+  document.querySelector('#nemesis').checked = settings['NEMESIS'];
+  document.querySelector('#arges').checked = settings['ARGES'];
+  document.querySelector('#eris').checked = settings['ERIS'];
+  document.querySelector('#moros').checked = settings['MOROS'];
+  document.querySelector('#cottus').checked = settings['COTTUS'];
+  document.querySelector('#pandiag').checked = settings['PANDIAGONAL'];
+  document.querySelector('#symmetric').checked = settings['ASSOCIATIVE'];
+  document.querySelector('#self-compl').checked = settings['SELF-COMPL'];
+
 //   if(settings._id) {
 //     const displayTheme = document.getElementById('themes');
 //     const themeIndex = displayTheme[displayTheme.selectedIndex].value;
@@ -874,12 +892,12 @@ function adjust(thing) {
   }
   settings[thing] = x;
   saveSettings(settings);
-  if(['order','style','amount'].includes(thing)) {
-    getData();
-    populateLengthOptions();
-    // handleAnimationRadios();
-    // triggerAnimationPause();
-  }
+  // if(['order','style','amount'].includes(thing)) {
+  //   getData();
+  //   populateLengthOptions();
+  //   // handleAnimationRadios();
+  //   // triggerAnimationPause();
+  // }
 }
 
 
@@ -931,20 +949,20 @@ function loadBookmark(params) {
 
 night.addEventListener("click", () => {
   document.body.classList.remove("dayMode");
-  // document.body.style.background = "#222222";
-  document.getElementById('background').value = "#222222";
-  document.getElementById('stroke').value = "#EEEEEE";
-  adjust("background");
-  adjust("stroke");
+  document.body.style.background = "#222222";
+  // document.getElementById('background').value = "#222222";
+  // document.getElementById('stroke').value = "#EEEEEE";
+  // adjust("background");
+  // adjust("stroke");
   adjust("dayMode");
 });
 day.addEventListener("click", () => {
   document.body.classList.add("dayMode");
-  // document.body.style.background = "#FFFFFF";
-  document.getElementById('background').value = "#FFFFFF";
-  document.getElementById('stroke').value = "#000000";
-  adjust("background");
-  adjust("stroke");
+  document.body.style.background = "#FFFFFF";
+  // document.getElementById('background').value = "#FFFFFF";
+  // document.getElementById('stroke').value = "#000000";
+  // adjust("background");
+  // adjust("stroke");
   adjust("dayMode");
 });
 

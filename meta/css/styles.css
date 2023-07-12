@@ -311,6 +311,12 @@ main.research.lengthClass #squares figure .orient svg {
   padding: 10px 0;
   margin: 0;
 }
+.dayMode .research.lengthClass #squares figure .orient svg {
+  fill: var(--textColour);
+}
+main.research.lengthClass #squares figure figcaption p {
+  text-align: center;
+}
 main.research.lengthClass #squares figure .orient svg:hover {
   /* filter: drop-shadow(1px 1px 2px rgba(238,238,238,0.3)); */
   cursor: pointer;
