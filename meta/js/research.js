@@ -489,7 +489,7 @@ async function addRotationButtons() {
       const id = id_before_trim.substring(11);
       const str_nums = old_str_nums.innerText.split(" ");
       const parsed_nums = str_nums.map(sn => Number(sn));
-      console.log('parsed_nums',parsed_nums); 
+      // console.log('parsed_nums',parsed_nums); 
       let rot_numbers = [];
       if(rot_right_count == 0){
         rot_numbers = rotate90(parsed_nums);
@@ -504,7 +504,7 @@ async function addRotationButtons() {
         rot_numbers = parsed_nums;
         rot_right_count = -1;
       }
-      console.log('rot_numbers',rot_numbers);
+      // console.log('rot_numbers',rot_numbers);
       const rot_nums_string = rot_numbers.join(' ');
       const rot_coords = await getCoords(4,rot_numbers);
       const new_rot_line_svg = await createPolyline(4,rot_coords,id,"");
@@ -529,24 +529,29 @@ async function addRotationButtons() {
   });
   refl_up_downs.forEach(rud => {
     rud.addEventListener("click", async () => {
+      // console.log("clicked refl_up_down", refl_up_down_count);
       const old_line_svg = rud.parentElement.previousElementSibling.children[0];
       const old_num_svg = rud.parentElement.previousElementSibling.children[1];
-      const id = rud.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
-      const str_nums = rud.parentElement.nextElementSibling.children[1].innerText.split(" ");
+      const old_str_nums = rud.parentElement.nextElementSibling.children[0];
+      const id_before_trim = old_line_svg.attributes[0].value;
+      const id = id_before_trim.substring(11);
+      const str_nums = old_str_nums.innerText.split(" ");
       const parsed_nums = str_nums.map(sn => Number(sn));
       let refl_numbers = [];
       if(refl_up_down_count == 0){
         refl_numbers = reflectH(parsed_nums);
       }
       if(refl_up_down_count == 1){
-        refl_numbers = parsed_nums;
+        refl_numbers = reflectH(parsed_nums);
         refl_up_down_count = -1;
       }
+      const refl_nums_string = refl_numbers.join(' ');
       const refl_coords = await getCoords(4,refl_numbers);
       const new_refl_line_svg = await createPolyline(4,refl_coords,id,"");
       const new_refl_num_svg = await createNumberSVGs(4,refl_coords,id,"");
       old_line_svg.outerHTML = new_refl_line_svg;
       old_num_svg.outerHTML = new_refl_num_svg;
+      old_str_nums.innerHTML = refl_nums_string;
       refl_up_down_count += 1;
     });
   });
