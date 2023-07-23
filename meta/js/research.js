@@ -74,7 +74,8 @@ async function populateLengthOptions() {
 
 
 
-
+// let firstload = true;
+let defaultsquares = {};
 
 getData("i");
 
@@ -124,7 +125,15 @@ async function getData(filter) {
       const polylen = await polygon_length(dataSorted[i].svg);
       // polygon_length(dataSorted[i].svg);
       lengths.push(polylen);
+
+      // if(firstload){
+      //   console.log("firstload",i,firstload);
+      defaultsquares[elemID] = elemNumsClean;
+      // }
+
     }
+    // firstload = false;
+
     // if(data.length === 200) {
       // const io = new IntersectionObserver(
       //   entries => {
@@ -149,7 +158,7 @@ async function getData(filter) {
     // console.log(lengths.length);
     await populateLengthOptions();
     await addRotationButtons();
-
+    // console.log(defaultsquares);
     // // MUTATION OBSERVER BABY
     // // Select the node that will be observed for mutations
     // const targetNode = document.getElementById('squares');
@@ -175,6 +184,10 @@ async function getData(filter) {
     // // observer.disconnect();
   } // end of finally
 } // end of getData
+
+
+
+
 
 
 
@@ -463,15 +476,13 @@ async function addRotationButtons() {
   // can't be ids - need to be classes!
   const [...identities] = document.querySelectorAll('.identity');
   const [...hide_svgs] = document.querySelectorAll('.hide-svg');
-  // const [...rot_lefts] = document.querySelectorAll('.rot-left');
   const [...rot_rights] = document.querySelectorAll('.rot-right');
   const [...refl_up_downs] = document.querySelectorAll('.refl-up-down');
   const [...refl_left_rights] = document.querySelectorAll('.refl-left-right');
   const [...refl_diag_left_rights] = document.querySelectorAll('.refl-diag-left-right');
   const [...refl_diag_right_lefts] = document.querySelectorAll('.refl-diag-right-left');
 
-  // let identity_count = 0;
-  // let rot_left_count = 0;
+  const defaults = defaultsquares;
   let rot_right_count = 0;
   let refl_up_down_count = 0;
   let refl_left_right_count = 0;
@@ -480,7 +491,6 @@ async function addRotationButtons() {
 
   rot_rights.forEach(rr => {
     rr.addEventListener("click", async () => {
-      // console.dir(rr);
       //                   svg  div.orient      div               [svg,svg]
       const old_line_svg = rr.parentElement.previousElementSibling.children[0];
       const old_num_svg = rr.parentElement.previousElementSibling.children[1];
@@ -489,7 +499,6 @@ async function addRotationButtons() {
       const id = id_before_trim.substring(11);
       const str_nums = old_str_nums.innerText.split(" ");
       const parsed_nums = str_nums.map(sn => Number(sn));
-      // console.log('parsed_nums',parsed_nums); 
       let rot_numbers = [];
       if(rot_right_count == 0){
         rot_numbers = rotate90(parsed_nums);
@@ -498,21 +507,14 @@ async function addRotationButtons() {
         rot_numbers = rotate90(parsed_nums);
         rot_right_count = -1;
       }
-      // console.log('rot_numbers',rot_numbers);
       const rot_nums_string = rot_numbers.join(' ');
       const rot_coords = await getCoords(4,rot_numbers);
       const new_rot_line_svg = await createPolyline(4,rot_coords,id,"");
       const new_rot_num_svg = await createNumberSVGs(4,rot_coords,id,"");
-      // console.log(new_rot_line_svg);
-      // console.log(new_rot_num_svg);
       old_line_svg.outerHTML = new_rot_line_svg;
       old_num_svg.outerHTML = new_rot_num_svg;
       old_str_nums.innerHTML = rot_nums_string;
       rot_right_count += 1;
-      // const new_old_svg = document.
-      // console.log('after',old_line_svg.outerHTML);
-      // console.log('after',old_num_svg.outerHTML);
-      // rl.style.fill = 'white';
     });
   });
   hide_svgs.forEach(hs => {
@@ -523,7 +525,6 @@ async function addRotationButtons() {
   });
   refl_up_downs.forEach(rud => {
     rud.addEventListener("click", async () => {
-      // console.log("clicked refl_up_down", refl_up_down_count);
       const old_line_svg = rud.parentElement.previousElementSibling.children[0];
       const old_num_svg = rud.parentElement.previousElementSibling.children[1];
       const old_str_nums = rud.parentElement.nextElementSibling.children[0];
@@ -553,22 +554,26 @@ async function addRotationButtons() {
     rlr.addEventListener("click", async () => {
       const old_line_svg = rlr.parentElement.previousElementSibling.children[0];
       const old_num_svg = rlr.parentElement.previousElementSibling.children[1];
-      const id = rlr.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
-      const str_nums = rlr.parentElement.nextElementSibling.children[1].innerText.split(" ");
+      const old_str_nums = rlr.parentElement.nextElementSibling.children[0];
+      const id_before_trim = old_line_svg.attributes[0].value;
+      const id = id_before_trim.substring(11);
+      const str_nums = old_str_nums.innerText.split(" ");
       const parsed_nums = str_nums.map(sn => Number(sn));
       let refl_numbers = [];
       if(refl_left_right_count == 0){
         refl_numbers = reflectV(parsed_nums);
       }
       if(refl_left_right_count == 1){
-        refl_numbers = parsed_nums;
+        refl_numbers = reflectV(parsed_nums);
         refl_left_right_count = -1;
       }
+      const refl_nums_string = refl_numbers.join(' ');
       const refl_coords = await getCoords(4,refl_numbers);
       const new_refl_line_svg = await createPolyline(4,refl_coords,id,"");
       const new_refl_num_svg = await createNumberSVGs(4,refl_coords,id,"");
       old_line_svg.outerHTML = new_refl_line_svg;
       old_num_svg.outerHTML = new_refl_num_svg;
+      old_str_nums.innerHTML = refl_nums_string;
       refl_left_right_count += 1;
     });
   });
@@ -576,24 +581,28 @@ async function addRotationButtons() {
     i.addEventListener("click", async () => {
       const old_line_svg = i.parentElement.previousElementSibling.children[0];
       const old_num_svg = i.parentElement.previousElementSibling.children[1];
-      const id = i.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
-      const str_nums = i.parentElement.nextElementSibling.children[1].innerText.split(" ");
-      const parsed_nums = str_nums.map(sn => Number(sn));
-      let refl_numbers = [];
-      refl_numbers = parsed_nums;
-      const refl_coords = await getCoords(4,refl_numbers);
-      const new_refl_line_svg = await createPolyline(4,refl_coords,id,"");
-      const new_refl_num_svg = await createNumberSVGs(4,refl_coords,id,"");
-      old_line_svg.outerHTML = new_refl_line_svg;
-      old_num_svg.outerHTML = new_refl_num_svg;
+      const old_str_nums = i.parentElement.nextElementSibling.children[0];
+      const id_before_trim = old_line_svg.attributes[0].value;
+      const id = id_before_trim.substring(11);
+      let id_numbers = [];
+      id_numbers = defaults[id].split(' ');
+      const new_id_str = defaults[id];
+      const id_coords = await getCoords(4,id_numbers);
+      const new_id_line_svg = await createPolyline(4,id_coords,id,"");
+      const new_id_num_svg = await createNumberSVGs(4,id_coords,id,"");
+      old_line_svg.outerHTML = new_id_line_svg;
+      old_num_svg.outerHTML = new_id_num_svg;
+      old_str_nums.innerHTML = new_id_str;
     });
   });
   refl_diag_left_rights.forEach(rdlr => {
     rdlr.addEventListener("click", async () => {
       const old_line_svg = rdlr.parentElement.previousElementSibling.children[0];
       const old_num_svg = rdlr.parentElement.previousElementSibling.children[1];
-      const id = rdlr.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
-      const str_nums = rdlr.parentElement.nextElementSibling.children[1].innerText.split(" ");
+      const old_str_nums = rdlr.parentElement.nextElementSibling.children[0];
+      const id_before_trim = old_line_svg.attributes[0].value;
+      const id = id_before_trim.substring(11);
+      const str_nums = old_str_nums.innerText.split(" ");
       const parsed_nums = str_nums.map(sn => Number(sn));
       let refl_numbers = [];
       if(refl_diag_left_right_count == 0){
@@ -603,14 +612,16 @@ async function addRotationButtons() {
         refl_numbers = reflectD1(parsed_nums);
       }
       if(refl_diag_left_right_count == 1){
-        refl_numbers = parsed_nums;
+        refl_numbers = reflectD1(parsed_nums);
         refl_diag_left_right_count = -1;
       }
+      const new_refl_nums_string = refl_numbers.join(' ');
       const refl_coords = await getCoords(4,refl_numbers);
       const new_refl_line_svg = await createPolyline(4,refl_coords,id,"");
       const new_refl_num_svg = await createNumberSVGs(4,refl_coords,id,"");
       old_line_svg.outerHTML = new_refl_line_svg;
       old_num_svg.outerHTML = new_refl_num_svg;
+      old_str_nums.innerHTML = new_refl_nums_string;
       refl_diag_left_right_count += 1;
     });
   });
@@ -618,8 +629,10 @@ async function addRotationButtons() {
     rdrl.addEventListener("click", async () => {
       const old_line_svg = rdrl.parentElement.previousElementSibling.children[0];
       const old_num_svg = rdrl.parentElement.previousElementSibling.children[1];
-      const id = rdrl.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
-      const str_nums = rdrl.parentElement.nextElementSibling.children[1].innerText.split(" ");
+      const old_str_nums = rdrl.parentElement.nextElementSibling.children[0];
+      const id_before_trim = old_line_svg.attributes[0].value;
+      const id = id_before_trim.substring(11);
+      const str_nums = old_str_nums.innerText.split(" ");
       const parsed_nums = str_nums.map(sn => Number(sn));
       let refl_numbers = [];
       if(refl_diag_right_left_count == 0){
@@ -629,14 +642,16 @@ async function addRotationButtons() {
         refl_numbers = reflectD2(parsed_nums);
       }
       if(refl_diag_right_left_count == 1){
-        refl_numbers = parsed_nums;
+        refl_numbers = reflectD2(parsed_nums);
         refl_diag_right_left_count = -1;
       }
+      const new_refl_nums_string = refl_numbers.join(' ');
       const refl_coords = await getCoords(4,refl_numbers);
       const new_refl_line_svg = await createPolyline(4,refl_coords,id,"");
       const new_refl_num_svg = await createNumberSVGs(4,refl_coords,id,"");
       old_line_svg.outerHTML = new_refl_line_svg;
       old_num_svg.outerHTML = new_refl_num_svg;
+      old_str_nums.innerHTML = new_refl_nums_string;
       refl_diag_right_left_count += 1;
     });
   });
