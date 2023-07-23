@@ -495,13 +495,7 @@ async function addRotationButtons() {
         rot_numbers = rotate90(parsed_nums);
       }
       if(rot_right_count == 1){
-        rot_numbers = rotate180(parsed_nums);
-      }
-      if(rot_right_count == 2){
-        rot_numbers = rotate270(parsed_nums);
-      }
-      if(rot_right_count == 3){
-        rot_numbers = parsed_nums;
+        rot_numbers = rotate90(parsed_nums);
         rot_right_count = -1;
       }
       // console.log('rot_numbers',rot_numbers);
