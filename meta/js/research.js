@@ -104,7 +104,7 @@ async function getData(filter) {
       <figure data-length="${elemLen}">
         <div>${elemSVG}${elemNumSVG}</div>
         <div class="orient">
-          <svg class="rot-left" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><title>Rotate Left</title><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/></svg>
+          <svg class="rot-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><title>Rotate Right</title><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/></svg>
           <svg class="refl-up-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 256 512"><title>Reflect Up and Down</title><path d="M145.6 7.7C141 2.8 134.7 0 128 0s-13 2.8-17.6 7.7l-104 112c-6.5 7-8.2 17.2-4.4 25.9S14.5 160 24 160H80V352H24c-9.5 0-18.2 5.7-22 14.4s-2.1 18.9 4.4 25.9l104 112c4.5 4.9 10.9 7.7 17.6 7.7s13-2.8 17.6-7.7l104-112c6.5-7 8.2-17.2 4.4-25.9s-12.5-14.4-22-14.4H176V160h56c9.5 0 18.2-5.7 22-14.4s2.1-18.9-4.4-25.9l-104-112z"/></svg>
           <svg class="refl-diag-left-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><title>Reflect Left and Right Diagonally</title><path d="M344 0H488c13.3 0 24 10.7 24 24V168c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-39-39-87 87c-9.4 9.4-24.6 9.4-33.9 0l-32-32c-9.4-9.4-9.4-24.6 0-33.9l87-87L327 41c-6.9-6.9-8.9-17.2-5.2-26.2S334.3 0 344 0zM168 512H24c-13.3 0-24-10.7-24-24V344c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2l39 39 87-87c9.4-9.4 24.6-9.4 33.9 0l32 32c9.4 9.4 9.4 24.6 0 33.9l-87 87 39 39c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8z"/></svg>
           <svg class="identity" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><title>Identity</title><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm192-96H320c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32H192c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32z"/></svg>
@@ -463,7 +463,7 @@ async function addRotationButtons() {
   // can't be ids - need to be classes!
   const [...identities] = document.querySelectorAll('.identity');
   const [...hide_svgs] = document.querySelectorAll('.hide-svg');
-  const [...rot_lefts] = document.querySelectorAll('.rot-left');
+  // const [...rot_lefts] = document.querySelectorAll('.rot-left');
   const [...rot_rights] = document.querySelectorAll('.rot-right');
   const [...refl_up_downs] = document.querySelectorAll('.refl-up-down');
   const [...refl_left_rights] = document.querySelectorAll('.refl-left-right');
@@ -471,39 +471,41 @@ async function addRotationButtons() {
   const [...refl_diag_right_lefts] = document.querySelectorAll('.refl-diag-right-left');
 
   // let identity_count = 0;
-  let rot_left_count = 0;
+  // let rot_left_count = 0;
   let rot_right_count = 0;
   let refl_up_down_count = 0;
   let refl_left_right_count = 0;
   let refl_diag_left_right_count = 0;
   let refl_diag_right_left_count = 0;
 
-  rot_lefts.forEach(rl => {
-    rl.addEventListener("click", async () => {
-      // console.dir(rl);
+  rot_rights.forEach(rr => {
+    rr.addEventListener("click", async () => {
+      // console.dir(rr);
       //                   svg  div.orient      div               [svg,svg]
-      const old_line_svg = rl.parentElement.previousElementSibling.children[0];
-      const old_num_svg = rl.parentElement.previousElementSibling.children[1];
-      //               svg  div.orient      figcaption       [p,p]
-      const id = rl.parentElement.nextElementSibling.children[0].innerText.substring(1, 33);
-      const str_nums = rl.parentElement.nextElementSibling.children[1].innerText.split(" ");
+      const old_line_svg = rr.parentElement.previousElementSibling.children[0];
+      const old_num_svg = rr.parentElement.previousElementSibling.children[1];
+      const old_str_nums = rr.parentElement.nextElementSibling.children[0];
+      const id_before_trim = old_line_svg.attributes[0].value;
+      const id = id_before_trim.substring(11);
+      const str_nums = old_str_nums.innerText.split(" ");
       const parsed_nums = str_nums.map(sn => Number(sn));
-      // console.log('parsed_nums',parsed_nums);
+      console.log('parsed_nums',parsed_nums); 
       let rot_numbers = [];
-      if(rot_left_count == 0){
+      if(rot_right_count == 0){
         rot_numbers = rotate90(parsed_nums);
       }
-      if(rot_left_count == 1){
+      if(rot_right_count == 1){
         rot_numbers = rotate180(parsed_nums);
       }
-      if(rot_left_count == 2){
+      if(rot_right_count == 2){
         rot_numbers = rotate270(parsed_nums);
       }
-      if(rot_left_count == 3){
+      if(rot_right_count == 3){
         rot_numbers = parsed_nums;
-        rot_left_count = -1;
+        rot_right_count = -1;
       }
-      // console.log('rot_numbers',rot_numbers);
+      console.log('rot_numbers',rot_numbers);
+      const rot_nums_string = rot_numbers.join(' ');
       const rot_coords = await getCoords(4,rot_numbers);
       const new_rot_line_svg = await createPolyline(4,rot_coords,id,"");
       const new_rot_num_svg = await createNumberSVGs(4,rot_coords,id,"");
@@ -511,7 +513,8 @@ async function addRotationButtons() {
       // console.log(new_rot_num_svg);
       old_line_svg.outerHTML = new_rot_line_svg;
       old_num_svg.outerHTML = new_rot_num_svg;
-      rot_left_count += 1;
+      old_str_nums.innerHTML = rot_nums_string;
+      rot_right_count += 1;
       // const new_old_svg = document.
       // console.log('after',old_line_svg.outerHTML);
       // console.log('after',old_num_svg.outerHTML);
