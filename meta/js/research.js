@@ -661,28 +661,6 @@ async function addRotationButtons() {
 
 
 
-function rotateSVG() {
-
-  const test = [1,2,3,4,5,6,7,8,9];
-  console.log(rotate90(test)); // [7, 4, 1, 8, 5, 2, 9, 6, 3]
-  console.log(rotate180(test)); // [9, 8, 7, 6, 5, 4, 3, 2, 1]
-  console.log(rotate270(test)); // [3, 6, 9, 2, 5, 8, 1, 4, 7]
-  console.log(reflectV(test)); // [3, 2, 1, 6, 5, 4, 9, 8, 7]
-  console.log(reflectH(test)); // [7, 8, 9, 4, 5, 6, 1, 2, 3]
-  console.log(reflectD1(test)); // [1, 4, 7, 2, 5, 8, 3, 6, 9]
-  console.log(reflectD2(test)); // [9, 6, 3, 8, 5, 2, 7, 4, 1]
-
-}
-
-// rotateSVG();
-
-
-
-
-
-
-
-
 
 
 
@@ -867,6 +845,11 @@ async function loadSettings() {
   document.querySelector('#symmetric').checked = settings['ASSOCIATIVE'];
   document.querySelector('#self-compl').checked = settings['SELF-COMPL'];
 
+  if(day.checked) {
+    document.body.classList.add("dayMode");
+  } else {
+    document.body.classList.remove("dayMode");
+  }
 //   if(settings._id) {
 //     const displayTheme = document.getElementById('themes');
 //     const themeIndex = displayTheme[displayTheme.selectedIndex].value;

@@ -18,10 +18,10 @@ or pipe it into text file with `npm run webhint > hint-report.txt`
 ### Research
 
 - [ ] try and fix setTimeout warning??
-- [ ] update numbers based on current view?
 - [ ] highlight current/recent button pressed
 - [ ] loading from localstorage
 - [ ] localstorage items need to be updated when making changes
+- [x] update numbers based on current view?
 - [x] make sure day/night model is added to localstorage
 - [x] remove IDs from display
 - [x] change colour of buttons for dayMode
