@@ -41,9 +41,9 @@ const params = location.search;
 if(params) { loadBookmark(params); }
 else {
   // clean load, possibly from memory
-  populateLengthOptions();
-  loadSettings();
-  getData();
+  async ()=>{
+    await getData();
+  }
 }
 
 
@@ -59,12 +59,24 @@ async function populateLengthOptions() {
     // console.log(lengths);
     const uniqlen = _.uniq(lengths);
     const countlen = _.countBy(lengths);
+    let cnt = 0;
     for (let i in countlen) {
+      // i == length
+      // console.log(cnt);
       const itemLen = i;
       const itemCount= countlen[i];
       const option = document.createElement('option');
       option.value = itemLen;
-      option.innerText = `(${itemCount}) ${itemLen}`;
+      if(cnt==0){
+        option.innerText = `(${itemCount}) ${itemLen}`;
+        console.log("inside 0");
+        // console.log(option.selected);
+        option.selected = true;
+      } else {
+        console.log("inside else");
+        option.innerText = `(${itemCount}) ${itemLen}`;
+      }
+      cnt++;
       // if(countlen[i] == 0) option.selected = true;
       lengthsdropdown.appendChild(option);
     }
@@ -157,6 +169,7 @@ async function getData(filter) {
     document.body.style.cursor = 'default !important'; 
     // console.log(lengths.length);
     await populateLengthOptions();
+    await loadSettings();
     await addRotationButtons();
     // console.log(defaultsquares);
     // // MUTATION OBSERVER BABY
@@ -784,6 +797,7 @@ share.addEventListener('click', ()=> {
 function getSettings() {
   console.log('getSettings');
   const settingsString = localStorage.getItem("researchSettings");
+  console.log(settingsString);
   let settingsJSON = {};
   if (settingsString === null) {
     settingsJSON = defaults;
@@ -816,9 +830,20 @@ async function loadSettings() {
   const settings = getSettings();
   console.log(settings);
 
+  const chosen_index = JSON.parse(localStorage.getItem('researchSettings'))['lengths-index'];
+
+  console.log(document.querySelector('#lengths').selectedIndex); // -1
+  console.log(typeof settings['lengths-index']); // num
+  console.log(settings['lengths-index']); // 0
+  console.log(typeof parseInt(settings['lengths-index'])); // num
+  console.log(parseInt(settings['lengths-index'])); // 0
+  console.log(chosen_index); // 0
+  // document.querySelector('#lengths').selectedIndex = parseInt(settings['lengths-index']); 
+  document.querySelector('#lengths').selectedIndex = chosen_index;
+  console.log(document.querySelector('#lengths').selectedIndex); // -1
+
   document.querySelector(`#lengthRadio`).checked = settings['length-filter'];
   document.querySelector(`#classesRadio`).checked = settings['class-filter'];
-  document.querySelector('#lengths').selectedIndex = settings['lengths-index'];
   document.querySelector('#day').checked = settings['dayMode'];
   document.querySelector('#night').checked = !settings['dayMode'];
   document.querySelector('#unique').checked = settings['unique'];
