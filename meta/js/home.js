@@ -762,7 +762,7 @@ async function loadSettings(originString) {
       order4quadOptions.classList.remove('hide');
     }
 
-    console.log(settings['style']);
+    // console.log(settings['style']);
     if(!document.querySelector(`#${settings['style']}`)) {
       // console.log('not undefined?',settings['style'],document.querySelector(`#${settings['style']}`).checked);
       // console.dir(document.querySelector(`#${settings['style']}`));
