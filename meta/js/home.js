@@ -486,7 +486,7 @@ reset.addEventListener('click', ()=> {
 const random = document.getElementById('random');
 random.addEventListener('click', async ()=> { 
   // console.log('RANDOM click triggered');
-  generateRandomMS();
+  handleRandom();
 });
 
 
@@ -499,10 +499,21 @@ slides.addEventListener('click', async ()=> {
 
 
 
-async function generateRandomMS() {
+async function handleRandom() {
   // console.log('generate Random magic square');
   populateOrderOptions();
   // const settings = getSettings();
+  const settings = await generateRandom();
+  saveSettings(settings);
+  loadSettings('fromRandom');
+  getData();
+  handleAnimationRadios();
+  triggerAnimationPause();
+  // console.log(counter++);
+}
+
+async function generateRandom() {
+  // console.log('generate Random magic square');
   const settings = {};
   const orders = await getOrders();
   const orderIndex = getRandomInt(0, (orders.length - 1));
@@ -522,12 +533,7 @@ async function generateRandomMS() {
   settings.speed = getRandomInt(0, 100);
   settings.overlap = [true,false][getRandomInt(0, 1)];
   settings.overlapAmount = 'overlap200';
-  saveSettings(settings);
-  loadSettings('fromRandom');
-  getData();
-  handleAnimationRadios();
-  triggerAnimationPause();
-  // console.log(counter++);
+  return settings;
 }
 
 
@@ -1213,10 +1219,14 @@ function handleSlideshow() {
 
   // urls.forEach(u => {window.location.replace(u)});
   const rand = urls[Math.floor(Math.random()*urls.length)];
+  console.log('rand',rand);
 
   window.location.replace(rand);
 
 }
+
+
+
 
 
 
