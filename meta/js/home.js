@@ -6,11 +6,13 @@ navigator.serviceWorker.register('sw.js');
 const CACHE = 'magic-v2.6.1';
 
 
+let counter = 0;
 const pause = document.getElementById('pause');
 const [...menuTriggers] = document.querySelectorAll('nav a');
 const [...displayStyles] = document.getElementsByName('style');
 const [...displayAmounts] = document.getElementsByName('amount');
 const displayOrder = document.getElementById('order');
+// const styleIDs = ['numbers','straight','quadvertex','quadline','arc','altarc','circles','blocks','tetromino'];
 // const loadingTriggers = (menuTriggers.concat(displayStyles,displayOrder,displayAmounts)).flat(Infinity);
 // const displayTriggers = (displayStyles.concat(displayOrder,displayAmounts)).flat(Infinity);
 // const unique = document.getElementById('unique');
@@ -58,7 +60,7 @@ if(params) { loadBookmark(params); }
 else {
   // clean load, possibly from memory
   populateOrderOptions();
-  loadSettings();
+  loadSettings('fromScratch');
   getData();
   handleAnimationRadios();
   triggerAnimationPause();
@@ -75,26 +77,34 @@ function loadBookmark(params) {
   const settings = {};
   const checkBool = ['dayMode', 'overlap'];
   const checkNum = ['falpha', 'gap', 'order', 'salpha', 'size', 'speed', 'strokeWidth'];
+  // console.log(keyValueStrings);
   keyValueStrings.forEach(x => {
     const pair = x.split('=');
     let value = pair[1].replace('%23','#');
+    settings[pair[0]] = value;
+    // console.log(pair[0],value);
     if(checkNum.includes(pair[0])) {
       value = parseInt(value);
     }
     if(checkBool.includes(pair[0])) {
       value = value === 'true';
     }
-    settings[pair[0]] = value;
     if(pair[0] == 'interface' && value == 'hidden') {
+      console.log('bookmarks interface case');
       toggleInterface();
     }
     if(pair[0] == 'gallery' && value == 'true') {
+      console.log('bookmarks gallery case');
       handleGalleryMode();
+    }
+    if(pair[0] == 'slideshow' && value == 'true') {
+      console.log('bookmarks slideshow case');
+      handleSlideshow();
     }
   });
   saveSettings(settings);
   populateOrderOptions();
-  loadSettings();
+  loadSettings('fromBookmarks');
   getData();
   handleAnimationRadios();
   triggerAnimationPause();
@@ -455,9 +465,9 @@ function triggerAnimationPause() {
 // RESET OPTION
 const reset = document.getElementById('reset');
 reset.addEventListener('click', ()=> { 
-  // console.log('RESET click triggered');
+  console.log('RESET click triggered');
   saveSettings(defaults);
-  loadSettings();
+  loadSettings('fromReset');
   getData();
   handleAnimationRadios();
   triggerAnimationPause();
@@ -469,15 +479,28 @@ reset.addEventListener('click', ()=> {
 });
 
 
+
 // RANDOM OPTION
 const random = document.getElementById('random');
 random.addEventListener('click', async ()=> { 
-  // console.log('RANDOM click triggered');
-  const settings = getSettings();
+  console.log('RANDOM click triggered');
+  generateRandomMS();
+});
+
+
+
+
+async function generateRandomMS() {
+  console.log('generate Random magic square');
+  populateOrderOptions();
+  // const settings = getSettings();
+  const settings = {};
   const orders = await getOrders();
   const orderIndex = getRandomInt(0, (orders.length - 1));
   const orderSelect = document.getElementById('order');
   settings.order = parseInt(orderSelect[orderIndex].value);
+  settings.amount = 'unique';
+  settings.style = ['numbers','straight','quadvertex','quadline','arc','altarc','circles','blocks','tetromino'][getRandomInt(0, 8)];
   settings.size = getRandomInt(10, 50);
   settings.gap = getRandomInt(0, 50);
   settings.background = getRandomColour();
@@ -489,12 +512,14 @@ random.addEventListener('click', async ()=> {
   settings.animation = ['sync','async','off'][getRandomInt(0, 2)];
   settings.speed = getRandomInt(0, 100);
   settings.overlap = [true,false][getRandomInt(0, 1)];
+  settings.overlapAmount = 'overlap200';
   saveSettings(settings);
-  loadSettings();
+  loadSettings('fromRandom');
   getData();
   handleAnimationRadios();
   triggerAnimationPause();
-});
+  console.log(counter++);
+}
 
 
 // SHARE OPTION
@@ -720,51 +745,83 @@ function adjust(thing) {
 
 
 
-async function loadSettings() {
-  // console.log('loadSettings');
+async function loadSettings(originString) {
+  console.log('loadSettings');
   const settings = getSettings();
-  const rOrders = await getOrders();
-  document.querySelector('#order').selectedIndex = rOrders.indexOf(parseInt(settings.order));
-  document.querySelector(`#${settings.amount}`).checked = true;
-  document.querySelector(`#${settings.style}`).checked = true;
-  document.getElementById('size').value = settings.size;
-  document.getElementById('gap').value = settings.gap;
-  document.getElementById('strokeWidth').value = settings.strokeWidth;
-  document.getElementById('overlap').checked = settings.overlap === true;
-  document.querySelector(`#${settings.overlapAmount}`).checked = true;
-  document.getElementById('background').value = settings.background;
-  document.getElementById('stroke').value = settings.stroke;
-  document.getElementById('salpha').value = settings.salpha;
-  document.getElementById('fill').value = settings.fill;
-  document.getElementById('falpha').value = settings.falpha;
-  document.querySelector(`#${settings.animation}`).checked = true;
-  document.getElementById('speed').value = settings.speed;
-  document.getElementById('day').checked = settings.dayMode;
-  document.getElementById('night').checked = !settings.dayMode;
-  if(settings._id) {
-    const displayTheme = document.getElementById('themes');
-    const themeIndex = displayTheme[displayTheme.selectedIndex].value;
-    displayTheme.selectedIndex = parseInt(settings._id);
-  }
-  applyStyles();
-  handleAnimationRadios();
-  triggerAnimationPause();
+  console.log(`Where am I from? ${originString}`,settings);
 
-  // add class to body for printing
-  document.body.removeAttribute("class");
-  const orderClass = 
-    settings.amount == "unique" 
-    && settings.order == 4 
-    && settings.style == 'quadvertex'
-    ? `order4U` 
-    : `order${settings.order}`;
+  const size = Object.keys(settings).length;
+  console.log('length of settings',size);
+  // we actually have a proper object to handle
+  if(size > 3) {
+    const rOrders = await getOrders();
+    document.querySelector('#order').selectedIndex = rOrders.indexOf(parseInt(settings['order']));
+    if(settings['order'] == 4) {
+      document.querySelector(`#${settings['amount']}`).checked = true;
+      // console.log(order4quadOptions);
+      order4quadOptions.classList.remove('hide');
+    }
 
-  document.body.classList.add(orderClass);
-  if(day.checked) {
-    document.body.classList.add("dayMode");
-  } else {
-    document.body.classList.remove("dayMode");
+    console.log(settings['style']);
+    if(!document.querySelector(`#${settings['style']}`)) {
+      console.log('not undefined?',settings['style'],document.querySelector(`#${settings['style']}`).checked);
+      // console.dir(document.querySelector(`#${settings['style']}`));
+      document.querySelector(`#${settings['style']}`).checked = true;
+    }
+
+    document.getElementById('size').value = settings['size'];
+    document.getElementById('gap').value = settings['gap'];
+    document.getElementById('strokeWidth').value = settings['strokeWidth'];
+
+    console.log(settings['overlap']);
+    console.log(typeof settings['overlap']);
+    document.getElementById('overlap').checked = settings['overlap'] === 'true';
+    if(settings['overlap'] === 'true') {
+      // console.log(settings['overlapAmount']);
+      document.querySelector(`#${settings['overlapAmount']}`).checked = true;
+      // overlapOptions.classList.remove('hide');
+    }
+
+    document.getElementById('background').value = settings['background'];
+    document.getElementById('stroke').value = settings['stroke'];
+    document.getElementById('salpha').value = settings['salpha'];
+    document.getElementById('fill').value = settings['fill'];
+    document.getElementById('falpha').value = settings['falpha'];
+
+    document.querySelector(`#${settings['animation']}`).checked = true;
+    
+    document.getElementById('speed').value = settings['speed'];
+
+    document.getElementById('day').checked = settings['dayMode'] === 'true';
+    document.getElementById('night').checked = !settings['dayMode'] === 'true';
+
+    if(settings['_id']) {
+      const displayTheme = document.getElementById('themes');
+      const themeIndex = displayTheme[displayTheme.selectedIndex].value;
+      displayTheme.selectedIndex = parseInt(settings['_id']);
+    }
+    applyStyles();
+    handleAnimationRadios();
+    triggerAnimationPause();
+
+    // add class to body for printing
+    document.body.removeAttribute("class");
+    const orderClass = 
+      settings['amount'] == "unique" 
+      && settings['order'] == 4 
+      && settings['style'] == 'quadvertex'
+      ? `order4U` 
+      : `order${settings['order']}`;
+
+    document.body.classList.add(orderClass);
+    if(day.checked) {
+      document.body.classList.add("dayMode");
+    } else {
+      document.body.classList.remove("dayMode");
+    }
   }
+
+
 }
 
 
@@ -893,7 +950,7 @@ function saveSettings(settingsJSON) {
   // console.log('saveSettings to localStorage');
   const settingsString = JSON.stringify(settingsJSON);
   localStorage.setItem("magicSettings", settingsString);
-  loadSettings();
+  loadSettings('fromSaveSettings');
   // applyStyles();
   // console.log("saving", settingsJSON);
   // updateCache(settingsJSON);
@@ -999,6 +1056,18 @@ function toggleInterface() {
   const elems = document.querySelectorAll("header, footer");
   elems.forEach(e => {
     e.classList.toggle('hide');
+  });
+}
+function hideInterface() {
+  const elems = document.querySelectorAll("header, footer");
+  elems.forEach(e => {
+    e.classList.remove('hide');
+  });
+}
+function showInterface() {
+  const elems = document.querySelectorAll("header, footer");
+  elems.forEach(e => {
+    e.classList.add('hide');
   });
 }
 
@@ -1109,4 +1178,17 @@ function handleGalleryMode() {
       sq.children[i].classList.add('hide');
     }
   }, 1000);
+}
+
+
+
+function handleSlideshow() {
+  console.log('slideshow');
+
+  // hideInterface();
+  generateRandomMS();
+
+// location
+// handleGalleryMode();
+
 }
