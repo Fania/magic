@@ -6,6 +6,7 @@ navigator.serviceWorker.register('sw.js');
 const CACHE = 'magic-v2.6.1';
 
 
+let iID;
 let counter = 0;
 const pause = document.getElementById('pause');
 const [...menuTriggers] = document.querySelectorAll('nav a');
@@ -98,8 +99,9 @@ function loadBookmark(params) {
       handleGalleryMode();
     }
     if(pair[0] == 'slideshow' && value == 'true') {
-      // console.log('bookmarks slideshow case');
-      handleSlideshow();
+      console.log('bookmarks slideshow case');
+      // handleSlideshow();
+      startSlideshow();
     }
   });
   saveSettings(settings);
@@ -487,6 +489,13 @@ random.addEventListener('click', async ()=> {
   generateRandomMS();
 });
 
+
+// SLIDES OPTION
+const slides = document.getElementById('slides');
+slides.addEventListener('click', async ()=> { 
+  // console.log('RANDOM click triggered');
+  startSlideshow();
+});
 
 
 
@@ -1045,10 +1054,16 @@ document.addEventListener("keydown", event => {
   if (event.key === "p") {
     togglePrintStyles();
   }
+  if (event.key === "Escape") {
+    pause.checked = !pause.checked;
+    triggerAnimationPause();
+    stopSlideshow();
+  }
   if (event.key === "o") {
     // console.log('o pressed');
     pause.checked = !pause.checked;
     triggerAnimationPause();
+    stopSlideshow();
   }
 });
 
@@ -1183,12 +1198,34 @@ function handleGalleryMode() {
 
 
 function handleSlideshow() {
-  // console.log('slideshow');
+  console.log('handelling slideshow');
 
-  // hideInterface();
   generateRandomMS();
 
-// location
-// handleGalleryMode();
+  const urls = [
+    `${window.location.origin}/?slideshow=true&gallery=true&interface=hidden`,
 
+    `${window.location.origin}/?order=10&amount=unique&style=arc&size=10&gap=15&overlap=true&overlapAmount=overlap200&background=%2337015b&stroke=%23ffef0a&strokeWidth=8&salpha=55&fill=%23ff9500&falpha=40&animation=sync&speed=100&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
+    `${window.location.origin}/?order=4&amount=unique&style=quadline&size=4&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23f8c8f9&strokeWidth=4&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
+    `${window.location.origin}/?order=5&amount=unique&style=straight&size=6&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23bcb8ff&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
+    `${window.location.origin}/?order=12&amount=unique&style=straight&size=11&gap=26&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23b8f9e9&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`
+  ];
+
+  // urls.forEach(u => {window.location.replace(u)});
+  const rand = urls[Math.floor(Math.random()*urls.length)];
+
+  window.location.replace(rand);
+
+}
+
+
+
+function startSlideshow() {
+  console.log('starting slideshow');
+  clearInterval(iID);
+  iID = setInterval(() => {handleSlideshow()}, 5000);
+}
+function stopSlideshow() {
+  console.log('cancelling slideshow');
+  clearInterval(iID);
 }
