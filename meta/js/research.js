@@ -41,9 +41,7 @@ const params = location.search;
 if(params) { loadBookmark(params); }
 else {
   // clean load, possibly from memory
-  async ()=>{
-    await getData();
-  }
+  async ()=>{ await getData() }
 }
 
 
@@ -69,11 +67,11 @@ async function populateLengthOptions() {
       option.value = itemLen;
       if(cnt==0){
         option.innerText = `(${itemCount}) ${itemLen}`;
-        console.log("inside 0");
+        // console.log("inside 0");
         // console.log(option.selected);
         option.selected = true;
       } else {
-        console.log("inside else");
+        // console.log("inside else");
         option.innerText = `(${itemCount}) ${itemLen}`;
       }
       cnt++;
@@ -222,7 +220,7 @@ lengthsdropdown.addEventListener("change", async event => {
 
 
 async function changeSelectedLength(selectedLength) {
-  // console.log(selectedLength);
+  console.log(selectedLength);
   const [...squaresSVGs] = document.querySelectorAll(`#squares figure`);
   squaresSVGs.forEach(sq => {
     // console.log(sq);
@@ -831,16 +829,13 @@ async function loadSettings() {
   console.log(settings);
 
   const chosen_index = JSON.parse(localStorage.getItem('researchSettings'))['lengths-index'];
-
-  console.log(document.querySelector('#lengths').selectedIndex); // -1
-  console.log(typeof settings['lengths-index']); // num
-  console.log(settings['lengths-index']); // 0
-  console.log(typeof parseInt(settings['lengths-index'])); // num
-  console.log(parseInt(settings['lengths-index'])); // 0
-  console.log(chosen_index); // 0
-  // document.querySelector('#lengths').selectedIndex = parseInt(settings['lengths-index']); 
   document.querySelector('#lengths').selectedIndex = chosen_index;
-  console.log(document.querySelector('#lengths').selectedIndex); // -1
+
+  const orderSelect = document.querySelector('#lengths');
+  const selectedLength = Number(orderSelect[orderSelect.selectedIndex].value);
+  // console.log(selectedLength);
+  await changeSelectedLength(selectedLength);
+
 
   document.querySelector(`#lengthRadio`).checked = settings['length-filter'];
   document.querySelector(`#classesRadio`).checked = settings['class-filter'];
@@ -953,10 +948,9 @@ function loadBookmark(params) {
     // }
   });
   saveSettings(settings);
-  populateLengthOptions();
-  loadSettings();
   getData();
-  // populateOrderOptions();
+  // populateLengthOptions();
+  // loadSettings();
   // handleAnimationRadios();
   // triggerAnimationPause();
 }
