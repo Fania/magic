@@ -775,7 +775,7 @@ async function loadSettings(originString) {
 
     console.log(settings['overlap']);
     console.log(typeof settings['overlap']);
-    document.getElementById('overlap').checked = settings['overlap'] === 'true';
+    document.getElementById('overlap').checked = settings['overlap'];
     if(settings['overlap'] === 'true') {
       // console.log(settings['overlapAmount']);
       document.querySelector(`#${settings['overlapAmount']}`).checked = true;
