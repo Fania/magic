@@ -72,7 +72,7 @@ else {
 
 
 function loadBookmark(params) {
-  console.log('loading from BOOKMARK');
+  // console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
   const settings = {};
   const checkBool = ['dayMode', 'overlap'];
@@ -90,15 +90,15 @@ function loadBookmark(params) {
       value = value === 'true';
     }
     if(pair[0] == 'interface' && value == 'hidden') {
-      console.log('bookmarks interface case');
+      // console.log('bookmarks interface case');
       toggleInterface();
     }
     if(pair[0] == 'gallery' && value == 'true') {
-      console.log('bookmarks gallery case');
+      // console.log('bookmarks gallery case');
       handleGalleryMode();
     }
     if(pair[0] == 'slideshow' && value == 'true') {
-      console.log('bookmarks slideshow case');
+      // console.log('bookmarks slideshow case');
       handleSlideshow();
     }
   });
@@ -371,7 +371,7 @@ function insertSpeedStyles() {
       rule.selectorText === ".animateEvenly#squares svg path");
     sheet.deleteRule(evenRuleIndex);
     // const text = `#squares.animateEvenly svg .lines { animation: dash ${speed.value}s ease-in-out alternate infinite }`;
-    console.log(speed.value);
+    // console.log(speed.value);
     const text = `#squares.animateEvenly svg path { animation: dash ${speed.value}s ease-in-out alternate infinite; }`;
     sheet.insertRule(text, sheet.cssRules.length);
     const textalt = `.animateEvenly#squares svg path { animation: dash ${speed.value}s ease-in-out alternate infinite; }`;
@@ -465,7 +465,7 @@ function triggerAnimationPause() {
 // RESET OPTION
 const reset = document.getElementById('reset');
 reset.addEventListener('click', ()=> { 
-  console.log('RESET click triggered');
+  // console.log('RESET click triggered');
   saveSettings(defaults);
   loadSettings('fromReset');
   getData();
@@ -483,7 +483,7 @@ reset.addEventListener('click', ()=> {
 // RANDOM OPTION
 const random = document.getElementById('random');
 random.addEventListener('click', async ()=> { 
-  console.log('RANDOM click triggered');
+  // console.log('RANDOM click triggered');
   generateRandomMS();
 });
 
@@ -491,7 +491,7 @@ random.addEventListener('click', async ()=> {
 
 
 async function generateRandomMS() {
-  console.log('generate Random magic square');
+  // console.log('generate Random magic square');
   populateOrderOptions();
   // const settings = getSettings();
   const settings = {};
@@ -518,7 +518,7 @@ async function generateRandomMS() {
   getData();
   handleAnimationRadios();
   triggerAnimationPause();
-  console.log(counter++);
+  // console.log(counter++);
 }
 
 
@@ -746,12 +746,12 @@ function adjust(thing) {
 
 
 async function loadSettings(originString) {
-  console.log('loadSettings');
+  // console.log('loadSettings');
   const settings = getSettings();
-  console.log(`Where am I from? ${originString}`,settings);
+  // console.log(`Where am I from? ${originString}`,settings);
 
   const size = Object.keys(settings).length;
-  console.log('length of settings',size);
+  // console.log('length of settings',size);
   // we actually have a proper object to handle
   if(size > 3) {
     const rOrders = await getOrders();
@@ -764,7 +764,7 @@ async function loadSettings(originString) {
 
     console.log(settings['style']);
     if(!document.querySelector(`#${settings['style']}`)) {
-      console.log('not undefined?',settings['style'],document.querySelector(`#${settings['style']}`).checked);
+      // console.log('not undefined?',settings['style'],document.querySelector(`#${settings['style']}`).checked);
       // console.dir(document.querySelector(`#${settings['style']}`));
       document.querySelector(`#${settings['style']}`).checked = true;
     }
@@ -773,8 +773,8 @@ async function loadSettings(originString) {
     document.getElementById('gap').value = settings['gap'];
     document.getElementById('strokeWidth').value = settings['strokeWidth'];
 
-    console.log(settings['overlap']);
-    console.log(typeof settings['overlap']);
+    // console.log(settings['overlap']);
+    // console.log(typeof settings['overlap']);
     document.getElementById('overlap').checked = settings['overlap'];
     if(settings['overlap'] === 'true') {
       // console.log(settings['overlapAmount']);
@@ -1046,7 +1046,7 @@ document.addEventListener("keydown", event => {
     togglePrintStyles();
   }
   if (event.key === "o") {
-    console.log('o pressed');
+    // console.log('o pressed');
     pause.checked = !pause.checked;
     triggerAnimationPause();
   }
@@ -1183,7 +1183,7 @@ function handleGalleryMode() {
 
 
 function handleSlideshow() {
-  console.log('slideshow');
+  // console.log('slideshow');
 
   // hideInterface();
   generateRandomMS();
