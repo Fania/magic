@@ -1203,10 +1203,8 @@ function handleGalleryMode() {
 
 
 
-function handleSlideshow() {
+async function handleSlideshow() {
   console.log('handelling slideshow');
-
-  generateRandomMS();
 
   const urls = [
     `${window.location.origin}/?slideshow=true&gallery=true&interface=hidden`,
@@ -1214,26 +1212,34 @@ function handleSlideshow() {
     `${window.location.origin}/?order=10&amount=unique&style=arc&size=10&gap=15&overlap=true&overlapAmount=overlap200&background=%2337015b&stroke=%23ffef0a&strokeWidth=8&salpha=55&fill=%23ff9500&falpha=40&animation=sync&speed=100&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=4&amount=unique&style=quadline&size=4&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23f8c8f9&strokeWidth=4&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=5&amount=unique&style=straight&size=6&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23bcb8ff&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
-    `${window.location.origin}/?order=12&amount=unique&style=straight&size=11&gap=26&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23b8f9e9&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`
+    `${window.location.origin}/?order=12&amount=unique&style=straight&size=11&gap=26&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23b8f9e9&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
+    `${window.location.origin}/?order=4&amount=unique&style=straight&size=11&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23FFFFFF&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`
+
   ];
 
-  // urls.forEach(u => {window.location.replace(u)});
+  const random = await generateRandom();
+  const randStr = JSON.stringify(random);
+  const randStr1 = randStr.replaceAll(/\{/g, '/?');
+  const randStr2 = randStr1.replaceAll(/"/g, '');
+  const randStr3 = randStr2.replaceAll(/:/g, '=');
+  const randStr4 = randStr3.replaceAll(/,/g, '&');
+  const randStr5 = randStr4.replaceAll(/#/g, '%23');
+  const randFinal = randStr5.replaceAll(/\}/g, '&slideshow=true&gallery=true&interface=hidden');
+  urls.push(randFinal);
+
+  // console.log('randFinal',randFinal);
+
   const rand = urls[Math.floor(Math.random()*urls.length)];
-  console.log('rand',rand);
 
   window.location.replace(rand);
 
 }
 
 
-
-
-
-
 function startSlideshow() {
   console.log('starting slideshow');
   clearInterval(iID);
-  iID = setInterval(() => {handleSlideshow()}, 5000);
+  iID = setInterval(() => {handleSlideshow()}, 10000);
 }
 function stopSlideshow() {
   console.log('cancelling slideshow');
