@@ -1,6 +1,6 @@
 'use strict';
 
-const cacheName = 'magic-v2.6.1';
+const cacheName = 'magic-v2.6.2';
 
 
 const precacheResources = [
@@ -151,9 +151,12 @@ async function updateCacheFromNetwork(req) {
   const resource = fullurl.pathname;
   let thing = await cache.match(resource);
   // only adds new resources in, not updates out-of-date ones?
-  if (thing === undefined) {
-    thing = await fetch(req.clone());
-    await cache.put(req, thing);
+  // this line avoids things like "chrome-extension://xyz"
+  if((fullurl.startsWith('http')) || (fullurl.startsWith('https'))){
+    if (thing === undefined) {
+      thing = await fetch(req.clone());
+      await cache.put(req, thing);
+    }
   }
 
 }
