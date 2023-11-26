@@ -3,10 +3,11 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.6.3';
+const CACHE = 'magic-v2.6.4';
 
 
 let iID;
+stopSlideshow();
 let counter = 0;
 const pause = document.getElementById('pause');
 const [...menuTriggers] = document.querySelectorAll('nav a');
@@ -778,11 +779,11 @@ async function loadSettings(originString) {
     }
 
     // console.log(settings['style']);
-    if(!document.querySelector(`#${settings['style']}`)) {
+    // if(!document.querySelector(`#${settings['style']}`)) {
       // console.log('not undefined?',settings['style'],document.querySelector(`#${settings['style']}`).checked);
       // console.dir(document.querySelector(`#${settings['style']}`));
-      document.querySelector(`#${settings['style']}`).checked = true;
-    }
+    document.querySelector(`#${settings['style']}`).checked = true;
+    // }
 
     document.getElementById('size').value = settings['size'];
     document.getElementById('gap').value = settings['gap'];
@@ -1181,10 +1182,11 @@ function handleGalleryMode() {
       s.style.display = 'none';
     })
 
-    // console.dir(sq);
+    console.dir(sq);
     const cntWidth = sq.clientWidth;
     const winHeigh = window.innerHeight;
     const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
+    console.log(svgWidth);
 
     // const x = Math.floor(window.innerHeight / sq.children[0].clientWidth);
     // const y = Math.floor(window.innerWidth / sq.children[0].clientWidth);
@@ -1198,7 +1200,7 @@ function handleGalleryMode() {
       // console.log('test');
       sq.children[i].classList.add('hide');
     }
-  }, 1000);
+  }, 100);
 }
 
 
