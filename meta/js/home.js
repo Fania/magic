@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.6.4';
+const CACHE = 'magic-v2.6.5';
 
 
 let iID;
@@ -73,7 +73,7 @@ else {
 
 
 
-function loadBookmark(params) {
+async function loadBookmark(params) {
   // console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
   const settings = {};
@@ -1170,7 +1170,7 @@ day.addEventListener("click", () => {
 });
 
 
-function handleGalleryMode() {
+async function handleGalleryMode() {
   // console.log('hello Gallery');
   setTimeout(()=> { 
     const sq = document.getElementById('squares');
@@ -1207,18 +1207,14 @@ function handleGalleryMode() {
 
 async function handleSlideshow() {
   console.log('handelling slideshow');
-
   const urls = [
     `${window.location.origin}/?slideshow=true&gallery=true&interface=hidden`,
-
     `${window.location.origin}/?order=10&amount=unique&style=arc&size=10&gap=15&overlap=true&overlapAmount=overlap200&background=%2337015b&stroke=%23ffef0a&strokeWidth=8&salpha=55&fill=%23ff9500&falpha=40&animation=sync&speed=100&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=4&amount=unique&style=quadline&size=4&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23f8c8f9&strokeWidth=4&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=5&amount=unique&style=straight&size=6&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23bcb8ff&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=12&amount=unique&style=straight&size=11&gap=26&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23b8f9e9&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=4&amount=unique&style=straight&size=11&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23FFFFFF&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`
-
   ];
-
   const random = await generateRandom();
   const randStr = JSON.stringify(random);
   const randStr1 = randStr.replaceAll(/\{/g, '/?');
@@ -1228,17 +1224,37 @@ async function handleSlideshow() {
   const randStr5 = randStr4.replaceAll(/#/g, '%23');
   const randFinal = randStr5.replaceAll(/\}/g, '&slideshow=true&gallery=true&interface=hidden');
   urls.push(randFinal);
-
   // console.log('randFinal',randFinal);
-
   const rand = urls[Math.floor(Math.random()*urls.length)];
-
-  window.location.replace(rand);
+  const printout1 = rand.replaceAll('/(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g','');
+  const printout = printout1.replaceAll('/[&|?]/g','\n');
+  // console.log('rand',rand);
+  // console.log(printout1);
+  console.log('printout',printout);
+  // window.location.replace(rand);
+  const meta = document.createElement('meta');
+  meta.id = "slideshowURL";
+  meta.httpEquiv = "refresh";
+  meta.content = `10;url=${rand}`;
+  const headSec = document.getElementsByTagName('head')[0];
+  for (let i=0; i<headSec.children.length; i++) {
+    const slideURL = document.getElementById('slideshowURL');
+    if(slideURL) {
+      console.log('overriding existing meta tag');
+      slideURL.remove();
+      headSec.appendChild(meta);
+      break;
+    } else {
+      console.log('creating new meta tag');
+      headSec.appendChild(meta);
+      break;
+    }
+  }
 
 }
 
 
-function startSlideshow() {
+async function startSlideshow() {
   console.log('starting slideshow');
   clearInterval(iID);
   iID = setInterval(() => {handleSlideshow()}, 10000);
