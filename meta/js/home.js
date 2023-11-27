@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.6.6';
+const CACHE = 'magic-v2.6.7';
 
 
 let iID;
@@ -79,8 +79,8 @@ else {
 async function loadBookmark(params) {
   // console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
-  console.log(keyValueStrings);
-  console.log(keyValueStrings.length);
+  // console.log(keyValueStrings);
+  // console.log(keyValueStrings.length);
   const settings = {};
   const checkBool = ['dayMode', 'overlap', 'gallery', 'slideshow'];
   const checkNum = ['falpha', 'gap', 'order', 'salpha', 'size', 'speed', 'strokeWidth'];
@@ -89,7 +89,8 @@ async function loadBookmark(params) {
     keyValueStrings.forEach(x => {
       const pair = x.split('=');
       let value = pair[1].replace('%23','#');
-      // console.log(pair[0],value);
+      console.log('pair',pair);
+      console.log(pair[0],value);
       if(checkNum.includes(pair[0])) {
         value = parseInt(value);
       }
@@ -102,7 +103,7 @@ async function loadBookmark(params) {
       //   toggleInterface();
       // }
       if(pair[0] == 'gallery') {
-        // console.log('bookmarks gallery case');
+        console.log('bookmarks gallery case');
         // handleGalleryMode();
         adjust('gallery');
       }
