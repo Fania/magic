@@ -3,11 +3,11 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.6.5';
+const CACHE = 'magic-v2.6.6';
 
 
 let iID;
-stopSlideshow();
+if(iID){stopSlideshow()}
 let counter = 0;
 const pause = document.getElementById('pause');
 const [...menuTriggers] = document.querySelectorAll('nav a');
@@ -49,7 +49,10 @@ const defaults = {
   "falpha":        0,
   "animation":     "off",
   "speed":         50,
-  "dayMode":       false
+  "dayMode":       false,
+  "interface":     "shown",
+  "gallery":       false,
+  "slideshow":     false
 };
 
 
@@ -76,35 +79,42 @@ else {
 async function loadBookmark(params) {
   // console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
+  console.log(keyValueStrings);
+  console.log(keyValueStrings.length);
   const settings = {};
-  const checkBool = ['dayMode', 'overlap'];
+  const checkBool = ['dayMode', 'overlap', 'gallery', 'slideshow'];
   const checkNum = ['falpha', 'gap', 'order', 'salpha', 'size', 'speed', 'strokeWidth'];
   // console.log(keyValueStrings);
-  keyValueStrings.forEach(x => {
-    const pair = x.split('=');
-    let value = pair[1].replace('%23','#');
-    settings[pair[0]] = value;
-    // console.log(pair[0],value);
-    if(checkNum.includes(pair[0])) {
-      value = parseInt(value);
-    }
-    if(checkBool.includes(pair[0])) {
-      value = value === 'true';
-    }
-    if(pair[0] == 'interface' && value == 'hidden') {
-      // console.log('bookmarks interface case');
-      toggleInterface();
-    }
-    if(pair[0] == 'gallery' && value == 'true') {
-      // console.log('bookmarks gallery case');
-      handleGalleryMode();
-    }
-    if(pair[0] == 'slideshow' && value == 'true') {
-      console.log('bookmarks slideshow case');
-      // handleSlideshow();
-      startSlideshow();
-    }
-  });
+  if(keyValueStrings.length >= 16) {
+    keyValueStrings.forEach(x => {
+      const pair = x.split('=');
+      let value = pair[1].replace('%23','#');
+      // console.log(pair[0],value);
+      if(checkNum.includes(pair[0])) {
+        value = parseInt(value);
+      }
+      if(checkBool.includes(pair[0])) {
+        value = value === 'true';
+      }
+
+      // if(pair[0] == 'interface' && value == 'hidden') {
+      //   // console.log('bookmarks interface case');
+      //   toggleInterface();
+      // }
+      if(pair[0] == 'gallery') {
+        // console.log('bookmarks gallery case');
+        // handleGalleryMode();
+        adjust('gallery');
+      }
+      // if(pair[0] == 'slideshow' && value == 'true') {
+      //   console.log('bookmarks slideshow case');
+      //   // handleSlideshow();
+      //   startSlideshow();
+      // }
+
+      settings[pair[0]] = value;
+    });
+  }
   saveSettings(settings);
   populateOrderOptions();
   loadSettings('fromBookmarks');
@@ -534,6 +544,9 @@ async function generateRandom() {
   settings.speed = getRandomInt(0, 100);
   settings.overlap = [true,false][getRandomInt(0, 1)];
   settings.overlapAmount = 'overlap200';
+  settings.gallery = false;
+  settings.interface = 'shown';
+  settings.slideshow = false;
   return settings;
 }
 
@@ -743,6 +756,13 @@ function adjust(thing) {
     case 'animation':
       x = document.querySelector('[name="animation"]:checked').value;
       break;
+    case 'gallery':
+      const myurl = location.search;
+      const paramsSplit = (myurl.slice(1)).split('&');
+      const param = paramsSplit.find(ps => ps.startsWith('gallery'));
+      param.substring(8) === 'true' ? x = true : x = false;
+      console.log('adjust gallery: x:',x);
+      break;
     default:
       const y = document.getElementById(thing).value;
       x = Number.isNaN(parseInt(y)) ? y : parseInt(y);
@@ -808,8 +828,21 @@ async function loadSettings(originString) {
     
     document.getElementById('speed').value = settings['speed'];
 
-    document.getElementById('day').checked = settings['dayMode'] === 'true';
-    document.getElementById('night').checked = !settings['dayMode'] === 'true';
+    document.getElementById('day').checked = settings['dayMode'];
+    document.getElementById('night').checked = !settings['dayMode'];
+
+    if(settings['gallery']){
+      handleGalleryMode();
+    }
+    if(settings['interface'] === 'hidden'){
+      hideInterface();
+    }
+    if(settings['interface'] === 'shown'){
+      showInterface();
+    }
+    if(settings['slideshow']){
+      startSlideshow();
+    }
 
     if(settings['_id']) {
       const displayTheme = document.getElementById('themes');
@@ -1083,13 +1116,14 @@ function toggleInterface() {
 function hideInterface() {
   const elems = document.querySelectorAll("header, footer");
   elems.forEach(e => {
-    e.classList.remove('hide');
+    e.classList.add('hide');
   });
+
 }
 function showInterface() {
   const elems = document.querySelectorAll("header, footer");
   elems.forEach(e => {
-    e.classList.add('hide');
+    e.classList.remove('hide');
   });
 }
 
