@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.6.10';
+const CACHE = 'magic-v2.6.11';
 
 
 let iID;
@@ -1287,8 +1287,8 @@ async function handleSlideshow() {
     `${window.location.origin}/?order=12&amount=unique&style=straight&size=11&gap=26&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23b8f9e9&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=4&amount=unique&style=straight&size=11&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23FFFFFF&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`
   ];
-  const random = await generateRandom();
-  const randStr = JSON.stringify(random);
+  const randomUrl = await generateRandom();
+  const randStr = JSON.stringify(randomUrl);
   const randStr1 = randStr.replaceAll(/\{/g, '/?');
   const randStr2 = randStr1.replaceAll(/"/g, '');
   const randStr3 = randStr2.replaceAll(/:/g, '=');

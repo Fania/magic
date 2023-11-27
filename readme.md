@@ -30,9 +30,13 @@ or pipe it into text file with `npm run webhint > hint-report.txt`
 ### Bugs ?
 
 - [ ] slideshow issues:
-    - [ ] changing toggleInterface ?
-    - [ ] changing handleGalleryMode ?
-    - [ ] changing startSlideshow ?
+    - [ ] some groups hangover to next group?
+    - [ ] overlaps causing issues?
+    - [ ] still widths causing issues?
+    - [ ] timing wrong?
+    - [x] changing toggleInterface ?
+    - [x] changing handleGalleryMode ?
+    - [x] changing startSlideshow ?
 - [ ] tablet screens don't fit side settings menu? 
 - [ ] make Edge respect speed range adjustments without turning anim off/on
 - [ ] check printing on all browsers
