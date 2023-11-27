@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.6.8';
+const CACHE = 'magic-v2.6.9';
 
 
 let iID;
@@ -79,6 +79,7 @@ else {
 async function loadBookmark(params) {
   // console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
+  console.log('keyValueStrings',keyValueStrings);
   console.log('keyValueStrings.length',keyValueStrings.length);
   console.log('keyValueStrings.keys',keyValueStrings.keys());
   const settings = getSettings();
@@ -96,20 +97,13 @@ async function loadBookmark(params) {
     if(checkBool.includes(pair[0])) {
       value = value === 'true';
     }
-    if(pair[0] == 'interface') {
-      console.log('bookmarks interface case');
-      adjust('interface');
-    }
-    if(pair[0] == 'gallery') {
-      console.log('bookmarks gallery case');
-      adjust('gallery');
-    }
-    if(pair[0] == 'slideshow') {
-      console.log('bookmarks slideshow case');
-      adjust('slideshow');
-    }
     settings[pair[0]] = value;
   });
+  // Deal with these 3 either way - if the url param exists or not, the
+  // adjust function will handle it and deal with the localStorage!
+  adjust('interface');
+  adjust('gallery');
+  adjust('slideshow');
   saveSettings(settings);
   populateOrderOptions();
   loadSettings('fromBookmarks');
@@ -756,18 +750,27 @@ function adjust(thing) {
       break;
     case 'gallery':
       param = paramsSplit.find(ps => ps.startsWith('gallery'));
-      param.substring(8) === 'true' ? x = true : x = false;
-      console.log('adjust gallery: x:',x);
+      if(typeof param !== 'undefined'){
+        param.substring(8) === 'true' ? x = true : x = false;
+      } else {
+        x = false; // default, i.e. no url params
+      }
       break;
     case 'interface':
       param = paramsSplit.find(ps => ps.startsWith('interface'));
-      param.substring(8) === 'shown' ? x = 'shown' : x = 'hidden';
-      console.log('adjust interface: x:',x);
+      if(typeof param !== 'undefined'){
+        param.substring(8) === 'shown' ? x = 'shown' : x = 'hidden';
+      } else {
+        x = 'shown'; // default, i.e. no url params
+      }
       break;
     case 'slideshow':
       param = paramsSplit.find(ps => ps.startsWith('slideshow'));
-      param.substring(8) === 'true' ? x = true : x = false;
-      console.log('adjust slideshow: x:',x);
+      if(typeof param !== 'undefined'){
+        param.substring(8) === 'true' ? x = true : x = false;
+      } else {
+        x = false; // default, i.e. no url params
+      }
       break;
     default:
       const y = document.getElementById(thing).value;
@@ -777,7 +780,7 @@ function adjust(thing) {
   // console.log(`adjusting ${x}`);
   settings[thing] = x;
   saveSettings(settings);
-  if(['order','style','amount'].includes(thing)) {
+  if(['order','style','amount','gallery','slideshow'].includes(thing)) {
     getData();
     handleAnimationRadios();
     triggerAnimationPause();
@@ -839,7 +842,10 @@ async function loadSettings(originString) {
 
     if(settings['gallery']){
       handleGalleryMode();
-    }
+    } 
+    if(!settings['gallery']){
+      unhideGallerySVGs();
+    } 
     if(settings['interface'] === 'hidden'){
       hideInterface();
     }
@@ -848,6 +854,9 @@ async function loadSettings(originString) {
     }
     if(settings['slideshow']){
       startSlideshow();
+    }
+    if(!settings['slideshow']){
+      stopSlideshow();
     }
 
     if(settings['_id']) {
@@ -1221,13 +1230,11 @@ async function handleGalleryMode() {
       // console.log('sentinel');
       s.style.display = 'none';
     })
-
     console.dir(sq);
     const cntWidth = sq.clientWidth;
     const winHeigh = window.innerHeight;
     const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
     console.log(svgWidth);
-
     // const x = Math.floor(window.innerHeight / sq.children[0].clientWidth);
     // const y = Math.floor(window.innerWidth / sq.children[0].clientWidth);
     const x = Math.floor(cntWidth / svgWidth);
@@ -1235,13 +1242,31 @@ async function handleGalleryMode() {
     const z = Math.ceil(x*y);
     // console.log(x,y,z);
     // console.log(sq.children[z]);
-
     for(let i=z; i < sq.children.length; i++){
       // console.log('test');
       sq.children[i].classList.add('hide');
     }
   }, 100);
 }
+
+async function unhideGallerySVGs() {
+  // console.log('hello Gallery');
+  setTimeout(()=> { 
+    const sq = document.getElementById('squares');
+    // enable intersection observer
+    const sentinels = document.querySelectorAll("[class*='sentinel']");
+    sentinels.forEach(s => {
+      s.style.display = 'block';
+    })
+    console.dir(sq);
+    const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
+    console.log(svgWidth);
+    for(let i=0; i < sq.children.length; i++){
+      sq.children[i].classList.remove('hide');
+    }
+  }, 100);
+}
+
 
 
 
@@ -1301,5 +1326,9 @@ async function startSlideshow() {
 }
 function stopSlideshow() {
   console.log('cancelling slideshow');
+  const slideURL = document.getElementById('slideshowURL');
+  if(slideURL) {
+    slideURL.remove();
+  }
   clearInterval(iID);
 }
