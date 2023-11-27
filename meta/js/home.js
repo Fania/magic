@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.6.7';
+const CACHE = 'magic-v2.6.8';
 
 
 let iID;
@@ -79,43 +79,37 @@ else {
 async function loadBookmark(params) {
   // console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
-  // console.log(keyValueStrings);
-  // console.log(keyValueStrings.length);
-  const settings = {};
+  console.log('keyValueStrings.length',keyValueStrings.length);
+  console.log('keyValueStrings.keys',keyValueStrings.keys());
+  const settings = getSettings();
+  const newSettings = {};
   const checkBool = ['dayMode', 'overlap', 'gallery', 'slideshow'];
   const checkNum = ['falpha', 'gap', 'order', 'salpha', 'size', 'speed', 'strokeWidth'];
-  // console.log(keyValueStrings);
-  if(keyValueStrings.length >= 16) {
-    keyValueStrings.forEach(x => {
-      const pair = x.split('=');
-      let value = pair[1].replace('%23','#');
-      console.log('pair',pair);
-      console.log(pair[0],value);
-      if(checkNum.includes(pair[0])) {
-        value = parseInt(value);
-      }
-      if(checkBool.includes(pair[0])) {
-        value = value === 'true';
-      }
-
-      // if(pair[0] == 'interface' && value == 'hidden') {
-      //   // console.log('bookmarks interface case');
-      //   toggleInterface();
-      // }
-      if(pair[0] == 'gallery') {
-        console.log('bookmarks gallery case');
-        // handleGalleryMode();
-        adjust('gallery');
-      }
-      // if(pair[0] == 'slideshow' && value == 'true') {
-      //   console.log('bookmarks slideshow case');
-      //   // handleSlideshow();
-      //   startSlideshow();
-      // }
-
-      settings[pair[0]] = value;
-    });
-  }
+  keyValueStrings.forEach(x => {
+    const pair = x.split('=');
+    let value = pair[1].replace('%23','#');
+    console.log('pair',pair);
+    console.log(pair[0],value);
+    if(checkNum.includes(pair[0])) {
+      value = parseInt(value);
+    }
+    if(checkBool.includes(pair[0])) {
+      value = value === 'true';
+    }
+    if(pair[0] == 'interface') {
+      console.log('bookmarks interface case');
+      adjust('interface');
+    }
+    if(pair[0] == 'gallery') {
+      console.log('bookmarks gallery case');
+      adjust('gallery');
+    }
+    if(pair[0] == 'slideshow') {
+      console.log('bookmarks slideshow case');
+      adjust('slideshow');
+    }
+    settings[pair[0]] = value;
+  });
   saveSettings(settings);
   populateOrderOptions();
   loadSettings('fromBookmarks');
@@ -727,6 +721,9 @@ function adjust(thing) {
   // loading.classList.add('show');
   document.body.style.cursor = 'wait !important';
   let x = "";
+  const myurl = location.search;
+  const paramsSplit = (myurl.slice(1)).split('&');
+  let param;
   switch(thing) {
     case 'order':
       const orderSelect = document.querySelector('#order');
@@ -758,11 +755,19 @@ function adjust(thing) {
       x = document.querySelector('[name="animation"]:checked').value;
       break;
     case 'gallery':
-      const myurl = location.search;
-      const paramsSplit = (myurl.slice(1)).split('&');
-      const param = paramsSplit.find(ps => ps.startsWith('gallery'));
+      param = paramsSplit.find(ps => ps.startsWith('gallery'));
       param.substring(8) === 'true' ? x = true : x = false;
       console.log('adjust gallery: x:',x);
+      break;
+    case 'interface':
+      param = paramsSplit.find(ps => ps.startsWith('interface'));
+      param.substring(8) === 'shown' ? x = 'shown' : x = 'hidden';
+      console.log('adjust interface: x:',x);
+      break;
+    case 'slideshow':
+      param = paramsSplit.find(ps => ps.startsWith('slideshow'));
+      param.substring(8) === 'true' ? x = true : x = false;
+      console.log('adjust slideshow: x:',x);
       break;
     default:
       const y = document.getElementById(thing).value;
