@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.6.9';
+const CACHE = 'magic-v2.6.10';
 
 
 let iID;
@@ -468,6 +468,10 @@ function triggerAnimationPause() {
 const reset = document.getElementById('reset');
 reset.addEventListener('click', ()=> { 
   // console.log('RESET click triggered');
+  resetEverything();
+});
+
+function resetEverything() {
   saveSettings(defaults);
   loadSettings('fromReset');
   getData();
@@ -478,7 +482,7 @@ reset.addEventListener('click', ()=> {
   squares.classList.remove('animateOddly');
   squares.classList.remove('animateEvenly');
   location = location.origin;
-});
+}
 
 
 
@@ -486,7 +490,7 @@ reset.addEventListener('click', ()=> {
 const random = document.getElementById('random');
 random.addEventListener('click', async ()=> { 
   // console.log('RANDOM click triggered');
-  handleRandom();
+  await handleRandom();
 });
 
 
@@ -494,7 +498,7 @@ random.addEventListener('click', async ()=> {
 const slides = document.getElementById('slides');
 slides.addEventListener('click', async ()=> { 
   // console.log('RANDOM click triggered');
-  startSlideshow();
+  await startSlideshow();
 });
 
 
@@ -1109,6 +1113,9 @@ document.addEventListener("keydown", event => {
   if (event.key === "p") {
     togglePrintStyles();
   }
+  if (event.key === "r") {
+    resetEverything();
+  }
   if (event.key === "Escape") {
     pause.checked = !pause.checked;
     triggerAnimationPause();
@@ -1223,18 +1230,16 @@ async function handleGalleryMode() {
   // console.log('hello Gallery');
   setTimeout(()=> { 
     const sq = document.getElementById('squares');
-
     // disable intersection observer
     const sentinels = document.querySelectorAll("[class*='sentinel']");
     sentinels.forEach(s => {
       // console.log('sentinel');
       s.style.display = 'none';
     })
-    console.dir(sq);
+    // console.dir(sq);
     const cntWidth = sq.clientWidth;
     const winHeigh = window.innerHeight;
     const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
-    console.log(svgWidth);
     // const x = Math.floor(window.innerHeight / sq.children[0].clientWidth);
     // const y = Math.floor(window.innerWidth / sq.children[0].clientWidth);
     const x = Math.floor(cntWidth / svgWidth);
@@ -1243,10 +1248,9 @@ async function handleGalleryMode() {
     // console.log(x,y,z);
     // console.log(sq.children[z]);
     for(let i=z; i < sq.children.length; i++){
-      // console.log('test');
       sq.children[i].classList.add('hide');
     }
-  }, 100);
+  }, 1000);
 }
 
 async function unhideGallerySVGs() {
@@ -1260,11 +1264,14 @@ async function unhideGallerySVGs() {
     })
     console.dir(sq);
     const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
-    console.log(svgWidth);
+    // console.log(sq.children[0]);
+    // console.log(sq.children[0].getBoundingClientRect());
+    // console.log(sq.children[0].getBoundingClientRect().width);
+    console.log('svgWidth',svgWidth);
     for(let i=0; i < sq.children.length; i++){
       sq.children[i].classList.remove('hide');
     }
-  }, 100);
+  }, 1000);
 }
 
 
@@ -1289,14 +1296,13 @@ async function handleSlideshow() {
   const randStr5 = randStr4.replaceAll(/#/g, '%23');
   const randFinal = randStr5.replaceAll(/\}/g, '&slideshow=true&gallery=true&interface=hidden');
   urls.push(randFinal);
-  // console.log('randFinal',randFinal);
   const rand = urls[Math.floor(Math.random()*urls.length)];
-  const printout1 = rand.replaceAll('/(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g','');
-  const printout = printout1.replaceAll('/[&|?]/g','\n');
-  // console.log('rand',rand);
-  // console.log(printout1);
+  const regex = /(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g;
+  const regex2 = /[&|?]/g;
+  const printout1 = rand.replaceAll(regex,'');
+  const printout = printout1.replaceAll(regex2,'\n');
   console.log('printout',printout);
-  // window.location.replace(rand);
+
   const meta = document.createElement('meta');
   meta.id = "slideshowURL";
   meta.httpEquiv = "refresh";
