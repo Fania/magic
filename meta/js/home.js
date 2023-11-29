@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.7.1';
+const CACHE = 'magic-v2.7.2';
 
 
 let iID;
@@ -88,6 +88,7 @@ async function loadBookmark(params) {
   // const newSettings = {};
   const checkBool = ['dayMode', 'overlap', 'gallery', 'slideshow'];
   const checkNum = ['falpha', 'gap', 'order', 'salpha', 'size', 'speed', 'strokeWidth'];
+  const checkStr = ['amount', 'animation', 'background', 'fill', 'interface', 'overlapAmount', 'stroke', 'style'];
   keyValueStrings.forEach(x => {
     const pair = x.split('=');
     let value = pair[1].replace('%23','#');
@@ -95,9 +96,15 @@ async function loadBookmark(params) {
     // console.log(pair[0],value);
     if(checkNum.includes(pair[0])) {
       value = parseInt(value);
+      // console.log('number check');
     }
     if(checkBool.includes(pair[0])) {
       value = value === 'true';
+      // console.log('bool check');
+    }
+    if(checkStr.includes(pair[0])) {
+      value = pair[1].replace('%23','#');
+      // console.log('string check');
     }
     settings[pair[0]] = value;
   });
@@ -756,6 +763,7 @@ function adjust(thing) {
       break;
     case 'gallery':
       param = paramsSplit.find(ps => ps.startsWith('gallery'));
+      // console.log(`adjusting gallery ${param} - ${param.substring(8)}`);
       if(typeof param !== 'undefined'){
         param.substring(8) === 'true' ? x = true : x = false;
       } else {
@@ -764,16 +772,18 @@ function adjust(thing) {
       break;
     case 'interface':
       param = paramsSplit.find(ps => ps.startsWith('interface'));
+      // console.log(`adjusting interface ${param} - ${param.substring(10)}`);
       if(typeof param !== 'undefined'){
-        param.substring(8) === 'shown' ? x = 'shown' : x = 'hidden';
+        param.substring(10) === 'shown' ? x = 'shown' : x = 'hidden';
       } else {
         x = 'shown'; // default, i.e. no url params
       }
       break;
     case 'slideshow':
       param = paramsSplit.find(ps => ps.startsWith('slideshow'));
+      // console.log(`adjusting slideshow ${param} - ${param.substring(10)}`);
       if(typeof param !== 'undefined'){
-        param.substring(8) === 'true' ? x = true : x = false;
+        param.substring(10) === 'true' ? x = true : x = false;
       } else {
         x = false; // default, i.e. no url params
       }
@@ -1264,8 +1274,8 @@ async function unhideGallerySVGs() {
     sentinels.forEach(s => {
       s.style.display = 'block';
     })
-    console.dir(sq);
-    const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
+    // console.dir(sq);
+    // const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
     // console.log(sq.children[0]);
     // console.log(sq.children[0].getBoundingClientRect());
     // console.log(sq.children[0].getBoundingClientRect().width);
@@ -1288,36 +1298,39 @@ async function handleSlideshow() {
     `${window.location.origin}/?order=12&amount=unique&style=straight&size=11&gap=26&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23b8f9e9&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=4&amount=unique&style=straight&size=11&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23FFFFFF&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`
   ];
-  const randomUrl = await generateRandom();
-  const randStr = JSON.stringify(randomUrl);
-  const randStr1 = randStr.replaceAll(/\{/g, '/?');
+  const randomJSON = await generateRandom();
+  const randomStr = JSON.stringify(randomJSON);
+  const randStr1 = randomStr.replaceAll(/\{/g, '/?');
   const randStr2 = randStr1.replaceAll(/"/g, '');
   const randStr3 = randStr2.replaceAll(/:/g, '=');
   const randStr4 = randStr3.replaceAll(/,/g, '&');
   const randStr5 = randStr4.replaceAll(/#/g, '%23');
   const randFinal = randStr5.replaceAll(/\}/g, '&slideshow=true&gallery=true&interface=hidden');
-  urls.push(randFinal);
-  const rand = urls[Math.floor(Math.random()*urls.length)];
+  // urls.push(randFinal);
+  // const rand = urls[Math.floor(Math.random()*urls.length)];
   const regex = /(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g;
   const regex2 = /[&|?]/g;
-  const printout1 = rand.replaceAll(regex,'');
+  // const printout1 = rand.replaceAll(regex,'');
+  const printout1 = randFinal.replaceAll(regex,'');
   const printout = printout1.replaceAll(regex2,'\n');
   console.log('printout',printout);
   // console.log('placeholder before',placeholder);
-  placeholder.setAttribute("title", `Slideshow: Order-${randomUrl.order} ${randomUrl.style}`);
-  placeholder.setAttribute("width", `${window.innerWidth}px`);
-  placeholder.setAttribute("height", `${window.innerHeight}px`);
-  placeholder.setAttribute("src", `${rand}`);
-  // console.log('placeholder after',placeholder);
   mainContent.classList.add('hide');
   hideInterface();
+  placeholder.setAttribute("title", `Slideshow: Order-${randomJSON.order} ${randomJSON.style}`);
+  placeholder.setAttribute("width", `${window.innerWidth}px`);
+  placeholder.setAttribute("height", `${window.innerHeight}px`);
+  // placeholder.setAttribute("src", `${rand}`);
+  placeholder.setAttribute("src", `${randFinal}`);
+  // console.log('placeholder after',placeholder);
 }
 
 
 async function startSlideshow(whoranme) {
   console.log(`starting slideshow by ${whoranme}`);
   clearInterval(iID);
-  iID = setInterval(() => {handleSlideshow()}, 10000);
+  // handleSlideshow();
+  iID = setInterval(() => {handleSlideshow()}, 20000);
 }
 function stopSlideshow(whoranme) {
   console.log(`cancelling slideshow by ${whoranme}`);

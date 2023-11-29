@@ -30,10 +30,11 @@ or pipe it into text file with `npm run webhint > hint-report.txt`
 ### Bugs ?
 
 - [ ] slideshow issues:
+    - [ ] doesn't stop when asked/reset?
     - [ ] some groups hangover to next group?
     - [ ] overlaps causing issues?
     - [ ] still widths causing issues?
-    - [ ] timing wrong?
+    - [x] timing wrong?
     - [x] changing toggleInterface ?
     - [x] changing handleGalleryMode ?
     - [x] changing startSlideshow ?

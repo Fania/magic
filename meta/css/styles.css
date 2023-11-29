@@ -29,7 +29,9 @@ header svg {
   stroke: var(--textColour);
 }
 
-
+iframe#placeholder {
+  overflow: hidden;
+}
 
 
 .printSettings { display: none; }
