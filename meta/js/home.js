@@ -3,13 +3,15 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.6.11';
+const CACHE = 'magic-v2.6.12';
 
 
 let iID;
-if(iID){stopSlideshow()}
+if(iID){stopSlideshow('firstpageload-stopping-existing-slideshows')}
 let counter = 0;
 const pause = document.getElementById('pause');
+const placeholder = document.getElementById('slideshowPlaceholder');
+const mainContent = document.getElementsByTagName('main')[0];
 const [...menuTriggers] = document.querySelectorAll('nav a');
 const [...displayStyles] = document.getElementsByName('style');
 const [...displayAmounts] = document.getElementsByName('amount');
@@ -79,18 +81,18 @@ else {
 async function loadBookmark(params) {
   // console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
-  console.log('keyValueStrings',keyValueStrings);
-  console.log('keyValueStrings.length',keyValueStrings.length);
-  console.log('keyValueStrings.keys',keyValueStrings.keys());
+  // console.log('keyValueStrings',keyValueStrings);
+  // console.log('keyValueStrings.length',keyValueStrings.length);
+  // console.log('keyValueStrings.keys',keyValueStrings.keys());
   const settings = getSettings();
-  const newSettings = {};
+  // const newSettings = {};
   const checkBool = ['dayMode', 'overlap', 'gallery', 'slideshow'];
   const checkNum = ['falpha', 'gap', 'order', 'salpha', 'size', 'speed', 'strokeWidth'];
   keyValueStrings.forEach(x => {
     const pair = x.split('=');
     let value = pair[1].replace('%23','#');
-    console.log('pair',pair);
-    console.log(pair[0],value);
+    // console.log('pair',pair);
+    // console.log(pair[0],value);
     if(checkNum.includes(pair[0])) {
       value = parseInt(value);
     }
@@ -114,20 +116,20 @@ async function loadBookmark(params) {
 }
 
 
-displayOrder.addEventListener('wheel', () => {
+displayOrder.addEventListener('wheel', (ev) => {
   // console.log('ORDER wheel triggered');
   const orderSelects = document.querySelector('#order');
   const totalOptions = orderSelects.length;
   const maxIndex = totalOptions;
   let fromIndex = orderSelects.selectedIndex;
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN (e.g. 4 to 5)
+  if (Math.sign(EventSource.wheelDeltaY) === -1) { // DOWN (e.g. 4 to 5)
     // console.log(`down from (i): ${fromIndex}, (v): ${orderSelects[fromIndex].value}`);
     if (fromIndex === maxIndex) fromIndex = 0;
     let toIndex = (fromIndex + 1) % totalOptions;
     orderSelects.selectedIndex = toIndex;
     // console.log(`down to (i): ${orderSelects.selectedIndex}, (v): ${orderSelects[orderSelects.selectedIndex].value}`);
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP (e.g. 5 to 4)
+  if (Math.sign(ev.wheelDeltaY) === 1) { // UP (e.g. 5 to 4)
     // console.log(`up from (i): ${fromIndex}, (v): ${orderSelects[fromIndex].value}`);
     if (fromIndex === 0) fromIndex = maxIndex;
     let toIndex = (fromIndex - 1) % totalOptions;
@@ -135,7 +137,7 @@ displayOrder.addEventListener('wheel', () => {
     // console.log(`up to (i): ${orderSelects.selectedIndex}, (v): ${orderSelects[orderSelects.selectedIndex].value}`);
   }
   adjust('order');
-  event.preventDefault();
+  ev.preventDefault();
 }, { passive: false });
 displayOrder.addEventListener('change', () => {
   // console.log('ORDER change triggered');
@@ -161,19 +163,19 @@ size.addEventListener('input', ()=> {
   // console.log('SIZE input triggered');
   adjust('size');
 });
-size.addEventListener('wheel', ()=> { 
+size.addEventListener('wheel', (ev)=> { 
   // console.log('SIZE wheel triggered');
   const old = parseInt(size.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(ev.wheelDeltaY) === -1) { // DOWN
     if(old > 1) { size.value = old - 1; } 
     else        { size.value = 1; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(ev.wheelDeltaY) === 1) { // UP
     if(old < 69) { size.value = old + 1; } 
     else         { size.value = 70; }
   }
   adjust('size');
-  event.preventDefault();
+  ev.preventDefault();
 }, { passive: false });
 
 const gap = document.getElementById('gap');
@@ -181,19 +183,19 @@ gap.addEventListener('input', ()=> {
   // console.log('GAP input triggered');
   adjust('gap');
 });
-gap.addEventListener('wheel', ()=> { 
+gap.addEventListener('wheel', (ev)=> { 
   // console.log('GAP wheel triggered');
   const old = parseInt(gap.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(ev.wheelDeltaY) === -1) { // DOWN
     if(old >= 5) { gap.value = old - 5; } 
     else         { gap.value = 0; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(ev.wheelDeltaY) === 1) { // UP
     if(old <= 95) { gap.value = old + 5; } 
     else          { gap.value = 100; }
   }
   adjust('gap');
-  event.preventDefault();
+  ev.preventDefault();
 }, { passive: false });
 
 const strokeWidth = document.getElementById('strokeWidth');
@@ -201,19 +203,19 @@ strokeWidth.addEventListener('input', ()=> {
   // console.log('LINE-WIDTH input triggered');
   adjust('strokeWidth');
 });
-strokeWidth.addEventListener('wheel', ()=> { 
+strokeWidth.addEventListener('wheel', (ev)=> { 
   // console.log('LINE-WIDTH wheel triggered');
   const old = parseInt(strokeWidth.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(ev.wheelDeltaY) === -1) { // DOWN
     if(old > 2) { strokeWidth.value = old - 2; } 
     else        { strokeWidth.value = 1; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(ev.wheelDeltaY) === 1) { // UP
     if(old <= 28) { strokeWidth.value = old + 2; } 
     else          { strokeWidth.value = 30; }
   }
   adjust('strokeWidth');
-  event.preventDefault();
+  ev.preventDefault();
 }, { passive: false });
 
 const overlap = document.getElementById('overlap');
@@ -255,19 +257,19 @@ salpha.addEventListener('input', ()=> {
   // console.log('STROKE-ALPHA input triggered');
   adjust('salpha');
 });
-salpha.addEventListener('wheel', ()=> { 
+salpha.addEventListener('wheel', (ev)=> { 
   // console.log('STROKE-ALPHA wheel triggered');
   const old = parseInt(salpha.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(ev.wheelDeltaY) === -1) { // DOWN
     if(old >= 5) { salpha.value = old - 5; } 
     else        { salpha.value = 0; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(ev.wheelDeltaY) === 1) { // UP
     if(old <= 250) { salpha.value = old + 5; } 
     else          { salpha.value = 255; }
   }
   adjust('salpha');
-  event.preventDefault();
+  ev.preventDefault();
 }, { passive: false });
 
 // FILL OPTION
@@ -283,19 +285,19 @@ falpha.addEventListener('input', ()=> {
   // console.log('FILL-ALPHA input triggered');
   adjust('falpha');
 });
-falpha.addEventListener('wheel', ()=> { 
+falpha.addEventListener('wheel', (ev)=> { 
   // console.log('FILL-ALPHA wheel triggered');
   const old = parseInt(falpha.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(ev.wheelDeltaY) === -1) { // DOWN
     if(old >= 5) { falpha.value = old - 5; } 
     else        { falpha.value = 0; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(ev.wheelDeltaY) === 1) { // UP
     if(old <= 250) { falpha.value = old + 5; } 
     else          { falpha.value = 255; }
   }
   adjust('falpha');
-  event.preventDefault();
+  ev.preventDefault();
 }, { passive: false });
 
 
@@ -345,20 +347,20 @@ speed.addEventListener('input', ()=> {
   insertSpeedStyles();
   adjust('speed');
 });
-speed.addEventListener('wheel', ()=> { 
+speed.addEventListener('wheel', (ev)=> { 
   // console.log('SPEED wheel triggered');
   const old = parseInt(speed.value);
-  if (Math.sign(event.wheelDeltaY) === -1) { // DOWN
+  if (Math.sign(ev.wheelDeltaY) === -1) { // DOWN
     if(old > 6) { speed.value = old - 5; } 
     else        { speed.value = 1; }
   }
-  if (Math.sign(event.wheelDeltaY) === 1) { // UP
+  if (Math.sign(ev.wheelDeltaY) === 1) { // UP
     if(old <= 95) { speed.value = old + 5; } 
     else          { speed.value = 100; }
   }
   insertSpeedStyles();
   adjust('speed');
-  event.preventDefault();
+  ev.preventDefault();
 }, { passive: false });
 
 
@@ -498,7 +500,7 @@ random.addEventListener('click', async ()=> {
 const slides = document.getElementById('slides');
 slides.addEventListener('click', async ()=> { 
   // console.log('RANDOM click triggered');
-  await startSlideshow();
+  await startSlideshow('starting-slideshow-button');
 });
 
 
@@ -526,7 +528,7 @@ async function generateRandom() {
   settings.amount = 'unique';
   settings.style = ['numbers','straight','quadvertex','quadline','arc','altarc','circles','blocks','tetromino'][getRandomInt(0, 8)];
   settings.size = getRandomInt(10, 50);
-  settings.gap = getRandomInt(0, 50);
+  settings.gap = [0,10,20,30,40,50][getRandomInt(0, 5)];
   settings.background = getRandomColour();
   settings.stroke = getRandomColour();
   settings.strokeWidth = getRandomInt(1, 30);
@@ -857,10 +859,10 @@ async function loadSettings(originString) {
       showInterface();
     }
     if(settings['slideshow']){
-      startSlideshow();
+      startSlideshow('loadsettings-slideshow-true');
     }
     if(!settings['slideshow']){
-      stopSlideshow();
+      stopSlideshow('loadsettings-slideshow-false');
     }
 
     if(settings['_id']) {
@@ -1119,13 +1121,13 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape") {
     pause.checked = !pause.checked;
     triggerAnimationPause();
-    stopSlideshow();
+    stopSlideshow('escape-key');
   }
   if (event.key === "o") {
     // console.log('o pressed');
     pause.checked = !pause.checked;
     triggerAnimationPause();
-    stopSlideshow();
+    stopSlideshow('o-key');
   }
 });
 
@@ -1267,7 +1269,7 @@ async function unhideGallerySVGs() {
     // console.log(sq.children[0]);
     // console.log(sq.children[0].getBoundingClientRect());
     // console.log(sq.children[0].getBoundingClientRect().width);
-    console.log('svgWidth',svgWidth);
+    // console.log('svgWidth',svgWidth);
     for(let i=0; i < sq.children.length; i++){
       sq.children[i].classList.remove('hide');
     }
@@ -1280,7 +1282,6 @@ async function unhideGallerySVGs() {
 async function handleSlideshow() {
   console.log('handelling slideshow');
   const urls = [
-    `${window.location.origin}/?slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=10&amount=unique&style=arc&size=10&gap=15&overlap=true&overlapAmount=overlap200&background=%2337015b&stroke=%23ffef0a&strokeWidth=8&salpha=55&fill=%23ff9500&falpha=40&animation=sync&speed=100&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=4&amount=unique&style=quadline&size=4&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23f8c8f9&strokeWidth=4&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
     `${window.location.origin}/?order=5&amount=unique&style=straight&size=6&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23bcb8ff&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
@@ -1302,39 +1303,25 @@ async function handleSlideshow() {
   const printout1 = rand.replaceAll(regex,'');
   const printout = printout1.replaceAll(regex2,'\n');
   console.log('printout',printout);
-
-  const meta = document.createElement('meta');
-  meta.id = "slideshowURL";
-  meta.httpEquiv = "refresh";
-  meta.content = `10;url=${rand}`;
-  const headSec = document.getElementsByTagName('head')[0];
-  for (let i=0; i<headSec.children.length; i++) {
-    const slideURL = document.getElementById('slideshowURL');
-    if(slideURL) {
-      console.log('overriding existing meta tag');
-      slideURL.remove();
-      headSec.appendChild(meta);
-      break;
-    } else {
-      console.log('creating new meta tag');
-      headSec.appendChild(meta);
-      break;
-    }
-  }
-
+  // console.log('placeholder before',placeholder);
+  placeholder.setAttribute("title", `Slideshow: Order-${randomUrl.order} ${randomUrl.style}`);
+  placeholder.setAttribute("width", `${window.innerWidth}px`);
+  placeholder.setAttribute("height", `${window.innerHeight}px`);
+  placeholder.setAttribute("src", `${rand}`);
+  // console.log('placeholder after',placeholder);
+  mainContent.classList.add('hide');
+  hideInterface();
 }
 
 
-async function startSlideshow() {
-  console.log('starting slideshow');
+async function startSlideshow(whoranme) {
+  console.log(`starting slideshow by ${whoranme}`);
   clearInterval(iID);
   iID = setInterval(() => {handleSlideshow()}, 10000);
 }
-function stopSlideshow() {
-  console.log('cancelling slideshow');
-  const slideURL = document.getElementById('slideshowURL');
-  if(slideURL) {
-    slideURL.remove();
-  }
+function stopSlideshow(whoranme) {
+  console.log(`cancelling slideshow by ${whoranme}`);
+  mainContent.classList.remove('hide');
+  showInterface();
   clearInterval(iID);
 }
