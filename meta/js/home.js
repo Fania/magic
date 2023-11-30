@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.7.2';
+const CACHE = 'magic-v2.7.3';
 
 
 let iID;
@@ -1300,12 +1300,19 @@ async function handleSlideshow() {
   ];
   const randomJSON = await generateRandom();
   const randomStr = JSON.stringify(randomJSON);
+  // the random generator generates for general viewing, not for slideshow,
+  // so needs the 3 params (slideshow, gallery, interface) amending
   const randStr1 = randomStr.replaceAll(/\{/g, '/?');
   const randStr2 = randStr1.replaceAll(/"/g, '');
   const randStr3 = randStr2.replaceAll(/:/g, '=');
   const randStr4 = randStr3.replaceAll(/,/g, '&');
   const randStr5 = randStr4.replaceAll(/#/g, '%23');
-  const randFinal = randStr5.replaceAll(/\}/g, '&slideshow=true&gallery=true&interface=hidden');
+  const randStr6 = randStr5.replaceAll(/&gallery=false/g, '&gallery=true');
+  const randStr7 = randStr6.replaceAll(/&interface=shown/g, '&interface=hidden');
+  const randFinal = randStr7.replaceAll(/&slideshow=false/g, '&slideshow=true');
+  // console.log('randFinal',randFinal);
+
+
   // urls.push(randFinal);
   // const rand = urls[Math.floor(Math.random()*urls.length)];
   const regex = /(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g;
