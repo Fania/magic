@@ -495,6 +495,11 @@ async function resetEverything() {
   squares.classList.remove('animateOddly');
   squares.classList.remove('animateEvenly');
   location = location.origin;
+  // placeholder.remove();
+  placeholder.setAttribute("src", `''`);
+  placeholder.setAttribute("width", `0px`);
+  placeholder.setAttribute("height", `0px`);
+  placeholder.setAttribute("class", `hide`);
 }
 
 

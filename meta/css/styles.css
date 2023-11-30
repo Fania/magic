@@ -20,7 +20,7 @@ body {
 }
 a { color: var(--textColour) }
 header { margin: 0; padding: 0 1em; }
-header.hide, footer.hide, main.hide { display: none; }
+header.hide, footer.hide, main.hide, #placeholder.hide { display: none; }
 .hide ~ main.home,
 .hide ~ main.research { margin-left: 2em; }
 
