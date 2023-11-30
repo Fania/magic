@@ -14,7 +14,6 @@ if(typeof iID !== 'undefined'){
 }
 let counter = 0;
 const pause = document.getElementById('pause');
-const placeholder = document.getElementById('slideshowPlaceholder');
 const mainContent = document.getElementsByTagName('main')[0];
 const [...menuTriggers] = document.querySelectorAll('nav a');
 const [...displayStyles] = document.getElementsByName('style');
@@ -85,30 +84,21 @@ else {
 async function loadBookmark(params) {
   // console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
-  // console.log('keyValueStrings',keyValueStrings);
-  // console.log('keyValueStrings.length',keyValueStrings.length);
-  // console.log('keyValueStrings.keys',keyValueStrings.keys());
   const settings = getSettings();
-  // const newSettings = {};
   const checkBool = ['dayMode', 'overlap', 'gallery', 'slideshow'];
   const checkNum = ['falpha', 'gap', 'order', 'salpha', 'size', 'speed', 'strokeWidth'];
   const checkStr = ['amount', 'animation', 'background', 'fill', 'interface', 'overlapAmount', 'stroke', 'style'];
   keyValueStrings.forEach(x => {
     const pair = x.split('=');
     let value = pair[1].replace('%23','#');
-    // console.log('pair',pair);
-    // console.log(pair[0],value);
     if(checkNum.includes(pair[0])) {
       value = parseInt(value);
-      // console.log('number check');
     }
     if(checkBool.includes(pair[0])) {
       value = value === 'true';
-      // console.log('bool check');
     }
     if(checkStr.includes(pair[0])) {
       value = pair[1].replace('%23','#');
-      // console.log('string check');
     }
     settings[pair[0]] = value;
   });
@@ -495,11 +485,7 @@ async function resetEverything() {
   squares.classList.remove('animateOddly');
   squares.classList.remove('animateEvenly');
   location = location.origin;
-  // placeholder.remove();
-  placeholder.setAttribute("src", `''`);
-  placeholder.setAttribute("width", `0px`);
-  placeholder.setAttribute("height", `0px`);
-  placeholder.setAttribute("class", `hide`);
+
 }
 
 
@@ -866,7 +852,7 @@ async function loadSettings(originString) {
     document.getElementById('night').checked = !settings['dayMode'];
 
     if(settings['gallery']){
-      handleGalleryMode();
+      await handleGalleryMode();
     } 
     if(!settings['gallery']){
       unhideGallerySVGs();
@@ -1274,7 +1260,7 @@ async function handleGalleryMode() {
     const x = Math.floor(cntWidth / svgWidth);
     const y = Math.floor(winHeigh / svgWidth);
     const z = Math.ceil(x*y);
-    // console.log(x,y,z);
+    console.log('x,y,z',x,y,z);
     // console.log(sq.children[z]);
     for(let i=z; i < sq.children.length; i++){
       sq.children[i].classList.add('hide');
@@ -1326,7 +1312,8 @@ async function handleSlideshow() {
   const randStr5 = randStr4.replaceAll(/#/g, '%23');
   const randStr6 = randStr5.replaceAll(/&gallery=false/g, '&gallery=true');
   const randStr7 = randStr6.replaceAll(/&interface=shown/g, '&interface=hidden');
-  const randFinal = randStr7.replaceAll(/&slideshow=false/g, '&slideshow=true');
+  const randStr8 = randStr7.replaceAll(/&slideshow=false/g, '&slideshow=true');
+  const randFinal = randStr8.replaceAll(/\}/g, '');
   // console.log('randFinal',randFinal);
 
 
@@ -1338,28 +1325,25 @@ async function handleSlideshow() {
   const printout1 = randFinal.replaceAll(regex,'');
   const printout = printout1.replaceAll(regex2,'\n');
   console.log('printout',printout);
-  // console.log('placeholder before',placeholder);
 
   mainContent.classList.add('hide');
   hideInterface();
-  placeholder.setAttribute("title", `Slideshow: Order-${randomJSON.order} ${randomJSON.style}`);
-  placeholder.setAttribute("width", `${window.innerWidth}px`);
-  placeholder.setAttribute("height", `${window.innerHeight}px`);
-  // placeholder.setAttribute("src", `${rand}`);
-  placeholder.setAttribute("src", `${randFinal}`);
-  // console.log('placeholder after',placeholder);
+
+  window.location.replace(randFinal);
+
 }
 
 
 async function startSlideshow(whoranme) {
   console.log(`starting slideshow by ${whoranme}`);
   clearInterval(iID);
-  // handleSlideshow();
+  mainContent.classList.add('slideshow');
   iID = setInterval(() => {handleSlideshow()}, 20000);
 }
 function stopSlideshow(whoranme) {
   console.log(`cancelling slideshow by ${whoranme}`);
   mainContent.classList.remove('hide');
+  mainContent.classList.remove('slideshow');
   showInterface();
   clearInterval(iID);
 }
