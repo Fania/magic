@@ -1253,14 +1253,19 @@ async function handleGalleryMode() {
     })
     // console.dir(sq);
     const cntWidth = sq.clientWidth;
+    // console.log('cntWidth',cntWidth);
+    const cntoffWidth = sq.offsetWidth;
+    // console.log('cntoffWidth',cntoffWidth);
     const winHeigh = window.innerHeight;
+    // console.log('winHeigh',winHeigh);
     const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
+    console.log('svgWidth',svgWidth);
     // const x = Math.floor(window.innerHeight / sq.children[0].clientWidth);
     // const y = Math.floor(window.innerWidth / sq.children[0].clientWidth);
     const x = Math.floor(cntWidth / svgWidth);
     const y = Math.floor(winHeigh / svgWidth);
-    const z = Math.ceil(x*y);
-    console.log('x,y,z',x,y,z);
+    const z = Math.ceil(x * y);
+    // console.log('x,y,z',x,y,z);
     // console.log(sq.children[z]);
     for(let i=z; i < sq.children.length; i++){
       sq.children[i].classList.add('hide');
@@ -1328,9 +1333,7 @@ async function handleSlideshow() {
 
   mainContent.classList.add('hide');
   hideInterface();
-
   window.location.replace(randFinal);
-
 }
 
 

@@ -32,7 +32,7 @@ or pipe it into text file with `npm run webhint > hint-report.txt`
 - [ ] slideshow issues:
     - [ ] some groups hangover to next group?
     - [ ] overlaps causing issues?
-    - [ ] still widths causing issues?
+    - [ ] still widths causing issues? = need to give css #squares a width!
     - [x] doesn't stop when asked/reset?
     - [x] timing wrong?
     - [x] changing toggleInterface ?

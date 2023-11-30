@@ -28,7 +28,19 @@ header.hide, footer.hide, main.hide { display: none; }
 header svg {
   stroke: var(--textColour);
 }
+main.slideshow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 98vh; */
+}
 
+#squares {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100vw - 200px - 4em);
+}
 
 
 .printSettings { display: none; }
