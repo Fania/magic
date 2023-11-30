@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.7.3';
+const CACHE = 'magic-v2.7.4';
 
 
 let iID;
@@ -114,9 +114,9 @@ async function loadBookmark(params) {
   adjust('gallery');
   adjust('slideshow');
   saveSettings(settings);
-  populateOrderOptions();
-  loadSettings('fromBookmarks');
-  getData();
+  await populateOrderOptions();
+  await loadSettings('fromBookmarks');
+  await getData();
   handleAnimationRadios();
   triggerAnimationPause();
   // populateLengthOptions();
@@ -480,10 +480,10 @@ reset.addEventListener('click', ()=> {
   resetEverything();
 });
 
-function resetEverything() {
+async function resetEverything() {
   saveSettings(defaults);
-  loadSettings('fromReset');
-  getData();
+  await loadSettings('fromReset');
+  await getData();
   handleAnimationRadios();
   triggerAnimationPause();
   //TODO find better solution for this
@@ -514,12 +514,12 @@ slides.addEventListener('click', async ()=> {
 
 async function handleRandom() {
   // console.log('generate Random magic square');
-  populateOrderOptions();
+  await populateOrderOptions();
   // const settings = getSettings();
   const settings = await generateRandom();
   saveSettings(settings);
-  loadSettings('fromRandom');
-  getData();
+  await loadSettings('fromRandom');
+  await getData();
   handleAnimationRadios();
   triggerAnimationPause();
   // console.log(counter++);
@@ -722,7 +722,7 @@ async function populateOrderOptions() {
 
 // UTILITY
 
-function adjust(thing) {
+async function adjust(thing) {
   // console.log(`adjust ${thing}`);
   const settings = getSettings();
   // loading.classList.add('show');
@@ -797,7 +797,7 @@ function adjust(thing) {
   settings[thing] = x;
   saveSettings(settings);
   if(['order','style','amount','gallery','slideshow'].includes(thing)) {
-    getData();
+    await getData();
     handleAnimationRadios();
     triggerAnimationPause();
     // populateLengthOptions();
@@ -863,9 +863,11 @@ async function loadSettings(originString) {
       unhideGallerySVGs();
     } 
     if(settings['interface'] === 'hidden'){
+      console.log('hideInterface from within loadSettings');
       hideInterface();
     }
     if(settings['interface'] === 'shown'){
+      console.log('showInterface from within loadSettings');
       showInterface();
     }
     if(settings['slideshow']){
@@ -1322,6 +1324,7 @@ async function handleSlideshow() {
   const printout = printout1.replaceAll(regex2,'\n');
   console.log('printout',printout);
   // console.log('placeholder before',placeholder);
+
   mainContent.classList.add('hide');
   hideInterface();
   placeholder.setAttribute("title", `Slideshow: Order-${randomJSON.order} ${randomJSON.style}`);
