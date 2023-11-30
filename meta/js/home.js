@@ -7,7 +7,11 @@ const CACHE = 'magic-v2.7.4';
 
 
 let iID;
-if(iID){stopSlideshow('firstpageload-stopping-existing-slideshows')}
+if(typeof iID !== 'undefined'){
+  stopSlideshow('firstpageload-stopping-existing-slideshows')
+} else {
+  console.log('iID',iID);
+}
 let counter = 0;
 const pause = document.getElementById('pause');
 const placeholder = document.getElementById('slideshowPlaceholder');
@@ -874,7 +878,9 @@ async function loadSettings(originString) {
       startSlideshow('loadsettings-slideshow-true');
     }
     if(!settings['slideshow']){
-      stopSlideshow('loadsettings-slideshow-false');
+      if(typeof iID !== 'undefined'){
+        stopSlideshow('loadsettings-slideshow-false');
+      }
     }
 
     if(settings['_id']) {
@@ -1133,13 +1139,17 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape") {
     pause.checked = !pause.checked;
     triggerAnimationPause();
-    stopSlideshow('escape-key');
+    if(typeof iID !== 'undefined'){
+      stopSlideshow('escape-key');
+    }
   }
   if (event.key === "o") {
     // console.log('o pressed');
     pause.checked = !pause.checked;
     triggerAnimationPause();
-    stopSlideshow('o-key');
+    if(typeof iID !== 'undefined'){
+      stopSlideshow('o-key');
+    }
   }
 });
 
