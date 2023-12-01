@@ -32,7 +32,7 @@ main.slideshow {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-height: 98vh; */
+  height: calc(100vh - 81.375px);
   cursor: none;
 }
 body.slideshow {

@@ -803,16 +803,16 @@ async function adjust(thing) {
     case 'slideshow':
       param = paramsSplit.find(ps => ps.startsWith('slideshow'));
       // console.log(`adjusting slideshow ${param} - ${param.substring(10)}`);
-      console.log("param",param);
-      console.log("typeof param",typeof param);
-      console.log("typeof param",typeof param !== 'undefined');
+      // console.log("param",param);
+      // console.log("typeof param",typeof param);
+      // console.log("typeof param",typeof param !== 'undefined');
       if(typeof param !== 'undefined'){
         if(param.substring(10) === 'random') { x = 'random'; }
         if(param.substring(10) === 'curated') { x = 'curated'; }
       } else {
         x = 'false'; // default, i.e. no url params
       }
-      console.log('slideshow',x);
+      // console.log('slideshow',x);
       break;
     default:
       const y = document.getElementById(thing).value;
@@ -893,11 +893,11 @@ async function loadSettings(originString) {
       unhideGallerySVGs();
     } 
     if(settings['interface'] === 'hidden'){
-      console.log('hideInterface from within loadSettings');
+      // console.log('hideInterface from within loadSettings');
       hideInterface();
     }
     if(settings['interface'] === 'shown'){
-      console.log('showInterface from within loadSettings');
+      // console.log('showInterface from within loadSettings');
       showInterface();
     }
     if(settings['slideshow'] === 'random'){
@@ -1364,8 +1364,8 @@ async function unhideGallerySVGs() {
 
 
 async function handleCuratedSlideshow() {
-  console.log('handling curated slideshow');
-  console.log('handleCuratedSlideshow sID',sID);
+  // console.log('handling curated slideshow');
+  // console.log('handleCuratedSlideshow sID',sID);
   const rand = urls[Math.floor(Math.random()*urls.length)];
   const regex = /(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g;
   const regex2 = /[&|?]/g;
@@ -1379,8 +1379,8 @@ async function handleCuratedSlideshow() {
 }
 
 async function handleRandomSlideshow() {
-  console.log('handling random slideshow');
-  console.log('handleRandomSlideshow rID',rID);
+  // console.log('handling random slideshow');
+  // console.log('handleRandomSlideshow rID',rID);
   const randomJSON = await generateRandom();
   const randomStr = JSON.stringify(randomJSON);
   // the random generator generates for general viewing, not for slideshow,
@@ -1408,28 +1408,28 @@ async function handleRandomSlideshow() {
 
 
 async function startRandomSlideshow(whoranme) {
-  console.log(`starting random slideshow by ${whoranme}`);
+  // console.log(`starting random slideshow by ${whoranme}`);
   clearInterval(rID);
   mainContent.classList.add('slideshow');
   bodyContent.classList.add('slideshow');
   rID = setInterval(() => {handleRandomSlideshow()}, 20000);
 }
 async function startCuratedSlideshow(whoranme) {
-  console.log(`starting curated slideshow by ${whoranme}`);
+  // console.log(`starting curated slideshow by ${whoranme}`);
   clearInterval(sID);
   mainContent.classList.add('slideshow');
   bodyContent.classList.add('slideshow');
   sID = setInterval(() => {handleCuratedSlideshow()}, 20000);
 }
 function stopRandomSlideshow(whoranme) {
-  console.log(`cancelling random slideshow by ${whoranme}`);
+  // console.log(`cancelling random slideshow by ${whoranme}`);
   mainContent.classList.remove('hide');
   bodyContent.classList.remove('slideshow');
   showInterface();
   clearInterval(rID);
 }
 function stopCuratedSlideshow(whoranme) {
-  console.log(`cancelling curated slideshow by ${whoranme}`);
+  // console.log(`cancelling curated slideshow by ${whoranme}`);
   mainContent.classList.remove('hide');
   bodyContent.classList.remove('slideshow');
   showInterface();
