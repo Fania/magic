@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.7.5';
+const CACHE = 'magic-v2.7.6';
 
 
 let iID;
@@ -538,7 +538,7 @@ async function generateRandom() {
   settings.fill = getRandomColour();
   settings.falpha = getRandomInt(0, 255);
   settings.animation = ['sync','async','off'][getRandomInt(0, 2)];
-  settings.speed = getRandomInt(0, 100);
+  settings.speed = getRandomInt(1, 100);
   settings.overlap = [true,false][getRandomInt(0, 1)];
   settings.overlapAmount = 'overlap200';
   settings.gallery = false;
@@ -1263,7 +1263,7 @@ async function handleGalleryMode() {
     const cntWidth = sq.clientWidth;
     const winHeigh = window.innerHeight;
     const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
-    console.log('svgWidth',svgWidth);
+    // console.log('svgWidth',svgWidth);
     // const x = Math.floor(window.innerHeight / sq.children[0].clientWidth);
     // const y = Math.floor(window.innerWidth / sq.children[0].clientWidth);
     const x = Math.floor(cntWidth / svgWidth);
@@ -1272,7 +1272,7 @@ async function handleGalleryMode() {
     const classes = [...sq.classList];
     if(!classes.includes('overlap')) {
       for(let i=z; i < sq.children.length; i++){
-        console.log(`handleGalleryMode: hiding:`,sq.children[i]);
+        // console.log(`handleGalleryMode: hiding:`,sq.children[i]);
         // console.log(`handleGalleryMode: hiding ${sq.children[i]}`);
         sq.children[i].classList.add('hide');
       }
@@ -1329,8 +1329,8 @@ async function handleSlideshow() {
   // console.log('randFinal',randFinal);
 
 
-  // urls.push(randFinal);
-  // const rand = urls[Math.floor(Math.random()*urls.length)];
+  urls.push(randFinal);
+  const rand = urls[Math.floor(Math.random()*urls.length)];
   const regex = /(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g;
   const regex2 = /[&|?]/g;
   // const printout1 = rand.replaceAll(regex,'');
@@ -1340,7 +1340,8 @@ async function handleSlideshow() {
 
   mainContent.classList.add('hide');
   hideInterface();
-  window.location.replace(randFinal);
+  // window.location.replace(randFinal);
+  window.location.replace(rand);
 }
 
 
