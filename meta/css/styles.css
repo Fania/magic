@@ -32,19 +32,26 @@ main.slideshow {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 81.375px);
+  /* height: calc(100vh - 81.375px); */
+  height: 90vh;
+  width: 98vw;
   cursor: none;
+  margin: 0px;
+  margin-left: 0px !important;
 }
 body.slideshow {
   cursor: none;
 }
 
 
+/* http://localhost:3001/?order=4&amount=unique&style=quadline&size=4&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23f8c8f9&strokeWidth=4&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=false&gallery=true&interface=hidden */
+
 main.slideshow #squares {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(100vw - 200px - 4em);
+  width: 90vw;
+  height: 90vh;
 }
 
 
