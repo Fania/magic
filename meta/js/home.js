@@ -3,22 +3,40 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.7.6';
+const CACHE = 'magic-v2.7.7';
 
 
-let iID;
-if(typeof iID !== 'undefined'){
-  stopSlideshow('firstpageload-stopping-existing-slideshows')
+let rID;
+let sID;
+if(typeof rID !== 'undefined'){
+  stopRandomSlideshow('firstpageload-stopping-existing-random-slideshows')
 } else {
-  console.log('iID',iID);
+  console.log('rID',rID);
+}
+if(typeof sID !== 'undefined'){
+  stopCuratedSlideshow('firstpageload-stopping-existing-curated-slideshows')
+} else {
+  console.log('sID',sID);
 }
 let counter = 0;
 const pause = document.getElementById('pause');
 const mainContent = document.getElementsByTagName('main')[0];
+const bodyContent = document.getElementsByTagName('body')[0];
 const [...menuTriggers] = document.querySelectorAll('nav a');
 const [...displayStyles] = document.getElementsByName('style');
 const [...displayAmounts] = document.getElementsByName('amount');
 const displayOrder = document.getElementById('order');
+
+const urls = [
+  `${window.location.origin}/?order=10&amount=unique&style=arc&size=10&gap=15&overlap=true&overlapAmount=overlap200&background=%2337015b&stroke=%23ffef0a&strokeWidth=8&salpha=55&fill=%23ff9500&falpha=40&animation=sync&speed=100&dayMode=false&slideshow=curated&gallery=true&interface=hidden`,
+  `${window.location.origin}/?order=4&amount=unique&style=quadline&size=4&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23f8c8f9&strokeWidth=4&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=curated&gallery=true&interface=hidden`,
+  `${window.location.origin}/?order=5&amount=unique&style=straight&size=6&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23bcb8ff&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=curated&gallery=true&interface=hidden`,
+  `${window.location.origin}/?order=12&amount=unique&style=straight&size=11&gap=26&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23b8f9e9&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=curated&gallery=true&interface=hidden`,
+  `${window.location.origin}/?order=4&amount=unique&style=straight&size=11&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23FFFFFF&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=curated&gallery=true&interface=hidden`
+];
+
+
+
 // const styleIDs = ['numbers','straight','quadvertex','quadline','arc','altarc','circles','blocks','tetromino'];
 // const loadingTriggers = (menuTriggers.concat(displayStyles,displayOrder,displayAmounts)).flat(Infinity);
 // const displayTriggers = (displayStyles.concat(displayOrder,displayAmounts)).flat(Infinity);
@@ -57,7 +75,7 @@ const defaults = {
   "dayMode":       false,
   "interface":     "shown",
   "gallery":       false,
-  "slideshow":     false
+  "slideshow":     "false"
 };
 
 
@@ -85,9 +103,9 @@ async function loadBookmark(params) {
   // console.log('loading from BOOKMARK');
   const keyValueStrings = (params.slice(1)).split('&');
   const settings = getSettings();
-  const checkBool = ['dayMode', 'overlap', 'gallery', 'slideshow'];
+  const checkBool = ['dayMode', 'overlap', 'gallery'];
   const checkNum = ['falpha', 'gap', 'order', 'salpha', 'size', 'speed', 'strokeWidth'];
-  const checkStr = ['amount', 'animation', 'background', 'fill', 'interface', 'overlapAmount', 'stroke', 'style'];
+  const checkStr = ['amount', 'animation', 'background', 'fill', 'interface', 'overlapAmount', 'stroke', 'style', 'slideshow'];
   keyValueStrings.forEach(x => {
     const pair = x.split('=');
     let value = pair[1].replace('%23','#');
@@ -499,10 +517,15 @@ random.addEventListener('click', async ()=> {
 
 
 // SLIDES OPTION
-const slides = document.getElementById('slides');
-slides.addEventListener('click', async ()=> { 
+const rSlides = document.getElementById('randomSlides');
+const cSlides = document.getElementById('curatedSlides');
+rSlides.addEventListener('click', async ()=> { 
   // console.log('RANDOM click triggered');
-  await startSlideshow('starting-slideshow-button');
+  await startRandomSlideshow('starting-random-slideshow-button');
+});
+cSlides.addEventListener('click', async ()=> { 
+  // console.log('RANDOM click triggered');
+  await startCuratedSlideshow('starting-curated-slideshow-button');
 });
 
 
@@ -543,7 +566,7 @@ async function generateRandom() {
   settings.overlapAmount = 'overlap200';
   settings.gallery = false;
   settings.interface = 'shown';
-  settings.slideshow = false;
+  settings.slideshow = 'false';
   return settings;
 }
 
@@ -760,7 +783,7 @@ async function adjust(thing) {
       param = paramsSplit.find(ps => ps.startsWith('gallery'));
       // console.log(`adjusting gallery ${param} - ${param.substring(8)}`);
       if(typeof param !== 'undefined'){
-        param.substring(8) === 'true' ? x = true : x = false;
+        (param.substring(8) === 'true') ? x = true : x = false;
       } else {
         x = false; // default, i.e. no url params
       }
@@ -769,7 +792,7 @@ async function adjust(thing) {
       param = paramsSplit.find(ps => ps.startsWith('interface'));
       // console.log(`adjusting interface ${param} - ${param.substring(10)}`);
       if(typeof param !== 'undefined'){
-        param.substring(10) === 'shown' ? x = 'shown' : x = 'hidden';
+        (param.substring(10) === 'shown') ? x = 'shown' : x = 'hidden';
       } else {
         x = 'shown'; // default, i.e. no url params
       }
@@ -777,11 +800,16 @@ async function adjust(thing) {
     case 'slideshow':
       param = paramsSplit.find(ps => ps.startsWith('slideshow'));
       // console.log(`adjusting slideshow ${param} - ${param.substring(10)}`);
+      console.log("param",param);
+      console.log("typeof param",typeof param);
+      console.log("typeof param",typeof param !== 'undefined');
       if(typeof param !== 'undefined'){
-        param.substring(10) === 'true' ? x = true : x = false;
+        if(param.substring(10) === 'random') { x = 'random'; }
+        if(param.substring(10) === 'curated') { x = 'curated'; }
       } else {
-        x = false; // default, i.e. no url params
+        x = 'false'; // default, i.e. no url params
       }
+      console.log('slideshow',x);
       break;
     default:
       const y = document.getElementById(thing).value;
@@ -869,12 +897,18 @@ async function loadSettings(originString) {
       console.log('showInterface from within loadSettings');
       showInterface();
     }
-    if(settings['slideshow']){
-      startSlideshow('loadsettings-slideshow-true');
+    if(settings['slideshow'] === 'random'){
+      startRandomSlideshow('loadsettings-slideshow-random');
     }
-    if(!settings['slideshow']){
-      if(typeof iID !== 'undefined'){
-        stopSlideshow('loadsettings-slideshow-false');
+    if(settings['slideshow'] === 'curated'){
+      startCuratedSlideshow('loadsettings-slideshow-curated');
+    }
+    if(settings['slideshow'] === 'false'){
+      if(typeof rID !== 'undefined'){
+        stopRandomSlideshow('loadsettings-random-slideshow-false');
+      }
+      if(typeof sID !== 'undefined'){
+        stopCuratedSlideshow('loadsettings-curated-slideshow-false');
       }
     }
 
@@ -1138,16 +1172,22 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape") {
     pause.checked = !pause.checked;
     triggerAnimationPause();
-    if(typeof iID !== 'undefined'){
-      stopSlideshow('escape-key');
+    if(typeof rID !== 'undefined'){
+      stopRandomSlideshow('escape-key');
+    }
+    if(typeof sID !== 'undefined'){
+      stopCuratedSlideshow('escape-key');
     }
   }
   if (event.key === "o") {
     // console.log('o pressed');
     pause.checked = !pause.checked;
     triggerAnimationPause();
-    if(typeof iID !== 'undefined'){
-      stopSlideshow('o-key');
+    if(typeof rID !== 'undefined'){
+      stopRandomSlideshow('o-key');
+    }
+    if(typeof sID !== 'undefined'){
+      stopCuratedSlideshow('o-key');
     }
   }
 });
@@ -1304,15 +1344,24 @@ async function unhideGallerySVGs() {
 
 
 
-async function handleSlideshow() {
-  console.log('handelling slideshow');
-  const urls = [
-    `${window.location.origin}/?order=10&amount=unique&style=arc&size=10&gap=15&overlap=true&overlapAmount=overlap200&background=%2337015b&stroke=%23ffef0a&strokeWidth=8&salpha=55&fill=%23ff9500&falpha=40&animation=sync&speed=100&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
-    `${window.location.origin}/?order=4&amount=unique&style=quadline&size=4&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23f8c8f9&strokeWidth=4&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
-    `${window.location.origin}/?order=5&amount=unique&style=straight&size=6&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23bcb8ff&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=async&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
-    `${window.location.origin}/?order=12&amount=unique&style=straight&size=11&gap=26&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23b8f9e9&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`,
-    `${window.location.origin}/?order=4&amount=unique&style=straight&size=11&gap=0&overlap=false&overlapAmount=overlap200&background=%23222222&stroke=%23FFFFFF&strokeWidth=2&salpha=255&fill=%23666666&falpha=0&animation=off&speed=50&dayMode=false&slideshow=true&gallery=true&interface=hidden`
-  ];
+async function handleCuratedSlideshow() {
+  console.log('handling curated slideshow');
+  console.log('handleCuratedSlideshow sID',sID);
+  const rand = urls[Math.floor(Math.random()*urls.length)];
+  const regex = /(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g;
+  const regex2 = /[&|?]/g;
+  const printout1 = rand.replaceAll(regex,'');
+  const printout = printout1.replaceAll(regex2,'\n');
+  console.log('printout',printout);
+  bodyContent.classList.add('slideshow');
+  mainContent.classList.add('hide');
+  hideInterface();
+  window.location.replace(rand);
+}
+
+async function handleRandomSlideshow() {
+  console.log('handling random slideshow');
+  console.log('handleRandomSlideshow rID',rID);
   const randomJSON = await generateRandom();
   const randomStr = JSON.stringify(randomJSON);
   // the random generator generates for general viewing, not for slideshow,
@@ -1324,37 +1373,46 @@ async function handleSlideshow() {
   const randStr5 = randStr4.replaceAll(/#/g, '%23');
   const randStr6 = randStr5.replaceAll(/&gallery=false/g, '&gallery=true');
   const randStr7 = randStr6.replaceAll(/&interface=shown/g, '&interface=hidden');
-  const randStr8 = randStr7.replaceAll(/&slideshow=false/g, '&slideshow=true');
+  const randStr8 = randStr7.replaceAll(/&slideshow=false/g, '&slideshow=random');
   const randFinal = randStr8.replaceAll(/\}/g, '');
-  // console.log('randFinal',randFinal);
-
-
-  urls.push(randFinal);
-  const rand = urls[Math.floor(Math.random()*urls.length)];
   const regex = /(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g;
   const regex2 = /[&|?]/g;
-  // const printout1 = rand.replaceAll(regex,'');
   const printout1 = randFinal.replaceAll(regex,'');
   const printout = printout1.replaceAll(regex2,'\n');
   console.log('printout',printout);
-
+  bodyContent.classList.add('slideshow');
   mainContent.classList.add('hide');
   hideInterface();
-  // window.location.replace(randFinal);
-  window.location.replace(rand);
+  window.location.replace(randFinal);
+  // window.location.replace(rand);
 }
 
 
-async function startSlideshow(whoranme) {
-  console.log(`starting slideshow by ${whoranme}`);
-  clearInterval(iID);
+async function startRandomSlideshow(whoranme) {
+  console.log(`starting random slideshow by ${whoranme}`);
+  clearInterval(rID);
   mainContent.classList.add('slideshow');
-  iID = setInterval(() => {handleSlideshow()}, 20000);
+  bodyContent.classList.add('slideshow');
+  rID = setInterval(() => {handleRandomSlideshow()}, 20000);
 }
-function stopSlideshow(whoranme) {
-  console.log(`cancelling slideshow by ${whoranme}`);
+async function startCuratedSlideshow(whoranme) {
+  console.log(`starting curated slideshow by ${whoranme}`);
+  clearInterval(sID);
+  mainContent.classList.add('slideshow');
+  bodyContent.classList.add('slideshow');
+  sID = setInterval(() => {handleCuratedSlideshow()}, 20000);
+}
+function stopRandomSlideshow(whoranme) {
+  console.log(`cancelling random slideshow by ${whoranme}`);
   mainContent.classList.remove('hide');
-  mainContent.classList.remove('slideshow');
+  bodyContent.classList.remove('slideshow');
   showInterface();
-  clearInterval(iID);
+  clearInterval(rID);
+}
+function stopCuratedSlideshow(whoranme) {
+  console.log(`cancelling curated slideshow by ${whoranme}`);
+  mainContent.classList.remove('hide');
+  bodyContent.classList.remove('slideshow');
+  showInterface();
+  clearInterval(sID);
 }

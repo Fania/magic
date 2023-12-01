@@ -33,7 +33,12 @@ main.slideshow {
   justify-content: center;
   align-items: center;
   /* min-height: 98vh; */
+  cursor: none;
 }
+body.slideshow {
+  cursor: none;
+}
+
 
 #squares {
   display: flex;
@@ -113,7 +118,9 @@ main.slideshow {
 /* header.submenu form fieldset { border: none; margin: 0; padding: 0; } */
 /* header.submenu label { box-sizing: border-box; } */
 
-
+#presetOptions input {
+  text-wrap: wrap;
+}
 
 form input,
 form label,
