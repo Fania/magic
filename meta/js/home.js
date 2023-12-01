@@ -1192,6 +1192,22 @@ document.addEventListener("keydown", event => {
   }
 });
 
+
+
+// HAMMERTIME
+const mc = new Hammer.Manager(bodyContent);
+mc.add(new Hammer.Tap({ 
+  event: 'doubletap', 
+  taps: 2
+})); 
+mc.on("doubletap", handleTap);
+function handleTap(ev) {
+  // console.log('tap',ev);
+  stopCuratedSlideshow('stop-by-handleTap');
+  stopRandomSlideshow('stop-by-handleTap');
+}
+
+
 function toggleInterface() {
   const elems = document.querySelectorAll("header, footer");
   elems.forEach(e => {
