@@ -40,7 +40,7 @@ body.slideshow {
 }
 
 
-#squares {
+main.slideshow #squares {
   display: flex;
   align-items: center;
   justify-content: center;
