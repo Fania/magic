@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.7.4';
+const CACHE = 'magic-v2.7.5';
 
 
 let iID;
@@ -829,10 +829,14 @@ async function loadSettings(originString) {
     document.getElementById('gap').value = settings['gap'];
     document.getElementById('strokeWidth').value = settings['strokeWidth'];
 
+// http://localhost:3001/?order=20&amount=unique&style=circles&size=11&gap=50&background=%2332B7ED&stroke=%238CBA61&strokeWidth=22&salpha=212&fill=%23CDE26C&falpha=197&animation=async&speed=69&overlap=true&overlapAmount=overlap200&gallery=true&interface=shown&slideshow=false
+
     // console.log(settings['overlap']);
     // console.log(typeof settings['overlap']);
+    // console.log(settings['overlap'] === 'true');
+    // console.log(settings['overlap'] === true);
     document.getElementById('overlap').checked = settings['overlap'];
-    if(settings['overlap'] === 'true') {
+    if(settings['overlap'] === true) {
       // console.log(settings['overlapAmount']);
       document.querySelector(`#${settings['overlapAmount']}`).checked = true;
       // overlapOptions.classList.remove('hide');
@@ -938,7 +942,9 @@ function applyStyles() {
   sheet2.insertRule(modaltext, sheet.cssRules.length);
 
   document.body.style.background = settings.background;
-  applyOverlap(settings.overlap === 'true' || settings.overlap);
+  applyOverlap(settings.overlap === 'true' || 
+               settings.overlap === true || 
+              settings.overlap);
   // loading.classList.remove('show');
   document.body.style.cursor = 'default !important';
   if(day.checked) {
@@ -1014,7 +1020,9 @@ async function getData(offset = 0) {
       squares.appendChild(sentinel);
       io.observe(sentinel);
       // enable overlap for new squares if checked
-      applyOverlap(getSettings().overlap === 'true' || getSettings().overlap);
+      applyOverlap(getSettings().overlap === 'true' || 
+                   getSettings().overlap === true ||
+                   getSettings().overlap);
     }
   } 
   catch (error) { console.log('getData', error) }
@@ -1253,11 +1261,7 @@ async function handleGalleryMode() {
     })
     // console.dir(sq);
     const cntWidth = sq.clientWidth;
-    // console.log('cntWidth',cntWidth);
-    const cntoffWidth = sq.offsetWidth;
-    // console.log('cntoffWidth',cntoffWidth);
     const winHeigh = window.innerHeight;
-    // console.log('winHeigh',winHeigh);
     const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
     console.log('svgWidth',svgWidth);
     // const x = Math.floor(window.innerHeight / sq.children[0].clientWidth);
@@ -1265,10 +1269,13 @@ async function handleGalleryMode() {
     const x = Math.floor(cntWidth / svgWidth);
     const y = Math.floor(winHeigh / svgWidth);
     const z = Math.ceil(x * y);
-    // console.log('x,y,z',x,y,z);
-    // console.log(sq.children[z]);
-    for(let i=z; i < sq.children.length; i++){
-      sq.children[i].classList.add('hide');
+    const classes = [...sq.classList];
+    if(!classes.includes('overlap')) {
+      for(let i=z; i < sq.children.length; i++){
+        console.log(`handleGalleryMode: hiding:`,sq.children[i]);
+        // console.log(`handleGalleryMode: hiding ${sq.children[i]}`);
+        sq.children[i].classList.add('hide');
+      }
     }
   }, 1000);
 }
