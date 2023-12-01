@@ -3,20 +3,16 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v2.7.7';
+const CACHE = 'magic-v3.0.0';
 
 
 let rID;
 let sID;
 if(typeof rID !== 'undefined'){
   stopRandomSlideshow('firstpageload-stopping-existing-random-slideshows')
-} else {
-  console.log('rID',rID);
 }
 if(typeof sID !== 'undefined'){
   stopCuratedSlideshow('firstpageload-stopping-existing-curated-slideshows')
-} else {
-  console.log('sID',sID);
 }
 let counter = 0;
 const pause = document.getElementById('pause');
