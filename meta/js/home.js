@@ -542,6 +542,26 @@ async function handleRandom() {
   // console.log(counter++);
 }
 
+// const elems = ["A", "B", "C", "D"];
+// const weights = [2, 5, 8, 1]; // weight of each element above
+function add(a, b) { return a + b; } // helper function
+function getWeighedRandom(elems, weights) {
+  // get total weight (sum of all items in weights array)
+  const totalWeight = weights.reduce(add, 0);
+  const weighedElems = [];
+  let currentElem = 0;
+  while (currentElem < elems.length) {
+    for (let i = 0; i < weights[currentElem]; i++)
+      weighedElems[weighedElems.length] = elems[currentElem];
+    currentElem++;
+  }
+  console.log('weighedElems',weighedElems);
+  const rnd = Math.floor(Math.random() * totalWeight);
+  console.log('weighedElems[rnd]',weighedElems[rnd]);
+  return weighedElems[rnd];
+}
+
+
 async function generateRandom() {
   // console.log('generate Random magic square');
   const settings = {};
@@ -550,7 +570,7 @@ async function generateRandom() {
   const orderSelect = document.getElementById('order');
   settings.order = parseInt(orderSelect[orderIndex].value);
   settings.amount = 'unique';
-  settings.style = ['numbers','straight','quadvertex','quadline','arc','altarc','circles','blocks','tetromino'][getRandomInt(0, 8)];
+  settings.style = getWeighedRandom(['numbers','straight','quadvertex','quadline','arc','altarc','circles','blocks','tetromino'], [1,3,4,3,2,2,1,1,2]);
   settings.size = getRandomInt(10, 50);
   settings.gap = [0,10,20,30,40,50][getRandomInt(0, 5)];
   settings.background = getRandomColour();
@@ -558,7 +578,7 @@ async function generateRandom() {
   settings.strokeWidth = getRandomInt(1, 30);
   settings.salpha = getRandomInt(0, 255);
   settings.fill = getRandomColour();
-  settings.falpha = getRandomInt(0, 255);
+  settings.falpha = getRandomInt(0, 150); // max 255
   settings.animation = ['sync','async','off'][getRandomInt(0, 2)];
   settings.speed = getRandomInt(1, 100);
   settings.overlap = [true,false][getRandomInt(0, 1)];
@@ -568,6 +588,8 @@ async function generateRandom() {
   settings.slideshow = 'false';
   return settings;
 }
+
+
 
 
 // SHARE OPTION
