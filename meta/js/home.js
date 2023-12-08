@@ -22,6 +22,8 @@ const [...menuTriggers] = document.querySelectorAll('nav a');
 const [...displayStyles] = document.getElementsByName('style');
 const [...displayAmounts] = document.getElementsByName('amount');
 const displayOrder = document.getElementById('order');
+const preldr = document.getElementById('preloader');
+
 
 const urls = [
   `${window.location.origin}/?order=10&amount=unique&style=arc&size=10&gap=15&overlap=true&overlapAmount=overlap200&background=%2337015b&stroke=%23ffef0a&strokeWidth=8&salpha=55&fill=%23ff9500&falpha=40&animation=sync&speed=100&dayMode=false&slideshow=curated&gallery=true&interface=hidden`,
@@ -1338,21 +1340,44 @@ async function handleGalleryMode() {
     })
     // console.dir(sq);
     const cntWidth = sq.clientWidth;
+    const winWidth = window.innerWidth;
     const winHeigh = window.innerHeight;
-    const svgWidth = Math.floor(sq.children[0].getBoundingClientRect().width);
+    // const svgWidth = Math.ceil(sq.children[0].getBoundingClientRect().width);
+    // console.log('cntWidth',cntWidth);
+    // console.log('winWidth',winWidth);
+    // console.log('winHeigh',winHeigh);
+
+    const compStyles = window.getComputedStyle(sq.children[0]);
+
+    const paddingSource = compStyles.getPropertyValue("padding");
+    // console.log('paddingSource',paddingSource);
+    const padding = parseInt(paddingSource.substring(0, paddingSource.length - 2));
+    // console.log('padding',padding);
+    const marginSource = compStyles.getPropertyValue("margin");
+    // console.log('marginSource',marginSource);
+    const margin = parseInt(marginSource.substring(0, marginSource.length - 2));
+    // console.log('margin',margin);
+    const widthSource = compStyles.getPropertyValue("width");
+    // console.log('widthSource',widthSource);
+    const svgWidthBefore = Math.ceil(parseInt(widthSource.substring(0, widthSource.length - 2)));
+    const svgWidth = svgWidthBefore + margin*2 + padding*2;
     // console.log('svgWidth',svgWidth);
-    // const x = Math.floor(window.innerHeight / sq.children[0].clientWidth);
-    // const y = Math.floor(window.innerWidth / sq.children[0].clientWidth);
+    const w = Math.floor(winWidth / svgWidth);
     const x = Math.floor(cntWidth / svgWidth);
     const y = Math.floor(winHeigh / svgWidth);
+    const zw = Math.ceil(w * y);
     const z = Math.ceil(x * y);
     const classes = [...sq.classList];
     if(!classes.includes('overlap')) {
-      for(let i=z; i < sq.children.length; i++){
+      let testcnt = 0;
+      for(let i=zw; i < sq.children.length; i++){
+        // console.log('i',i);
         // console.log(`handleGalleryMode: hiding:`,sq.children[i]);
         // console.log(`handleGalleryMode: hiding ${sq.children[i]}`);
         sq.children[i].classList.add('hide');
+        testcnt++;
       }
+      // console.log(`handleGalleryMode: hid ${testcnt} elements`);
     }
   }, 1000);
 }
@@ -1393,6 +1418,7 @@ async function handleCuratedSlideshow() {
   bodyContent.classList.add('slideshow');
   mainContent.classList.add('hide');
   hideInterface();
+  preldr.attributes.href.value = rand;
   window.location.replace(rand);
 }
 
@@ -1420,8 +1446,8 @@ async function handleRandomSlideshow() {
   bodyContent.classList.add('slideshow');
   mainContent.classList.add('hide');
   hideInterface();
+  preldr.attributes.href.value = randFinal;
   window.location.replace(randFinal);
-  // window.location.replace(rand);
 }
 
 
@@ -1431,6 +1457,7 @@ async function startRandomSlideshow(whoranme) {
   mainContent.classList.add('slideshow');
   bodyContent.classList.add('slideshow');
   rID = setInterval(() => {handleRandomSlideshow()}, 20000);
+
 }
 async function startCuratedSlideshow(whoranme) {
   // console.log(`starting curated slideshow by ${whoranme}`);
@@ -1453,3 +1480,7 @@ function stopCuratedSlideshow(whoranme) {
   showInterface();
   clearInterval(sID);
 }
+
+
+
+
