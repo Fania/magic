@@ -573,9 +573,9 @@ function getWeighedRandom(elems, weights) {
       weighedElems[weighedElems.length] = elems[currentElem];
     currentElem++;
   }
-  console.log('weighedElems',weighedElems);
+  // console.log('weighedElems',weighedElems);
   const rnd = Math.floor(Math.random() * totalWeight);
-  console.log('weighedElems[rnd]',weighedElems[rnd]);
+  // console.log('weighedElems[rnd]',weighedElems[rnd]);
   return weighedElems[rnd];
 }
 
@@ -1376,14 +1376,14 @@ async function handleGalleryMode() {
     // console.log('marginSource',marginSource);
     const margin = parseInt(marginSource.substring(0, marginSource.length - 2));
     const winHeightMargin = window.innerHeight - margin * 2;
-    console.log('margin',margin);
-    console.log('winHeightMargin',winHeightMargin);
-    console.log('winHeigh',winHeigh);
+    // console.log('margin',margin);
+    // console.log('winHeightMargin',winHeightMargin);
+    // console.log('winHeigh',winHeigh);
     const widthSource = compStyles.getPropertyValue("width");
     // console.log('widthSource',widthSource);
     const svgWidthBefore = Math.ceil(parseInt(widthSource.substring(0, widthSource.length - 2)));
     const svgWidth = svgWidthBefore + margin*2 + padding*2;
-    console.log('svgWidth',svgWidth);
+    // console.log('svgWidth',svgWidth);
     const w = Math.floor(winWidth / svgWidth);
     const x = Math.floor(cntWidth / svgWidth);
     // const y = Math.floor(winHeigh / svgWidth);
@@ -1427,22 +1427,29 @@ async function unhideGallerySVGs() {
 }
 
 
-
-
 async function handleCuratedSlideshow() {
+  const url = `/data/curated`;
+  const rawData = await fetch(url);
+  const data = await rawData.json();
+  let curatedLoopCnt = data.counter;
+  console.log('curatedLoopCnt',curatedLoopCnt);
   // console.log('handling curated slideshow');
   // console.log('handleCuratedSlideshow sID',sID);
-  const rand = urls[Math.floor(Math.random()*urls.length)];
+  // const rand = urls[Math.floor(Math.random()*urls.length)];
+  const currentLoopItem = urls[curatedLoopCnt];
   const regex = /(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g;
   const regex2 = /[&|?]/g;
-  const printout1 = rand.replaceAll(regex,'');
+  // const printout1 = rand.replaceAll(regex,'');
+  const printout1 = currentLoopItem.replaceAll(regex,'');
   const printout = printout1.replaceAll(regex2,'\n');
   console.log('printout',printout);
   bodyContent.classList.add('slideshow');
   mainContent.classList.add('hide');
   hideInterface();
-  preldr.attributes.href.value = rand;
-  window.location.replace(rand);
+  // preldr.attributes.href.value = rand;
+  preldr.attributes.href.value = currentLoopItem;
+  // window.location.replace(rand);
+  window.location.replace(currentLoopItem);
 }
 
 async function handleRandomSlideshow() {
@@ -1487,6 +1494,11 @@ async function startCuratedSlideshow(whoranme) {
   clearInterval(sID);
   mainContent.classList.add('slideshow');
   bodyContent.classList.add('slideshow');
+
+  hideInterface(); // hide interface immediately
+  // await handleRandom(); // start a random thing
+  // await handleGalleryMode(); // enable galleryMode immediately
+
   sID = setInterval(() => {handleCuratedSlideshow()}, 20000);
 }
 function stopRandomSlideshow(whoranme) {

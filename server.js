@@ -143,6 +143,13 @@ app.get('/data/themes', async (req, res) => {
   const data = await couch.viewAllDB('themes')
   res.send( data )
 })
+let counter = 0
+app.get('/data/curated', async (req, res) => {
+  const data = {"counter": counter}
+  counter < 24 ? counter++ : counter = 0
+  console.log(counter)
+  res.send( data )
+})
 app.get('/data/orders', async (req, res) => {
   const data = await couch.getAllOrders()
   res.send( data )
