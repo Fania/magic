@@ -30,6 +30,8 @@ or pipe it into text file with `npm run webhint > hint-report.txt`
 ### Bugs ?
 
 - [ ] slideshow issues:
+    - [ ] curated on loop
+    - [ ] put start random into slideshow when it starts 20sec
     - [x] create two versions, one for random and another one for pre-selected so that in gallery two screens can be shown with generated content and hand-selected content side by side
     - [x] some groups hangover to next group?
     - [x] still widths causing issues? = need to give css #squares a width!
