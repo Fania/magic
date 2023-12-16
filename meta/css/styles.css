@@ -32,6 +32,10 @@ header.hide, footer.hide, main.hide { display: none; }
   justify-content: center;
 }
 
+/* fix for safari buttons not wrapping text */
+input:is([type="button"], [type="submit"], [type="reset"]) {
+  text-wrap: wrap;
+}
 
 header svg {
   stroke: var(--textColour);
