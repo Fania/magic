@@ -30,6 +30,7 @@ header.hide, footer.hide, main.hide { display: none; }
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 /* fix for safari buttons not wrapping text */
