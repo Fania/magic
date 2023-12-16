@@ -22,7 +22,15 @@ a { color: var(--textColour) }
 header { margin: 0; padding: 0 1em; }
 header.hide, footer.hide, main.hide { display: none; }
 .hide ~ main.home,
-.hide ~ main.research { margin-left: 2em; }
+.hide ~ main.research { 
+  margin-left: 2em; 
+  height: calc(100vh - 4em);
+}
+.hide ~ main.home { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 header svg {
