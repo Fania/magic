@@ -570,9 +570,12 @@ async function generateRandom() {
   const orders = await getOrders();
   const orderIndex = getRandomInt(0, (orders.length - 1));
   const orderSelect = document.getElementById('order');
-  settings.order = parseInt(orderSelect[orderIndex].value);
+  // settings.order = parseInt(orderSelect[orderIndex].value);
+  settings.order = getWeighedRandom(
+  [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,27,28,30,32], 
+  [2,8,7,6,6,6,4,4,3,7,6,6,4,5,3,4,3,5,3,4,3,4,4,4,3]);
   settings.amount = 'unique';
-  settings.style = getWeighedRandom(['numbers','straight','quadvertex','quadline','arc','altarc','circles','blocks','tetromino'], [1,3,4,3,2,2,1,1,2]);
+  settings.style = getWeighedRandom(['numbers','straight','quadvertex','quadline','arc','altarc','circles','blocks','tetromino'], [1,3,5,3,2,3,2,1,3]);
   settings.size = getRandomInt(10, 50);
   settings.gap = [0,10,20,30,40,50][getRandomInt(0, 5)];
   settings.background = getRandomColour();
