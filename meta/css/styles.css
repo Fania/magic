@@ -26,7 +26,9 @@ header.hide, footer.hide, main.hide { display: none; }
   margin-left: 2em; 
   height: calc(100vh - 4em);
 }
-.hide ~ main.home { 
+.hide ~ main.home, 
+body.slideshow ~ main.home,
+body:not(.hidden) ~ main.home { 
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1255,19 +1255,38 @@ function toggleInterface() {
   elems.forEach(e => {
     e.classList.toggle('hide');
   });
+  bodyContent.classList.toggle('hidden');
+  const settings = getSettings();
+  console.log('current interface setting inside toggle:',settings['interface']);
+  // if(settings['interface'] === 'shown') {
+  //   settings['interface'] = 'hidden';
+  // } else {
+  //   settings['interface'] = 'shown';
+  // }
+  // saveSettings(settings);
+  // adjust('interface');
 }
 function hideInterface() {
   const elems = document.querySelectorAll("header, footer");
   elems.forEach(e => {
     e.classList.add('hide');
   });
-
+  bodyContent.classList.add('hidden');
+  // const settings = getSettings();
+  // settings['interface'] = 'hidden';
+  // saveSettings(settings);
+  // adjust('interface');
 }
 function showInterface() {
   const elems = document.querySelectorAll("header, footer");
   elems.forEach(e => {
     e.classList.remove('hide');
   });
+  bodyContent.classList.remove('hidden');
+  // const settings = getSettings();
+  // settings['interface'] = 'shown';
+  // saveSettings(settings);
+  // adjust('interface');
 }
 
 
@@ -1451,6 +1470,7 @@ async function handleCuratedSlideshow() {
   // window.location.replace(rand);
   window.location.replace(currentLoopItem);
 }
+
 
 async function handleRandomSlideshow() {
   // console.log('handling random slideshow');
