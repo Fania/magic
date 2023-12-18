@@ -4,6 +4,7 @@ const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
 const compression = require('compression')
+const circularJSON = require('circular-json');
 // const minify = require('express-minify')
 const _ = require('lodash')
 // const dotenv = require('dotenv').config()
@@ -44,7 +45,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 3.0.2')
+	console.log('Magic Squares Version 3.0.3')
 	console.log('Running on http://localhost:3001')
 })
 
@@ -143,27 +144,12 @@ app.get('/data/themes', async (req, res) => {
   const data = await couch.viewAllDB('themes')
   res.send( data )
 })
-let counter = 0
-const data = {};
+const data = {}
 app.get('/data/curated', async (req, res) => {
-  console.log('counter at beginning',counter)
-  // console.log(req)
-  // console.log(res)
-  // counter < 24 ? counter++ : counter = 0
-  if(counter < 23) {
-    console.log('counter < 23',counter)
-    counter++
-    console.log('counter++',counter)
-  } else {
-    console.log('counter = 23',counter)
-    counter = 0
-    console.log('counter = 0',counter)
-  }
-  data['counter'] = counter
-  // console.log(typeof data)
-  // console.log(typeof counter)
-  // console.log(data)
-  // console.log(counter)
+  // const currentCounter = await couch.viewCuratedCounterDB()
+  const increaseCounter = await couch.updateCuratedCounterDB()
+  console.log('increaseCounter',increaseCounter.counter)
+  data['counter'] = increaseCounter.counter
   res.send( data )
 })
 app.get('/data/orders', async (req, res) => {

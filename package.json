@@ -1,6 +1,6 @@
 {
   "name": "magic",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A magic square page.",
   "main": "server",
   "repository": "http://github.com/fania/magic",
@@ -22,6 +22,7 @@
     "@hint/parser-manifest": "^2.3.16",
     "axios": "^0.21.1",
     "chokidar": "^3.5.1",
+    "circular-json": "^0.5.9",
     "compression": "^1.7.4",
     "create-hintrc": "^4.0.5",
     "dom-parser": "^0.1.6",
