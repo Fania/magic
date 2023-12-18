@@ -44,7 +44,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 3.0.0')
+	console.log('Magic Squares Version 3.0.1')
 	console.log('Running on http://localhost:3001')
 })
 
@@ -144,10 +144,26 @@ app.get('/data/themes', async (req, res) => {
   res.send( data )
 })
 let counter = 0
+const data = {};
 app.get('/data/curated', async (req, res) => {
-  const data = {"counter": counter}
-  counter < 24 ? counter++ : counter = 0
-  console.log(counter)
+  console.log('counter at beginning',counter)
+  // console.log(req)
+  // console.log(res)
+  // counter < 24 ? counter++ : counter = 0
+  if(counter < 23) {
+    console.log('counter < 23',counter)
+    counter++
+    console.log('counter++',counter)
+  } else {
+    console.log('counter = 23',counter)
+    counter = 0
+    console.log('counter = 0',counter)
+  }
+  data['counter'] = counter
+  // console.log(typeof data)
+  // console.log(typeof counter)
+  // console.log(data)
+  // console.log(counter)
   res.send( data )
 })
 app.get('/data/orders', async (req, res) => {

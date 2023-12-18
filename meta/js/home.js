@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v3.0.0';
+const CACHE = 'magic-v3.0.1';
 
 
 let rID;
@@ -1456,6 +1456,8 @@ async function handleCuratedSlideshow() {
   // console.log('handleCuratedSlideshow sID',sID);
   // const rand = urls[Math.floor(Math.random()*urls.length)];
   const currentLoopItem = urls[curatedLoopCnt];
+  console.log('first item in curated array',urls[0]);
+  console.log('last item in curated array',urls[23]);
   const regex = /(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g;
   const regex2 = /[&|?]/g;
   // const printout1 = rand.replaceAll(regex,'');
