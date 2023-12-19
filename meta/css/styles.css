@@ -37,7 +37,9 @@ body:not(.hidden) ~ main.home {
 
 /* fix for safari buttons not wrapping text */
 input:is([type="button"], [type="submit"], [type="reset"]) {
-  text-wrap: wrap;
+  /* text-wrap: wrap; */
+  white-space: normal;
+  /* border-radius: 0; */
 }
 
 header svg {

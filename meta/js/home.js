@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v3.0.5';
+const CACHE = 'magic-v3.0.6';
 
 
 let rID;
@@ -483,17 +483,40 @@ pause.addEventListener('change', ()=> {
 });
 
 function triggerAnimationPause() {
+  const params = location.search;
+  const keyValueStrings = (params.slice(1)).split('&');
+  // console.log(keyValueStrings);
   const paths = document.querySelectorAll('#squares svg path');
   if (pause.checked) {
     // animations are running and pause button can be checked
     paths.forEach( p => {
       p.style.animationPlayState = 'paused';
     });
+    if(keyValueStrings.includes('slideshow=curated')) {
+      console.log('stopping curated slideshow');
+      // hideInterface();
+      stopCuratedSlideshow('pauseButtonPressed');
+    }
+    if(keyValueStrings.includes('slideshow=random')) {
+      console.log('stopping random slideshow');
+      // hideInterface();
+      stopRandomSlideshow('pauseButtonPressed');
+    }
   } else {
     // animations are paused and pause button restarts them
     paths.forEach( p => {
       p.style.animationPlayState = 'running';
     });
+    if(keyValueStrings.includes('slideshow=curated')) {
+      console.log('starting curated slideshow');
+      // hideInterface();
+      startCuratedSlideshow('UNpauseButtonPressed');
+    }
+    if(keyValueStrings.includes('slideshow=random')) {
+      console.log('starting random slideshow');
+      // hideInterface();
+      startRandomSlideshow('UNpauseButtonPressed');
+    }
   }
 }
 
@@ -1451,13 +1474,11 @@ async function handleCuratedSlideshow() {
   const rawData = await fetch(url);
   const data = await rawData.json();
   const curatedLoopCnt = data.counter;
-  console.log('curatedLoopCnt',curatedLoopCnt);
-  // console.log('handling curated slideshow');
-  // console.log('handleCuratedSlideshow sID',sID);
+  console.log('current curated slide',curatedLoopCnt);
   // const rand = urls[Math.floor(Math.random()*urls.length)];
   const currentLoopItem = urls[curatedLoopCnt];
-  console.log('first item in curated array',urls[0]);
-  console.log('last item in curated array',urls[23]);
+  // console.log('first item in curated array',urls[0]);
+  // console.log('last item in curated array',urls[23]);
   const regex = /(\w+:\/\/)(\w+\.)?(\w+\.)?(\w+)(:?\d*)\/\?/g;
   const regex2 = /[&|?]/g;
   // const printout1 = rand.replaceAll(regex,'');
