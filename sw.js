@@ -1,6 +1,6 @@
 'use strict';
 
-const cacheName = 'magic-v3.0.4';
+const cacheName = 'magic-v3.0.5';
 
 
 const precacheResources = [
@@ -23,7 +23,6 @@ const postcacheResources = [
 
 const dataResources = [
   '/data/4/unique/0',
-  // 'data/curated',
   '/data/themes'
 ];
 
@@ -36,10 +35,6 @@ const staticResources = [
   '/meta/imgs/favicons/favicon.ico',
   '/meta/imgs/spinning-arc.svg',
   '/meta/imgs/logo.svg'
-];
-
-const blackList = [
-  'data/curated'
 ];
 
 
@@ -122,7 +117,6 @@ addEventListener('fetch', event => {
   if ( event.request.url.match( 'data/curated' ) ) {
     return false;
   } else {
-
     event.respondWith(
       serveFromCache(event.request)
     );
@@ -132,7 +126,6 @@ addEventListener('fetch', event => {
         // .then(requestRefresh)
     );
   }
-
 });
 
 
