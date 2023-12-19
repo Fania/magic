@@ -45,7 +45,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 3.0.3')
+	console.log('Magic Squares Version 3.0.4')
 	console.log('Running on http://localhost:3001')
 })
 
@@ -144,14 +144,20 @@ app.get('/data/themes', async (req, res) => {
   const data = await couch.viewAllDB('themes')
   res.send( data )
 })
+
+
+
 const data = {}
 app.get('/data/curated', async (req, res) => {
   // const currentCounter = await couch.viewCuratedCounterDB()
   const increaseCounter = await couch.updateCuratedCounterDB()
-  console.log('increaseCounter',increaseCounter.counter)
   data['counter'] = increaseCounter.counter
   res.send( data )
+  console.log('increaseCounter',increaseCounter.counter)
 })
+
+
+
 app.get('/data/orders', async (req, res) => {
   const data = await couch.getAllOrders()
   res.send( data )

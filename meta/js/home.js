@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v3.0.3';
+const CACHE = 'magic-v3.0.4';
 
 
 let rID;
@@ -1450,7 +1450,7 @@ async function handleCuratedSlideshow() {
   const url = `/data/curated`;
   const rawData = await fetch(url);
   const data = await rawData.json();
-  let curatedLoopCnt = data.counter;
+  const curatedLoopCnt = data.counter;
   console.log('curatedLoopCnt',curatedLoopCnt);
   // console.log('handling curated slideshow');
   // console.log('handleCuratedSlideshow sID',sID);

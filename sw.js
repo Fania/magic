@@ -1,6 +1,6 @@
 'use strict';
 
-const cacheName = 'magic-v3.0.3';
+const cacheName = 'magic-v3.0.4';
 
 
 const precacheResources = [
@@ -23,7 +23,7 @@ const postcacheResources = [
 
 const dataResources = [
   '/data/4/unique/0',
-  'data/curated',
+  // 'data/curated',
   '/data/themes'
 ];
 
@@ -36,6 +36,10 @@ const staticResources = [
   '/meta/imgs/favicons/favicon.ico',
   '/meta/imgs/spinning-arc.svg',
   '/meta/imgs/logo.svg'
+];
+
+const blackList = [
+  'data/curated'
 ];
 
 
@@ -115,14 +119,20 @@ async function updateCacheWith(thing) {
 addEventListener('fetch', event => {
   // console.log('[Service Worker] fetching/serving assets');
   // respondWith() for ASAP answer from cache
-  event.respondWith(
-    serveFromCache(event.request)
-  );
-  // don't put SW to sleep until we've done the following
-  event.waitUntil(
-    updateCacheFromNetwork(event.request)
-      // .then(requestRefresh)
-  );
+  if ( event.request.url.match( 'data/curated' ) ) {
+    return false;
+  } else {
+
+    event.respondWith(
+      serveFromCache(event.request)
+    );
+    // don't put SW to sleep until we've done the following
+    event.waitUntil(
+      updateCacheFromNetwork(event.request)
+        // .then(requestRefresh)
+    );
+  }
+
 });
 
 
