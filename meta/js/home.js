@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v3.0.7';
+const CACHE = 'magic-v3.0.8';
 
 
 let rID;
@@ -625,7 +625,12 @@ async function generateRandom() {
   settings.falpha = getRandomInt(0, 150); // max 255
   settings.animation = ['sync','async','off'][getRandomInt(0, 2)];
   settings.speed = getRandomInt(1, 100);
-  settings.overlap = [true,false][getRandomInt(0, 1)];
+  // settings.overlap = [true,false][getRandomInt(0, 1)];
+  // TODO change weighed ranking for overlap!! 60/40 
+  // also change timing to 40 seconds or more
+  // work out what happened to style when first loading?
+  settings.overlap = getWeighedRandom([true,false], [2,3]);
+  // settings.overlap = [true,false][getRandomInt(0, 1)];
   settings.overlapAmount = 'overlap200';
   settings.gallery = false;
   settings.interface = 'shown';
@@ -1409,6 +1414,8 @@ async function handleGalleryMode() {
     // console.log('winHeigh',winHeigh);
 
     const compStyles = window.getComputedStyle(sq.children[0]);
+    console.log('sq.children[0]',sq.children[0]);
+    console.log('compStyles',compStyles);
 
     const paddingSource = compStyles.getPropertyValue("padding");
     // console.log('paddingSource',paddingSource);

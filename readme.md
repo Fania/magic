@@ -330,3 +330,8 @@ request(_all_dbs)
 
 
 
+
+
+- home.js:1411 Uncaught TypeError: Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'. at home.js:1411:31
+
+- https://squares.cubelife.org/?order=11&amount=unique&style=tetromino&size=44&gap=20&background=%23704338&stroke=%23520A6D&strokeWidth=5&salpha=43&fill=%2398EFEB&falpha=19&animation=sync&speed=5&overlap=true&overlapAmount=overlap200&gallery=true&interface=hidden&slideshow=false
