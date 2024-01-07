@@ -70,6 +70,7 @@ main.slideshow #squares {
   display: flex;
   align-items: center;
   justify-content: center;
+  align-content: center;
   width: 90vw;
   height: 90vh;
 }
