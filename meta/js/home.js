@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v3.0.9';
+const CACHE = 'magic-v3.0.10';
 
 
 let rID;
@@ -1533,6 +1533,9 @@ async function handleRandomSlideshow() {
 
 async function startRandomSlideshow(whoranme) {
   // console.log(`starting random slideshow by ${whoranme}`);
+  
+  hideInterface(); // hide interface immediately
+
   clearInterval(rID);
   mainContent.classList.add('slideshow');
   bodyContent.classList.add('slideshow');
@@ -1541,11 +1544,13 @@ async function startRandomSlideshow(whoranme) {
 }
 async function startCuratedSlideshow(whoranme) {
   // console.log(`starting curated slideshow by ${whoranme}`);
+
+  hideInterface(); // hide interface immediately
+  
   clearInterval(sID);
   mainContent.classList.add('slideshow');
   bodyContent.classList.add('slideshow');
 
-  hideInterface(); // hide interface immediately
   // await handleRandom(); // start a random thing
   // await handleGalleryMode(); // enable galleryMode immediately
 
