@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v3.0.10';
+const CACHE = 'magic-v3.0.11';
 
 
 let rID;
@@ -1396,62 +1396,64 @@ day.addEventListener("click", () => {
 
 async function handleGalleryMode() {
   // console.log('hello Gallery');
-  setTimeout(()=> { 
-    const sq = document.getElementById('squares');
-    // disable intersection observer
-    const sentinels = document.querySelectorAll("[class*='sentinel']");
-    sentinels.forEach(s => {
-      // console.log('sentinel');
-      s.style.display = 'none';
-    })
-    // console.dir(sq);
-    const cntWidth = sq.clientWidth;
-    const winWidth = window.innerWidth;
-    const winHeigh = window.innerHeight;
-    // const svgWidth = Math.ceil(sq.children[0].getBoundingClientRect().width);
-    // console.log('cntWidth',cntWidth);
-    // console.log('winWidth',winWidth);
-    // console.log('winHeigh',winHeigh);
+  // document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(()=> { 
+      const sq = document.getElementById('squares');
+      // disable intersection observer
+      const sentinels = document.querySelectorAll("[class*='sentinel']");
+      sentinels.forEach(s => {
+        // console.log('sentinel');
+        s.style.display = 'none';
+      })
+      // console.dir(sq);
+      const cntWidth = sq.clientWidth;
+      const winWidth = window.innerWidth;
+      const winHeigh = window.innerHeight;
+      // const svgWidth = Math.ceil(sq.children[0].getBoundingClientRect().width);
+      // console.log('cntWidth',cntWidth);
+      // console.log('winWidth',winWidth);
+      // console.log('winHeigh',winHeigh);
 
-    const compStyles = window.getComputedStyle(sq.children[0]);
-    console.log('sq.children[0]',sq.children[0]);
-    console.log('compStyles',compStyles);
+      const compStyles = window.getComputedStyle(sq.children[0]);
+      // console.log('sq.children[0]',sq.children[0]);
+      // console.log('compStyles',compStyles);
 
-    const paddingSource = compStyles.getPropertyValue("padding");
-    // console.log('paddingSource',paddingSource);
-    const padding = parseInt(paddingSource.substring(0, paddingSource.length - 2));
-    // console.log('padding',padding);
-    const marginSource = compStyles.getPropertyValue("margin");
-    // console.log('marginSource',marginSource);
-    const margin = parseInt(marginSource.substring(0, marginSource.length - 2));
-    const winHeightMargin = window.innerHeight - margin * 2;
-    // console.log('margin',margin);
-    // console.log('winHeightMargin',winHeightMargin);
-    // console.log('winHeigh',winHeigh);
-    const widthSource = compStyles.getPropertyValue("width");
-    // console.log('widthSource',widthSource);
-    const svgWidthBefore = Math.ceil(parseInt(widthSource.substring(0, widthSource.length - 2)));
-    const svgWidth = svgWidthBefore + margin*2 + padding*2;
-    // console.log('svgWidth',svgWidth);
-    const w = Math.floor(winWidth / svgWidth);
-    const x = Math.floor(cntWidth / svgWidth);
-    // const y = Math.floor(winHeigh / svgWidth);
-    const y = Math.floor(winHeightMargin / svgWidth);
-    const zw = Math.ceil(w * y);
-    const z = Math.ceil(x * y);
-    const classes = [...sq.classList];
-    if(!classes.includes('overlap')) {
-      let testcnt = 0;
-      for(let i=zw; i < sq.children.length; i++){
-        // console.log('i',i);
-        // console.log(`handleGalleryMode: hiding:`,sq.children[i]);
-        // console.log(`handleGalleryMode: hiding ${sq.children[i]}`);
-        sq.children[i].classList.add('hide');
-        testcnt++;
+      const paddingSource = compStyles.getPropertyValue("padding");
+      // console.log('paddingSource',paddingSource);
+      const padding = parseInt(paddingSource.substring(0, paddingSource.length - 2));
+      // console.log('padding',padding);
+      const marginSource = compStyles.getPropertyValue("margin");
+      // console.log('marginSource',marginSource);
+      const margin = parseInt(marginSource.substring(0, marginSource.length - 2));
+      const winHeightMargin = window.innerHeight - margin * 2;
+      // console.log('margin',margin);
+      // console.log('winHeightMargin',winHeightMargin);
+      // console.log('winHeigh',winHeigh);
+      const widthSource = compStyles.getPropertyValue("width");
+      // console.log('widthSource',widthSource);
+      const svgWidthBefore = Math.ceil(parseInt(widthSource.substring(0, widthSource.length - 2)));
+      const svgWidth = svgWidthBefore + margin*2 + padding*2;
+      // console.log('svgWidth',svgWidth);
+      const w = Math.floor(winWidth / svgWidth);
+      const x = Math.floor(cntWidth / svgWidth);
+      // const y = Math.floor(winHeigh / svgWidth);
+      const y = Math.floor(winHeightMargin / svgWidth);
+      const zw = Math.ceil(w * y);
+      const z = Math.ceil(x * y);
+      const classes = [...sq.classList];
+      if(!classes.includes('overlap')) {
+        let testcnt = 0;
+        for(let i=zw; i < sq.children.length; i++){
+          // console.log('i',i);
+          // console.log(`handleGalleryMode: hiding:`,sq.children[i]);
+          // console.log(`handleGalleryMode: hiding ${sq.children[i]}`);
+          sq.children[i].classList.add('hide');
+          testcnt++;
+        }
+        // console.log(`handleGalleryMode: hid ${testcnt} elements`);
       }
-      // console.log(`handleGalleryMode: hid ${testcnt} elements`);
-    }
-  }, 1000);
+    }, 1000);
+  // });
 }
 
 async function unhideGallerySVGs() {

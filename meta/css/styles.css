@@ -24,16 +24,20 @@ header.hide, footer.hide, main.hide { display: none; }
 .hide ~ main.home,
 .hide ~ main.research { 
   margin-left: 2em; 
-  height: calc(100vh - 4em);
+  /* height: calc(100vh - 4em); */
+  height: calc(100vh);
 }
 .hide ~ main.home, 
 body.slideshow ~ main.home,
 body:not(.hidden) ~ main.home { 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
   overflow: hidden;
 }
+/* main.home {
+  display: unset;
+} */
 
 /* fix for safari buttons not wrapping text */
 input:is([type="button"], [type="submit"], [type="reset"]) {
@@ -508,7 +512,7 @@ label.tag:hover {
 
 
 main { margin: 1em; min-height: calc(100vh - 175px); }
-main output { display: flex; justify-content: center; flex-wrap: wrap; }
+main output { display: flex; justify-content: center; flex-wrap: wrap; min-height: 94vh; }
 
 
 /* this will be overwritten by js code when adjusting color */
