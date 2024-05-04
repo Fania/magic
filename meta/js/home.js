@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v3.0.14';
+const CACHE = 'magic-v3.0.15';
 
 
 let rID;
@@ -1180,6 +1180,36 @@ async function updateCache(url) {
 }
 
 
+
+
+function hexdec (hexString) {
+  hexString = (hexString + '').replace(/[^a-f0-9]/gi, '');
+  return parseInt(hexString, 16);
+}
+function hexToCMYK(val){
+  let tempRGB = '';
+	let rgb = val.replace('#', '').match(/.{2}/g);
+	for(var i = 0; i < rgb.length; i++){
+		rgb[i] = hexdec( rgb[i] );
+	}
+	tempRGB = rgb.join(' ');
+	let b = 1;
+	let cmyk = [];
+	for(var i = 0; i < rgb.length; i++){
+		let color =  1 - ( rgb[i] / 255 );
+		if	( color < b ) b = color;
+		if ( b === 1 ) color = 1;
+		else color = ( ( color - b ) / ( 1 - b ) ) * 100;
+		cmyk[i] = Math.round(color);
+	}
+	const k = Math.round(b * 100);
+	cmyk.push(k);
+  let result = cmyk.join(' ');
+  return result;
+}
+
+console.log(hexToCMYK('#CCCCCC'));
+console.log(hexToCMYK('#000000'));
 
 
 
