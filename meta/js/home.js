@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v3.0.15';
+const CACHE = 'magic-v3.0.16';
 
 
 let rID;
@@ -1022,7 +1022,9 @@ function applyStyles() {
   const text = `
   #squares svg {
     stroke: ${settings.stroke}${getHex(settings.salpha)};
+    /* stroke: ${settings.stroke}${getCMYK(settings.salpha)}; */
     fill: ${settings.fill}${getHex(settings.falpha)};
+    /* fill: ${settings.fill}${getCMYK(settings.falpha)}; */
     stroke-width: ${settings.strokeWidth}px;
     width: ${settings.size}%;
     max-height: 70vh; 
@@ -1037,7 +1039,9 @@ function applyStyles() {
   const modaltext = `
   #modal svg {
     stroke: ${settings.stroke}${getHex(settings.salpha)};
+    /* stroke: ${settings.stroke}${getCMYK(settings.salpha)}; */
     fill: ${settings.fill}${getHex(settings.falpha)};
+    /* fill: ${settings.fill}${getCMYK(settings.falpha)}; */
     stroke-width: ${settings.strokeWidth}px;
     object-fit: contain; 
     width: 60vw; height: 60vh; 
@@ -1208,11 +1212,15 @@ function hexToCMYK(val){
   return result;
 }
 
-console.log(hexToCMYK('#CCCCCC'));
-console.log(hexToCMYK('#000000'));
+// console.log(hexToCMYK('#CCCCCC'));
+// console.log(hexToCMYK('#000000'));
 
 
-
+function getCMYK(dec) {
+  let hex = getHex(dec);
+  let cmyk = hexToCMYK(hex);
+  return cmyk;
+}
 function getHex(dec) {
   return (parseInt(dec) + 0x10000).toString(16).substr(-2).toUpperCase();
 }
@@ -1228,6 +1236,11 @@ function getRandomInt(min, max) {
 function getRandomColour() {
   return `#${getHex(getRandomInt(0, 255))}${getHex(getRandomInt(0, 255))}${getHex(getRandomInt(0, 255))}`;
 }
+// function getRandomColour() {
+//   let cmyk = `${getRandomInt(0, 100)} ${getRandomInt(0, 100)} 
+//               ${getRandomInt(0, 100)} ${getRandomInt(0, 100)}`;
+//   return cmyk;
+// }
 
 
 
