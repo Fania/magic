@@ -28,6 +28,8 @@ nunjucks.configure('views', {
 
 // app.use(express.urlencoded())
 // app.use(bodyParser.json())
+// app.use(bodyParser.json({limit: '300kb'}))
+// app.use(bodyParser.json({limit: '999pb'}))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
@@ -45,7 +47,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 3.0.17')
+	console.log('Magic Squares Version 3.0.18')
 	console.log('Running on http://localhost:3001')
 })
 
@@ -68,6 +70,7 @@ async function initialiseSources() {
 // initialiseSources()
 // setupSource(256)
 // setupSource(4)
+
 
 
 // couch.statusReport()
