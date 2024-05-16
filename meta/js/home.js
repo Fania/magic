@@ -3,7 +3,7 @@
 navigator.serviceWorker.register('sw.js');
 
 
-const CACHE = 'magic-v3.0.18';
+const CACHE = 'magic-v3.0.19';
 
 
 let rID;
