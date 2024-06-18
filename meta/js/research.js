@@ -46,15 +46,15 @@ async function getData(filter) {
       squares.insertAdjacentHTML('beforeend',elem);
 
       // calculate new lengths for straight lines
-      polygon_length(dataSorted[i].svg);
+      await polygon_length(dataSorted[i].svg);
+
       // console.log(dataSorted[i].array);
       // console.log(dataSorted[i].length);
       // console.log(dataSorted[i].svg);
 
 
     }
-
-
+    console.log(lengths);
 
 
     // if(data.length === 200) {
@@ -106,6 +106,10 @@ lengthsdropdown.addEventListener("change", event => {
   const difflen = _.intersection(lengths,uniqlen);
   // console.log(difflen);
   // console.log(uniqlen === difflen)
+
+
+
+
 
 
 
@@ -267,7 +271,8 @@ function polygon_length(svg_str) {
     // measure line or measure polygon close line
     len += distance(coord(points[0]), coord(points[points.length-1]));
     // lengths.push(Math.round(len));
-    lengths.push(len);
+    const lenInt = parseFloat(len).toFixed(6);
+    lengths.push(lenInt);
     // console.log("final polygon length", Math.round(len));
     return len;
     // return Math.round(len);
