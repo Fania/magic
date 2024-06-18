@@ -352,19 +352,18 @@ svg * { box-sizing: border-box; }
   height: 25px;
   margin: 3px;
 }
-.research #squares svg.unique,
+
+/* .research #squares svg.unique,
 .research #squares svg.identity {
   stroke: cyan;
   stroke-width: 10px;
 }
 .research #squares svg.pandiag {
-  /* stroke: magenta; */
   stroke-width: 10px;
   border-left: 1px dashed magenta;
   border-right: 1px dashed magenta;
 }
 .research #squares svg.symmetric {
-  /* stroke: yellow; */
   stroke-width: 10px;
   border-top: 1px dashed yellow;
   border-bottom: 1px dashed yellow;
@@ -375,7 +374,7 @@ svg * { box-sizing: border-box; }
 .research #squares svg.none {
   stroke: white;
   stroke-width: 8px;
-}
+} */
 
 
 /* image filters */ 

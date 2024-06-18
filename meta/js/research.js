@@ -54,7 +54,7 @@ async function getData(filter) {
       defaultsquares[elemID] = elemNumsClean;
 
     }
-    // console.log(lengths);
+    console.log(lengths);
   } 
   catch (error) { console.log('getData', error) }
   finally { 
@@ -477,6 +477,7 @@ function polygon_length(svg_str) {
     // measure line or measure polygon close line
     len += distance(coord(points[0]), coord(points[points.length-1]));
     // lengths.push(Math.round(len));
+    console.log(len);
     const lenInt = parseFloat(len).toFixed(6);
     lengths.push(lenInt);
     // console.log("final polygon length", Math.round(len));
