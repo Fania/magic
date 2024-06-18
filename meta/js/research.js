@@ -2,29 +2,6 @@
 
 document.body.classList.add("order4");
 
-// const classification = document.getElementById('classification');
-// classification.addEventListener('change', () => {
-//   console.log('classification change triggered');
-//   let x = classification[classification.selectedIndex].value;
-//   console.log(x);
-//   // filterSquares(x);
-//   getData(x);
-// });
-
-
-
-
-// function filterSquares(c) {
-
-//   const squares = document.querySelectorAll(`#squares svg`);
-//   const matches = document.querySelectorAll(`#squares svg.${c}`);
-
-//   squares.forEach( sq => { sq.classList.add('hide') });
-//   matches.forEach( sq => { sq.classList.remove('hide') });
-
-//   if (c == 'all') squares.forEach( sq => { sq.classList.remove('hide') });
-
-// }
 
 const lengths = [];
 let defaultsquares = {};
@@ -45,7 +22,8 @@ async function getData(filter) {
       // console.log(data[i]);
       const elem = dataSorted[i].svg;
       const elemID = dataSorted[i].id;
-      const elemLen = dataSorted[i].length;
+      const elemLenLong = dataSorted[i].length;
+      const elemLen = parseFloat(elemLenLong).toFixed(6);
       const elemNums = dataSorted[i].array;
       const elemNumsClean = elemNums.toString().replace(/,/g,' ');
       const elemFlags = dataSorted[i].flags;
@@ -70,38 +48,13 @@ async function getData(filter) {
         </figcaption>
       </figure>
       `
-
-      // squares.insertAdjacentHTML('beforeend',elem);
       squares.insertAdjacentHTML('beforeend',elemText);
-
       // calculate new lengths for straight lines
       await polygon_length(dataSorted[i].svg);
-
-      // console.log(dataSorted[i].array);
-      // console.log(dataSorted[i].length);
-      // console.log(dataSorted[i].svg);
-
       defaultsquares[elemID] = elemNumsClean;
 
     }
-    console.log(lengths);
-
-
-    // if(data.length === 200) {
-      // const io = new IntersectionObserver(
-      //   entries => {
-      //     if(entries[0].isIntersecting) {
-      //       offset += 200;
-      //       getData(offset);
-      //       io.unobserve(entries[0].target);
-      //     }
-      //   },{}
-      // );
-      // const sentinel = document.createElement('div');
-      // sentinel.classList.add(`sentinel${offset}`);
-      // squares.appendChild(sentinel);
-      // io.observe(sentinel);
-    // }
+    // console.log(lengths);
   } 
   catch (error) { console.log('getData', error) }
   finally { 
@@ -116,30 +69,21 @@ async function getData(filter) {
 
 
 
-
-
-
-
 // Lengths dropdown
 const lengthsdropdown = document.querySelector("#lengths");
 lengthsdropdown.addEventListener("change", event => {
   
-  // squares.innerHTML = ""
-  // getData("i");
-  // CHANGE THE CSS
-
-
-  let fromIndex = lengthsdropdown.selectedIndex;
-  console.log(fromIndex);
-
-  // console.log(lengths);
-  const uniqlen = _.uniq(lengths);
-  // console.log(uniqlen);
-  const difflen = _.intersection(lengths,uniqlen);
-  // console.log(difflen);
-  // console.log(uniqlen === difflen)
-
-
+  const fromIndex = lengthsdropdown.selectedIndex;
+  const selectedLen = lengthsdropdown[fromIndex].value;
+  const [...squaresSVGs] = document.querySelectorAll(`#squares figure`);
+  squaresSVGs.forEach(sq => {
+    const len = sq.getAttribute("data-length");
+    if(len != selectedLen) {
+      sq.style.display = "none";
+    } else {
+      sq.style.display = "block";
+    }
+  });
 });
 
 
