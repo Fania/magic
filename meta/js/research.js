@@ -25,7 +25,7 @@ async function getData(filter) {
       const elem = dataSorted[i].svg;
       const elemID = dataSorted[i].id;
       const elemLenLong = dataSorted[i].length;
-      const elemLen = parseFloat(elemLenLong).toFixed(6);
+      // const elemLen = parseFloat(elemLenLong).toFixed(6);
       const elemNums = dataSorted[i].array;
       const elemNumsClean = elemNums.toString().replace(/,/g,' ');
       const elemFlags = dataSorted[i].flags;
@@ -33,7 +33,7 @@ async function getData(filter) {
       const elemNumSVG = await createNumberSVGs(4,elemCoords,elemID,elemFlags);
 
       const elemText = `
-      <figure data-length="${elemLen}">
+      <figure data-length="${elemLenLong}">
         <div>${elem}${elemNumSVG}</div>
         <div class="orient">
           <svg class="rot-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><title>Rotate Right</title><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/></svg>
@@ -53,7 +53,8 @@ async function getData(filter) {
       `
       squares.insertAdjacentHTML('beforeend',elemText);
       // calculate new lengths for straight lines
-      await polygon_length(dataSorted[i].svg);
+      // await polygon_length(dataSorted[i].svg);
+      lengths.push(elemLenLong);
       defaultsquares[elemID] = elemNumsClean;
 
     }
@@ -69,7 +70,7 @@ async function getData(filter) {
 }
 
 async function getSuzukiData() {
-  console.log('getSuzukiData');
+  // console.log('getSuzukiData');
   try {
     const squares = document.querySelector(`#squares`);
     squares.innerHTML = "";
@@ -93,7 +94,7 @@ async function getSuzukiData() {
       const elemNumSVG = await createNumberSVGs(4,elemCoords,elemID,elemFlags);
 
       const elemText = `
-      <figure data-length="${elemLen}">
+      <figure data-length="${elemLenLong}">
         <div>${elem}${elemNumSVG}</div>
         <div class="orient">
           <svg class="rot-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><title>Rotate Right</title><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"/></svg>
@@ -113,10 +114,11 @@ async function getSuzukiData() {
       `
       squares.insertAdjacentHTML('beforeend',elemText);
       // calculate new lengths for straight lines
-      await polygon_length(dataSorted[i].svg);
+      // await polygon_length(dataSorted[i].svg);
+      lengths.push(elemLenLong);
       defaultsquares[elemID] = elemNumsClean;
     }
-    console.log(lengths);
+    // console.log(lengths);
   } 
   catch (error) { console.log('getSuzukiData', error) }
   finally { 
@@ -192,7 +194,7 @@ async function populateLengthOptions() {
 const raczRad = document.getElementById('raczinskiRadio');
 raczRad.addEventListener('change', ()=> { 
   if(raczRad.checked) { 
-    console.log(`change triggered by`, raczRad);
+    // console.log(`change triggered by`, raczRad);
     getData('i');
     // do stuff
   }
@@ -200,7 +202,7 @@ raczRad.addEventListener('change', ()=> {
 const suzRad = document.getElementById('suzukiRadio');
 suzRad.addEventListener('change', ()=> { 
   if(suzRad.checked) { 
-    console.log(`change triggered by`, suzRad);
+    // console.log(`change triggered by`, suzRad);
     getSuzukiData();
     // do stuff
   }
