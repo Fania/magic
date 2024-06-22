@@ -374,36 +374,66 @@ main.research.lengthClass #squares figure .orient svg:hover {
 .research:not(.lengthClass).submenu #settings fieldset.hide {
   display: none;
 }
-main.research:not(.lengthClass) #squares svg {
-  width: 50px;
-  height: 50px;
+
+
+.research #squares {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.research #squares div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.research #squares div.orient svg {
+  fill: white;
+  stroke: white;
+}
+.dayMode .research #squares .orient svg {
+  fill: var(--textColour);
+}
+.research #squares .orient svg:hover {
+  /* filter: drop-shadow(1px 1px 2px rgba(238,238,238,0.3)); */
+  cursor: pointer;
+}
+.research #squares div:first-of-type svg {
+  width: 150px;
+  height: 150px;
+}
+.research #squares figure {
+  width: 300px;
+  margin: 5px;
+}
+.research #squares figcaption {
+  text-align: center;
+  font-size: .9em;
+}
+.research #squares figcaption p {
+  margin-top: 0;
+}
+
+.research #squares svg {
+  width: 25px;
+  height: 25px;
   margin: 3px;
 }
-main.research:not(.lengthClass) #squares figure {
-  margin: 1px;
-}
-.research:not(.lengthClass) #squares figure .orient {
-  display: none;
-}
-main.research:not(.lengthClass) #squares figure div svg:last-child {
-  display: none;
-}
-main.research:not(.lengthClass) #squares figure figcaption {
-  display: none;
-}
-main.research:not(.lengthClass) #squares svg.unique,
-main.research:not(.lengthClass) #squares svg.identity {
+
+/* .research #squares svg.unique,
+.research #squares svg.identity {
   stroke: cyan;
   stroke-width: 10px;
 }
-main.research:not(.lengthClass) #squares svg.pandiag {
-  /* stroke: magenta; */
+.research #squares svg.pandiag {
   stroke-width: 10px;
   border-left: 1px dashed magenta;
   border-right: 1px dashed magenta;
 }
 main.research:not(.lengthClass) #squares svg.symmetric {
   /* stroke: yellow; */
+.research #squares svg.symmetric {
   stroke-width: 10px;
   border-top: 1px dashed yellow;
   border-bottom: 1px dashed yellow;
@@ -412,6 +442,9 @@ main.research:not(.lengthClass) #squares svg.self-compl {
   fill: rgba(209, 168, 255, 0.8);
 }
 main.research:not(.lengthClass) #squares svg.none {
+  fill: rgba(209, 168, 255, 0.8);
+}
+.research #squares svg.none {
   stroke: white;
   stroke-width: 8px;
 }
@@ -657,7 +690,7 @@ body::-webkit-scrollbar-thumb {
 
   header { padding: 0 2em }
 
-  .mainmenu div h1 { display: block; margin-left: 1em; width: 275px }
+  .mainmenu div h1 { display: block; margin-left: 1em; width: 270px }
 
   #hamburger { display: none }
   #mainnav { 

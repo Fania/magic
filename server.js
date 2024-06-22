@@ -47,7 +47,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 3.0.19')
+	console.log('Magic Squares Version 3.1.11')
 	console.log('Running on http://localhost:3001')
 })
 
@@ -56,6 +56,10 @@ app.listen(3001, () => {
 async function setupSource(n) {
   const result = await generate.source(n)
   await couch.populateDBSource(result, n)
+}
+async function setupSuzuki(n) {
+  const result = await generate.sourceSuzuki(n)
+  await couch.populateDBSourceSuzuki(result, n)
 }
 async function initialiseSources() {
   const orders = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,27,28,30,32]
@@ -70,6 +74,7 @@ async function initialiseSources() {
 // initialiseSources()
 // setupSource(256)
 // setupSource(4)
+// setupSuzuki(4)
 
 
 
@@ -141,6 +146,12 @@ app.get('/data/:n/:s/:o', async (req, res) => {
   // const source = await couch.viewSourceDB(order,offset)
   const source = await couch.viewSourceDB(order,style,offset)
   const data = await generate.svgData(source,order,style)
+  res.send( data )
+})
+app.get('/data/suzuki', async (req, res) => {
+  // console.log(order,style,offset)
+  const source = await couch.viewDB('suzuki','straight',0)
+  const data = await generate.svgData(source,4,'straight')
   res.send( data )
 })
 app.get('/data/themes', async (req, res) => {

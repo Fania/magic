@@ -29,8 +29,14 @@
           <option value="unique">Unique</option>
           <option value="shared">Shared</option>
         </select>
-        <input id="none" class="filter-none" type="checkbox"/>
-        {# <label for="none" class="tag">none</label> #}
+      </label>
+      <label>
+        <span>Raczinski</span>
+        <input type="radio" id="raczinskiRadio" name="magicSet" value="raczinski" checked>
+      </label>
+      <label>
+        <span>Suzuki</span>
+        <input type="radio" id="suzukiRadio" name="magicSet" value="suzuki">
       </label>
     </fieldset>
 
@@ -136,6 +142,7 @@
 
 
 {% block scripts %}
+{# <script src="lazysizes.min.js" async=""></script> #}
 <script src="meta/js/svg-path-properties.min.js"></script>
 <script src="meta/js/lodash.min.js"></script>
 <script src="meta/js/research.js"></script>
