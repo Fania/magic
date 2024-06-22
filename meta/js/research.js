@@ -58,7 +58,7 @@ async function getData(filter) {
       defaultsquares[elemID] = elemNumsClean;
 
     }
-    console.log(lengths);
+    // console.log(lengths);
   } 
   catch (error) { console.log('getData', error) }
   finally { 
@@ -116,6 +116,7 @@ async function getSuzukiData() {
       // calculate new lengths for straight lines
       // await polygon_length(dataSorted[i].svg);
       lengths.push(elemLenLong);
+      // lengths.push(elemLen);
       defaultsquares[elemID] = elemNumsClean;
     }
     // console.log(lengths);
@@ -164,17 +165,20 @@ async function populateLengthOptions() {
       // i == length
       // console.log(cnt);
       const itemLen = i;
+      const elemLen = parseFloat(itemLen).toFixed(6);
       const itemCount= countlen[i];
       const option = document.createElement('option');
       option.value = itemLen;
       if(cnt==0){
-        option.innerText = `(${itemCount}) ${itemLen}`;
+        // option.innerText = `(${itemCount}) ${itemLen}`;
+        option.innerText = `(${itemCount}) ${elemLen}`;
         // console.log("inside 0");
         // console.log(option.selected);
         option.selected = true;
       } else {
         // console.log("inside else");
-        option.innerText = `(${itemCount}) ${itemLen}`;
+        // option.innerText = `(${itemCount}) ${itemLen}`;
+        option.innerText = `(${itemCount}) ${elemLen}`;
       }
       cnt++;
       // if(countlen[i] == 0) option.selected = true;
