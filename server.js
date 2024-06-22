@@ -44,7 +44,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 3.1.4')
+	console.log('Magic Squares Version 3.1.5')
 	console.log('Running on http://localhost:3001')
 })
 
@@ -53,6 +53,10 @@ app.listen(3001, () => {
 async function setupSource(n) {
   const result = await generate.source(n)
   await couch.populateDBSource(result, n)
+}
+async function setupSuzuki(n) {
+  const result = await generate.sourceSuzuki(n)
+  await couch.populateDBSourceSuzuki(result, n)
 }
 async function initialiseSources() {
   const orders = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,27,28,30,32]
@@ -67,6 +71,7 @@ async function initialiseSources() {
 // initialiseSources()
 // setupSource(256)
 // setupSource(4)
+// setupSuzuki(4)
 
 
 // couch.statusReport()

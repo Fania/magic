@@ -1,6 +1,6 @@
 'use strict';
 
-const cacheName = 'magic-v3.1.4';
+const cacheName = 'magic-v3.1.5';
 
 
 const precacheResources = [
