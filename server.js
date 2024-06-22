@@ -44,7 +44,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 3.1.5')
+	console.log('Magic Squares Version 3.1.6')
 	console.log('Running on http://localhost:3001')
 })
 
@@ -142,6 +142,12 @@ app.get('/data/:n/:s/:o', async (req, res) => {
   // const source = await couch.viewSourceDB(order,offset)
   const source = await couch.viewSourceDB(order,style,offset)
   const data = await generate.svgData(source,order,style)
+  res.send( data )
+})
+app.get('/data/suzuki', async (req, res) => {
+  // console.log(order,style,offset)
+  const source = await couch.viewDB('suzuki','straight',0)
+  const data = await generate.svgData(source,4,'straight')
   res.send( data )
 })
 app.get('/data/themes', async (req, res) => {
