@@ -129,6 +129,23 @@ async function populateLengthOptions() {
 
 
 
+const raczRad = document.getElementById('raczinskiRadio');
+raczRad.addEventListener('change', ()=> { 
+  if(raczRad.checked) { 
+    console.log(`change triggered by`, raczRad);
+    // do stuff
+  }
+});
+const suzRad = document.getElementById('suzukiRadio');
+suzRad.addEventListener('change', ()=> { 
+  if(suzRad.checked) { 
+    console.log(`change triggered by`, suzRad);
+    // do stuff
+  }
+});
+
+
+
 
 
 
