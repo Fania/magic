@@ -64,9 +64,12 @@ or pipe it into text file with `npm run webhint > hint-report.txt`
 
 ### Interface
 
+
+- [ ] arc babies overlap fix viewbox problem?
+- [ ] rems for all units?
 - [ ] add option to hide interface via share button / bookmarks
 - [ ] make print stylesheet sizes dynamic
-- [ ] modal being added twice after print dialog triggered
+- [ ] modal being added twice after print dialogue triggered
 - [ ] create new research page
 - [ ] don't save to localstorage while live adjusting things like fill
 - [ ] prevent overlap for more than 200? e.g. for order 5s (with loads)
