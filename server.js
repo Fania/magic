@@ -38,7 +38,7 @@ const gallery = require('./lib/gallery.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 3.2.1')
+	console.log('Magic Squares Version 3.2.2')
 	console.log('Running on http://localhost:3001')
 })
 
