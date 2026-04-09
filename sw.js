@@ -1,6 +1,6 @@
 'use strict';
 
-const cacheName = 'magic-v3.1.13';
+const cacheName = 'magic-v3.2.1';
 
 
 const precacheResources = [
@@ -22,8 +22,7 @@ const postcacheResources = [
 ];
 
 const dataResources = [
-  '/data/4/unique/0',
-  '/data/themes'
+  '/data/4/unique/0'
 ];
 
 const staticResources = [

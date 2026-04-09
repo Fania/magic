@@ -1,13 +1,8 @@
 'use strict'
 
-const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
 const compression = require('compression')
-const circularJSON = require('circular-json');
-// const minify = require('express-minify')
-const _ = require('lodash')
-// const dotenv = require('dotenv').config()
 const app = express()
 app.use(compression())
 
@@ -26,20 +21,16 @@ nunjucks.configure('views', {
 })
 
 
-// app.use(express.urlencoded())
-// app.use(bodyParser.json())
-// app.use(bodyParser.json({limit: '300kb'}))
-// app.use(bodyParser.json({limit: '999pb'}))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
 const couch = require('./lib/couch.js')
 const generate = require('./lib/generators.js')
 const checker = require('./lib/checker.js')
+const gallery = require('./lib/gallery.js')
+// const test = require('./lib/tests.js')
 // const draw = require('./lib/draw.js')
 // const trans = require('./lib/transformations.js')
-const gallery = require('./lib/gallery.js')
-const test = require('./lib/tests.js')
 // const cmd = require('./lib/haskell.js')
 // cmd.ls()
 
@@ -47,7 +38,7 @@ const test = require('./lib/tests.js')
 
 // START THE SERVER
 app.listen(3001, () => {
-	console.log('Magic Squares Version 3.1.13')
+	console.log('Magic Squares Version 3.2.1')
 	console.log('Running on http://localhost:3001')
 })
 
@@ -62,7 +53,7 @@ async function setupSuzuki(n) {
   await couch.populateDBSourceSuzuki(result, n)
 }
 async function initialiseSources() {
-  const orders = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,27,28,30,32]
+  const orders = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,24,25,26,27,28,30,32]
   const forLoop = async _ => { 
     for (let i=0; i < orders.length; i++) {
       await setupSource(orders[i])
@@ -87,9 +78,9 @@ async function initialiseSources() {
 // ROUTES
 app.get('/', (req, res) => { res.render('home.njk') })
 app.post('/', async (req, res) => { 
-  const theme = req.body
-  if(!theme.overlap) theme.overlap = 'false'
-  await couch.insertTheme(theme)
+  // const theme = req.body
+  // if(!theme.overlap) theme.overlap = 'false'
+  // await couch.insertTheme(theme)
   res.render('home.njk')
 })
 
